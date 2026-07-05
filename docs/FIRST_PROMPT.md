@@ -1,6 +1,6 @@
 # First Claude Code session — starter prompt
 
-Paste the block below as your first message in `claude` (after trusting the folder and `/reload-plugins`).
+Paste the block below as your first message in `claude` (after trusting the folder; if you just installed Superpowers, quit and relaunch `claude` so its skills load — there is no live reload).
 
 ---
 
