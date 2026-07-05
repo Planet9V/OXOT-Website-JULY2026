@@ -7,21 +7,26 @@ export async function GET() {
   if (!(await getAdminSession()))
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const { rows } = await pool.query(
-    `SELECT slug, locale, title, published, updated_at FROM pages ORDER BY slug, locale`
+    `SELECT slug, locale, title, content_type AS "contentType", published, updated_at
+       FROM pages ORDER BY slug, locale`
   );
   return NextResponse.json({ pages: rows });
 }
 
-// Upsert a page for one locale.
+// Upsert a page for one locale, including SEO/meta fields.
 export async function POST(req: NextRequest) {
   if (!(await getAdminSession()))
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const b = (await req.json().catch(() => ({}))) as {
     slug?: string; locale?: string; title?: string; body?: string; published?: boolean;
+    metaTitle?: string; metaDescription?: string; excerpt?: string;
+    ogImage?: string; contentType?: string;
   };
   if (!b.slug || !b.locale || !isLocale(b.locale) || !b.title) {
     return NextResponse.json({ error: "slug, valid locale, title required" }, { status: 400 });
   }
+  const contentType = b.contentType === "article" ? "article" : "page";
+
   // Bilingual guard: cannot publish unless the sibling locale exists.
   if (b.published) {
     const other = b.locale === "nl" ? "en" : "nl";
@@ -34,12 +39,23 @@ export async function POST(req: NextRequest) {
     }
   }
   await pool.query(
-    `INSERT INTO pages (slug, locale, title, body, published, updated_at)
-     VALUES ($1,$2,$3,$4,$5, now())
+    `INSERT INTO pages
+       (slug, locale, title, body, published,
+        meta_title, meta_description, excerpt, og_image, content_type,
+        published_at, updated_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
+        CASE WHEN $5 THEN now() ELSE NULL END, now())
      ON CONFLICT (slug, locale) DO UPDATE
-       SET title=EXCLUDED.title, body=EXCLUDED.body,
-           published=EXCLUDED.published, updated_at=now()`,
-    [b.slug, b.locale, b.title, b.body ?? "", b.published === true]
+       SET title=EXCLUDED.title, body=EXCLUDED.body, published=EXCLUDED.published,
+           meta_title=EXCLUDED.meta_title, meta_description=EXCLUDED.meta_description,
+           excerpt=EXCLUDED.excerpt, og_image=EXCLUDED.og_image, content_type=EXCLUDED.content_type,
+           published_at=COALESCE(pages.published_at, EXCLUDED.published_at),
+           updated_at=now()`,
+    [
+      b.slug, b.locale, b.title, b.body ?? "", b.published === true,
+      b.metaTitle ?? null, b.metaDescription ?? null, b.excerpt ?? null,
+      b.ogImage ?? null, contentType
+    ]
   );
   return NextResponse.json({ ok: true });
 }

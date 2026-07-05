@@ -1,8 +1,33 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getPublishedPage } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  if (!isLocale(locale)) return {};
+  const page = await getPublishedPage(slug, locale);
+  if (!page) return {};
+  const title = page.metaTitle ?? page.title;
+  const description = page.metaDescription ?? page.excerpt ?? undefined;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: page.contentType === "article" ? "article" : "website",
+      locale,
+      images: page.ogImage ? [{ url: page.ogImage }] : undefined
+    }
+  };
+}
 
 export default async function CmsPage({
   params

@@ -33,3 +33,6 @@ ollama/
 
 # Next.js generated
 next-env.d.ts
+
+# Internal source material (never commit to public repo)
+content-source/

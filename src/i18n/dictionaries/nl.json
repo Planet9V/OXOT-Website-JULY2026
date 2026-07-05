@@ -1,12 +1,26 @@
 {
   "home": {
     "hero": {
-      "title": "Professionele diensten, opnieuw uitgevonden",
-      "subtitle": "Modern, interactief en gebouwd rond wat u nodig heeft.",
-      "cta": "Neem contact op"
+      "title": "Beveilig industriële operaties met heldere, risicogebaseerde OT-cybersecurity",
+      "subtitle": "OXOT helpt industriële organisaties cyberrisico's te begrijpen en te verminderen in Operational Technology-omgevingen waar veiligheid, continuïteit en productie het zwaarst wegen.",
+      "subtitle2": "Wij combineren diepgaande OT-securityexpertise, engineeringervaring en Cyber Digital Twin-capaciteiten om versnipperde technische bevindingen om te zetten in heldere beslissingen voor CISO's, COO's, plantmanagers en industriële leiding.",
+      "cta": "Praat met een OT-securityexpert",
+      "cta2": "Ontdek onze aanpak"
+    },
+    "services": {
+      "heading": "OXOT-diensten",
+      "items": [
+        { "name": "OT-securityassessments", "desc": "Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen.", "href": "/services" },
+        { "name": "Cyber Digital Twin", "desc": "Creëer een levend model van uw OT-omgeving om risicogebaseerde beslissingen op schaal te ondersteunen.", "href": "/cyber-digital-twin" },
+        { "name": "OT-securityprogramma's", "desc": "Ontwerp en voer gestructureerde OT-securityverbeterprogramma's uit over locaties, bedrijfsonderdelen of regio's.", "href": "/services" },
+        { "name": "Architectuur & segmentatie", "desc": "Definieer veilige OT-netwerkarchitecturen, zones, conduits en praktische segmentatiepatronen.", "href": "/services" },
+        { "name": "Veilige externe toegang", "desc": "Verminder risico van leverancierstoegang, onderhoud op afstand en externe connectiviteit.", "href": "/services" },
+        { "name": "OT-securitybaseline", "desc": "Definieer minimale beveiligingsmaatregelen die realistisch, herhaalbaar en afgestemd op operationele behoeften zijn.", "href": "/services" },
+        { "name": "Kennisoverdracht", "desc": "Help interne teams de kennis, structuur en eigenaarschap op te bouwen om OT-security duurzaam te onderhouden.", "href": "/services" }
+      ]
     }
   },
-  "nav": { "home": "Home", "services": "Diensten", "contact": "Contact" },
+  "nav": { "home": "Home", "services": "Diensten", "cyberDigitalTwin": "Cyber Digital Twin", "frameworks": "Kaders", "about": "Over ons", "contact": "Contact" },
   "theme": { "toggle": "Thema wisselen" },
   "agent": {
     "title": "Vraag het OXOT",
