@@ -1,0 +1,54 @@
+# OXOT Website — full app runs in Docker. Source of truth: Planet9v/OXOT-Website-JULY2026
+services:
+  app:
+    build:
+      context: .
+      target: dev            # dev stage includes Node + Claude Code toolchain
+    env_file: [.env.local]
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - DATABASE_URL=postgres://${POSTGRES_USER:-oxot}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-oxot}
+    volumes:
+      - ".:/workspace"
+      - "oxot_memory:/workspace/memory"   # shared team brain, one copy across containers
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: sleep infinity   # dev container; run `npm run dev` inside it
+
+  db:
+    image: pgvector/pgvector:pg17
+    env_file: [.env.local]
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-oxot}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-change-me}
+      - POSTGRES_DB=${POSTGRES_DB:-oxot}
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+    # NOT host-published: the app reaches the DB internally over the compose network (db:5432),
+    # and the Mac already has Postgres on 5432/5433. For a host DB shell use:
+    #   docker compose exec db psql -U oxot -d oxot
+    # To expose it, add a free host port here, e.g.  ports: ["5434:5432"].
+
+  # Optional in-compose Ollama. Disabled by default via a profile so it does NOT
+  # clash with a host Ollama already listening on :11434 (local dev uses the host one,
+  # see docker-compose.override.yml). Start it explicitly only if you need it:
+  #   docker compose --profile with-ollama up -d
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["with-ollama"]
+    volumes:
+      - "ollama:/root/.ollama"
+    ports:
+      - "11434:11434"
+
+  # Optional: run Context7 as its own HTTP MCP service instead of in-container npx
+  # context7:
+  #   image: mcp/context7
+  #   ports: ["8080:8080"]
+
+volumes:
+  pgdata: {}
+  ollama: {}
+  oxot_memory: {}

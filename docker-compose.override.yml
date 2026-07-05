@@ -1,0 +1,9 @@
+# LOCAL DEV OVERRIDE — auto-loaded by `docker compose`.
+# Wires the app to the Ollama already running on the Mac (with models pulled),
+# instead of the empty in-compose ollama container. No 7GB re-download.
+services:
+  app:
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

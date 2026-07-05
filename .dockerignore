@@ -1,0 +1,17 @@
+# Keep secrets and local state out of the image
+.env
+.env.local
+.env.*.local
+.git
+.github
+node_modules
+.next
+out
+dist
+build
+coverage
+pgdata
+ollama
+*.log
+.DS_Store
+SETUP_PLAN.md

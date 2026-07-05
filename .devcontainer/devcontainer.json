@@ -1,0 +1,9 @@
+{
+  "name": "OXOT Website (dev)",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "features": { "ghcr.io/devcontainers/features/github-cli:1": {} },
+  "postCreateCommand": "npm install && (npm run claude:bootstrap || true)",
+  "remoteUser": "node"
+}

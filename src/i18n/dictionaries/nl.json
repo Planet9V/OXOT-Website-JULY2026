@@ -1,0 +1,24 @@
+{
+  "home": {
+    "hero": {
+      "title": "Professionele diensten, opnieuw uitgevonden",
+      "subtitle": "Modern, interactief en gebouwd rond wat u nodig heeft.",
+      "cta": "Neem contact op"
+    }
+  },
+  "nav": { "home": "Home", "services": "Diensten", "contact": "Contact" },
+  "theme": { "toggle": "Thema wisselen" },
+  "agent": {
+    "title": "Vraag het OXOT",
+    "greeting": "Hallo — stel me gerust een vraag over deze pagina.",
+    "placeholder": "Typ uw vraag…",
+    "send": "Verstuur",
+    "open": "Chat met ons",
+    "consent": {
+      "title": "Mogen we deze chat afstemmen op uw bezoek?",
+      "body": "We gebruiken first-party signalen (bekeken pagina's, klikken) alleen om de assistent behulpzamer te maken. Er wordt niets opgeslagen totdat u akkoord gaat.",
+      "accept": "Accepteren",
+      "decline": "Nee bedankt"
+    }
+  }
+}

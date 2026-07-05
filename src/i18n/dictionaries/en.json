@@ -1,0 +1,24 @@
+{
+  "home": {
+    "hero": {
+      "title": "Professional services, reimagined",
+      "subtitle": "Modern, interactive, and built around what you need.",
+      "cta": "Get in touch"
+    }
+  },
+  "nav": { "home": "Home", "services": "Services", "contact": "Contact" },
+  "theme": { "toggle": "Toggle theme" },
+  "agent": {
+    "title": "Ask OXOT",
+    "greeting": "Hi — ask me anything about this page.",
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "open": "Chat with us",
+    "consent": {
+      "title": "Can we tailor this chat to your visit?",
+      "body": "We use first-party signals (pages viewed, clicks) only to make the assistant more helpful. Nothing is stored until you agree.",
+      "accept": "Accept",
+      "decline": "No thanks"
+    }
+  }
+}

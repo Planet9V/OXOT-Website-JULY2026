@@ -1,0 +1,5 @@
+# Shared team brain: additive merges so branch/PR memory converges instead of conflicting
+memory/** merge=union
+
+# Normalize line endings
+* text=auto eol=lf

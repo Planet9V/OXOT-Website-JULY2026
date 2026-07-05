@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   GLOBAL STYLESHEET — SINGLE SOURCE OF TRUTH for the OXOT design system.
+   All colors/spacing/radius come from these tokens. Dark + light both defined.
+   Do not hard-code colors in components (see .claude/skills/website-alignment).
+--------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --radius: 0.75rem;
+  }
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --border: 217 33% 20%;
+  }
+  * { border-color: hsl(var(--border)); }
+  body { background: hsl(var(--background)); color: hsl(var(--foreground)); }
+}

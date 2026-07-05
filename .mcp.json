@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp", "--transport", "stdio"]
+    },
+    "valyu": {
+      "command": "npx",
+      "args": ["-y", "@valyu/valyu-mcp"],
+      "env": { "VALYU_API_KEY": "${VALYU_API_KEY}" }
+    }
+  }
+}
