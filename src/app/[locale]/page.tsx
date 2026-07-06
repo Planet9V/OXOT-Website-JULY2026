@@ -7,6 +7,9 @@ import { getHomeContent } from "@/lib/site-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
 
+// Read the CMS content fresh on every request so admin edits appear immediately.
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params
 }: {
