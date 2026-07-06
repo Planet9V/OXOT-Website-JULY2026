@@ -93,6 +93,8 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
         );
       } else if (lang === "carousel") {
         blocks.push(<Carousel key={key++} slides={parseCarousel(content)} />);
+      } else if (lang === "html") {
+        blocks.push(<div key={key++} className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} />);
       } else {
         blocks.push(
           <pre key={key++} className="my-6 overflow-x-auto rounded-lg border border-border bg-muted/40 p-4 text-sm">
