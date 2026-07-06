@@ -22,7 +22,7 @@ function parseInline(text: string, keyBase: string): Inline[] {
     /(!\[([^\]]*)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\))|(\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\))|(\*\*([^*]+)\*\*)|(`([^`]+)`)|(\*([^*]+)\*)/g;
   let last = 0, m: RegExpExecArray | null, i = 0;
   while ((m = pattern.exec(text)) !== null) {
-    if (m.index > last) nodes.push(text.slice(last, m.index));
+    if (m.index > last) nodes.push(<React.Fragment key={`${keyBase}-t${i++}`}>{text.slice(last, m.index)}</React.Fragment>);
     const key = `${keyBase}-i${i++}`;
     if (m[1]) {
       nodes.push(<img key={key} src={m[3]} alt={m[2]} className="my-1 inline-block max-h-6 align-middle" />);
@@ -41,7 +41,7 @@ function parseInline(text: string, keyBase: string): Inline[] {
     }
     last = m.index + m[0].length;
   }
-  if (last < text.length) nodes.push(text.slice(last));
+  if (last < text.length) nodes.push(<React.Fragment key={`${keyBase}-t${i++}`}>{text.slice(last)}</React.Fragment>);
   return nodes;
 }
 
@@ -67,6 +67,13 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
   const lines = source.replace(/\r\n/g, "\n").split("\n");
   const blocks: React.ReactNode[] = [];
   const headings: { id: string; text: string }[] = [];
+  const seenIds = new Map<string, number>();
+  const uniqueId = (text: string) => {
+    const base = slugify(text) || "section";
+    const n = seenIds.get(base) ?? 0;
+    seenIds.set(base, n + 1);
+    return n === 0 ? base : `${base}-${n + 1}`;
+  };
   let i = 0, key = 0;
 
   const isBlockStart = (l: string) =>
@@ -139,7 +146,7 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
     if (h) {
       const level = h[1].length;
       const text = h[2];
-      const id = slugify(text);
+      const id = uniqueId(text);
       if (level === 2) headings.push({ id, text });
       const content = parseInline(text, `h${key}`);
       const cls =

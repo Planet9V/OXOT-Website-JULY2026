@@ -12,6 +12,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  if (!isLocale(locale)) return {};
   const nl = locale === "nl";
   return {
     title: nl ? "Kennisbank | OXOT" : "Insights | OXOT",
