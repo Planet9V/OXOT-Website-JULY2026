@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getPublishedPage } from "@/lib/content";
 import { MarkdownContent } from "@/components/markdown";
+import { alternates, articleJsonLd, jsonLdScript, ogImageUrl, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -20,12 +21,13 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: alternates(locale, `/${slug}`),
     openGraph: {
       title,
       description,
       type: page.contentType === "article" ? "article" : "website",
       locale,
-      images: page.ogImage ? [{ url: page.ogImage }] : undefined
+      images: [{ url: ogImageUrl(page.ogImage) }]
     }
   };
 }
@@ -39,8 +41,20 @@ export default async function CmsPage({
   if (!isLocale(locale)) notFound();
   const page = await getPublishedPage(slug, locale);
   if (!page) notFound();
+  const jsonLd =
+    page.contentType === "article"
+      ? articleJsonLd({
+          title: page.metaTitle ?? page.title,
+          description: page.metaDescription ?? page.excerpt,
+          url: `${SITE_URL}/${locale}/${slug}`,
+          image: page.ogImage
+        })
+      : null;
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
+      {jsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      )}
       <h1 className="mb-6 text-4xl font-bold tracking-tight">{page.title}</h1>
       <article>
         <MarkdownContent source={page.body} />

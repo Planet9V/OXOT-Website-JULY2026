@@ -4,16 +4,27 @@
 # 2) Runs the Next dev server AS THE CONTAINER'S MAIN PROCESS (so it survives and
 #    restarts cleanly), with a background auto-seed watcher that re-imports
 #    content/pages/** whenever a file changes — so content edits publish themselves.
+# 3) Keeps node_modules in a CONTAINER-OWNED named volume, masking the host's
+#    macOS (darwin) node_modules from the Linux container. Without this the bind
+#    mount ".:/workspace" exposes darwin binaries to Linux and `next dev` (PID1)
+#    crashes on boot. PID1 self-installs deps on first run if the volume is empty.
 services:
   app:
     environment:
       - OLLAMA_HOST=http://host.docker.internal:11434
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    volumes:
+      - "oxot_node_modules:/workspace/node_modules"
     command:
       - "sh"
       - "-c"
       - >
+        if [ ! -x node_modules/.bin/next ]; then
+          echo '[boot] installing deps into container node_modules volume…';
+          rm -f package-lock.json;
+          npm install --no-audit --no-fund;
+        fi;
         touch /tmp/seed.stamp;
         ( while true; do
             if find content/pages -type f -newer /tmp/seed.stamp 2>/dev/null | grep -q .; then
@@ -23,3 +34,6 @@ services:
             sleep 5;
           done & );
         exec npm run dev
+
+volumes:
+  oxot_node_modules: {}

@@ -35,5 +35,23 @@
       "accept": "Accept",
       "decline": "No thanks"
     }
+  },
+  "contact": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Work email",
+    "emailPlaceholder": "you@company.com",
+    "companyLabel": "Organization",
+    "companyPlaceholder": "Company (optional)",
+    "messageLabel": "How can we help?",
+    "messagePlaceholder": "Tell us about your OT environment, sites, and what you're trying to achieve.",
+    "submit": "Send message",
+    "submitting": "Sending…",
+    "success": "Thanks — your message reached us. An OXOT expert will be in touch shortly.",
+    "errorGeneric": "Something went wrong. Please try again, or email us directly.",
+    "errorRate": "Too many messages from this connection. Please wait a few minutes and try again.",
+    "errName": "Please enter your name.",
+    "errEmail": "Please enter a valid email address.",
+    "errMessage": "Please add a few sentences so we can help."
   }
 }

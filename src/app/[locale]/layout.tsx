@@ -25,7 +25,7 @@ export default async function LocaleLayout({
     <div lang={locale}>
       <SiteNav locale={locale} />
       {children}
-      <ChatWidget locale={locale} pageId="home" strings={t.agent} />
+      <ChatWidget locale={locale} strings={t.agent} />
     </div>
   );
 }

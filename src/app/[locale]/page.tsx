@@ -1,9 +1,26 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { HeroVisual } from "@/components/hero-visual";
+import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  const t = getDictionary(locale);
+  return {
+    title: t.home.hero.title,
+    description: t.home.hero.subtitle,
+    alternates: alternates(locale, "")
+  };
+}
 
 export default async function Home({
   params
@@ -21,6 +38,10 @@ export default async function Home({
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd()) }}
+      />
       <div className="mb-6 flex justify-end">
         <ThemeToggle label={t.theme.toggle} />
       </div>

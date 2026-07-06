@@ -95,7 +95,7 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
       const content = buf.join("\n");
       if (lang === "svg") {
         blocks.push(
-          <figure key={key++} className="my-8 overflow-x-auto rounded-xl border border-border bg-muted/20 p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full"
+          <figure key={key++} className="oxot-diagram my-8 overflow-x-auto rounded-xl p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full"
                    dangerouslySetInnerHTML={{ __html: content }} />
         );
       } else if (lang === "carousel") {

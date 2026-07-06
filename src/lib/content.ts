@@ -44,6 +44,20 @@ export async function getMenu(key: string, locale: Locale): Promise<MenuItem[]> 
   return rows;
 }
 
+// All published slugs per locale, with type + last-modified — used by the sitemap.
+export interface PublishedRef { slug: string; locale: string; contentType: string; updatedAt: Date | null }
+export async function listPublishedRefs(): Promise<PublishedRef[]> {
+  const { rows } = await pool.query(
+    `SELECT slug, locale,
+            content_type AS "contentType",
+            COALESCE(published_at, updated_at) AS "updatedAt"
+       FROM pages
+      WHERE published=true
+      ORDER BY slug, locale`
+  );
+  return rows;
+}
+
 // Published articles (content_type='article'), newest first — used by the blog index.
 export async function listArticles(locale: Locale): Promise<ArticleSummary[]> {
   const { rows } = await pool.query(

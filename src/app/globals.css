@@ -46,4 +46,17 @@
   .oxot-kicker {
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary;
   }
+
+  /* Diagram panel — the inline ```svg figures draw light strokes/text
+     (#e5e7eb, #cbd5e1, orange). They must sit on a FIXED navy panel in BOTH
+     themes, or they vanish on the light "paper" background. Colour lives here,
+     in the single source of truth, not hard-coded in the renderer. */
+  .oxot-diagram {
+    background-color: #102030;   /* OXOT navy */
+    border: 1px solid #2a3b52;
+    color: #e5e7eb;
+  }
+  .oxot-diagram :is(figcaption) {
+    color: #94a3b8;
+  }
 }
