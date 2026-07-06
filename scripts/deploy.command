@@ -38,8 +38,14 @@ for i in $(seq 1 30); do
   sleep 2; [ "$i" = 30 ] && die "db never ready"
 done
 
-step "Install deps in app container (clean)"
-docker compose exec -T app sh -lc "rm -rf node_modules package-lock.json && npm install --no-audit --no-fund" 2>&1 | tail -3 || die "npm install failed"
+step "Wait for the app to install deps + start (PID1 self-installs on first boot; can take 1-2 min)"
+UP=0
+for i in $(seq 1 90); do
+  if curl -fsS -o /dev/null "$BASE/en" 2>/dev/null; then pass "site up"; UP=1; break; fi
+  sleep 3
+  if [ $((i % 10)) -eq 0 ]; then echo "   …still starting (${i}0s) — deps: $(docker compose exec -T app sh -lc '[ -x node_modules/.bin/next ] && echo installed || echo installing' 2>/dev/null)"; fi
+done
+[ "$UP" = 1 ] || echo "  ⚠ site not responding yet — continuing; check: docker compose logs -f app"
 
 step "Migrate schema (incl 006_contact)"
 docker compose exec -T app npm run db:migrate 2>&1 | tail -4 || die "migrate failed"
@@ -50,9 +56,6 @@ docker compose exec -T app npm run ingest 2>&1 | tail -3 || echo "  ⚠ ingest f
 
 step "Run unit tests in container"
 docker compose exec -T app npm test 2>&1 | tail -8 || echo "  ⚠ tests reported failures (see above)"
-
-step "Wait for the site"
-for _ in $(seq 1 40); do curl -fsS -o /dev/null "$BASE/en" 2>/dev/null && { pass "site up"; break; }; sleep 2; done
 
 step "Admin"
 if [ -n "${OXOT_ADMIN_EMAIL:-}" ] && [ -n "${OXOT_ADMIN_PW:-}" ]; then
