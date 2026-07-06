@@ -14,7 +14,8 @@ Read this first when you open the repo in Claude Code. It's the runbook to go fr
 ```bash
 cd OXOT_Website_JULY2026
 claude                     # trust the folder → prompts to install Superpowers
-/reload-plugins            # activates superpowers:* skills (incl. using-superpowers)
+# If Superpowers was just installed, quit and relaunch `claude` — plugin changes apply on
+# restart (there is NO /reload-plugins). Verify with: claude plugin list  (should show "enabled").
 
 # 1. secrets (never commit .env.local)
 cp .env.example .env.local
@@ -48,7 +49,7 @@ bash scripts/init-repo.sh
 ## Rollback / recovery
 - App issues: `docker compose down` (keeps volumes) → fix → `up`. Full reset: `docker compose down -v` (drops `pgdata`, `ollama`, `oxot_memory` — you re-migrate/ingest).
 - Bad migration: migrations are idempotent (`IF NOT EXISTS`); write a new `00X_*.sql` to change schema, never edit an applied one.
-- Superpowers skills missing: `rm -rf ~/.claude/plugins/cache`, restart, `claude plugin install superpowers@superpowers-marketplace`, `/reload-plugins`.
+- Superpowers skills missing: run `claude plugin install superpowers@superpowers-marketplace`, then quit and relaunch `claude` (restart applies plugin changes — there is no `/reload-plugins`). If still missing, `rm -rf ~/.claude/plugins/cache` and reinstall.
 
 ## What's left to build (suggested order, via superpowers:writing-plans → TDD)
 1. **Tests** — the scaffold has none yet; DoD requires TDD. Start with `lib/` (retrieval, auth, llm fallback) and API routes.
