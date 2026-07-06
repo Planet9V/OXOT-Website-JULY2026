@@ -82,9 +82,10 @@ SID=$(curl -fsS -X POST "$BASE/api/session" -H 'content-type: application/json' 
 if [ -n "$SID" ]; then
   pass "session $SID"
   echo "   Q: What are the NIS2 reporting deadlines?"
-  echo "   A: ---------------------------------------"
-  curl -fsS -X POST "$BASE/api/agent" -H 'content-type: application/json' \
-    -d "{\"sessionId\":\"$SID\",\"message\":\"What are the NIS2 reporting deadlines?\",\"locale\":\"en\",\"pageId\":\"nis2\"}" 2>/dev/null | sed 's/^/      /'
+  echo "   A: --------------------------------------- (up to 120s: Ollama first-load or grok fallback)"
+  curl -sS --max-time 120 -X POST "$BASE/api/agent" -H 'content-type: application/json' \
+    -d "{\"sessionId\":\"$SID\",\"message\":\"What are the NIS2 reporting deadlines?\",\"locale\":\"en\",\"pageId\":\"nis2\"}" 2>/dev/null | sed 's/^/      /' \
+    || echo "      ⚠ agent call timed out at 90s (check: docker compose logs app | tail)"
   echo ""; echo "   ----------------------------------------"
 else fail "no session (check DB/app logs)"; fi
 
