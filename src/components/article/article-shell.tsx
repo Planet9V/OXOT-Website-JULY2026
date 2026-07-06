@@ -25,13 +25,23 @@ function useScrollSpy(ids: string[]) {
   return active;
 }
 
+const RELATED: { slug: string; label: string; note: Record<"en" | "nl", string> }[] = [
+  { slug: "cra", label: "Cyber Resilience Act", note: { en: "Security as a condition of market access for products", nl: "Beveiliging als voorwaarde voor markttoegang van producten" } },
+  { slug: "nis2", label: "NIS2 Directive", note: { en: "Risk-management & reporting duties for operators", nl: "Risicobeheer- en meldplicht voor operators" } },
+  { slug: "iec-62443", label: "IEC 62443", note: { en: "The engineering backbone for OT security", nl: "De engineering-ruggengraat voor OT-beveiliging" } },
+  { slug: "ai-act", label: "AI Act", note: { en: "AI in safety-related and industrial contexts", nl: "AI in veiligheidsgerelateerde en industriële context" } },
+  { slug: "machine-act", label: "Machinery Regulation", note: { en: "Cybersecurity inside the machine safety case", nl: "Cybersecurity binnen de machineveiligheidscase" } },
+  { slug: "ts-50701", label: "TS 50701", note: { en: "IEC 62443 adapted to railway systems", nl: "IEC 62443 toegepast op spoorwegsystemen" } }
+];
+
 export function ArticleShell({
-  kicker, title, dek, readingMin, updated, sources, toc, ctaLabel, ctaHref, children
+  kicker, title, dek, readingMin, updated, sources, toc, ctaLabel, ctaHref, slug, locale, children
 }: {
   kicker: string; title: string; dek?: string | null;
   readingMin: number; updated?: string | null; sources: number;
-  toc: Toc; ctaLabel: string; ctaHref: string; children: React.ReactNode;
+  toc: Toc; ctaLabel: string; ctaHref: string; slug: string; locale: string; children: React.ReactNode;
 }) {
+  const related = RELATED.filter((r) => r.slug !== slug).slice(0, 5);
   const ids = React.useMemo(() => toc.map((t) => t.id), [toc]);
   const active = useScrollSpy(ids);
   const reduce = useReducedMotion();
@@ -84,7 +94,26 @@ export function ArticleShell({
         <article className="article-prose min-w-0 max-w-3xl">
           {children}
 
-          <div className="mt-14 rounded-2xl border border-border bg-card p-8">
+          {/* Related regulations — internal cross-links (navigation + SEO) */}
+          {related.length > 0 && (
+            <section className="mt-14">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{locale === "nl" ? "Gerelateerde kaders" : "Related frameworks"}</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {related.map((r) => (
+                  <Link key={r.slug} href={`/${locale}/${r.slug}`}
+                    className="group flex items-start justify-between gap-3 rounded-xl border border-border p-4 transition-colors hover:border-primary hover:bg-accent">
+                    <span>
+                      <span className="block text-sm font-semibold group-hover:text-primary">{r.label}</span>
+                      <span className="mt-0.5 block text-xs text-muted-foreground">{r.note[locale as "en" | "nl"] ?? r.note.en}</span>
+                    </span>
+                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <div className="mt-10 rounded-2xl border border-border bg-card p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">OXOT</p>
             <h3 className="mt-2 text-2xl font-semibold tracking-tight" style={{ fontFamily: "var(--font-display)" }}>Talk to an expert about {kicker.toLowerCase().includes("regulation") || kicker.toLowerCase().includes("directive") || kicker.toLowerCase().includes("standard") ? "this" : "your"} compliance</h3>
             <p className="mt-2 max-w-xl text-muted-foreground">{ctaLabel}</p>

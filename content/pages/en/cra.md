@@ -11,6 +11,18 @@ The Cyber Resilience Act is the European Union's answer to a simple, uncomfortab
 
 If [NIS2](/en/nis2) is a law for the *operators* who run systems, the CRA is the law for the *makers* of the products those systems are built from. Industrial organisations tend to meet it from both sides at once: as a buyer who can finally demand security as a right, and — if you build, integrate or substantially modify products — as a manufacturer who now carries obligations backed by turnover-linked fines.
 
+```keyfacts
+Instrument :: Regulation (EU) 2024/2847 — directly applicable
+Entered into force :: 10 December 2024
+Reporting obligations :: from 11 September 2026
+Main obligations :: from 11 December 2027
+Support period :: as a rule ≥ 5 years
+Early-warning clock :: 24 hours to ENISA + CSIRT
+Conformity :: Annex I + CE marking
+Max penalty :: €15M or 2.5% of global turnover
+Aligns with :: [IEC 62443](/en/iec-62443)
+```
+
 ## The short version
 
 - The CRA is **Regulation (EU) 2024/2847**, a directly applicable Regulation — not a Directive — so it takes effect identically across all 27 Member States with no national transposition step. ([EUR-Lex, official text](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))

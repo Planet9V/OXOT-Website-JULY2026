@@ -120,6 +120,38 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
         );
       } else if (lang === "carousel") {
         blocks.push(<Carousel key={key++} slides={parseCarousel(content)} />);
+      } else if (lang === "keyfacts") {
+        // ```keyfacts  →  scannable fact grid. Lines: "Label :: Value".
+        const facts = content.split("\n").map((l) => l.split("::")).filter((p) => p.length >= 2)
+          .map((p) => ({ k: p[0].trim(), v: p.slice(1).join("::").trim() }));
+        blocks.push(
+          <div key={key++} className="my-8 rounded-2xl border border-primary/25 bg-primary/5 p-5">
+            <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">At a glance</div>
+            <dl className="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+              {facts.map((f, k2) => (
+                <div key={k2} className="border-l-2 border-primary/40 pl-3">
+                  <dt className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{f.k}</dt>
+                  <dd className="mt-0.5 text-sm font-semibold text-foreground">{parseInline(f.v, `kf${key}-${k2}`)}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        );
+      } else if (lang === "timeline") {
+        // ```timeline  →  vertical dated milestones. Lines: "Date :: Event".
+        const items = content.split("\n").map((l) => l.split("::")).filter((p) => p.length >= 2)
+          .map((p) => ({ d: p[0].trim(), e: p.slice(1).join("::").trim() }));
+        blocks.push(
+          <ol key={key++} className="my-8 space-y-0 border-l border-border pl-6">
+            {items.map((it, k2) => (
+              <li key={k2} className="relative pb-6 last:pb-0">
+                <span className="absolute -left-[27px] top-1 h-3 w-3 rounded-full border-2 border-primary bg-background" />
+                <div className="font-mono text-xs font-semibold uppercase tracking-wide text-primary">{it.d}</div>
+                <div className="mt-1 text-sm text-muted-foreground">{parseInline(it.e, `tl${key}-${k2}`)}</div>
+              </li>
+            ))}
+          </ol>
+        );
       } else if (lang === "html") {
         blocks.push(<div key={key++} className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} />);
       } else {

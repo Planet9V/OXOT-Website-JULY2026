@@ -11,6 +11,18 @@ De Cyber Resilience Act is het antwoord van de Europese Unie op een eenvoudig ma
 
 Als [NIS2](/nl/nis2) een wet is voor de *operatoren* die systemen draaien, is de CRA de wet voor de *makers* van de producten waaruit die systemen zijn opgebouwd. Industriële organisaties krijgen er doorgaans van twee kanten mee te maken: als afnemer die eindelijk beveiliging als recht kan eisen, en — als u producten bouwt, integreert of substantieel wijzigt — als fabrikant die nu verplichtingen draagt die worden ondersteund door aan de omzet gekoppelde boetes.
 
+```keyfacts
+Instrument :: Verordening (EU) 2024/2847 — rechtstreeks toepasselijk
+In werking getreden :: 10 december 2024
+Meldverplichtingen :: vanaf 11 september 2026
+Hoofdverplichtingen :: vanaf 11 december 2027
+Ondersteuningsperiode :: in de regel ≥ 5 jaar
+Vroegwaarschuwing :: 24 uur naar ENISA + CSIRT
+Conformiteit :: Bijlage I + CE-markering
+Max. boete :: €15M of 2,5% van wereldwijde omzet
+Sluit aan op :: [IEC 62443](/nl/iec-62443)
+```
+
 ## De korte versie
 
 - De CRA is **Verordening (EU) 2024/2847**, een rechtstreeks toepasselijke verordening — geen richtlijn — en werkt daardoor identiek in alle 27 lidstaten, zonder nationale omzettingsstap. ([EUR-Lex, officiële tekst](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))

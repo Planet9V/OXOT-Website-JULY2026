@@ -87,6 +87,8 @@ export default async function CmsPage({
         toc={toc}
         ctaLabel={ctaLabel}
         ctaHref={`/${locale}/contact`}
+        slug={slug}
+        locale={locale}
       >
         <MarkdownContent source={page.body} toc={false} />
       </ArticleShell>
