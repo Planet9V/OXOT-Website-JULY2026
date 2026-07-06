@@ -1,9 +1,25 @@
 # LOCAL DEV OVERRIDE — auto-loaded by `docker compose`.
-# Wires the app to the Ollama already running on the Mac (with models pulled),
-# instead of the empty in-compose ollama container. No 7GB re-download.
+# 1) Wires the app to the Ollama already running on the Mac (with models pulled),
+#    instead of the empty in-compose ollama container. No 7GB re-download.
+# 2) Runs the Next dev server AS THE CONTAINER'S MAIN PROCESS (so it survives and
+#    restarts cleanly), with a background auto-seed watcher that re-imports
+#    content/pages/** whenever a file changes — so content edits publish themselves.
 services:
   app:
     environment:
       - OLLAMA_HOST=http://host.docker.internal:11434
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    command:
+      - "sh"
+      - "-c"
+      - >
+        touch /tmp/seed.stamp;
+        ( while true; do
+            if find content/pages -type f -newer /tmp/seed.stamp 2>/dev/null | grep -q .; then
+              npm run seed:pages > /tmp/seed-watch.log 2>&1;
+              touch /tmp/seed.stamp;
+            fi;
+            sleep 5;
+          done & );
+        exec npm run dev

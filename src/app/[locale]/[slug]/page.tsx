@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getPublishedPage } from "@/lib/content";
+import { MarkdownContent } from "@/components/markdown";
 
 export const dynamic = "force-dynamic";
 
@@ -40,9 +41,9 @@ export default async function CmsPage({
   if (!page) notFound();
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="mb-4 text-3xl font-bold tracking-tight">{page.title}</h1>
-      <article className="whitespace-pre-wrap leading-relaxed text-foreground">
-        {page.body}
+      <h1 className="mb-6 text-4xl font-bold tracking-tight">{page.title}</h1>
+      <article>
+        <MarkdownContent source={page.body} />
       </article>
     </main>
   );
