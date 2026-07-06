@@ -35,5 +35,23 @@
       "accept": "Accepteren",
       "decline": "Nee bedankt"
     }
+  },
+  "contact": {
+    "nameLabel": "Naam",
+    "namePlaceholder": "Uw naam",
+    "emailLabel": "Zakelijk e-mailadres",
+    "emailPlaceholder": "u@bedrijf.nl",
+    "companyLabel": "Organisatie",
+    "companyPlaceholder": "Bedrijf (optioneel)",
+    "messageLabel": "Hoe kunnen we helpen?",
+    "messagePlaceholder": "Vertel ons over uw OT-omgeving, locaties en wat u wilt bereiken.",
+    "submit": "Bericht versturen",
+    "submitting": "Versturen…",
+    "success": "Bedankt — uw bericht is bij ons aangekomen. Een OXOT-expert neemt spoedig contact met u op.",
+    "errorGeneric": "Er ging iets mis. Probeer het opnieuw of mail ons rechtstreeks.",
+    "errorRate": "Te veel berichten vanaf deze verbinding. Wacht enkele minuten en probeer het opnieuw.",
+    "errName": "Voer uw naam in.",
+    "errEmail": "Voer een geldig e-mailadres in.",
+    "errMessage": "Voeg enkele zinnen toe zodat we u kunnen helpen."
   }
 }

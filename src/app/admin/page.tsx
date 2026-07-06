@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getAdminSession } from "@/lib/auth";
 import { PagesManager } from "@/components/admin/pages-manager";
 import { MenuManager } from "@/components/admin/menu-manager";
+import { ContactInbox } from "@/components/admin/contact-inbox";
 
 export default async function AdminDashboard() {
   const session = await getAdminSession();
@@ -14,6 +15,7 @@ export default async function AdminDashboard() {
       </header>
       <PagesManager />
       <div className="mt-10"><MenuManager /></div>
+      <div className="mt-10"><ContactInbox /></div>
     </main>
   );
 }

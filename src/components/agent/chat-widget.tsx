@@ -1,7 +1,16 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import type { Locale } from "@/i18n/config";
 import { Button } from "@/components/ui/button";
+
+// Derive the current page id from the pathname so the agent's page-boost and
+// click/page beacons reflect the page the visitor is actually on (not "home").
+// "/en" or "/nl" -> "home"; "/en/nis2" -> "nis2"; "/en/blog/x" -> "blog/x".
+function pageIdFromPath(pathname: string): string {
+  const parts = pathname.split("/").filter(Boolean);
+  return parts.length <= 1 ? "home" : parts.slice(1).join("/");
+}
 
 type Msg = { role: "user" | "assistant"; text: string };
 
@@ -16,13 +25,13 @@ export interface AgentStrings {
 
 export function ChatWidget({
   locale,
-  pageId,
   strings
 }: {
   locale: Locale;
-  pageId: string;
   strings: AgentStrings;
 }) {
+  const pathname = usePathname();
+  const pageId = useMemo(() => pageIdFromPath(pathname), [pathname]);
   const [open, setOpen] = useState(false);
   const [consent, setConsent] = useState<boolean | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
