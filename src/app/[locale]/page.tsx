@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getHomeContent } from "@/lib/site-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
 
@@ -13,10 +14,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale);
+  const { hero } = await getHomeContent(locale);
   return {
-    title: t.home.hero.title,
-    description: t.home.hero.subtitle,
+    title: hero.title,
+    description: hero.subtitle,
     alternates: alternates(locale, "")
   };
 }
@@ -29,8 +30,7 @@ export default async function Home({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
-  const hero = t.home.hero;
-  const services = t.home.services;
+  const { hero, services } = await getHomeContent(locale);
 
   return (
     <main className="editorial">

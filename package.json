@@ -13,6 +13,7 @@
     "i18n:check": "node scripts/i18n-check.mjs",
     "db:migrate": "node scripts/migrate.mjs",
     "seed:pages": "node scripts/seed-pages.mjs",
+    "seed:site": "node scripts/seed-site-blocks.mjs",
     "ingest": "node scripts/ingest.mjs",
     "claude:bootstrap": "bash scripts/bootstrap-claude.sh"
   },
