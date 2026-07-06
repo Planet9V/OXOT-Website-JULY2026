@@ -40,3 +40,4 @@ content-source/
 # Large media (served locally; host video via CDN for production)
 public/media/*.mp4
 .tmp-translate/
+.tmp_*

@@ -4,29 +4,46 @@
 
 /* ---------------------------------------------------------------------------
    GLOBAL STYLESHEET — SINGLE SOURCE OF TRUTH for the OXOT design system.
+   Palette from the OXOT brand: deep navy #102030, OXOT orange #F07000 accent,
+   steel-blue structure, editorial serif headlines over humanist sans body.
    All colors/spacing/radius come from these tokens. Dark + light both defined.
    Do not hard-code colors in components (see .claude/skills/website-alignment).
 --------------------------------------------------------------------------- */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
+    --background: 60 33% 98%;          /* paper */
+    --foreground: 212 51% 11%;         /* ink */
+    --primary: 28 100% 47%;            /* OXOT orange #F07000 */
     --primary-foreground: 0 0% 100%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --border: 214 32% 91%;
+    --muted: 210 30% 94%;
+    --muted-foreground: 212 20% 38%;
+    --border: 214 25% 88%;
     --radius: 0.75rem;
+    --font-display: "Fraunces", "Newsreader", Georgia, "Palatino Linotype", "Iowan Old Style", serif;
   }
   .dark {
-    --background: 222 47% 8%;
-    --foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 11%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --border: 217 33% 20%;
+    --background: 210 50% 12%;          /* OXOT navy #102030 */
+    --foreground: 220 20% 92%;          /* off-white */
+    --primary: 28 100% 53%;            /* orange, brighter on navy */
+    --primary-foreground: 210 50% 10%;
+    --muted: 210 34% 18%;
+    --muted-foreground: 214 18% 68%;
+    --border: 210 30% 24%;
   }
   * { border-color: hsl(var(--border)); }
-  body { background: hsl(var(--background)); color: hsl(var(--foreground)); }
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Editorial serif headlines — the OXOT voice, in type. */
+  h1, h2, h3 { font-family: var(--font-display); font-feature-settings: "liga" 1, "kern" 1; }
+}
+
+@layer components {
+  /* Signature uppercase, letter-spaced orange kicker label. */
+  .oxot-kicker {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary;
+  }
 }
