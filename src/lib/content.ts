@@ -11,6 +11,7 @@ export interface Page {
   excerpt: string | null;
   ogImage: string | null;
   contentType: string;
+  publishedAt: Date | null;
 }
 export interface MenuItem { label: string; href: string; }
 export interface ArticleSummary { slug: string; title: string; excerpt: string | null }
@@ -25,7 +26,8 @@ export async function getPublishedPage(
             meta_description AS "metaDescription",
             excerpt,
             og_image         AS "ogImage",
-            content_type     AS "contentType"
+            content_type     AS "contentType",
+            published_at     AS "publishedAt"
        FROM pages
       WHERE slug=$1 AND locale=$2 AND published=true LIMIT 1`,
     [slug, locale]

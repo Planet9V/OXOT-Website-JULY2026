@@ -224,3 +224,36 @@
   float: left; height: 0; pointer-events: none;
 }
 .oxot-editor .ProseMirror-selectednode { outline: 2px solid hsl(var(--ring)); }
+
+/* ============================================================================
+   Magazine article prose — the framework / regulation pages. Layers on top of
+   the Markdown renderer's element classes to create editorial hierarchy.
+============================================================================ */
+.article-prose { counter-reset: h2sec; font-size: 1.0625rem; }
+.article-prose p { color: hsl(var(--foreground) / 0.86); line-height: 1.78; }
+/* Drop cap on the opening paragraph. */
+.article-prose > p:first-of-type::first-letter {
+  float: left; font-family: var(--font-display); font-weight: 600;
+  font-size: 3.4rem; line-height: 0.78; padding: 0.28rem 0.6rem 0 0; color: hsl(var(--primary));
+}
+/* Numbered section headings. */
+.article-prose h2 {
+  counter-increment: h2sec; position: relative; border-bottom: none !important;
+  margin-top: 3rem; padding-bottom: 0; font-size: 1.7rem; line-height: 1.2;
+  display: flex; align-items: baseline; gap: 0.7rem;
+}
+.article-prose h2::before {
+  content: counter(h2sec, decimal-leading-zero);
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; font-weight: 700;
+  color: hsl(var(--primary)); letter-spacing: 0.05em; transform: translateY(-0.35em);
+}
+.article-prose h2::after {
+  content: ""; position: absolute; left: 0; bottom: -0.7rem; height: 2px; width: 44px;
+  background: hsl(var(--primary));
+}
+.article-prose h3 { margin-top: 1.9rem; font-size: 1.22rem; }
+.article-prose a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 2px; }
+.article-prose blockquote { font-size: 1.15rem; font-style: italic; }
+.article-prose img { border-radius: 12px; }
+/* Callouts (rendered as <aside>) get a touch more presence. */
+.article-prose aside { box-shadow: 0 1px 0 hsl(var(--border)); }

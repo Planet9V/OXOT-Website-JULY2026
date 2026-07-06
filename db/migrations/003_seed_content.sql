@@ -222,8 +222,8 @@ Een contactformulier en volledige contactgegevens volgen binnenkort. Neem in de 
 
 OXOT — Nederlandse OT-cybersecurity, met focus op EU-soevereiniteit.$body$, true)
 
-ON CONFLICT (slug, locale) DO UPDATE
-  SET title = EXCLUDED.title,
-      body = EXCLUDED.body,
-      published = true,
-      updated_at = now();
+-- DO NOTHING (was DO UPDATE): these are first-run PLACEHOLDER bodies. Re-running
+-- migrate must never overwrite the full content that scripts/seed-pages.mjs
+-- (npm run seed:pages) imports from content/pages/**. Clobbering here was the
+-- cause of framework pages reverting to "Content coming soon" stubs.
+ON CONFLICT (slug, locale) DO NOTHING;

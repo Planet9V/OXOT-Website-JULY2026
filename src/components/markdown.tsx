@@ -16,6 +16,26 @@ function slugify(s: string): string {
   return s.toLowerCase().replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-").slice(0, 80);
 }
 
+/** Extract the H2 table of contents with the SAME de-duplicated ids the renderer
+ *  assigns, so a sidebar TOC's anchors match the rendered headings. */
+export function extractToc(source: string): { id: string; text: string }[] {
+  const seen = new Map<string, number>();
+  const out: { id: string; text: string }[] = [];
+  let inFence = false;
+  for (const raw of source.replace(/\r\n/g, "\n").split("\n")) {
+    if (/^\s*```/.test(raw)) { inFence = !inFence; continue; }
+    if (inFence) continue;
+    const h = /^(#{1,4})\s+(.*)$/.exec(raw);
+    if (!h) continue;
+    const base = slugify(h[2]) || "section";
+    const n = seen.get(base) ?? 0;
+    seen.set(base, n + 1);
+    const id = n === 0 ? base : `${base}-${n + 1}`;
+    if (h[1].length === 2) out.push({ id, text: h[2].replace(/\*\*|\*|`/g, "") });
+  }
+  return out;
+}
+
 function parseInline(text: string, keyBase: string): Inline[] {
   const nodes: Inline[] = [];
   const pattern =
