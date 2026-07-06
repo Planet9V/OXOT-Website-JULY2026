@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OXOT · LinkedIn Carousel Builder</title>
+<style>
+  :root{
+    --navy:#102030; --navy2:#16273b; --orange:#F07000; --steel:#4a6076;
+    --off:#E5E7EB; --muted:#8aa0b6; --paper:#f7f7f0;
+    --serif:"Fraunces","Newsreader",Georgia,"Palatino Linotype",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --slideW:1080px; --slideH:1350px; /* 4:5 LinkedIn document */
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);background:#0b141f;color:var(--off)}
+  header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid #22344a;position:sticky;top:0;background:#0b141f;z-index:5}
+  header .rule{width:4px;height:26px;background:var(--orange);border-radius:2px}
+  header b{font-family:var(--serif);font-size:18px}
+  header .kick{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);font-weight:700}
+  .wrap{display:grid;grid-template-columns:380px 1fr;gap:0;height:calc(100vh - 56px)}
+  .panel{padding:18px;border-right:1px solid #22344a;overflow:auto}
+  .panel h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+  textarea{width:100%;height:46vh;background:#0f1c2b;color:var(--off);border:1px solid #26384f;border-radius:10px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.5;resize:vertical}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  select,input{width:100%;background:#0f1c2b;color:var(--off);border:1px solid #26384f;border-radius:8px;padding:8px}
+  .row{display:flex;gap:10px}
+  button{margin-top:14px;width:100%;background:var(--orange);color:#111;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:14px;cursor:pointer}
+  button.ghost{background:transparent;color:var(--off);border:1px solid #334b66}
+  .hint{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:8px}
+  .stage{overflow:auto;padding:26px;display:flex;flex-wrap:wrap;gap:20px;align-content:flex-start;background:#0b141f}
+  /* Slide */
+  .slide{width:var(--slideW);height:var(--slideH);background:var(--navy);color:var(--off);position:relative;
+    transform-origin:top left;flex:0 0 auto;overflow:hidden;border-radius:6px}
+  .slide .bar{position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--orange)}
+  .slide .pad{position:absolute;inset:0;padding:96px 96px 96px 120px;display:flex;flex-direction:column}
+  .slide .kick{font-size:26px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:700}
+  .slide h3{font-family:var(--serif);font-size:76px;line-height:1.05;margin:24px 0 0;font-weight:700}
+  .slide p{font-size:36px;line-height:1.4;color:#cdd8e4;margin-top:28px}
+  .slide .big{font-family:var(--serif);font-size:150px;line-height:1;color:var(--orange);margin-top:10px}
+  .slide ul{margin-top:26px;padding-left:0;list-style:none}
+  .slide li{font-size:34px;line-height:1.45;color:#cdd8e4;padding-left:44px;position:relative;margin-bottom:16px}
+  .slide li::before{content:"";position:absolute;left:0;top:16px;width:22px;height:4px;background:var(--orange);border-radius:2px}
+  .slide .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-size:24px;color:var(--muted);border-top:1px solid #2a3f57;padding-top:22px}
+  .slide .foot b{color:var(--orange);font-weight:700}
+  .slide .num{position:absolute;right:64px;top:70px;font-size:26px;color:#5f7690}
+  .cover{background:linear-gradient(135deg,#132a40,#0d1a29)}
+  @media print{
+    header,.panel,.hint{display:none!important}
+    body{background:#fff}
+    .wrap{display:block;height:auto}
+    .stage{padding:0;gap:0;display:block;background:#fff}
+    .slide{transform:none!important;border-radius:0;page-break-after:always;margin:0}
+    @page{size:1080px 1350px;margin:0}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="rule"></div>
+  <b>OXOT</b><span class="kick">Carousel Builder</span>
+  <div style="margin-left:auto;font-size:12px;color:var(--muted)">LinkedIn document · 1080×1350 (4:5)</div>
+</header>
+<div class="wrap">
+  <div class="panel">
+    <h2>Slides</h2>
+    <div class="hint">One slide per block, separated by a line with only <code>---</code>. First line = title.
+      Prefixes on a line: <code>#</code> kicker · <code>!</code> giant stat · <code>-</code> bullet · <code>@</code> footer.
+      Leave a blank first line + <code>#COVER</code> to style a cover slide.</div>
+    <textarea id="src"></textarea>
+    <div class="row">
+      <div style="flex:1"><label>Format</label>
+        <select id="fmt">
+          <option value="1080x1350">4:5 portrait (1080×1350)</option>
+          <option value="1080x1080">1:1 square (1080×1080)</option>
+        </select>
+      </div>
+      <div style="flex:1"><label>Handle (footer)</label><input id="handle" value="oxot.nl" /></div>
+    </div>
+    <button onclick="render()">Update preview</button>
+    <button class="ghost" onclick="window.print()">Export PDF (Print → Save as PDF)</button>
+    <div class="hint">To post: Export → “Save as PDF”, then upload the PDF to LinkedIn as a <b>document</b> post. Keep to 6–10 slides.</div>
+  </div>
+  <div class="stage" id="stage"></div>
+</div>
+<script>
+const DEFAULT=`#COVER
+NIS2 is not an IT problem
+#The plant floor is in scope now
+@OXOT · NIS2 for OT
+---
+#THE MISCONCEPTION
+"It's the IT team's compliance project."
+It reaches directly into the OT that keeps production running and people safe.
+---
+#THE NUMBER
+!24h
+Early warning for a significant incident. Then 72 hours. Then a final report in one month. The clock starts when you become aware.
+---
+#TEN MEASURES
+Article 21 is the core
+- Risk analysis & asset inventory
+- Incident handling that fits OT
+- Business continuity & recovery
+- Supply-chain security
+- MFA on remote & privileged access
+---
+#ACCOUNTABILITY
+Management is on the hook
+Under Article 20, the board approves the measures, oversees them, and can be held liable. Security follows accountability.
+---
+#THE PENALTY
+!€10M
+or 2% of global turnover for essential entities. Non-compliance is a board-level financial risk, not a rounding error.
+---
+#WHERE TO START
+You can't manage what you can't see
+Most operators can't produce a current, structured view of their OT estate. That inventory is the foundation everything else rests on.
+@OXOT turns fragmented findings into clear decisions
+---
+#COVER
+Talk to an OT security expert
+#oxot.nl
+@Risk-based OT cybersecurity · EU`;
+
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function slideHTML(block,idx,total){
+  const lines=block.split("\n").filter(l=>l.trim().length||true);
+  let kicker="",title="",big="",footer="",cover=false;const body=[];const bullets=[];
+  for(const raw of lines){
+    const l=raw.trim(); if(!l)continue;
+    if(l==="#COVER"){cover=true;continue;}
+    if(l.startsWith("#")){ if(!kicker)kicker=l.slice(1).trim(); else if(!title)title=l.slice(1).trim(); }
+    else if(l.startsWith("!")){big=l.slice(1).trim();}
+    else if(l.startsWith("-")){bullets.push(l.slice(1).trim());}
+    else if(l.startsWith("@")){footer=l.slice(1).trim();}
+    else if(!title){title=l;}
+    else {body.push(l);}
+  }
+  const handle=document.getElementById("handle").value||"oxot.nl";
+  let inner=`<div class="bar"></div><div class="num">${idx+1}/${total}</div><div class="pad">`;
+  if(kicker)inner+=`<div class="kick">${esc(kicker)}</div>`;
+  if(title)inner+=`<h3>${esc(title)}</h3>`;
+  if(big)inner+=`<div class="big">${esc(big)}</div>`;
+  body.forEach(p=>inner+=`<p>${esc(p)}</p>`);
+  if(bullets.length){inner+="<ul>"+bullets.map(b=>`<li>${esc(b)}</li>`).join("")+"</ul>";}
+  inner+=`<div class="foot"><span>${esc(footer||"")}</span><b>${esc(handle)}</b></div></div>`;
+  return `<div class="slide ${cover?'cover':''}">${inner}</div>`;
+}
+function render(){
+  const fmt=document.getElementById("fmt").value.split("x");
+  document.documentElement.style.setProperty("--slideW",fmt[0]+"px");
+  document.documentElement.style.setProperty("--slideH",fmt[1]+"px");
+  const blocks=document.getElementById("src").value.split(/\n---\n/);
+  const stage=document.getElementById("stage");
+  stage.innerHTML=blocks.map((b,i)=>slideHTML(b,i,blocks.length)).join("");
+  // scale previews to fit screen width
+  const scale=Math.min(1,(stage.clientWidth-80)/(parseInt(fmt[0])) );
+  [...stage.querySelectorAll(".slide")].forEach(s=>{
+    s.style.transform="scale("+scale+")";
+    s.style.marginBottom=(parseInt(fmt[1])*scale - parseInt(fmt[1]) + 20)+"px";
+    s.style.marginRight=(parseInt(fmt[0])*scale - parseInt(fmt[0]) + 20)+"px";
+  });
+}
+document.getElementById("src").value=DEFAULT;
+render();
+window.addEventListener("resize",render);
+</script>
+</body>
+</html>

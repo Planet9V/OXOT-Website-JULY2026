@@ -33,3 +33,11 @@ ollama/
 
 # Next.js generated
 next-env.d.ts
+
+# Internal source material (never commit to public repo)
+content-source/
+
+# Large media (served locally; host video via CDN for production)
+public/media/*.mp4
+.tmp-translate/
+.tmp_*

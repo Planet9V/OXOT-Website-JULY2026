@@ -1,12 +1,27 @@
 {
   "home": {
     "hero": {
-      "title": "Professional services, reimagined",
-      "subtitle": "Modern, interactive, and built around what you need.",
-      "cta": "Get in touch"
+      "kicker": "OT Cybersecurity · Operational Technology",
+      "title": "Secure industrial operations with clear, risk-based OT cybersecurity",
+      "subtitle": "OXOT helps industrial organizations understand and reduce cyber risk in Operational Technology environments where safety, continuity and production matter most.",
+      "subtitle2": "We combine deep OT security expertise, engineering experience and Cyber Digital Twin capabilities to turn fragmented technical findings into clear decisions for CISOs, COOs, plant managers and industrial leadership.",
+      "cta": "Talk to an OT security expert",
+      "cta2": "Explore our approach"
+    },
+    "services": {
+      "heading": "OXOT services",
+      "items": [
+        { "name": "OT Security Assessments", "desc": "Understand your current OT security posture, key risks and practical next steps.", "href": "/services" },
+        { "name": "Cyber Digital Twin", "desc": "Create a living model of your OT environment to support risk-based decisions at scale.", "href": "/cyber-digital-twin" },
+        { "name": "OT Security Programmes", "desc": "Design and execute structured OT security improvement programmes across sites, business units or regions.", "href": "/services" },
+        { "name": "Architecture & Segmentation", "desc": "Define secure OT network architectures, zones, conduits and practical segmentation patterns.", "href": "/services" },
+        { "name": "Secure Remote Access", "desc": "Reduce risk from vendor access, remote maintenance and external connectivity.", "href": "/services" },
+        { "name": "OT Security Baseline", "desc": "Define minimum security controls that are realistic, repeatable and aligned with operational needs.", "href": "/services" },
+        { "name": "Capability Transfer", "desc": "Help internal teams build the knowledge, structure and ownership needed to maintain OT security over time.", "href": "/services" }
+      ]
     }
   },
-  "nav": { "home": "Home", "services": "Services", "contact": "Contact" },
+  "nav": { "home": "Home", "services": "Services", "cyberDigitalTwin": "Cyber Digital Twin", "frameworks": "Frameworks", "about": "About", "contact": "Contact" },
   "theme": { "toggle": "Toggle theme" },
   "agent": {
     "title": "Ask OXOT",

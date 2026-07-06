@@ -1,11 +1,11 @@
-# OXOT — Professionele Diensten
+# OXOT — OT-cybersecurity
 
-OXOT levert moderne, interactieve professionele diensten op maat van elke klant.
-We combineren diepgaande expertise met een snelle, mobile-first digitale ervaring.
+Beveilig industriële operaties met heldere, risicogebaseerde OT-cybersecurity.
 
-## Wat we doen
-We adviseren, ontwerpen en leveren. Ons kleine, senior team werkt rechtstreeks met u —
-geen overdrachten, geen opvulling. Elke opdracht begint met meetbare doelen.
+OXOT helpt industriële organisaties cyberrisico's te begrijpen en te verminderen in Operational Technology (OT)-omgevingen waar veiligheid, continuïteit en productie het zwaarst wegen. Wij combineren diepgaande OT-securityexpertise, engineeringervaring en Cyber Digital Twin-capaciteiten om versnipperde technische bevindingen om te zetten in heldere beslissingen voor CISO's, COO's, plantmanagers en industriële leiding.
+
+## Diensten
+OT-securityassessments, Cyber Digital Twin, OT-securityprogramma's, Architectuur & segmentatie, Veilige externe toegang, OT-securitybaseline en Kennisoverdracht.
 
 ## Contact
-Bereik ons via de contactpagina. We reageren in het Nederlands of Engels.
+Neem contact met ons op om met een OT-securityexpert te praten. Wij reageren in het Nederlands of Engels.
