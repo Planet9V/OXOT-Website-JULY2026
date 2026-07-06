@@ -4,7 +4,6 @@ import Link from "next/link";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { HeroVisual } from "@/components/hero-visual";
 import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -33,67 +32,129 @@ export default async function Home({
   const hero = t.home.hero;
   const services = t.home.services;
 
-  const ctaBase =
-    "inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2";
-
   return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
+    <main className="editorial">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd()) }}
       />
-      <div className="mb-6 flex justify-end">
+      <div className="ed-toggle">
         <ThemeToggle label={t.theme.toggle} />
       </div>
 
-      <section className="grid items-center gap-10 lg:grid-cols-2">
-        {/* left: the signature orange rule + kicker + serif headline */}
-        <div className="border-l-2 border-primary pl-6">
-          <p className="oxot-kicker">{hero.kicker}</p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-            {hero.title}
-          </h1>
-          <p className="mt-6 text-lg text-muted-foreground">{hero.subtitle}</p>
-          <p className="mt-4 text-base text-muted-foreground">{hero.subtitle2}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={`/${locale}/contact`}
-              className={`${ctaBase} bg-primary text-primary-foreground hover:opacity-90`}
-            >
-              {hero.cta}
-            </Link>
-            <Link
-              href={`/${locale}/cyber-digital-twin`}
-              className={`${ctaBase} border border-border bg-background hover:bg-muted`}
-            >
-              {hero.cta2}
-            </Link>
+      {/* ─── HERO (hero_1b) ─────────────────────────────────────────── */}
+      <div className="ed-wrap">
+        <section className="ed-hero">
+          <div>
+            <p className="ed-eyebrow">{hero.kicker}</p>
+            <h1 className="ed-h1">{hero.title}</h1>
+            <p className="ed-lede">{hero.subtitle}</p>
+            <div className="ed-actions">
+              <Link href={`/${locale}/contact`} className="ed-btn-primary">
+                {hero.cta}
+              </Link>
+              <Link href={`/${locale}/cyber-digital-twin`} className="ed-btn-link">
+                {hero.cta2}
+              </Link>
+            </div>
+            <div className="ed-trust">
+              <span className="ed-trust-label">{hero.trustLabel}</span>
+              <div className="ed-trust-list">
+                {hero.industries.map((name, i) => (
+                  <span key={name} className="contents">
+                    <span>{name}</span>
+                    {i < hero.industries.length - 1 && <span>·</span>}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* right: the Cyber Digital Twin visual */}
-        <div className="hidden lg:block">
-          <HeroVisual className="h-auto w-full" />
-        </div>
-      </section>
+          {/* insight card */}
+          <div className="ed-card">
+            <div className="ed-card-head">
+              <span className="ed-card-title">{hero.card.title}</span>
+              <span className="ed-card-tag">{hero.card.tag}</span>
+            </div>
+            <svg viewBox="0 0 420 280" className="ed-svg" role="img" aria-label={hero.card.title}>
+              <defs>
+                <radialGradient id="g1b" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#e8700a" stopOpacity=".9" />
+                  <stop offset="100%" stopColor="#e8700a" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <g stroke="#c9cdd6" strokeWidth="1">
+                <line x1="60" y1="70" x2="180" y2="120" />
+                <line x1="60" y1="130" x2="180" y2="120" />
+                <line x1="60" y1="190" x2="180" y2="120" />
+                <line x1="180" y1="120" x2="270" y2="70" />
+                <line x1="180" y1="120" x2="300" y2="150" />
+                <line x1="270" y1="70" x2="360" y2="110" />
+                <line x1="300" y1="150" x2="360" y2="200" />
+              </g>
+              <rect x="118" y="44" width="230" height="180" rx="10" fill="none" stroke="#c9cdd6" strokeDasharray="4 5" />
+              <text x="128" y="38" fontFamily="Instrument Sans" fontSize="10" letterSpacing="1.5" fill="#9aa0ac">ZONE · CONTROL</text>
+              <text x="60" y="26" fontFamily="Instrument Sans" fontSize="10" letterSpacing="1.5" fill="#9aa0ac">{hero.card.findingsLabel}</text>
+              <g fill="#fff" stroke="#161d2b" strokeWidth="1.5">
+                <rect x="40" y="62" width="20" height="16" rx="3" />
+                <rect x="40" y="122" width="20" height="16" rx="3" />
+                <rect x="40" y="182" width="20" height="16" rx="3" />
+              </g>
+              <g fill="#7d8494">
+                <circle cx="270" cy="70" r="5" />
+                <circle cx="360" cy="110" r="5" />
+                <circle cx="300" cy="150" r="5" />
+                <circle cx="360" cy="200" r="5" />
+              </g>
+              <circle cx="180" cy="120" r="34" fill="url(#g1b)" />
+              <circle cx="180" cy="120" r="9" fill="#e8700a" />
+              <text x="180" y="168" textAnchor="middle" fontFamily="Instrument Sans" fontSize="10" letterSpacing="1.5" fill="#e8700a" fontWeight="600">RISK</text>
+            </svg>
+            <div className="ed-stats">
+              {hero.card.stats.map((s) => (
+                <div className="ed-stat" key={s.l}>
+                  <div className={`ed-stat-n${s.accent ? " is-accent" : ""}`}>{s.n}</div>
+                  <div className="ed-stat-l">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <section className="mt-24 border-t border-border pt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">
-          {services.heading}
-        </h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {services.items.map((it) => (
-            <Link
-              key={it.name}
-              href={`/${locale}${it.href}`}
-              className="group rounded-lg border border-border p-5 transition-colors hover:border-primary"
-            >
-              <h3 className="font-semibold group-hover:text-primary">{it.name}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{it.desc}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
+        {/* ─── DIENSTEN (services_2a) ──────────────────────────────── */}
+        <section>
+          <div className="ed-sec-head">
+            <div>
+              <p className="ed-eyebrow">{services.eyebrow}</p>
+              <h2 className="ed-h2">{services.heading}</h2>
+            </div>
+            <p className="ed-sec-intro">{services.intro}</p>
+          </div>
+
+          <div className="ed-grid">
+            {services.items.map((it, i) => (
+              <Link key={it.name} href={`/${locale}${it.href}`} className="ed-svc">
+                <div className="ed-svc-num">
+                  <b>{String(i + 1).padStart(2, "0")}</b>
+                  <i />
+                </div>
+                <h3>{it.name}</h3>
+                <p>{it.desc}</p>
+                <span className="ed-svc-link">
+                  {services.more} <span className="arrow">→</span>
+                </span>
+              </Link>
+            ))}
+
+            {/* 8th slot — CTA panel */}
+            <div className="ed-svc-cta">
+              <h3>{services.cta.title}</h3>
+              <p>{services.cta.body}</p>
+              <Link href={`/${locale}/contact`}>{services.cta.button}</Link>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

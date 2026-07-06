@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OXOT — Diensten (2a Editorial Grid)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#161d2b; --ink-2:#12192a; --paper:#f6f4ef; --dutch-orange:#e8700a;
+    --line:rgba(22,29,43,.09); --muted:rgba(22,29,43,.62);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1280px;margin:0 auto}
+
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;padding:66px 52px 40px;border-bottom:1px solid rgba(22,29,43,.1)}
+  .eyebrow{font:600 12px/1 'Instrument Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--dutch-orange);margin-bottom:20px}
+  h2{font:400 46px/1.05 'Newsreader',serif;letter-spacing:-.01em;margin:0;color:var(--ink-2)}
+  .sec-intro{font:400 16px/1.6 'Instrument Sans',sans-serif;color:rgba(22,29,43,.6);margin:0 0 6px;max-width:400px;text-align:right}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr)}
+  .svc{padding:38px 40px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .svc:nth-child(3n){border-right:none}
+  .svc-num{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .svc-num b{font:700 13px/1 'IBM Plex Mono',monospace;color:var(--dutch-orange)}
+  .svc-num i{height:1px;flex:1;background:rgba(232,112,10,.35)}
+  .svc h3{font:500 21px/1.2 'Newsreader',serif;margin:0 0 12px;color:var(--ink-2)}
+  .svc p{font:400 15px/1.62 'Instrument Sans',sans-serif;color:var(--muted);margin:0 0 22px}
+  .svc a{font:600 13px/1 'Instrument Sans',sans-serif;color:var(--dutch-orange)}
+
+  /* CTA cell replaces the empty 8th slot */
+  .svc-cta{padding:38px 40px;background:var(--ink-2);display:flex;flex-direction:column;justify-content:center;gap:18px;border-right:none}
+  .svc-cta h3{font:400 24px/1.2 'Newsreader',serif;margin:0;color:var(--paper)}
+  .svc-cta p{font:400 14px/1.55 'Instrument Sans',sans-serif;color:rgba(246,244,239,.62);margin:0}
+  .svc-cta a{align-self:flex-start;background:var(--dutch-orange);color:var(--ink-2);font:600 14px/1 'Instrument Sans',sans-serif;padding:14px 22px;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">Onze diensten</div>
+      <h2>OXOT-diensten</h2>
+    </div>
+    <p class="sec-intro">Van eerste inzicht tot duurzaam beheer — een samenhangend traject om OT-cyberrisico's beheersbaar te maken.</p>
+  </div>
+
+  <div class="grid">
+    <div class="svc"><div class="svc-num"><b>01</b><i></i></div><h3>OT-securityassessments</h3><p>Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc"><div class="svc-num"><b>02</b><i></i></div><h3>Cyber Digital Twin</h3><p>Creëer een levend model van uw OT-omgeving om risicogebaseerde beslissingen op schaal te ondersteunen.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc"><div class="svc-num"><b>03</b><i></i></div><h3>OT-securityprogramma's</h3><p>Ontwerp en voer gestructureerde OT-securityverbeterprogramma's uit over locaties, bedrijfsonderdelen of regio's.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc"><div class="svc-num"><b>04</b><i></i></div><h3>Architectuur &amp; segmentatie</h3><p>Definieer veilige OT-netwerkarchitecturen, zones, conduits en praktische segmentatiepatronen.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc"><div class="svc-num"><b>05</b><i></i></div><h3>Veilige externe toegang</h3><p>Verminder risico van leverancierstoegang, onderhoud op afstand en externe connectiviteit.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc"><div class="svc-num"><b>06</b><i></i></div><h3>OT-securitybaseline</h3><p>Definieer minimale beveiligingsmaatregelen die realistisch, herhaalbaar en afgestemd op operationele behoeften zijn.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc"><div class="svc-num"><b>07</b><i></i></div><h3>Kennisoverdracht</h3><p>Help interne teams de kennis, structuur en eigenaarschap op te bouwen om OT-security duurzaam te onderhouden.</p><a href="#">Meer over deze dienst →</a></div>
+    <div class="svc-cta">
+      <h3>Niet zeker waar<br>te beginnen?</h3>
+      <p>We bepalen samen de juiste eerste stap voor uw organisatie.</p>
+      <a href="#">Praat met een expert</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

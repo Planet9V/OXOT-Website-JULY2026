@@ -2,14 +2,33 @@
   "home": {
     "hero": {
       "kicker": "OT Cybersecurity · Operational Technology",
-      "title": "Secure industrial operations with clear, risk-based OT cybersecurity",
-      "subtitle": "OXOT helps industrial organizations understand and reduce cyber risk in Operational Technology environments where safety, continuity and production matter most.",
-      "subtitle2": "We combine deep OT security expertise, engineering experience and Cyber Digital Twin capabilities to turn fragmented technical findings into clear decisions for CISOs, COOs, plant managers and industrial leadership.",
+      "title": "Secure industrial operations with clear, risk-based decisions.",
+      "subtitle": "We translate fragmented technical findings into clear decisions for CISOs, COOs and plant managers — with deep OT expertise and Cyber Digital Twin capabilities.",
       "cta": "Talk to an OT security expert",
-      "cta2": "Explore our approach"
+      "cta2": "Explore our approach",
+      "trustLabel": "Trusted across",
+      "industries": ["Energy", "Water", "Manufacturing", "Logistics"],
+      "card": {
+        "title": "One structured view",
+        "tag": "assets · risks · controls",
+        "findingsLabel": "FINDINGS",
+        "stats": [
+          { "n": "86", "l": "assets in scope", "accent": false },
+          { "n": "3", "l": "critical risks", "accent": true },
+          { "n": "62443", "l": "IEC framework", "accent": false }
+        ]
+      }
     },
     "services": {
+      "eyebrow": "Our services",
       "heading": "OXOT services",
+      "intro": "From first insight to sustainable management — a coherent path to make OT cyber risk manageable.",
+      "more": "More about this service",
+      "cta": {
+        "title": "Not sure where to start?",
+        "body": "Together we'll define the right first step for your organization.",
+        "button": "Talk to an expert"
+      },
       "items": [
         { "name": "OT Security Assessments", "desc": "Understand your current OT security posture, key risks and practical next steps.", "href": "/services" },
         { "name": "Cyber Digital Twin", "desc": "Create a living model of your OT environment to support risk-based decisions at scale.", "href": "/cyber-digital-twin" },

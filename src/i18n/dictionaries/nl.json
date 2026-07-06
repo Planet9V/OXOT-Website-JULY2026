@@ -1,15 +1,34 @@
 {
   "home": {
     "hero": {
-      "kicker": "OT-cybersecurity · Operational Technology",
-      "title": "Beveilig industriële operaties met heldere, risicogebaseerde OT-cybersecurity",
-      "subtitle": "OXOT helpt industriële organisaties cyberrisico's te begrijpen en te verminderen in Operational Technology-omgevingen waar veiligheid, continuïteit en productie het zwaarst wegen.",
-      "subtitle2": "Wij combineren diepgaande OT-securityexpertise, engineeringervaring en Cyber Digital Twin-capaciteiten om versnipperde technische bevindingen om te zetten in heldere beslissingen voor CISO's, COO's, plantmanagers en industriële leiding.",
+      "kicker": "OT-Cybersecurity · Operational Technology",
+      "title": "Beveilig industriële operaties met heldere, risicogebaseerde besluiten.",
+      "subtitle": "Wij vertalen versnipperde technische bevindingen naar heldere beslissingen voor CISO's, COO's en plantmanagers — met diepgaande OT-expertise en Cyber Digital Twin-capaciteiten.",
       "cta": "Praat met een OT-securityexpert",
-      "cta2": "Ontdek onze aanpak"
+      "cta2": "Ontdek onze aanpak",
+      "trustLabel": "Vertrouwd binnen",
+      "industries": ["Energie", "Water", "Maakindustrie", "Logistiek"],
+      "card": {
+        "title": "Eén gestructureerd beeld",
+        "tag": "assets · risks · controls",
+        "findingsLabel": "BEVINDINGEN",
+        "stats": [
+          { "n": "86", "l": "assets in scope", "accent": false },
+          { "n": "3", "l": "kritieke risico's", "accent": true },
+          { "n": "62443", "l": "IEC-kader", "accent": false }
+        ]
+      }
     },
     "services": {
+      "eyebrow": "Onze diensten",
       "heading": "OXOT-diensten",
+      "intro": "Van eerste inzicht tot duurzaam beheer — een samenhangend traject om OT-cyberrisico's beheersbaar te maken.",
+      "more": "Meer over deze dienst",
+      "cta": {
+        "title": "Niet zeker waar te beginnen?",
+        "body": "We bepalen samen de juiste eerste stap voor uw organisatie.",
+        "button": "Praat met een expert"
+      },
       "items": [
         { "name": "OT-securityassessments", "desc": "Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen.", "href": "/services" },
         { "name": "Cyber Digital Twin", "desc": "Creëer een levend model van uw OT-omgeving om risicogebaseerde beslissingen op schaal te ondersteunen.", "href": "/cyber-digital-twin" },

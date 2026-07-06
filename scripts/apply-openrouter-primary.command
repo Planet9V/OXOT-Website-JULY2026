@@ -35,7 +35,7 @@ else warn "could not create a session"; fi
 
 echo "▶ 5. Confirm which provider served it (from the DB)"
 docker compose exec -T db psql -U "${POSTGRES_USER:-oxot}" -d "${POSTGRES_DB:-oxot}" -tAc \
-  "select 'provider='||provider from agent_messages where role='assistant' order by created_at desc limit 1;" 2>&1 | sed 's/^/   /'
+  "select 'provider='||provider from agent_messages where role='assistant' order by ts desc limit 1;" 2>&1 | sed 's/^/   /'
 
 echo ""
 echo "════════ done — provider should read 'openrouter' (grok-4.3) ════════"

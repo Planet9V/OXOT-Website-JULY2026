@@ -38,6 +38,10 @@
 - **BUGFIX — agent hang → timeout+fallback:** Ollama chat (`qwen3.5:9b`) stalled and the agent hung forever (no timeout). Added a **60s idle watchdog** to `src/lib/llm/stream.ts` (AbortController; falls back to OpenRouter grok-4.3 only if no Ollama tokens emitted yet) and a 45s `AbortSignal.timeout` to `src/lib/llm/ollama.ts`. Env: `OLLAMA_IDLE_TIMEOUT_MS` / `OLLAMA_TIMEOUT_MS`. Deploy agent curl now `--max-time 120`.
 - **BUGFIX — thin agent corpus:** retrieval only had 15 chunks (`content/{locale}/*.md`); the deep framework pages (`content/pages/**`) weren't embedded, so the agent said "I don't know" for NIS2 deadlines. `scripts/ingest.mjs` now ALSO embeds `content/pages/{locale}/*.md` (strips frontmatter + code fences, `page_id=slug` so page-boost works). Corpus is now **756 chunks**; agent answers the NIS2-deadlines question correctly with citations [726][750]. NOTE: ingest embed() still has no per-call timeout — a stalled Ollama would hang ingest (future hardening).
 
+## 2026-07-06 — chat PRIMARY flipped to OpenRouter
+
+- The interactive agent now uses **OpenRouter (grok-4.3) as PRIMARY**, local Ollama `qwen3.5:9b` as fallback. Controlled by `LLM_PRIMARY` env (`openrouter` default; set `ollama` to flip back). `src/lib/llm/stream.ts` gained a real **OpenRouter SSE streaming** path (`data:` lines → `choices[0].delta.content`, `[DONE]` terminator) and a provider-order loop with failover; `src/lib/llm/index.ts` (non-streaming `chat()`) honors the same `LLM_PRIMARY`. Requires `docker compose up -d app` to reload the env. Verified live: agent returned a rich, cited CRA answer served by grok-4.3. Note: `agent_messages` timestamp column is **`ts`** (not `created_at`).
+
 ## 2026-07-06 — generation models + deploy
 
 - **OpenRouter key set** in `.env.local` (gitignored; NOT in memory/repo). Live-tested: auth HTTP 200 (valid, $100 limit), and the app-faithful `/chat/completions` call returns grounded, cited answers.
