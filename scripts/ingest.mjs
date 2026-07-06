@@ -5,6 +5,7 @@ import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, basename } from "node:path";
 import pg from "pg";
+import { parseFrontmatter } from "./lib/frontmatter.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OLLAMA_HOST = process.env.OLLAMA_HOST ?? "http://ollama:11434";
@@ -22,6 +23,12 @@ function chunk(text, max = 800) {
   }
   if (cur) out.push(cur);
   return out;
+}
+
+// Strip fenced code blocks (```svg / ```carousel / ```html / code) — they're not
+// useful retrieval text and pollute embeddings. Keeps prose, headings and tables.
+function stripFences(md) {
+  return md.replace(/```[\s\S]*?```/g, "").replace(/\n{3,}/g, "\n\n");
 }
 
 async function embed(text) {
@@ -62,6 +69,34 @@ try {
         total++;
       }
       console.log(`ingested ${locale}/${file}: ${parts.length} chunks`);
+    }
+  }
+
+  // Also embed the rich CMS pages (content/pages/{locale}/*.md) so the agent can
+  // ground answers in the full framework content — NIS2/CRA/IEC 62443/etc. Strip
+  // YAML frontmatter and code fences first. page_id = slug so the current-page
+  // boost in retrieval works for these pages too.
+  for (const locale of LOCALES) {
+    const dir = join(root, "content", "pages", locale);
+    if (!existsSync(dir)) continue;
+    for (const file of readdirSync(dir).filter((f) => f.endsWith(".md"))) {
+      const pageId = basename(file, ".md");
+      const { body } = parseFrontmatter(readFileSync(join(dir, file), "utf8"));
+      const parts = chunk(stripFences(body));
+      await client.query(
+        `DELETE FROM content_chunks WHERE page_id=$1 AND locale=$2`,
+        [pageId, locale]
+      );
+      for (const part of parts) {
+        const v = await embed(part);
+        await client.query(
+          `INSERT INTO content_chunks (page_id, locale, text, embedding, source_ref)
+           VALUES ($1,$2,$3,$4::vector,$5)`,
+          [pageId, locale, part, `[${v.join(",")}]`, `content/pages/${locale}/${file}`]
+        );
+        total++;
+      }
+      console.log(`ingested pages/${locale}/${file}: ${parts.length} chunks`);
     }
   }
   console.log(`Done: ${total} chunks embedded.`);
