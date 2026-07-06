@@ -12,6 +12,7 @@ export interface ContactInput {
   message?: unknown;
   locale?: unknown;
   page?: unknown;
+  sessionId?: unknown;
   // Honeypot: a hidden field real users never fill. Named to look tempting to bots.
   website?: unknown;
 }
@@ -23,7 +24,10 @@ export interface ContactData {
   message: string;
   locale: string;
   page: string | null;
+  sessionId: string | null;
 }
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export type ContactResult =
   | { ok: true; data: ContactData }
@@ -53,6 +57,7 @@ export function validateContact(input: ContactInput): ContactResult {
 
   if (Object.keys(errors).length) return { ok: false, errors };
 
+  const sid = str(input.sessionId);
   return {
     ok: true,
     data: {
@@ -61,7 +66,8 @@ export function validateContact(input: ContactInput): ContactResult {
       company: company || null,
       message,
       locale,
-      page: page || null
+      page: page || null,
+      sessionId: sid && UUID_RE.test(sid) ? sid : null
     }
   };
 }

@@ -37,6 +37,19 @@ export function PagesManager() {
   function set<K extends keyof Form>(k: K, v: Form[K]) { setForm((f) => ({ ...f, [k]: v })); }
   function reset() { setForm(EMPTY); setEditorKey((k) => k + 1); setMsg(""); }
 
+  async function loadPage(slug: string, locale: string) {
+    const res = await fetch(`/api/admin/pages?slug=${encodeURIComponent(slug)}&locale=${locale}`);
+    if (!res.ok) { setMsg("Could not load page."); return; }
+    const { page } = await res.json();
+    setForm({
+      slug: page.slug, locale: page.locale, title: page.title ?? "", body: page.body ?? "",
+      published: !!page.published, metaTitle: page.metaTitle ?? "", metaDescription: page.metaDescription ?? "",
+      excerpt: page.excerpt ?? "", ogImage: page.ogImage ?? "", contentType: page.contentType ?? "page"
+    });
+    setEditorKey((k) => k + 1);
+    setMsg(`Loaded ${slug} · ${locale} — edit and Save.`);
+  }
+
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setMsg(""); setBusy(true);
@@ -79,7 +92,7 @@ export function PagesManager() {
                     <td className="px-4 py-2">
                       <div className="flex justify-end gap-1">
                         <Button variant="ghost" size="icon" title="Load into editor"
-                          onClick={() => { set("slug", r.slug); set("locale", r.locale); setMsg("Loaded metadata — set body below, then Save to overwrite."); }}>
+                          onClick={() => loadPage(r.slug, r.locale)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon" title="Delete" onClick={() => del(r.slug, r.locale)}>

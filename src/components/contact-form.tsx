@@ -31,6 +31,8 @@ export function ContactForm({ locale, strings }: { locale: Locale; strings: Cont
     setErrors({});
     setTopError(null);
     const fd = new FormData(e.currentTarget);
+    let sessionId: string | null = null;
+    try { sessionId = window.localStorage.getItem("oxot_session"); } catch { /* ignore */ }
     const payload = {
       name: fd.get("name"),
       email: fd.get("email"),
@@ -38,7 +40,8 @@ export function ContactForm({ locale, strings }: { locale: Locale; strings: Cont
       message: fd.get("message"),
       website: fd.get("website"), // honeypot
       locale,
-      page: pathname
+      page: pathname,
+      sessionId
     };
     try {
       const res = await fetch("/api/contact", {

@@ -3,9 +3,27 @@ import { pool } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 import { isLocale } from "@/i18n/config";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   if (!(await getAdminSession()))
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+
+  const { searchParams } = new URL(req.url);
+  const slug = searchParams.get("slug");
+  const locale = searchParams.get("locale");
+
+  // Single full page (load-for-edit) when slug+locale are given.
+  if (slug && locale) {
+    const { rows } = await pool.query(
+      `SELECT slug, locale, title, body, published,
+              meta_title AS "metaTitle", meta_description AS "metaDescription",
+              excerpt, og_image AS "ogImage", content_type AS "contentType"
+         FROM pages WHERE slug=$1 AND locale=$2 LIMIT 1`,
+      [slug, locale]
+    );
+    if (!rows.length) return NextResponse.json({ error: "not found" }, { status: 404 });
+    return NextResponse.json({ page: rows[0] });
+  }
+
   const { rows } = await pool.query(
     `SELECT slug, locale, title, content_type AS "contentType", published, updated_at
        FROM pages ORDER BY slug, locale`

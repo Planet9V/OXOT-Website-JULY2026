@@ -10,7 +10,7 @@ import { DashboardOverview } from "@/components/admin/dashboard-overview";
 import { HomeContentEditor } from "@/components/admin/home-content-editor";
 import { PagesManager } from "@/components/admin/pages-manager";
 import { MenuManager } from "@/components/admin/menu-manager";
-import { ContactInbox } from "@/components/admin/contact-inbox";
+import { InquiriesManager } from "@/components/admin/inquiries-manager";
 
 type Section = "overview" | "homepage" | "pages" | "menus" | "enquiries";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
@@ -101,7 +101,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "homepage" && <HomeContentEditor />}
           {section === "pages" && <PagesManager />}
           {section === "menus" && <MenuManager />}
-          {section === "enquiries" && <ContactInbox />}
+          {section === "enquiries" && <InquiriesManager />}
         </main>
       </div>
     </div>

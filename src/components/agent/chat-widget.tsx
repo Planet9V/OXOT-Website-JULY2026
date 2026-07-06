@@ -56,6 +56,8 @@ export function ChatWidget({
     const { sessionId: sid } = await res.json();
     setSessionId(sid);
     setConsent(true);
+    // Expose the session id so a later contact form can link the enquiry to this chat.
+    try { window.localStorage.setItem("oxot_session", sid); } catch { /* ignore */ }
     void beacon(sid, "page", pageId);
   }
 
