@@ -45,6 +45,7 @@ export function ArticleShell({
   const ids = React.useMemo(() => toc.map((t) => t.id), [toc]);
   const active = useScrollSpy(ids);
   const reduce = useReducedMotion();
+  const nl = locale === "nl";
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
@@ -70,9 +71,9 @@ export function ArticleShell({
           )}
           <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4" /> {readingMin} min read</span>
-            {updated && <span className="inline-flex items-center gap-1.5"><CalendarDays className="h-4 w-4" /> Updated {updated}</span>}
-            {sources > 0 && <span className="inline-flex items-center gap-1.5"><Link2 className="h-4 w-4" /> {sources} cited sources</span>}
+            <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4" /> {readingMin} {nl ? "min leestijd" : "min read"}</span>
+            {updated && <span className="inline-flex items-center gap-1.5"><CalendarDays className="h-4 w-4" /> {nl ? "Bijgewerkt" : "Updated"} {updated}</span>}
+            {sources > 0 && <span className="inline-flex items-center gap-1.5"><Link2 className="h-4 w-4" /> {sources} {nl ? "bronnen" : "cited sources"}</span>}
           </motion.div>
         </div>
       </header>
@@ -84,7 +85,7 @@ export function ArticleShell({
         {toc.length >= 2 && (
           <aside className="hidden lg:block">
             <div className="sticky top-24">
-              <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground"><List className="h-3.5 w-3.5" /> On this page</p>
+              <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground"><List className="h-3.5 w-3.5" /> {nl ? "Op deze pagina" : "On this page"}</p>
               <nav className="space-y-1 border-l border-border">
                 {toc.map((t) => (
                   <a key={t.id} href={`#${t.id}`}
@@ -123,10 +124,10 @@ export function ArticleShell({
 
           <div className="mt-10 rounded-2xl border border-border bg-card p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">OXOT</p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight" style={{ fontFamily: "var(--font-display)" }}>Talk to an expert about {kicker.toLowerCase().includes("regulation") || kicker.toLowerCase().includes("directive") || kicker.toLowerCase().includes("standard") ? "this" : "your"} compliance</h3>
+            <h3 className="mt-2 text-2xl font-semibold tracking-tight" style={{ fontFamily: "var(--font-display)" }}>{nl ? "Praat met een expert over uw compliance" : `Talk to an expert about ${kicker.toLowerCase().includes("regulation") || kicker.toLowerCase().includes("directive") || kicker.toLowerCase().includes("standard") ? "this" : "your"} compliance`}</h3>
             <p className="mt-2 max-w-xl text-muted-foreground">{ctaLabel}</p>
             <Link href={ctaHref} className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-              Talk to an OT security expert <ArrowRight className="h-4 w-4" />
+              {nl ? "Praat met een OT-beveiligingsexpert" : "Talk to an OT security expert"} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </article>
