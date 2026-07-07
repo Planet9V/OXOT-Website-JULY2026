@@ -319,23 +319,29 @@ export function CardGrid({ items }: { items: { title: string; href: string; desc
       variants={{ show: { transition: { staggerChildren: 0.06 } } }}
     >
       {items.map((it, i) => {
-        const inner = (
-          <SpotlightCard className="h-full rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50">
+        const linked = !!it.href;
+        const body = (
+          <>
             <div className="flex items-start justify-between gap-3">
               <span className="font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{parseInline(it.title, `cardt-${i}`)}</span>
-              <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+              {linked && <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />}
             </div>
             {it.desc && <p className="mt-2 text-sm text-muted-foreground">{parseInline(it.desc, `cardd-${i}`)}</p>}
-          </SpotlightCard>
+          </>
         );
         return (
           <motion.div
             key={i}
             variants={reduce ? undefined : { hide: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } } }}
           >
-            {it.href
-              ? <Link href={it.href} target={external(it.href) ? "_blank" : undefined} rel={external(it.href) ? "noopener noreferrer" : undefined} className="block h-full no-underline">{inner}</Link>
-              : inner}
+            {linked ? (
+              <Link href={it.href} target={external(it.href) ? "_blank" : undefined} rel={external(it.href) ? "noopener noreferrer" : undefined} className="block h-full no-underline">
+                <SpotlightCard className="h-full rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50">{body}</SpotlightCard>
+              </Link>
+            ) : (
+              // non-linked info card: no arrow, no hover-lift/glow (not misleadingly clickable)
+              <div className="h-full rounded-2xl border border-border bg-card p-5">{body}</div>
+            )}
           </motion.div>
         );
       })}
