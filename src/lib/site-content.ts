@@ -18,6 +18,8 @@ export interface HomeHero {
   trustLabel: string;
   industries: string[];
   card: { title: string; tag: string; findingsLabel: string; stats: HomeStat[] };
+  /** Optional: media id of a PDF/image carousel shown in the hero instead of the risk-map card. */
+  heroPdf?: number | null;
 }
 export interface HomeServiceItem { name: string; desc: string; href: string }
 export interface HomeServices {

@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink
+  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,13 +11,15 @@ import { HomeContentEditor } from "@/components/admin/home-content-editor";
 import { PagesManager } from "@/components/admin/pages-manager";
 import { MenuManager } from "@/components/admin/menu-manager";
 import { InquiriesManager } from "@/components/admin/inquiries-manager";
+import { MediaManager } from "@/components/admin/media-manager";
 
-type Section = "overview" | "homepage" | "pages" | "menus" | "enquiries";
+type Section = "overview" | "homepage" | "pages" | "menus" | "media" | "enquiries";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   { key: "homepage", label: "Homepage", icon: Home },
   { key: "pages", label: "Pages", icon: FileText },
   { key: "menus", label: "Menus", icon: MenuIcon },
+  { key: "media", label: "Media", icon: Images },
   { key: "enquiries", label: "Enquiries", icon: Inbox }
 ];
 
@@ -101,6 +103,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "homepage" && <HomeContentEditor />}
           {section === "pages" && <PagesManager />}
           {section === "menus" && <MenuManager />}
+          {section === "media" && <MediaManager />}
           {section === "enquiries" && <InquiriesManager />}
         </main>
       </div>

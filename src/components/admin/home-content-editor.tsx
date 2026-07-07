@@ -67,6 +67,7 @@ export function HomeContentEditor() {
         <div><label className={lbl}>Eyebrow</label><input className={field} value={h.kicker} onChange={(e) => edit((c) => { c.hero.kicker = e.target.value; })} /></div>
         <div><label className={lbl}>Headline (H1)</label><textarea className={`${field} h-16`} value={h.title} onChange={(e) => edit((c) => { c.hero.title = e.target.value; })} /></div>
         <div><label className={lbl}>Lede</label><textarea className={`${field} h-20`} value={h.subtitle} onChange={(e) => edit((c) => { c.hero.subtitle = e.target.value; })} /></div>
+        <div><label className={lbl}>Hero visual — media/PDF id (blank = animated risk-map card)</label><input className={field} type="number" placeholder="a PDF plays page-by-page; find the id in Media" value={(h as { heroPdf?: number | null }).heroPdf ?? ""} onChange={(e) => edit((c) => { (c.hero as { heroPdf?: number | null }).heroPdf = e.target.value ? Number(e.target.value) : null; })} /></div>
         <div className="grid grid-cols-2 gap-2">
           <div><label className={lbl}>Primary button</label><input className={field} value={h.cta} onChange={(e) => edit((c) => { c.hero.cta = e.target.value; })} /></div>
           <div><label className={lbl}>Secondary link</label><input className={field} value={h.cta2} onChange={(e) => edit((c) => { c.hero.cta2 = e.target.value; })} /></div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import type { HomeHero as Hero } from "@/lib/site-content";
 import { Aurora, Reveal, Stagger, CountUp } from "@/components/motion/fx";
+import { MediaCarousel } from "@/components/media-carousel";
 
 function RiskMap({ findingsLabel }: { findingsLabel: string }) {
   const reduce = useReducedMotion();
@@ -78,21 +79,29 @@ export function HomeHero({ hero, locale }: { hero: Hero; locale: string }) {
         </div>
 
         <Reveal delay={0.15} y={30}>
-          <div className="ed-card">
-            <div className="ed-card-head">
-              <span className="ed-card-title">{hero.card.title}</span>
-              <span className="ed-card-tag">{hero.card.tag}</span>
+          {hero.heroPdf ? (
+            <MediaCarousel
+              items={[{ kind: "pdf", src: `/api/media/${hero.heroPdf}` }]}
+              ratio="16 / 9"
+              className="w-full"
+            />
+          ) : (
+            <div className="ed-card">
+              <div className="ed-card-head">
+                <span className="ed-card-title">{hero.card.title}</span>
+                <span className="ed-card-tag">{hero.card.tag}</span>
+              </div>
+              <RiskMap findingsLabel={hero.card.findingsLabel} />
+              <div className="ed-stats">
+                {hero.card.stats.map((s) => (
+                  <div className="ed-stat" key={s.l}>
+                    <div className={`ed-stat-n${s.accent ? " is-accent" : ""}`}><CountUp value={s.n} /></div>
+                    <div className="ed-stat-l">{s.l}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <RiskMap findingsLabel={hero.card.findingsLabel} />
-            <div className="ed-stats">
-              {hero.card.stats.map((s) => (
-                <div className="ed-stat" key={s.l}>
-                  <div className={`ed-stat-n${s.accent ? " is-accent" : ""}`}><CountUp value={s.n} /></div>
-                  <div className="ed-stat-l">{s.l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          )}
         </Reveal>
       </div>
     </section>

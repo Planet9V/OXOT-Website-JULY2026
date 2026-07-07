@@ -1,5 +1,6 @@
 import React from "react";
 import { Carousel, type Slide } from "./carousel";
+import { MediaCarousel, type CarouselItem } from "./media-carousel";
 import { parseInline, slugify } from "./article/inline";
 import { RevealBlock, KeyFacts, TimelineBlock, CompareBlock, DataTable, CtaCard, CardGrid, Widget } from "./article/blocks";
 
@@ -90,8 +91,28 @@ export function MarkdownContent({ source, toc = true, locale = "en" }: { source:
                      dangerouslySetInnerHTML={{ __html: content }} />
           </RevealBlock>
         );
-      } else if (lang === "carousel") {
-        blocks.push(<RevealBlock key={key++}><Carousel slides={parseCarousel(content)} /></RevealBlock>);
+      } else if (lang === "carousel" || lang === "gallery") {
+        // Media carousel when lines are refs (media:ID / pdf:ID / URL / /path);
+        // otherwise the classic text-slide carousel.
+        const firstLine = content.split("\n").map((l) => l.trim()).find(Boolean) ?? "";
+        const isMedia = /^(media:\d+|pdf:\d+|https?:\/\/|\/)/i.test(firstLine);
+        if (isMedia) {
+          const mediaItems = content.split("\n").map((l) => l.trim()).filter(Boolean).map((l): CarouselItem | null => {
+            const idx = l.indexOf("::");
+            const ref = (idx >= 0 ? l.slice(0, idx) : l).trim();
+            const caption = idx >= 0 ? l.slice(idx + 2).trim() : undefined;
+            const pdfId = /^pdf:(\d+)$/i.exec(ref);
+            const mediaId = /^media:(\d+)$/i.exec(ref);
+            if (pdfId) return { kind: "pdf", src: `/api/media/${pdfId[1]}` };
+            if (mediaId) return { kind: "image", src: `/api/media/${mediaId[1]}`, caption };
+            if (/\.pdf($|\?)/i.test(ref)) return { kind: "pdf", src: ref };
+            if (/^(https?:\/\/|\/)/.test(ref)) return { kind: "image", src: ref, caption };
+            return null;
+          }).filter(Boolean) as CarouselItem[];
+          blocks.push(<RevealBlock key={key++}><MediaCarousel items={mediaItems} /></RevealBlock>);
+        } else {
+          blocks.push(<RevealBlock key={key++}><Carousel slides={parseCarousel(content)} /></RevealBlock>);
+        }
       } else if (lang === "keyfacts") {
         // "Label :: Value" per line.
         const facts = content.split("\n").map((l) => l.split("::")).filter((p) => p.length >= 2)
