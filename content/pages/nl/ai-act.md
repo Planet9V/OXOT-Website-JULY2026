@@ -21,10 +21,23 @@ Deze pagina legt uit wat de AI Act vereist, wanneer een industrieel AI-systeem d
 - **Aanbieders** (providers — die AI ontwikkelen of op de markt brengen) dragen de zware verplichtingen; **gebruiksverantwoordelijken** (deployers — die AI gebruiken) dragen een lichtere maar reële set plichten. Wijzig een systeem voldoende en een gebruiksverantwoordelijke *wordt* een aanbieder.
 - Hoog-risicosystemen moeten voldoen aan de Artikelen 8–15: risicobeheer, datagovernance, logging, transparantie, menselijk toezicht en — de regel die OT-teams twee keer moeten lezen — **nauwkeurigheid, robuustheid en cyberbeveiliging** onder **Artikel 15**.
 - Sancties lopen op tot **35 miljoen euro of 7% van de wereldwijde omzet** voor verboden praktijken, en **15 miljoen euro of 3%** voor schending van hoog-risicoverplichtingen. ([Artikel 99](https://artificialintelligenceact.eu/article/99/))
-- De hoog-risicotermijnen zijn **uitgesteld** door de **Digital Omnibus**, overeengekomen op **7 mei 2026** — zelfstandige Bijlage III-systemen gelden nu vanaf **2 december 2027**, en in producten ingebedde Bijlage I-AI vanaf **2 augustus 2028**. ([Gibson Dunn](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/))
+- De hoog-risicotermijnen zijn **uitgesteld** door de **Digital Omnibus** — politiek overeengekomen op 7 mei 2026, **op 16 juni 2026 bekrachtigd door het Europees Parlement**, en **op 29 juni 2026 definitief vastgesteld door de Raad**, met publicatie in het Publicatieblad aanstaande. Zelfstandige Bijlage III-systemen gelden nu vanaf **2 december 2027**, en in producten ingebedde Bijlage I-AI vanaf **2 augustus 2028**. ([Raad van de EU, 29 juni 2026](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/))
 
 > [!NOTE]
 > De eerlijke hoofdboodschap voor de industrie: **de meeste industriële AI is geen hoog risico.** Procesoptimalisatie, kwaliteitsanalyse en onderhoudsvoorspelling die nooit een veiligheids- of besturingsfunctie raken, vallen in de minimale klasse. Het echte werk is het vinden van de handvol systemen die dat *wel* doen, ze correct classificeren, en ze beheersen zonder de nuttige negentig procent te verstikken.
+
+```keyfacts
+Instrument :: Verordening (EU) 2024/1689 — rechtstreeks toepasselijk, geen nationale omzetting
+Van kracht sinds :: 1 augustus 2024, gefaseerde toepassing
+Verboden praktijken live :: 2 februari 2025 (Artikel 5)
+Plicht AI-geletterdheid live :: 2 februari 2025 (Artikel 4)
+GPAI-verplichtingen live :: 2 augustus 2025
+Hoog risico (Bijlage III) :: 2 december 2027 (uitgesteld door Digital Omnibus)
+Hoog risico (Bijlage I, incl. machines) :: 2 augustus 2028 (uitgesteld)
+Hoogste boete :: €35 mln of 7% van de wereldwijde omzet (verboden praktijken)
+Het OT-kritieke artikel :: Artikel 15 — nauwkeurigheid, robuustheid, cyberbeveiliging
+Toezichthouder :: nationale markttoezichtautoriteiten + het EU AI-Bureau (GPAI)
+```
 
 ## De risicogebaseerde structuur
 
@@ -95,19 +108,20 @@ De AI Act is gepubliceerd in het Publicatieblad en op **1 augustus 2024** in wer
 - **2 februari 2025** — de **verbodsbepalingen van Artikel 5** golden, en organisaties werden verantwoordelijk voor een basisniveau van **AI-geletterdheid** bij personeel dat AI-systemen bedient.
 - **2 augustus 2025** — de governancebepalingen en de verplichtingen voor **AI-modellen voor algemene doeleinden (GPAI)** golden.
 
-Toen verschoof het tijdpad. Op **7 mei 2026** bereikten onderhandelaars van de Raad, het Parlement en de Commissie een voorlopig politiek akkoord over de **Digital Omnibus inzake AI** — een vereenvoudigingspakket dat onder meer **de hoog-risicotermijnen uitstelde**. Volgens de overeengekomen tekst gelden zelfstandige **Bijlage III**-hoog-risicosystemen vanaf **2 december 2027** (een verschuiving ten opzichte van de oorspronkelijke 2 augustus 2026), en in producten ingebedde **Bijlage I**-AI vanaf **2 augustus 2028**. ([Hogan Lovells](https://www.hoganlovells.com/en/publications/eu-legislators-agree-to-delay-for-highrisk-ai-rules); [ComplianceHub](https://compliancehub.wiki/eu-digital-omnibus-ai-act-deadline-deferral-annex-iii-2027/))
+Toen verschoof het tijdpad. Op **7 mei 2026** bereikten onderhandelaars van de Raad, het Parlement en de Commissie een voorlopig politiek akkoord over de **Digital Omnibus inzake AI** — een vereenvoudigingspakket dat onder meer **de hoog-risicotermijnen uitstelde**. Dat akkoord is inmiddels wet geworden: het **Europees Parlement bekrachtigde het op 16 juni 2026**, en de **Raad gaf op 29 juni 2026 definitief groen licht**, met publicatie in het Publicatieblad binnen enkele weken en inwerkingtreding op de derde dag daarna. Volgens de vastgestelde tekst gelden zelfstandige **Bijlage III**-hoog-risicosystemen vanaf **2 december 2027** (een verschuiving ten opzichte van de oorspronkelijke 2 augustus 2026), en in producten ingebedde **Bijlage I**-AI vanaf **2 augustus 2028**. ([Raad van de EU](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/); [White & Case](https://www.whitecase.com/insight-alert/eu-agrees-digital-omnibus-deal-simplify-ai-rules))
 
-| Datum | Wat van toepassing is | Status |
-|---|---|---|
-| 1 aug 2024 | Verordening treedt in werking | Van kracht |
-| 2 feb 2025 | Verbodsbepalingen Art. 5; plicht AI-geletterdheid | Van kracht |
-| 2 aug 2025 | Governanceregels; verplichtingen GPAI-modellen | Van kracht |
-| 2 dec 2026 | Nieuw verbod (door AI gegenereerd intiem beeldmateriaal / CSAM) | Voorlopig (Omnibus) |
-| **2 dec 2027** | **Hoog-risicoverplichtingen voor zelfstandige Bijlage III-systemen** | **Voorlopig (Omnibus) — was 2 aug 2026** |
-| **2 aug 2028** | **Hoog-risicoverplichtingen voor in Bijlage I ingebedde AI (incl. machines)** | **Voorlopig (Omnibus)** |
+```timeline
+1 aug 2024 :: **Verordening treedt in werking.** De AI Act wordt gepubliceerd in het Publicatieblad; de klok voor gefaseerde toepassing start. *(Van kracht)*
+2 feb 2025 :: **Verbodsbepalingen Art. 5 + AI-geletterdheidsplicht Art. 4 gelden.** Verboden praktijken zijn onwettig; personeel dat AI bedient moet basisgeletterdheid hebben. *(Van kracht)*
+2 aug 2025 :: **Governanceregels + verplichtingen GPAI-modellen gelden.** Het AI-Bureau wordt opgericht; aanbieders van foundation-modellen nemen documentatie- en transparantieplichten op zich. *(Van kracht)*
+2 aug 2026 :: **Transparantie- en overige niet-uitgestelde bepalingen gelden.** Deze data zijn *niet* verschoven door de Omnibus en blijven staan. *(Van kracht)*
+2 dec 2026 :: **Nieuw verbod** op door AI gegenereerd niet-consensueel intiem beeldmateriaal en CSAM. *(Vastgesteld — Omnibus)*
+2 dec 2027 :: **Hoog-risicoverplichtingen voor zelfstandige Bijlage III-systemen** — uitgesteld van de oorspronkelijke 2 aug 2026. *(Vastgesteld — Omnibus)*
+2 aug 2028 :: **Hoog-risicoverplichtingen voor in Bijlage I ingebedde AI** (inclusief machines). *(Vastgesteld — Omnibus)*
+```
 
 > [!WARNING]
-> Behandel deze hoog-risicodata als **voorlopig**. De Digital Omnibus is op 7 mei 2026 politiek overeengekomen, maar krijgt pas rechtskracht zodra de wijzigingsverordening formeel is vastgesteld en gepubliceerd in het Publicatieblad. Plan op basis van de specifieke route van uw systeem, niet op basis van een krantenkop — en houd het Publicatieblad in de gaten, niet het persbericht. ([Gibson Dunn](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/))
+> Het uitstel is echt en nu juridisch verankerd — maar lees de kleine lettertjes. De Omnibus verschoof de *hoog-risicodata*; hij verschoof **niet** de verbodsbepalingen (live sinds februari 2025), de AI-geletterdheidsplicht (eveneens live), de GPAI-verplichtingen (live sinds augustus 2025), of de transparantiebepalingen die op **2 augustus 2026** ingaan. Heeft uw organisatie iets ingezet dat onder die bepalingen valt, dan levert de extra tijd op hoog risico u niets op. Plan op basis van de specifieke route van uw systeem en de bijbehorende datum, niet op basis van één krantenkop. ([Latham & Watkins](https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines))
 
 Het uitstel is een geschenk van tijd, geen gratie. De verbodsbepalingen en de AI-geletterdheidsplichten gelden nu al, de klok voor hoog-risicoclassificatie loopt door, en de twee traagste taken — het opbouwen van een inventaris en het doorlopen van de classificatieredenering — zijn precies de taken die u achter de rug wilt hebben voordat het papierwerk landt.
 
@@ -201,6 +215,26 @@ Bijlage III-systemen kunnen alleen aan de hoog-risicostatus ontsnappen als ze we
 
 Dit is de natuurlijke naadlijn tussen de AI Act en de operationele beveiligingsregimes. De SCADA-nabije AI van een netbeheerder kan een veiligheidscomponent zijn onder Bijlage III *én* zich bevinden binnen een systeem dat onder [NIS2](/nl/nis2) valt. De classificatievragen en de beveiligingsvragen worden gesteld over hetzelfde asset.
 
+### De ontsnapping van Artikel 6, lid 3 — en waarom het geen schouderophalen is
+
+Route 2 heeft een ontlastklep, en het loont deze precies te begrijpen, want het is de meest ingeroepen en meest verkeerd toegepaste bepaling. **Artikel 6, lid 3** zegt dat een in Bijlage III opgesomd AI-systeem **niet** hoog risico is als het geen significant risico vormt voor gezondheid, veiligheid of grondrechten — *óók niet door de uitkomst van besluitvorming niet wezenlijk te beïnvloeden* — wanneer aan **één** van vier voorwaarden is voldaan. ([Artikel 6, EU AI Act](https://artificialintelligenceact.eu/article/6/))
+
+```compare
+Valt BUITEN hoog risico (Art. 6, lid 3)
+- **(a) Beperkte procedurele taak** — de AI doet iets afgebakends en mechanisch, bv. gegevens structureren of omzetten naar een vast sjabloon
+- **(b) Verbetert een voltooide menselijke activiteit** — het verfijnt output die een mens al heeft geproduceerd, zonder de richting te bepalen
+- **(c) Detecteert besluitvormingspatronen / afwijkingen** — het signaleert afwijking van een eerder menselijk patroon maar is *niet* bedoeld om de menselijke beoordeling te vervangen of te beïnvloeden zonder toetsing
+- **(d) Voert een voorbereidende taak uit** — het bereidt een input voor een beoordeling voor, maar maakt de beoordeling niet zelf
+---
+Blijft BINNEN hoog risico
+- De AI **profileert een natuurlijke persoon** — profilering houdt een systeem altijd hoog risico, geen afwijking mogelijk
+- De AI **beïnvloedt de uitkomst wezenlijk** van een veiligheids- of rechtenrelevant besluit
+- De AI **vervangt** betekenisvol menselijk oordeel in de lus
+- U kunt niet **documenteren en verdedigen** waarom een van de vier voorwaarden werkelijk van toepassing is
+```
+
+Twee waarschuwingen maken het verschil tussen een verdedigbare classificatie en een kostbare fout. Ten eerste is de richtsnoer van de Commissie expliciet dat de vier voorwaarden **eng moeten worden uitgelegd** — het zijn uitgangen voor werkelijk perifere AI, geen achterdeur om een systeem te herclassificeren dat u liever niet beheerst. Ten tweede moet u, als u zich op Artikel 6, lid 3 beroept, het systeem **registreren** en uw beoordeling **vastleggen** vóór marktintroductie of ingebruikname; de bewijslast ligt bij u, en een markttoezichtautoriteit kan de redenering opvragen. ([Data Protection Report, toepassing van de richtsnoeren van de Commissie](https://www.dataprotectionreport.com/2026/05/is-my-use-case-a-high-risk-ai-system-applying-the-commissions-guidelines-and-next-steps/)) In een OT-context is de eerlijke lezing dat een systeem dat werkelijk is verbonden met een *veiligheidscomponent* zelden kwalificeert — zodra de output een gevaar kan bewegen, beïnvloedt het wezenlijk een uitkomst waar de wet om geeft.
+
 ## Wat hoog-risicosystemen moeten doen — Artikelen 8–15
 
 Hoog-risico AI-systemen moeten worden gebouwd en geëxploiteerd tegen een vastgestelde set vereisten. Lees Artikelen 8–15 als een levenscyclus, niet als een checklist die u eenmalig afvinkt.
@@ -229,6 +263,18 @@ Cruciaal is dat Artikel 15 AI-specifieke aanvalsklassen benoemt en maatregelen v
 > [!TIP]
 > In IT levert een gemanipuleerd model een verkeerd antwoord op een scherm op. In OT is **een gemanipuleerd model een gemanipuleerd proces.** Een adversariële input die een op visie gebaseerde veiligheidstrip om de tuin leidt, of een vergiftigd model dat een gevaarlijke toestand verkeerd beoordeelt, is een fysiek veiligheidsincident — geen datakwaliteitskwestie. Daarom hoort Artikel 15 thuis in uw beveiligingsprogramma voor besturingssystemen, in kaart gebracht via methoden zoals [IEC 62443](/nl/iec-62443), en niet weggeborgen als een papierwerkoefening van het AI-team. Het is ook waarom de [CRA](/nl/cra) en Artikel 15 elkaar overlappen: beide eisen security-by-design voor de digitale componenten in uw producten.
 
+### Artikel 9 — een risicobeheersysteem dat nooit sluit
+
+Artikel 9 is de ruggengraat waaraan de andere vereisten hangen. Het eist een **continu, iteratief** risicobeheerproces dat over de volledige levenscyclus van een hoog-risicosysteem loopt — geen eenmalige beoordeling die bij lancering wordt gearchiveerd. U identificeert en analyseert de bekende en redelijkerwijs te voorziene risico's die het systeem kan opleveren voor gezondheid, veiligheid en grondrechten; u schat de risico's uit *beoogd gebruik* én uit *redelijkerwijs te voorzien misbruik*; u beoordeelt risico's uit monitoringgegevens na marktintroductie; en u treft gerichte maatregelen om ze te beheersen. Voor OT is "redelijkerwijs te voorzien misbruik" de zinsnede die het werk doet. Een visiemodel dat is getraind op een schone, goed verlichte lijn krijgt te maken met een nachtdienst, een vuile lens, een verwisselde mal en een operator die een onderdeel tegen de behuizing leunt om een seconde te winnen — en het risicodossier moet die wereld hebben verbeeld, niet de demo. Artikel 9 duwt u ook naar toetsing aan **gedefinieerde metrieken en probabilistische drempels** die passen bij het beoogde doel, precies waar de faalmodi van een model ophouden een onderzoekscuriositeit te zijn en een gedocumenteerde veiligheidsgrens worden.
+
+### Artikel 10 — gegevensgovernance, waar het risico vaak ontstaat
+
+Artikel 10 vereist dat trainings-, validatie- en testdatasets **relevant, voldoende representatief en zoveel mogelijk foutloos en volledig** zijn met het oog op het beoogde doel, met passende aandacht voor de specifieke setting waarin het systeem wordt gebruikt. Het verplicht u datasets te onderzoeken op **bias** die gezondheid, veiligheid of grondrechten kan raken, en hiaten en tekortkomingen te identificeren. In een industriële context voelt het grondrechtenkader ver weg, maar de representativiteitseis is pure techniek: een defectdetectiemodel dat alleen op zomerproduct is getraind, of op de grondstof van één leverancier, of op de toleranties van één machine, is niet "representatief" voor het proces dat het moet bewaken — en dat gat is waar zowel kwaliteitsfalen als niet-conformiteiten onder Artikel 10 ontstaan. Goede gegevensgovernance is hier dezelfde discipline die het model laat *werken*; de wet maakt het slechts auditeerbaar.
+
+### Artikel 14 — menselijk toezicht, en de valkuil van automatiseringsbias
+
+Artikel 14 vereist dat hoog-risicosystemen zo worden ontworpen dat ze tijdens gebruik **effectief kunnen worden overzien door natuurlijke personen** — met de interface, de informatie en het gereedschap dat een mens werkelijk nodig heeft om de grenzen van het systeem te begrijpen, op afwijkend gedrag te letten, de output correct te interpreteren, te besluiten het in een bepaald geval *niet* te gebruiken, en **in te grijpen of te stoppen**. De subtiele eis is bescherming tegen **automatiseringsbias**: de goed gedocumenteerde menselijke neiging om een zelfverzekerde machine te veel te vertrouwen, vooral onder tijdsdruk. Een "mens in de lus" die op lijnsnelheid alles afstempelt wat het model zegt, is geen toezicht in de zin die Artikel 14 bedoelt. In een controlekamer betekent betekenisvol toezicht dat de operator kan zien *waarom* het systeem handelde, de bevoegdheid en de fysieke middelen heeft om het te overrulen, en is getraind om het op de juiste momenten te wantrouwen. Hier zijn AI-governance en OT-human-factors-engineering hetzelfde gesprek — en waar het [Cyber Digital Twin](/nl/cyber-digital-twin)-beeld van wat-met-wat-verbonden-is een operator helpt de blast radius van een model te doordenken vóór, niet tijdens, een incident.
+
 ## Aanbieders versus gebruiksverantwoordelijken
 
 De verordening splitst plichten naar rol, en het correct vaststellen van uw rol bepaalt uw verplichtingen. Het onderscheid is niet academisch — dezelfde organisatie kan gebruiksverantwoordelijke zijn voor het ene systeem en, zonder dat te bedoelen, de aanbieder van een ander.
@@ -242,9 +288,46 @@ De verordening splitst plichten naar rol, en het correct vaststellen van uw rol 
 
 **Aanbieders** dragen het gewicht, en in de praktijk is dat uw OEM, integrator of modelleverancier. ([Artikel 16](https://artificialintelligenceact.eu/article/16/)) **Gebruiksverantwoordelijken** dragen een lichtere maar concrete set plichten, en waar u AI inzet die werknemers raakt, kunt u hun ook informatie verschuldigd zijn. ([Artikel 26](https://artificialintelligenceact.eu/article/26/)) De grens tussen beide is degene die u in de gaten moet houden bij inkoop en bij elke firmware-upgrade: op het moment dat u het veiligheidsmodel van een leverancier hertraint op uw eigen data, heeft u die grens zeer waarschijnlijk overschreden.
 
+### De wijzigingsvalkuil, uitgeschreven
+
+Artikel 25 is waar een gebruiksverantwoordelijke stilletjes een aanbieder wordt. U erft de **volledige aanbiedersverplichtingen** voor een hoog-risicosysteem als u er **uw eigen naam of merk op zet**, als u een **substantiële wijziging** aanbrengt die het hoog risico houdt, of als u het **beoogde doel verandert** zodat een voorheen niet-hoog-risicosysteem hoog risico wordt. In een OT-context zijn alle drie doodgewone onderhoudsgebeurtenissen, vermomd als juridische drempels.
+
+```compare
+Blijft gebruiksverantwoordelijke (Art. 26-plichten)
+- Gebruikt het systeem **volgens de instructies** van de aanbieder
+- Past leveranciersupdates en patches toe binnen het beoogde doel
+- Voedt het met representatieve invoergegevens en monitort de output
+- Houdt logs bij, waarborgt bevoegd menselijk toezicht, rapporteert opkomend risico
+---
+Wordt aanbieder (Art. 25 → Art. 16-plichten)
+- **Hertraint** het model op eigen data om de prestaties te wijzigen
+- **Rebrandt** het systeem of levert het door onder eigen naam
+- **Herbestemt** het — een kwaliteitsmodel omgebouwd tot veiligheidsbeslisser
+- **Wijzigt** het substantieel voorbij het door de aanbieder verklaarde ontwerp
+```
+
+Dit doet ertoe vanwege kosten en aansprakelijkheid: de aanbieder bezit de conformiteitsbeoordeling, het technisch dossier, de conformiteitsverklaring, de monitoring na marktintroductie en het bewijs onder Artikel 15. De grens per ongeluk overschrijden — een goedbedoelde hertraining om hinderlijke trips te verminderen — kan die volledige last op u overdragen zonder dat iemand iets tekent. Controleer voordat u wijzigt; documenteer het besluit hoe dan ook.
+
 ## Een noot over AI voor algemene doeleinden
 
-Los van de risicoklassen stelt de verordening regels vast voor **AI-modellen voor algemene doeleinden (GPAI)** — de grote foundation-modellen die voor veel taken kunnen worden aangepast. Hun verplichtingen (documentatie, auteursrechtbeleid, samenvattingen van trainingsdata, en aanvullende plichten voor modellen met "systeemrisico") golden vanaf **2 augustus 2025**, en de Commissie kan GPAI-aanbieders rechtstreeks beboeten. Voor een industriële operator is dit meestal upstream — u consumeert GPAI via tools in plaats van het te trainen — maar als u een foundation-model fine-tunet en in een product inbedt, komen de vragen over aanbiederschap weer in beeld.
+Los van de risicoklassen stelt de verordening regels vast voor **AI-modellen voor algemene doeleinden (GPAI)** — de grote foundation-modellen die voor veel taken kunnen worden aangepast. Hun verplichtingen (technische documentatie, een beleid voor auteursrechtnaleving, een openbare samenvatting van de trainingsdata, en samenwerking met het AI-Bureau) golden vanaf **2 augustus 2025**, en de Commissie — via het AI-Bureau — kan GPAI-aanbieders rechtstreeks controleren en beboeten onder Artikel 101.
+
+Bovenop deze plichten zit een zwaardere klasse: modellen met **systeemrisico**. Onder **Artikel 51** wordt aangenomen dat een GPAI-model systeemrisico draagt wanneer de cumulatieve rekenkracht voor de training **10²⁵ floating-point-operaties (FLOPs)** overschrijdt — een drempel gericht op de grootste frontier-modellen. Die aanbieders nemen extra plichten op zich: modelevaluatie en adversariële toetsing (red-teaming), beoordeling en mitigatie van systeemrisico, het volgen en melden van ernstige incidenten, en een basisniveau van cyberbeveiliging voor het model en de fysieke infrastructuur ervan. Veel aanbieders voldoen hieraan via de **GPAI-gedragscode**, het co-regulerende instrument dat de Commissie faciliteerde om een vermoeden van naleving te geven.
+
+Voor een industriële operator is dit meestal upstream — u consumeert GPAI via tools in plaats van het te trainen — maar de naadlijn doet er op twee plekken toe. Ten eerste, als u een **foundation-model fine-tunet en in een product inbedt** of onder eigen naam op de markt brengt, komen de vragen over aanbiederschap weer in beeld, en afhankelijk van de betrokken rekenkracht kunt u zelfs downstream GPAI-plichten erven. Ten tweede is een GPAI-aangedreven assistent die u op operationele data richt een **gegevensgovernance- en vertrouwelijkheidsbeslissing** voordat het een gemak is — precies het soort "shadow AI"-blootstelling dat pas ongeïnventariseerd opduikt wanneer iemand gaat zoeken.
+
+> [!IMPORTANT]
+> Let op **"shadow AI"** aan de OT-kant van het huis. Engineers die proceslogs in een publieke chatbot plakken om een storing te debuggen, een leverancierstool die stilletjes een gehost model aanroept, een assistent gefinetuned op uw onderhoudshistorie — elk is een AI-systeem dat op de inventaris hoort en verplichtingen kan dragen (geletterdheid, transparantie, vertrouwelijkheid, en soms meer). U kunt niet classificeren of beheersen wat niemand heeft opgeschreven.
+
+## AI-geletterdheid is al wet — Artikel 4
+
+Te midden van het debat over uitgestelde hoog-risicodata is één live verplichting makkelijk te missen: **Artikel 4** vereist dat aanbieders en gebruiksverantwoordelijken een **voldoende niveau van AI-geletterdheid** waarborgen bij hun personeel en bij eenieder die namens hen AI-systemen bedient, en het geldt sinds **2 februari 2025**. Het is niet gebonden aan de hoog-risicoklasse en is **niet** uitgesteld door de Omnibus.
+
+"Voldoende" is proportioneel aan de context: het schaalt mee met de rol van de persoon, de systemen die zij aanraken, en wie erdoor wordt geraakt. Voor een industriële operator betekent dit dat de mensen die een AI-ondersteunde inspectiecel bedienen, een adaptieve controller afstemmen, of de output van een model interpreteren, op een voor hun functie passend niveau moeten begrijpen wat het systeem doet, waar het faalt, en wanneer het te wantrouwen. Dit is de human-factors-tegenhanger van de toezichtplicht van Artikel 14: toezicht werkt alleen als de toezichthoudende persoon de geletterdheid heeft om het uit te oefenen. Een kort, op de rol toegesneden programma met een registratie van wie waarop is getraind is zowel het compliance-artefact als datgene wat het risico op de vloer daadwerkelijk verlaagt.
+
+## Grondrechtenkader en de FRIA
+
+De AI Act is in de kern een grondrechteninstrument, en dat komt tot uiting in één plicht van de gebruiksverantwoordelijke die het vermelden waard is, ook al bijt deze zelden in pure OT: bepaalde gebruiksverantwoordelijken van hoog-risicosystemen — met name overheidsinstanties en sommige aanbieders van essentiële diensten — moeten vóór het eerste gebruik een **grondrechteneffectbeoordeling (FRIA)** onder Artikel 27 uitvoeren, met een beschrijving van het proces, de getroffen personen, de risico's en de maatregelen voor menselijk toezicht en governance. Voor een puur mechanische veiligheidscomponent is het grondrechtenoppervlak klein; voor AI die werknemers, toegang of het publiek raakt — een klantbeïnvloedend beslissysteem van een nutsbedrijf, personeelsmonitoring — is het reëel, en het stapelt bovenop een eventuele AVG-verplichting in plaats van deze te vervangen. De veilige houding is de FRIA-vraag tijdens de classificatie te stellen in plaats van deze tijdens een audit te ontdekken.
 
 ## Sancties
 
@@ -259,6 +342,30 @@ Artikel 99 stelt de plafonds vast, en het zijn de hoogste in het EU-digitale rec
 
 Boetes zijn proportioneel, en voor kmo's en start-ups is het bedrag begrensd op het laagste van het percentage of het absolute bedrag — een bewuste verzachting voor kleinere bedrijven. ([Artikel 99](https://artificialintelligenceact.eu/article/99/); [Artikel 101](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-101))
 
+## Conformiteitsbeoordeling, CE-markering en de EU-databank
+
+Een hoog-risicosysteem bereikt de markt niet op de kracht van goede bedoelingen. Voordat het op de markt wordt gebracht of in gebruik wordt genomen, moet de aanbieder een **conformiteitsbeoordeling** uitvoeren — de formele controle dat aan Artikelen 8–15 is voldaan — en de route hangt af van hoe het systeem is geclassificeerd.
+
+Voor de meeste **Bijlage III**-hoog-risicosystemen staat de verordening een conformiteitsbeoordeling toe op basis van **interne controle (Bijlage VI)**: de aanbieder verifieert zelf dat zijn kwaliteitsmanagementsysteem en technische documentatie aan de vereisten voldoen, zonder derde partij. Voor bepaalde systemen — met name sommige biometrische gebruikscasussen — moet de beoordeling in plaats daarvan een **aangemelde instantie (Bijlage VII)** betrekken, een geaccrediteerde onafhankelijke beoordelaar. Voor in **Bijlage I** ingebedde AI wordt de AI-conformiteitscontrole opgenomen in de **bestaande productconformiteitsbeoordeling** onder de relevante harmonisatiewetgeving (zodat de AI-veiligheidscomponent van een machine wordt beoordeeld via de eigen procedure van de Machineverordening, niet via een aparte, parallelle). ([Artikel 43, EU AI Act](https://artificialintelligenceact.eu/article/43/))
+
+De uitkomst van een geslaagde beoordeling is een keten van tastbare artefacten:
+
+| Stap | Wat het is | Wie het bewaart |
+|---|---|---|
+| **Technische documentatie (Bijlage IV)** | Het bewijsdossier dat conformiteit aantoont | Aanbieder, actueel gehouden |
+| **EU-conformiteitsverklaring** | De ondertekende juridische verklaring van naleving door de aanbieder | Aanbieder |
+| **CE-markering** | Het zichtbare merk dat het product in de EU mag circuleren | Op het product / begeleidende documenten |
+| **Registratie in de EU-databank** | Zelfstandige Bijlage III-systemen vastgelegd vóór marktintroductie | Aanbieder (en gebruiksverantwoordelijken, voor sommige overheidsgebruiken) |
+| **Monitoring na marktintroductie** | Doorlopende verzameling van prestatie- en incidentgegevens | Aanbieder |
+
+De praktische implicatie voor een gebruiksverantwoordelijke is een korte inkoopchecklist met echt gewicht: **is er een conformiteitsverklaring, is het systeem CE-gemarkeerd, en kan de aanbieder de gebruiksaanwijzing met de nauwkeurigheidsmetrieken en beperkingen van Artikel 13 overleggen?** Is het antwoord nee, dan kijkt u ofwel niet naar een conform hoog-risicosysteem, ofwel bent u dichter bij het aanbieder-zijn dan u denkt.
+
+## Geharmoniseerde normen en het vermoeden van conformiteit
+
+Niemand wil Artikelen 8–15 voor elk systeem vanaf de grond opnieuw beargumenteren. De verordening gebruikt het klassieke mechanisme van het **Nieuwe Wetgevingskader**: waar een aanbieder een **geharmoniseerde norm** volgt waarvan de referentie in het Publicatieblad is gepubliceerd, geniet het systeem een **vermoeden van conformiteit** met de bijbehorende vereisten. Met andere woorden: voldoe aan de norm en de bewijslast valt grotendeels weg. De normen zelf worden op verzoek van de Commissie ontwikkeld door **CEN-CENELEC (Joint Technical Committee 21)** en bestrijken risicobeheer, datakwaliteit, robuustheid, cyberbeveiliging, transparantie en menselijk toezicht voor AI.
+
+Voor OT is dit de pragmatische route, en ze sluit aan op de beveiligingstechnische normen die u mogelijk al gebruikt. De cyberbeveiligingseis van Artikel 15 is bij uitstek waar AI-specifieke normen en normen voor de beveiliging van besturingssystemen zoals [IEC 62443](/nl/iec-62443) samenkomen: de geharmoniseerde AI-normen geven u het vermoeden van conformiteit, terwijl de zones, conduits en beveiligingsniveaus van 62443 u de *methode* geven om de robuustheid en cyberbeveiliging aan te tonen die de norm verwacht. Uw bewijs één keer opbouwen, tegen beide, is veel goedkoper dan het twee keer opbouwen.
+
 ## De koppeling met de Machineverordening
 
 De AI Act staat niet op zichzelf. De **Machineverordening (EU) 2023/1230** — die de oude Machinerichtlijn vervangt en van toepassing is vanaf **20 januari 2027** — moderniseert machineveiligheid voor een wereld van software, connectiviteit en AI, en maakt voor het eerst **cyberbeveiliging tot een essentiële gezondheids- en veiligheidseis**. ([EUR-Lex 2023/1230](https://eur-lex.europa.eu/eli/reg/2023/1230/oj/eng); [Nemko](https://www.nemko.com/blog/eu-machinery-regulation-2023/1230))
@@ -266,6 +373,31 @@ De AI Act staat niet op zichzelf. De **Machineverordening (EU) 2023/1230** — d
 De herziene essentiële eisen van Bijlage III behandelen nu AI-gedrag, cyberbeveiliging, samenwerking tussen mens en robot, IoT-connectiviteit, de veiligheidsimpact van software-updates en functionele veiligheid. In gewone taal: veiligheidsgerelateerde besturingssystemen en software moeten immuun zijn voor zowel toevallige storingen *als* opzettelijke aanvallen, en het aansluiten van een apparaat op een machine mag geen gevaar veroorzaken. Cyberbeveiliging in machines is niet langer optioneel — het maakt deel uit van het veiligheidsdossier.
 
 De twee wetten zijn doelbewust met elkaar verweven. Een veiligheidsgerelateerde AI-component in een machine is hoog risico onder de AI Act, en de machine zelf moet voldoen aan de veiligheids- en beveiligingseisen van de Machineverordening. De EU heeft expliciet stappen gezet om de overlap te verduidelijken, zodat een fabrikant niet twee tegenstrijdige conformiteitstrajecten voor één machine hoeft te doorlopen. ([IAPP](https://iapp.org/news/a/eu-agrees-to-amend-ai-act-clarifies-overlap-with-machinery-rules)) Voor een machinebouwer of een operator die nieuwe apparatuur in bedrijf stelt, loopt het compliant traject via **beide tegelijk** — precies waarom het classificatiewerk en de beveiligingstechniek in dezelfde kamer moeten plaatsvinden. Zie de pagina [Machineverordening](/nl/machine-act) voor de kant van machineveiligheid in dit verhaal.
+
+## Een uitgewerkt voorbeeld: een AI-visietrip op een pers van 400 ton
+
+Abstractie verbergt de beslissingen. Loop één concreet systeem door de hele keten en de wet houdt op een muur van artikelen te zijn.
+
+Een stanslijn draait een **mechanische pers van 400 ton**. Om operators te beschermen vervangt de bouwer het vaste lichtgordijn door een **AI-visiesysteem** dat de gevarenzone bewaakt en **de pers opdracht geeft te stoppen** als het een hand, arm of lichaam binnen de beveiligde zone tijdens de slag detecteert. Het leert een hand van een schaduw te onderscheiden, een handschoen van een onderdeel, stoom van een indringing.
+
+- **Is het hoog risico?** Ja — via **Route 1 (Bijlage I)**. Het visiesysteem is een **veiligheidscomponent van een machine** (Verordening (EU) 2023/1230), en machines vallen onder Bijlage I-harmonisatiewetgeving. De classificatie is automatisch; er is geen ontsnapping via Artikel 6, lid 3, omdat de output van het model *wezenlijk beïnvloedt* of een gevaarlijke beweging stopt. Zodra de beslissing de pers kan stoppen, verricht het veiligheidsrelevant werk.
+- **Wie is de aanbieder?** De **machinebouwer** die het visiesysteem integreert en de pers onder eigen naam op de markt brengt. Hij bezit de technische documentatie, het risicobeheerdossier (Artikel 9), de gegevensgovernance voor de trainingsset (Artikel 10), de conformiteitsverklaring en de CE-markering.
+- **Wat eist Artikel 15?** Dat het model **nauwkeurig** is (een verklaard, getest detectiepercentage onder echte verlichting, stof en snelheid), **robuust** (fail-safe — een verloren frame, een geblokkeerde lens of een out-of-distribution input moet de pers laten stoppen, niet doorlaten), en **cyberveilig** (een aanvaller mag geen vervalst frame kunnen invoeren, het model vergiftigen, of een **adversariële patch** maken — een sticker of patroon dat het model een hand als achtergrond laat classificeren op precies het verkeerde moment).
+- **Waar bijt de Machineverordening?** Parallel. Het **veiligheidsgerelateerde besturingssysteem** moet voldoen aan de essentiële gezondheids- en veiligheidseisen — inclusief de nieuwe **cyberbeveiligings**eis — en de AI-conformiteitscontrole vouwt zich in de eigen conformiteitsbeoordeling van de machine in plaats van als apart traject te lopen.
+- **Wat als de operator het hertraint?** Als de fabrieksoperator het **model hertraint op zijn eigen product** om valse trips te verminderen, kan hij het systeem **substantieel wijzigen** en **de aanbieder worden** — met overname van de volledige documentatie-, conformiteits- en Artikel 15-last waarvan hij dacht dat die bij de bouwer lag.
+- **Waar leeft het beveiligingsprogramma?** De risico's van adversariële patches en datavergiftiging zijn **OT-dreigingen**, in kaart gebracht via [IEC 62443](/nl/iec-62443)-zones en -conduits en staand op hetzelfde risicoregister voor besturingssystemen als blootstelling via toegang op afstand en ransomware — niet in een aparte AI-silo.
+
+Eén pers, één model, en vier regimes die eraan raken: de AI Act, de Machineverordening, [NIS2](/nl/nis2) bij de operator, en de [CRA](/nl/cra) op de digitale componenten erin. Daarom pleit OXOT ervoor ze te beantwoorden met **één samenhangend model van de fabriek**, niet vier losse projecten.
+
+## Sectorspecifieke aandachtspunten
+
+De classificatielogica is gemeenschappelijk, maar waar AI landt verschilt per sector:
+
+- **Energie en net.** AI in onderstationsautomatisering, DER-orkestratie en belastingprognose kan een **Bijlage III**-veiligheidscomponent zijn in de elektriciteitsvoorziening. Beschikbaarheid domineert, en een gemanipuleerde prognose of beschermingsnabij model is een stabiliteitsrisico, niet enkel een datakwaliteitskwestie.
+- **Water en afvalwater.** Doseeroptimalisatie en afwijkingsdetectie zitten dicht bij volksgezondheidsuitkomsten; een AI die een chemisch setpoint aanpast, beïnvloedt wezenlijk een veiligheidsrelevant proces, wat het naar hoog risico trekt.
+- **Discrete productie.** De Bijlage I / machine-route is de gebruikelijke: op visie gebaseerde veiligheidstrips, AI-geleide cobots, adaptieve controllers op gevaarlijke bewegingen. De aanbieder/gebruiksverantwoordelijke-valkuil rond hertraining is hier het scherpst.
+- **Farma en medische productie.** AI in hulpmiddelen en productie overlapt de verordeningen voor **medische hulpmiddelen / IVD** (eveneens Bijlage I), waardoor conformiteitsregimes zich op hetzelfde systeem stapelen.
+- **Chemie en procesindustrie.** AI nabij **veiligheidsinstrumentatiesystemen** moet worden verzoend met functionele-veiligheidsregimes — een natuurlijke fit voor de risicogebaseerde zones van IEC 62443 in plaats van een bolt-on.
 
 ## Wat het betekent voor OT — en voor uw rol
 
@@ -306,6 +438,18 @@ Ja, en nee. De Digital Omnibus heeft zelfstandige Bijlage III-systemen uitgestel
 **Maakt het de verordening uit welke AI-techniek wij hebben gebruikt?**
 Nee. Ze is technologieneutraal. Een regelgebaseerd systeem en een diep neuraal netwerk worden hetzelfde behandeld als ze dezelfde veiligheidsrelevante taak op dezelfde plek uitvoeren. Wat telt is de *functie en context*, niet het algoritme.
 
+**Ons Bijlage III-systeem doet een "beperkte taak" — kunnen we hoog risico overslaan?**
+Mogelijk, via de afwijking van Artikel 6, lid 3 — maar alleen als u het werkelijk in een van de vier voorwaarden kunt plaatsen (beperkte procedurele taak, verbetering van een voltooide menselijke activiteit, detectie van patronen zonder menselijk oordeel te vervangen, of een voorbereidende taak) *én* het geen persoon profileert of een veiligheids- of rechtenrelevante uitkomst wezenlijk beïnvloedt. U moet het systeem eerst registreren en de beoordeling vastleggen, en de voorwaarden worden eng uitgelegd. Voor een echte veiligheidscomponent is de uitgang zelden van toepassing.
+
+**Hebben we een aangemelde instantie nodig om onze hoog-risico-AI te beoordelen?**
+Meestal niet voor industriële systemen. De meeste Bijlage III-systemen gebruiken conformiteitsbeoordeling via interne controle (Bijlage VI); een aangemelde instantie (Bijlage VII) is vooral vereist voor bepaalde biometrische gebruikscasussen. Voor in machines ingebedde AI (Bijlage I) wordt de AI-controle opgenomen in de bestaande conformiteitsbeoordeling van de machine in plaats van er een aparte toe te voegen.
+
+**Is een norm volgen genoeg om te voldoen?**
+Het volgen van een geharmoniseerde norm waarvan de referentie in het Publicatieblad is gepubliceerd, geeft een **vermoeden van conformiteit** met de bijbehorende vereisten — wat de bewijslast sterk in uw voordeel verschuift, al kan een markttoezichtautoriteit nog steeds onderzoeken. De AI-normen worden geschreven door CEN-CENELEC JTC 21, en voor de cyberbeveiliging van Artikel 15 sluiten ze goed aan op IEC 62443.
+
+**En personeel dat gewoon een AI-tool gebruikt — nu al een verplichting?**
+Ja. De AI-geletterdheidsplicht van Artikel 4 is live en is niet uitgesteld. Iedereen die namens u AI bedient, heeft een begripsniveau nodig dat past bij de rol. Een kort, op de rol toegesneden trainingsprogramma met een registratie van voltooiing is het verwachte artefact.
+
 ## Bronnen
 
 - Verordening (EU) 2024/1689 (AI Act), officiële tekst — [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng)
@@ -314,6 +458,9 @@ Nee. Ze is technologieneutraal. Een regelgebaseerd systeem en een diep neuraal n
 - Artikel 15 — nauwkeurigheid, robuustheid en cyberbeveiliging — [AI Act Service Desk (EC)](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-15)
 - Artikel 16 — verplichtingen aanbieder — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/16/)
 - Artikel 26 — verplichtingen gebruiksverantwoordelijke — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/26/)
+- Artikel 43 — conformiteitsbeoordeling (Bijlage VI interne controle / Bijlage VII aangemelde instantie) — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/43/)
+- Artikel 6, lid 3 afwijking & classificatierichtsnoeren van de Commissie — [Data Protection Report](https://www.dataprotectionreport.com/2026/05/is-my-use-case-a-high-risk-ai-system-applying-the-commissions-guidelines-and-next-steps/)
+- Digital Omnibus — definitieve vaststelling door de Raad, 29 juni 2026 — [Raad van de EU](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/); [White & Case](https://www.whitecase.com/insight-alert/eu-agrees-digital-omnibus-deal-simplify-ai-rules)
 - Artikel 99 — sancties — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/99/)
 - Artikel 101 — boetes GPAI-modellen — [AI Act Service Desk (EC)](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-101)
 - Bijlage I — Unie-harmonisatiewetgeving (incl. machines) — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/annex/1/)

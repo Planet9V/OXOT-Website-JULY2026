@@ -21,10 +21,23 @@ This page explains what the AI Act requires, how an industrial AI system crosses
 - **Providers** (who develop or place AI on the market) carry the heavy obligations; **deployers** (who use it) carry a lighter but real set of duties. Modify a system enough and a deployer *becomes* a provider.
 - High-risk systems must satisfy Articles 8–15: risk management, data governance, logging, transparency, human oversight, and — the line OT teams should read twice — **accuracy, robustness and cybersecurity** under **Article 15**.
 - Penalties reach **€35 million or 7% of worldwide turnover** for prohibited practices, and **€15 million or 3%** for breaching high-risk obligations. ([Article 99](https://artificialintelligenceact.eu/article/99/))
-- The high-risk deadlines were **pushed back** by the **Digital Omnibus** agreed on **7 May 2026** — standalone Annex III systems now apply from **2 December 2027**, and product-embedded Annex I AI from **2 August 2028**. ([Gibson Dunn](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/))
+- The high-risk deadlines were **pushed back** by the **Digital Omnibus** — politically agreed on 7 May 2026, **endorsed by the European Parliament on 16 June 2026**, and **given final adoption by the Council on 29 June 2026**, with Official Journal publication imminent. Standalone Annex III systems now apply from **2 December 2027**, and product-embedded Annex I AI from **2 August 2028**. ([Council of the EU, 29 June 2026](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/))
 
 > [!NOTE]
 > The honest headline for industry: **most industrial AI is not high-risk.** Process optimisation, quality analytics and maintenance forecasting that never touch a safety or control function sit in the minimal tier. The real work is finding the handful of systems that *do*, classifying them correctly, and governing them without smothering the useful ninety percent.
+
+```keyfacts
+Instrument :: Regulation (EU) 2024/1689 — directly applicable, no national transposition
+In force since :: 1 August 2024, phased application
+Prohibitions live :: 2 February 2025 (Article 5)
+AI-literacy duty live :: 2 February 2025 (Article 4)
+GPAI obligations live :: 2 August 2025
+High-risk (Annex III) :: 2 December 2027 (deferred by Digital Omnibus)
+High-risk (Annex I, incl. machinery) :: 2 August 2028 (deferred)
+Top fine :: €35 mln or 7% of worldwide turnover (prohibited practices)
+The OT-critical article :: Article 15 — accuracy, robustness, cybersecurity
+Regulator :: national market-surveillance authorities + the EU AI Office (GPAI)
+```
 
 ## The risk-based structure
 
@@ -95,19 +108,20 @@ The AI Act was published in the Official Journal and entered into force on **1 A
 - **2 February 2025** — the **Article 5 prohibitions** applied, and organisations became responsible for a baseline of **AI literacy** among staff who operate AI systems.
 - **2 August 2025** — governance provisions and the obligations for **general-purpose AI (GPAI) models** applied.
 
-Then the timeline moved. On **7 May 2026**, negotiators from the Council, Parliament and Commission reached a provisional political agreement on the **Digital Omnibus on AI** — a simplification package that, among other things, **deferred the high-risk deadlines**. Under the agreed text, standalone **Annex III** high-risk systems apply from **2 December 2027** (a slip from the original 2 August 2026), and product-embedded **Annex I** AI applies from **2 August 2028**. ([Hogan Lovells](https://www.hoganlovells.com/en/publications/eu-legislators-agree-to-delay-for-highrisk-ai-rules); [ComplianceHub](https://compliancehub.wiki/eu-digital-omnibus-ai-act-deadline-deferral-annex-iii-2027/))
+Then the timeline moved. On **7 May 2026**, negotiators from the Council, Parliament and Commission reached a provisional political agreement on the **Digital Omnibus on AI** — a simplification package that, among other things, **deferred the high-risk deadlines**. That agreement has since hardened into law: the **European Parliament endorsed it on 16 June 2026**, and the **Council gave its final green light on 29 June 2026**, with publication in the Official Journal expected within weeks and entry into force on the third day after. Under the adopted text, standalone **Annex III** high-risk systems apply from **2 December 2027** (a slip from the original 2 August 2026), and product-embedded **Annex I** AI applies from **2 August 2028**. ([Council of the EU](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/); [White & Case](https://www.whitecase.com/insight-alert/eu-agrees-digital-omnibus-deal-simplify-ai-rules))
 
-| Date | What applies | Status |
-|---|---|---|
-| 1 Aug 2024 | Regulation enters into force | In force |
-| 2 Feb 2025 | Art. 5 prohibitions; AI-literacy duty | In force |
-| 2 Aug 2025 | Governance rules; GPAI model obligations | In force |
-| 2 Dec 2026 | New prohibition (AI-generated intimate imagery / CSAM) | Provisional (Omnibus) |
-| **2 Dec 2027** | **High-risk obligations for standalone Annex III systems** | **Provisional (Omnibus) — was 2 Aug 2026** |
-| **2 Aug 2028** | **High-risk obligations for Annex I product-embedded AI (incl. machinery)** | **Provisional (Omnibus)** |
+```timeline
+1 Aug 2024 :: **Regulation enters into force.** The AI Act is published in the Official Journal; the phased application clock starts. *(In force)*
+2 Feb 2025 :: **Article 5 prohibitions + Article 4 AI-literacy duty apply.** Banned practices are illegal; staff who operate AI must have baseline literacy. *(In force)*
+2 Aug 2025 :: **Governance rules + GPAI model obligations apply.** The AI Office stands up; general-purpose-model providers take on documentation and transparency duties. *(In force)*
+2 Aug 2026 :: **Transparency and other non-deferred provisions apply.** These dates were *not* pushed back by the Omnibus and remain live. *(In force)*
+2 Dec 2026 :: **New prohibition** on AI-generated non-consensual intimate imagery and CSAM. *(Adopted — Omnibus)*
+2 Dec 2027 :: **High-risk obligations for standalone Annex III systems** — deferred from the original 2 Aug 2026. *(Adopted — Omnibus)*
+2 Aug 2028 :: **High-risk obligations for Annex I product-embedded AI** (including machinery). *(Adopted — Omnibus)*
+```
 
 > [!WARNING]
-> Treat these high-risk dates as **provisional**. The Digital Omnibus was politically agreed on 7 May 2026 but takes legal effect only once the amending regulation is formally adopted and published in the Official Journal. Plan against your specific system's route, not against a headline date — and watch the Official Journal, not the press release. ([Gibson Dunn](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/))
+> The deferral is real and now legally grounded — but read the fine print. The Omnibus moved the *high-risk* dates; it did **not** move the prohibitions (live since February 2025), the AI-literacy duty (also live), the GPAI obligations (live since August 2025), or the transparency provisions due **2 August 2026**. If your organisation deployed anything caught by those, the extra time on high-risk does nothing for you. Plan against your specific system's route and its specific date, not against a single headline. ([Latham & Watkins](https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines))
 
 The deferral is a gift of time, not a reprieve. The prohibitions and AI-literacy duties are live now, the clock on high-risk classification is running, and the two slowest tasks — building an inventory and reasoning through classification — are exactly the ones you want behind you before the paperwork lands.
 
@@ -201,6 +215,26 @@ Annex III systems can escape high-risk status only if they genuinely do not pose
 
 This is the natural seam between the AI Act and the operational-security regimes. A grid operator's SCADA-adjacent AI can be an Annex III safety component *and* sit inside a system governed by [NIS2](/en/nis2). The classification questions and the security questions are asked of the same asset.
 
+### The Article 6(3) escape — and why it is not a shrug
+
+Route 2 has a release valve, and it is worth understanding precisely, because it is the provision most often invoked and most often misapplied. **Article 6(3)** says an AI system listed in Annex III is **not** high-risk if it does not pose a significant risk of harm to health, safety or fundamental rights — *including by not materially influencing the outcome of decision-making* — where **any one** of four conditions is met. ([Article 6, EU AI Act](https://artificialintelligenceact.eu/article/6/))
+
+```compare
+Falls OUT of high-risk (Art. 6(3))
+- **(a) Narrow procedural task** — the AI does something bounded and mechanical, e.g. structuring or transforming data to a fixed template
+- **(b) Improves a completed human activity** — it polishes or refines output a human has already produced, without setting the direction
+- **(c) Detects decision-making patterns / deviations** — it flags divergence from a prior human pattern but is *not* meant to replace or influence the human assessment without proper review
+- **(d) Performs a preparatory task** — it prepares an input for an assessment, but does not itself make the assessment
+---
+Stays IN high-risk
+- The AI **profiles a natural person** — profiling always keeps a system high-risk, no derogation available
+- The AI **materially influences the outcome** of a safety or rights-relevant decision
+- The AI **replaces** meaningful human judgement in the loop
+- You cannot **document and defend** why one of the four conditions genuinely applies
+```
+
+Two cautions make the difference between a defensible classification and a costly mistake. First, the Commission's guidance is explicit that the four conditions must be **interpreted narrowly** — they are exits for genuinely peripheral AI, not a loophole to reclassify a system you would rather not govern. Second, if you rely on Article 6(3) you must **register** the system and **record your assessment** before placing it on the market or putting it into service; the burden of proof sits with you, and a market-surveillance authority can demand the reasoning. ([Data Protection Report, applying the Commission's guidelines](https://www.dataprotectionreport.com/2026/05/is-my-use-case-a-high-risk-ai-system-applying-the-commissions-guidelines-and-next-steps/)) In an OT setting the honest read is that a system genuinely wired into a *safety component* rarely qualifies — the moment its output can move a hazard, it is materially influencing an outcome the law cares about.
+
 ## What high-risk systems must do — Articles 8–15
 
 High-risk AI systems must be built and operated against a defined set of requirements. Read Articles 8–15 as a lifecycle, not a checklist you clear once.
@@ -229,6 +263,18 @@ Crucially, Article 15 names AI-specific attack classes and requires measures —
 > [!TIP]
 > In IT, a manipulated model produces a wrong answer on a screen. In OT, **a manipulated model is a manipulated process.** An adversarial input that fools a vision-based safety trip, or a poisoned model that misjudges a hazardous condition, is a physical-safety event — not a data-quality issue. This is why Article 15 belongs in your control-system security programme, mapped through methods like [IEC 62443](/en/iec-62443), and not filed away as an AI-team paperwork exercise. It is also why the [CRA](/en/cra) and Article 15 overlap: both demand security-by-design for the digital components inside your products.
 
+### Article 9 — a risk-management system that never closes
+
+Article 9 is the spine the other requirements hang from. It demands a **continuous, iterative** risk-management process running across the entire lifecycle of a high-risk system — not a one-time assessment filed at launch. You identify and analyse the known and reasonably foreseeable risks the system can pose to health, safety and fundamental rights; you estimate the risks that emerge from *intended use* and from *reasonably foreseeable misuse*; you evaluate risks from post-market monitoring data; and you adopt targeted measures to manage them. For OT, the phrase that does the work is "reasonably foreseeable misuse." A vision model trained on a clean, well-lit line will meet a night shift, a dirty lens, a swapped fixture and an operator who leans a part against the housing to save a second — and the risk file has to have imagined that world, not the demo. Article 9 also pushes you toward testing against **defined metrics and probabilistic thresholds** appropriate to the intended purpose, which is exactly where a model's failure modes stop being a research curiosity and start being a documented safety boundary.
+
+### Article 10 — data governance, where the risk is often born
+
+Article 10 requires that training, validation and testing datasets be **relevant, sufficiently representative, and to the best extent possible free of errors and complete** in view of the intended purpose, with appropriate attention to the specific setting in which the system will be used. It obliges you to examine datasets for **bias** that could affect health, safety or fundamental rights, and to identify gaps and shortcomings. In an industrial context the fundamental-rights framing feels distant, but the representativeness requirement is pure engineering: a defect-detection model trained only on summer product, or on one supplier's raw material, or on a single machine's tolerances, is not "representative" of the process it will police — and that gap is where both quality failures and Article 10 non-conformities are born. Good data governance here is the same discipline that makes the model *work*; the Act simply makes it auditable.
+
+### Article 14 — human oversight, and the automation-bias trap
+
+Article 14 requires that high-risk systems be designed so that they can be **effectively overseen by natural persons** during use — with the interface, the information and the tooling a person actually needs to understand the system's limits, watch for signs of anomalous behaviour, correctly interpret its output, decide *not* to use it in a given case, and **intervene or stop** it. The subtle requirement is guarding against **automation bias**: the well-documented human tendency to over-trust a confident machine, especially under time pressure. A "human in the loop" who rubber-stamps whatever the model says at line speed is not oversight in the sense Article 14 means. In a control room, meaningful oversight means the operator can see *why* the system acted, has the authority and the physical means to override it, and has been trained to distrust it at the right moments. This is where AI governance and OT human-factors engineering are the same conversation — and where the [Cyber Digital Twin](/en/cyber-digital-twin) view of what-connects-to-what helps an operator reason about a model's blast radius before, not during, an incident.
+
 ## Providers versus deployers
 
 The Act splits duties by role, and getting your role right decides your obligations. The distinction is not academic — the same organisation can be a deployer of one system and, without meaning to, the provider of another.
@@ -242,9 +288,46 @@ The Act splits duties by role, and getting your role right decides your obligati
 
 **Providers** carry the weight, and in practice that is your OEM, integrator or model vendor. ([Article 16](https://artificialintelligenceact.eu/article/16/)) **Deployers** carry a lighter but concrete set of duties, and where you deploy AI that affects workers, you may owe them information as well. ([Article 26](https://artificialintelligenceact.eu/article/26/)) The line between the two is the one to watch at procurement and at every firmware upgrade: the moment you retrain a vendor's safety model on your own data, you have very likely stepped across it.
 
+### The modification trap, spelled out
+
+Article 25 is where a deployer quietly turns into a provider. You inherit the **full provider obligations** for a high-risk system if you **put your own name or trademark on it**, if you make a **substantial modification** that keeps it high-risk, or if you **change its intended purpose** such that a previously non-high-risk system becomes high-risk. In an OT context all three are ordinary maintenance events dressed as legal thresholds.
+
+```compare
+Stays a deployer (Art. 26 duties)
+- Uses the system **as instructed** by the provider
+- Applies vendor updates and patches within the intended purpose
+- Feeds it representative input data and monitors output
+- Keeps logs, ensures competent human oversight, reports emerging risk
+---
+Becomes a provider (Art. 25 → Art. 16 duties)
+- **Retrains** the model on its own data to change performance
+- **Re-brands** the system or ships it onward under its own name
+- **Repurposes** it — a quality model rewired to make a safety decision
+- **Substantially modifies** it beyond the provider's declared design
+```
+
+The reason this matters is cost and liability: the provider owns conformity assessment, the technical file, the declaration of conformity, post-market monitoring and the Article 15 evidence. Crossing the line by accident — a well-meant retrain to reduce nuisance trips — can transfer that entire burden to you without anyone signing anything. Check before you modify; document the decision either way.
+
 ## A note on general-purpose AI
 
-Separate from the risk tiers, the Act sets rules for **general-purpose AI (GPAI) models** — the large foundation models that can be adapted to many tasks. Their obligations (documentation, copyright policy, training-data summaries, and additional duties for models posing "systemic risk") applied from **2 August 2025**, and the Commission can fine GPAI providers directly. For an industrial operator this is mostly upstream — you consume GPAI through tools rather than train it — but if you fine-tune a foundation model and embed it in a product, the provider questions come back into view.
+Separate from the risk tiers, the Act sets rules for **general-purpose AI (GPAI) models** — the large foundation models that can be adapted to many tasks. Their obligations (technical documentation, a copyright-compliance policy, a public summary of training data, and cooperation with the AI Office) applied from **2 August 2025**, and the Commission — through the AI Office — can supervise and fine GPAI providers directly under Article 101.
+
+A second, heavier tier sits on top: models with **systemic risk**. Under **Article 51**, a GPAI model is presumed to carry systemic risk when the cumulative compute used for its training exceeds **10²⁵ floating-point operations (FLOPs)** — a threshold aimed at the largest frontier models. Those providers take on extra duties: model evaluation and adversarial testing (red-teaming), systemic-risk assessment and mitigation, serious-incident tracking and reporting, and a baseline of cybersecurity for the model and its physical infrastructure. Many providers meet these through the **GPAI Code of Practice**, the co-regulatory instrument the Commission facilitated to give a presumption of compliance.
+
+For an industrial operator this is mostly upstream — you consume GPAI through tools rather than train it — but the seam matters in two places. First, if you **fine-tune a foundation model and embed it in a product** or place it on the market under your own name, the provider questions come back into view, and depending on the compute involved you could even inherit downstream GPAI duties. Second, a GPAI-powered assistant that you point at operational data is a **data-governance and confidentiality** decision before it is a convenience — which is exactly the kind of "shadow AI" exposure that turns up uninventoried until someone goes looking.
+
+> [!IMPORTANT]
+> Watch for **"shadow AI"** on the OT side of the house. Engineers pasting process logs into a public chatbot to debug a fault, a vendor tool quietly calling a hosted model, an assistant fine-tuned on your maintenance history — each is an AI system that belongs on the inventory and may carry obligations (literacy, transparency, confidentiality, and occasionally more). You cannot classify or govern what nobody has written down.
+
+## AI literacy is already law — Article 4
+
+Amid the debate over deferred high-risk dates, one live obligation is easy to miss: **Article 4** requires providers and deployers to ensure a **sufficient level of AI literacy** among their staff and anyone operating AI systems on their behalf, and it has applied since **2 February 2025**. It is not tied to the high-risk tier and it was **not** deferred by the Omnibus.
+
+"Sufficient" is proportionate to context: it scales with the person's role, the systems they touch, and who is affected. For an industrial operator that means the people who run an AI-assisted inspection cell, tune an adaptive controller, or interpret a model's output should understand — at a level fit for their job — what the system does, where it fails, and when to distrust it. This is the human-factors counterpart to Article 14's oversight requirement: oversight only works if the person overseeing has the literacy to exercise it. A short, role-scoped programme with a record of who was trained and on what is both the compliance artefact and the thing that actually reduces risk on the floor.
+
+## Fundamental-rights framing and the FRIA
+
+The AI Act is, at its root, a fundamental-rights instrument, and that shows up in one deployer obligation worth flagging even though it rarely bites in pure OT: certain deployers of high-risk systems — notably public bodies and some providers of essential services — must carry out a **fundamental-rights impact assessment (FRIA)** under Article 27 before first use, describing the process, the affected persons, the risks, and the human-oversight and governance measures. For a purely mechanical safety component the fundamental-rights surface is small; for AI that touches workers, access, or the public — a utility's customer-affecting decision system, workforce monitoring — it is real, and it stacks on top of any GDPR obligation rather than replacing it. The safe posture is to ask the FRIA question during classification rather than discover it during an audit.
 
 ## Penalties
 
@@ -259,6 +342,30 @@ Article 99 sets the ceilings, and they are the highest in EU digital law. Like t
 
 Fines are proportionate, and for SMEs and start-ups the figure is capped at whichever of the percentage or the absolute amount is **lower** — a deliberate softening for smaller firms. ([Article 99](https://artificialintelligenceact.eu/article/99/); [Article 101](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-101))
 
+## Conformity assessment, CE marking and the EU database
+
+A high-risk system does not reach the market on the strength of good intentions. Before it is placed on the market or put into service, the provider must run a **conformity assessment** — the formal check that Articles 8–15 are met — and the route depends on how the system is classified.
+
+For most **Annex III** high-risk systems, the Act allows conformity assessment based on **internal control (Annex VI)**: the provider itself verifies that its quality-management system and technical documentation satisfy the requirements, without a third party. For certain systems — notably some biometric use-cases — assessment must instead involve a **notified body (Annex VII)**, an accredited independent assessor. For **Annex I** product-embedded AI, the AI conformity check is folded into the **existing product conformity assessment** under the relevant harmonisation law (so a machine's AI safety component is assessed through the Machinery Regulation's own procedure, not a separate parallel one). ([Article 43, EU AI Act](https://artificialintelligenceact.eu/article/43/))
+
+The output of a successful assessment is a chain of tangible artefacts:
+
+| Step | What it is | Who holds it |
+|---|---|---|
+| **Technical documentation (Annex IV)** | The evidentiary file proving conformity | Provider, kept current |
+| **EU declaration of conformity** | The provider's signed legal statement of compliance | Provider |
+| **CE marking** | The visible mark that the product may circulate in the EU | On the product / accompanying docs |
+| **Registration in the EU database** | Standalone Annex III systems logged before market entry | Provider (and deployers, for some public-authority uses) |
+| **Post-market monitoring** | Ongoing collection of performance and incident data | Provider |
+
+The practical implication for a deployer is a short procurement checklist that carries real weight: **is there a declaration of conformity, is the system CE-marked, and can the provider produce the instructions for use with the accuracy metrics and limits Article 13 requires?** If the answer is no, you are either not looking at a compliant high-risk system, or you are closer to being its provider than you think.
+
+## Harmonised standards and the presumption of conformity
+
+Nobody wants to argue Articles 8–15 from first principles for every system. The Act uses the classic **New Legislative Framework** mechanism: where a provider follows a **harmonised standard** whose reference has been published in the Official Journal, the system enjoys a **presumption of conformity** with the corresponding requirements. In other words, meet the standard and the burden of proving compliance largely lifts. The standards themselves are being developed by **CEN-CENELEC (Joint Technical Committee 21)** at the Commission's request, covering risk management, data quality, robustness, cybersecurity, transparency and human oversight for AI.
+
+For OT this is the pragmatic path, and it dovetails with the security-engineering standards you may already use. Article 15's cybersecurity requirement, in particular, is where AI-specific standards and control-system security standards like [IEC 62443](/en/iec-62443) converge: the AI harmonised standards give you the presumption of conformity, while 62443's zones, conduits and security-level framework give you the *method* to demonstrate the robustness and cybersecurity the standard expects. Building your evidence once, against both, is far cheaper than building it twice.
+
 ## The Machinery Regulation connection
 
 The AI Act does not stand alone. The **Machinery Regulation (EU) 2023/1230** — which replaces the old Machinery Directive and applies from **20 January 2027** — modernises machine safety for a world of software, connectivity and AI, and for the first time makes **cybersecurity an essential health-and-safety requirement**. ([EUR-Lex 2023/1230](https://eur-lex.europa.eu/eli/reg/2023/1230/oj/eng); [Nemko](https://www.nemko.com/blog/eu-machinery-regulation-2023/1230))
@@ -266,6 +373,31 @@ The AI Act does not stand alone. The **Machinery Regulation (EU) 2023/1230** —
 The revised Annex III essential requirements now address AI behaviour, cybersecurity, human-robot collaboration, IoT connectivity, the safety impact of software updates and functional safety. In plain terms: safety-related control systems and software must be immune to both accidental failure *and* deliberate attack, and connecting a device to a machine must not create a hazard. Cybersecurity in machinery is no longer optional — it is part of the safety case.
 
 The two laws are stitched together on purpose. A safety-related AI component in a machine is high-risk under the AI Act, and the machine itself must satisfy the Machinery Regulation's safety and security requirements. The EU has moved explicitly to clarify the overlap so that a manufacturer does not face two contradictory conformity paths for one machine. ([IAPP](https://iapp.org/news/a/eu-agrees-to-amend-ai-act-clarifies-overlap-with-machinery-rules)) For a machine builder or an operator commissioning new equipment, the compliant route runs through **both at once** — which is exactly why the classification work and the security engineering want to happen in the same room. See the [Machinery Regulation](/en/machine-act) page for the machine-safety side of this story.
+
+## A worked example: an AI vision trip on a 400-tonne press
+
+Abstraction hides the decisions. Walk one concrete system through the whole chain and the Act stops being a wall of articles.
+
+A stamping line runs a **400-tonne mechanical press**. To protect operators, the builder replaces the fixed light curtain with an **AI vision system** that watches the danger zone and **commands the press to stop** if it detects a hand, arm or body inside the guarded area during the stroke. It learns to distinguish a hand from a shadow, a glove from a part, steam from an intrusion.
+
+- **Is it high-risk?** Yes — via **Route 1 (Annex I)**. The vision system is a **safety component of machinery** (Reg. (EU) 2023/1230), and machinery is Annex I harmonisation law. The classification is automatic; there is no Article 6(3) escape, because the model's output *materially influences* whether a hazardous motion stops. The moment its decision can stop the press, it is doing safety-relevant work.
+- **Who is the provider?** The **machine builder** that integrates the vision system and places the press on the market under its own name. It owns the technical documentation, the risk-management file (Article 9), the data governance for the training set (Article 10), the declaration of conformity and CE marking.
+- **What does Article 15 demand?** That the model be **accurate** (a declared, tested detection rate under real lighting, dust and speed), **robust** (fails safe — a dropped frame, an occluded lens or an out-of-distribution input must trip the press, not wave it through), and **cyber-secure** (an attacker must not be able to feed a spoofed frame, poison the model, or craft an **adversarial patch** — a sticker or pattern that makes the model classify a hand as background at exactly the wrong instant).
+- **Where does the Machinery Regulation bite?** In parallel. The **safety-related control system** must meet the essential health-and-safety requirements — including the new **cybersecurity** requirement — and the AI conformity check folds into the machine's own conformity assessment rather than running as a separate track.
+- **What if the operator retrains it?** If the plant operator **retrains the model on its own product** to cut false trips, it may **substantially modify** the system and **become the provider** — inheriting the full documentation, conformity and Article 15 burden it thought belonged to the builder.
+- **Where does the security programme live?** The adversarial-patch and data-poisoning risks are **OT threats**, mapped through [IEC 62443](/en/iec-62443) zones and conduits and sitting on the same control-system risk register as remote-access exposure and ransomware — not in a separate AI silo.
+
+One press, one model, and four regimes brushing against it: the AI Act, the Machinery Regulation, [NIS2](/en/nis2) at the operator, and the [CRA](/en/cra) on the digital components inside. This is why OXOT argues for answering them with **one coherent model of the plant**, not four disconnected projects.
+
+## Sector-specific notes
+
+The classification logic is common, but where AI lands differs by sector:
+
+- **Energy and grid.** AI in substation automation, DER orchestration and load forecasting can be an **Annex III** safety component in electricity supply. Availability dominates, and a manipulated forecast or protection-adjacent model is a stability risk, not just a data-quality one.
+- **Water and wastewater.** Dosing optimisation and anomaly detection sit close to public-health outcomes; an AI that adjusts a chemical setpoint is materially influencing a safety-relevant process, which pulls it toward high-risk.
+- **Discrete manufacturing.** The Annex I / machinery route is the common one: vision-based safety trips, AI-guided cobots, adaptive controllers on hazardous motions. The provider/deployer trap around retraining is most acute here.
+- **Pharma and med-manufacturing.** AI in devices and production overlaps the **Medical Devices / IVD** regulations (also Annex I), stacking conformity regimes on the same system.
+- **Chemical and process.** AI adjacent to **safety-instrumented systems** must be reconciled with functional-safety regimes — a natural fit for the risk-based zones of IEC 62443 rather than a bolt-on.
 
 ## What it means for OT — and for your role
 
@@ -306,6 +438,18 @@ Yes, and no. The Digital Omnibus deferred standalone Annex III systems to 2 Dece
 **Does the Act care which AI technique we used?**
 No. It is technology-neutral. A rule-based system and a deep neural network are treated the same if they do the same safety-relevant job in the same place. What matters is the *function and context*, not the algorithm.
 
+**Our Annex III system does a "narrow task" — can we skip high-risk?**
+Possibly, under the Article 6(3) derogation — but only if you can genuinely place it in one of the four conditions (narrow procedural task, improving a completed human activity, detecting patterns without replacing human judgement, or a preparatory task) *and* it does not profile a person or materially influence a safety- or rights-relevant outcome. You must register the system and record the assessment first, and the conditions are interpreted narrowly. For a real safety component the exit rarely applies.
+
+**Do we need a notified body to assess our high-risk AI?**
+Usually not for industrial systems. Most Annex III systems use internal-control conformity assessment (Annex VI); a notified body (Annex VII) is required mainly for certain biometric use-cases. For AI embedded in machinery (Annex I), the AI check is folded into the machine's existing conformity assessment rather than adding a separate one.
+
+**Is following a standard enough to comply?**
+Following a harmonised standard whose reference is published in the Official Journal gives a **presumption of conformity** with the matching requirements — which shifts the burden strongly in your favour, though a market-surveillance authority can still investigate. The AI standards are being written by CEN-CENELEC JTC 21, and for Article 15 cybersecurity they align well with IEC 62443.
+
+**What about staff who just use an AI tool — any obligation now?**
+Yes. The Article 4 AI-literacy duty is live and was not deferred. Anyone operating AI on your behalf needs a level of understanding proportionate to their role. A short, role-scoped training programme with a record of completion is the expected artefact.
+
 ## Sources
 
 - Regulation (EU) 2024/1689 (AI Act), official text — [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng)
@@ -314,6 +458,9 @@ No. It is technology-neutral. A rule-based system and a deep neural network are 
 - Article 15 — accuracy, robustness and cybersecurity — [AI Act Service Desk (EC)](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-15)
 - Article 16 — provider obligations — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/16/)
 - Article 26 — deployer obligations — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/26/)
+- Article 43 — conformity assessment (Annex VI internal control / Annex VII notified body) — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/43/)
+- Article 6(3) derogation & Commission classification guidelines — [Data Protection Report](https://www.dataprotectionreport.com/2026/05/is-my-use-case-a-high-risk-ai-system-applying-the-commissions-guidelines-and-next-steps/)
+- Digital Omnibus — Council final adoption, 29 June 2026 — [Council of the EU](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/); [White & Case](https://www.whitecase.com/insight-alert/eu-agrees-digital-omnibus-deal-simplify-ai-rules)
 - Article 99 — penalties — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/article/99/)
 - Article 101 — GPAI model fines — [AI Act Service Desk (EC)](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-101)
 - Annex I — Union harmonisation legislation (incl. machinery) — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/annex/1/)
