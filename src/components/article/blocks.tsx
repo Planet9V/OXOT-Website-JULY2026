@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useInView, useReducedMotion, animate as motionAnimate } from "motion/react";
 import { ArrowUpDown, ArrowUp, ArrowDown, ArrowRight } from "lucide-react";
 import { parseInline, plainText } from "./inline";
+import { SpotlightCard } from "@/components/motion/fx";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -295,4 +296,144 @@ export function CtaCard({ heading, body, label, href }: { heading: string; body:
       </div>
     </RevealBlock>
   );
+}
+
+/* ─────────────────────────── cards grid ───────────────────────────
+   ```cards
+   Title :: /en/href :: Short description
+   ...
+   ```
+   Renders a responsive grid of spotlight link tiles. Used by Services,
+   Frameworks, About and the Cyber Digital Twin page. */
+export function CardGrid({ items }: { items: { title: string; href: string; desc: string }[] }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const reduce = useReducedMotion();
+  const external = (h: string) => /^https?:\/\//.test(h);
+  return (
+    <motion.div
+      ref={ref}
+      className="my-8 grid gap-4 sm:grid-cols-2"
+      initial="hide"
+      animate={inView ? "show" : "hide"}
+      variants={{ show: { transition: { staggerChildren: 0.06 } } }}
+    >
+      {items.map((it, i) => {
+        const inner = (
+          <SpotlightCard className="h-full rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50">
+            <div className="flex items-start justify-between gap-3">
+              <span className="font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{parseInline(it.title, `cardt-${i}`)}</span>
+              <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+            </div>
+            {it.desc && <p className="mt-2 text-sm text-muted-foreground">{parseInline(it.desc, `cardd-${i}`)}</p>}
+          </SpotlightCard>
+        );
+        return (
+          <motion.div
+            key={i}
+            variants={reduce ? undefined : { hide: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } } }}
+          >
+            {it.href
+              ? <Link href={it.href} target={external(it.href) ? "_blank" : undefined} rel={external(it.href) ? "noopener noreferrer" : undefined} className="block h-full no-underline">{inner}</Link>
+              : inner}
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}
+
+/* ─────────────────── interactive framework selector ───────────────────
+   The Frameworks-hub centerpiece: pick your role → see exactly which EU
+   frameworks apply and why, each linking to its detailed (upgraded) page. */
+const FW: Record<string, { name: string; tag: Record<"en" | "nl", string> }> = {
+  nis2: { name: "NIS2", tag: { en: "Directive (EU) 2022/2555", nl: "Richtlijn (EU) 2022/2555" } },
+  cra: { name: "Cyber Resilience Act", tag: { en: "Regulation (EU) 2024/2847", nl: "Verordening (EU) 2024/2847" } },
+  "ai-act": { name: "AI Act", tag: { en: "Regulation (EU) 2024/1689", nl: "Verordening (EU) 2024/1689" } },
+  "machine-act": { name: "Machinery Regulation", tag: { en: "Regulation (EU) 2023/1230", nl: "Verordening (EU) 2023/1230" } },
+  "iec-62443": { name: "IEC 62443", tag: { en: "International standard", nl: "Internationale norm" } },
+  "ts-50701": { name: "TS 50701", tag: { en: "CENELEC Technical Specification", nl: "CENELEC technische specificatie" } },
+};
+
+type RoleDef = { id: string; label: Record<"en" | "nl", string>; apply: { slug: string; why: Record<"en" | "nl", string> }[] };
+const ROLES: RoleDef[] = [
+  { id: "operator", label: { en: "I operate an essential / important service", nl: "Ik exploiteer een essentiële/belangrijke dienst" }, apply: [
+    { slug: "nis2", why: { en: "Your primary obligation — ten risk-management measures and 24/72-hour reporting.", nl: "Uw primaire verplichting — tien risicobeheersmaatregelen en 24/72-uursmelding." } },
+    { slug: "iec-62443", why: { en: "The engineering method to meet NIS2 and prove it.", nl: "De technische methode om aan NIS2 te voldoen en het aan te tonen." } },
+  ] },
+  { id: "manufacturer", label: { en: "I make products with digital elements", nl: "Ik maak producten met digitale elementen" }, apply: [
+    { slug: "cra", why: { en: "Security-by-design, SBOM and 24-hour vulnerability reporting.", nl: "Security-by-design, SBOM en 24-uurs kwetsbaarheidsmelding." } },
+    { slug: "iec-62443", why: { en: "Secure development (4-1) and component security (4-2).", nl: "Veilige ontwikkeling (4-1) en componentbeveiliging (4-2)." } },
+  ] },
+  { id: "machine", label: { en: "I build or integrate machinery", nl: "Ik bouw of integreer machines" }, apply: [
+    { slug: "machine-act", why: { en: "Protection against corruption becomes part of the safety case.", nl: "Bescherming tegen corruptie wordt onderdeel van het veiligheidsdossier." } },
+    { slug: "ai-act", why: { en: "An AI safety component in machinery is automatically high-risk.", nl: "Een AI-veiligheidscomponent in een machine is automatisch hoogrisico." } },
+    { slug: "cra", why: { en: "The digital components are products with digital elements too.", nl: "De digitale componenten zijn óók producten met digitale elementen." } },
+    { slug: "iec-62443", why: { en: "The method threading through all of them.", nl: "De methode die door alle regimes heen loopt." } },
+  ] },
+  { id: "ai", label: { en: "I deploy AI in a safety / high-risk role", nl: "Ik zet AI in voor een veiligheids-/hoogrisicorol" }, apply: [
+    { slug: "ai-act", why: { en: "Classification, human oversight and Article 15 robustness.", nl: "Classificatie, menselijk toezicht en robuustheid onder Artikel 15." } },
+    { slug: "iec-62443", why: { en: "Article 15 robustness maps to control-system security.", nl: "Robuustheid onder Artikel 15 sluit aan op besturingsbeveiliging." } },
+  ] },
+  { id: "rail", label: { en: "I operate or supply railways", nl: "Ik exploiteer of lever voor spoorwegen" }, apply: [
+    { slug: "ts-50701", why: { en: "The rail-specific cybersecurity method, tied to the safety lifecycle.", nl: "De spoorspecifieke cybersecuritymethode, gekoppeld aan de veiligheidslevenscyclus." } },
+    { slug: "nis2", why: { en: "Rail transport is an essential-entity sector.", nl: "Spoorvervoer is een sector van essentiële entiteiten." } },
+    { slug: "iec-62443", why: { en: "The foundation TS 50701 extends.", nl: "Het fundament dat TS 50701 uitbreidt." } },
+  ] },
+];
+
+export function FrameworkSelector({ locale = "en" }: { locale?: string }) {
+  const l = (locale === "nl" ? "nl" : "en") as "en" | "nl";
+  const [role, setRole] = React.useState(ROLES[0].id);
+  const reduce = useReducedMotion();
+  const current = ROLES.find((r) => r.id === role) ?? ROLES[0];
+  return (
+    <div className="my-8 rounded-2xl border border-border bg-muted/20 p-5 sm:p-6">
+      <div className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        {l === "nl" ? "Welke kaders gelden voor mij?" : "Which frameworks apply to me?"}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {ROLES.map((r) => (
+          <button
+            key={r.id}
+            onClick={() => setRole(r.id)}
+            className={cn("rounded-full border px-3.5 py-1.5 text-sm transition-colors",
+              role === r.id ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground")}
+          >
+            {r.label[l]}
+          </button>
+        ))}
+      </div>
+      <motion.div key={role} className="mt-5 grid gap-3 sm:grid-cols-2"
+        initial="hide" animate="show" variants={{ show: { transition: { staggerChildren: 0.07 } } }}>
+        {current.apply.map((a, i) => {
+          const fw = FW[a.slug];
+          return (
+            <motion.div key={a.slug + i}
+              variants={reduce ? undefined : { hide: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } } }}>
+              <Link href={`/${locale}/${a.slug}`} className="group block h-full rounded-xl border border-border bg-card p-4 no-underline transition-colors hover:border-primary/60">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-semibold text-foreground group-hover:text-primary" style={{ fontFamily: "var(--font-display)" }}>{fw?.name ?? a.slug}</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+                </div>
+                <div className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{fw?.tag[l]}</div>
+                <p className="mt-2 text-sm text-muted-foreground">{a.why[l]}</p>
+              </Link>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+      <p className="mt-4 text-xs text-muted-foreground">
+        {l === "nl"
+          ? "Eén connected, AI-ondersteunde installatie kan meerdere regimes tegelijk raken — wij behandelen ze als één risicogebaseerd programma."
+          : "One connected, AI-enabled line can trigger several regimes at once — we handle them as a single risk-based programme."}
+      </p>
+    </div>
+  );
+}
+
+/* Named client widgets, addressed from markdown via ```widget\n<name>\n``` */
+export function Widget({ name, locale }: { name: string; locale?: string }) {
+  if (name === "framework-selector") return <FrameworkSelector locale={locale} />;
+  return null;
 }

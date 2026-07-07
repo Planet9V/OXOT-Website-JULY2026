@@ -16,7 +16,10 @@ const KICKER: Record<string, { en: string; nl: string }> = {
   "machine-act": { en: "EU Regulation 2023/1230", nl: "EU-verordening 2023/1230" },
   "iec-62443": { en: "International Standard", nl: "Internationale norm" },
   "ts-50701": { en: "CENELEC Technical Specification", nl: "CENELEC technische specificatie" },
-  frameworks: { en: "OT Frameworks & Regulations", nl: "OT-kaders & regelgeving" }
+  frameworks: { en: "OT Frameworks & Regulations", nl: "OT-kaders & regelgeving" },
+  services: { en: "What we do", nl: "Wat we doen" },
+  "cyber-digital-twin": { en: "OXOT Platform", nl: "OXOT-platform" },
+  about: { en: "About OXOT", nl: "Over OXOT" }
 };
 
 export async function generateMetadata({

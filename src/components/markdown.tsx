@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel, type Slide } from "./carousel";
 import { parseInline, slugify } from "./article/inline";
-import { RevealBlock, KeyFacts, TimelineBlock, CompareBlock, DataTable, CtaCard } from "./article/blocks";
+import { RevealBlock, KeyFacts, TimelineBlock, CompareBlock, DataTable, CtaCard, CardGrid, Widget } from "./article/blocks";
 
 /**
  * Dependency-free, server-side Markdown renderer for CMS page bodies. Parsing
@@ -118,6 +118,15 @@ export function MarkdownContent({ source, toc = true, locale = "en" }: { source:
         const label = (parts[0]?.trim()) || (nl ? "Neem contact op" : "Talk to an expert");
         const href = (parts[1]?.trim()) || `/${locale}/contact`;
         blocks.push(<CtaCard key={key++} heading={heading} body={body} label={label} href={href} />);
+      } else if (lang === "cards") {
+        // "Title :: /href :: Short description" per line.
+        const items = content.split("\n").map((l) => l.trim()).filter(Boolean).map((l) => {
+          const p = l.split("::").map((s) => s.trim());
+          return { title: p[0] ?? "", href: p[1] ?? "", desc: p.slice(2).join(" :: ").trim() };
+        }).filter((it) => it.title);
+        blocks.push(<CardGrid key={key++} items={items} />);
+      } else if (lang === "widget") {
+        blocks.push(<Widget key={key++} name={content.trim().split("\n")[0].trim()} locale={locale} />);
       } else if (lang === "html") {
         blocks.push(<RevealBlock key={key++}><div className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} /></RevealBlock>);
       } else {
