@@ -298,6 +298,12 @@ Persoonlijk risico :: bestuurders aansprakelijk voor toezichttekort (Art. 20)
 
 De boete is niet de zwaarste hefboom in het arsenaal. Voor **essentiële entiteiten** kan een toezichthouder onder **Artikel 32(5)**, wanneer andere handhavingsmaatregelen zijn uitgeput, om een rechterlijke of administratieve maatregel vragen die de **certificering of vergunning voor een deel of het geheel van de diensten opschort**, en — scherper nog — een **natuurlijke persoon met bestuurs- of vertegenwoordigingsbevoegdheid (een CEO of wettelijk vertegenwoordiger) tijdelijk verbieden bestuursfuncties uit te oefenen**. Dat is een sanctie tegen de persoon, niet alleen de rechtspersoon. In samenhang met de aansprakelijkheid van Artikel 20 is de boodschap ondubbelzinnig: aanhoudende, verwijtbare niet-naleving kan de baan van een bestuurder kosten, niet slechts een regel op de winst-en-verliesrekening. In Nederland wordt deze handhavingsarchitectuur belegd via de Cyberbeveiligingswet en de aangewezen sectorale toezichthouders.
 
+```cta
+€10 miljoen of 2% van de omzet — plus persoonlijke aansprakelijkheid voor uw bestuur.
+NIS2-boetes raken de organisatie én haar leiding. Wij vertalen de tien maatregelen naar een verdedigbaar, bestuursklaar OT-beveiligingsprogramma.
+Toets mijn NIS2-blootstelling :: /nl/contact
+```
+
 ## Waar de wet de fabrieksvloer raakt
 
 NIS2 gebruikt nergens de woorden "PLC" of "SCADA," maar de allgevaren-, risicogebaseerde eisen komen recht op OT neer. Drie spanningsvelden verdienen het om eerlijk te worden benoemd.

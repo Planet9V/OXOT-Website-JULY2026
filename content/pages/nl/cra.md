@@ -383,6 +383,12 @@ Niet-naleving van de **essentiële eisen of de kernverplichtingen van de fabrika
 
 Net als bij NIS2 en de [AI Act](/nl/ai-act) is de koppeling aan de omzet weloverwogen: productbeveiliging is nu een risico op bestuursniveau, geen begrotingspost die leeft en sterft binnen engineering. ([Pillsbury — CRA-vereisten](https://www.pillsburylaw.com/en/news-and-insights/eu-cyber-resilience-act-requirements-products-software.html))
 
+```cta
+Niet zeker of u fabrikant, integrator of importeur bent onder de CRA?
+Uw rol of productklasse verkeerd inschatten is de duurste fout in CRA-gereedheid — en de klokken voor ondersteuning en melding lopen al. Wij brengen het in kaart voordat ze aflopen.
+Bepaal mijn CRA-verplichtingen :: /nl/contact
+```
+
 ## Product of systeem? De scopingvraag die alles bepaalt
 
 Nog voordat één Bijlage I-maatregel wordt gekozen, bepaalt één bedrieglijk eenvoudige vraag het hele compliancetraject: **wat is precies uw "product"?** De CRA beantwoordt dit in **Artikel 3(1)** — een product met digitale elementen is *"een software- of hardwareproduct en de bijbehorende oplossingen voor gegevensverwerking op afstand, met inbegrip van software- of hardwarecomponenten die afzonderlijk in de handel worden gebracht."* ([EUR-Lex, officiële tekst](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))

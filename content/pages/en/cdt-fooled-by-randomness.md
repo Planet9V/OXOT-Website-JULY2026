@@ -181,6 +181,12 @@ The conventional answer says: I am secure because I have the controls the framew
 
 Frameworks like [IEC 62443](/en/iec-62443) and [NIS2](/en/nis2) are not the enemy in this picture — they encode real, hard-earned knowledge, and no serious operator should ignore them. But they were built to describe the right side of the table well, and they were never going to be able to describe the left side, because the left side is specific to your equipment, your people, your patch history, and this week's geopolitics — not to the average facility the framework had to be written for. See our broader [Frameworks](/en/frameworks) overview for how these standards relate to one another and where each one's blind spots sit.
 
+```cta
+Would you rather see your own probability landscape than argue about averages?
+The Cyber Digital Twin turns your OT estate into a model you can stress-test — so the few paths that reach a safety-critical system show up before an attacker finds them.
+See your probability landscape :: /en/contact
+```
+
 ## The bottom line
 
 Nassim Taleb spent his career arguing that the financial world was systematically fooling itself — that the tools it used to measure risk were quietly built to hide risk instead, that the narratives constructed to explain success were artifacts of survivorship bias, and that the only honest position was the uncomfortable one: full probability space, epistemic humility, mathematical rigor, no shortcuts back to a comforting story.

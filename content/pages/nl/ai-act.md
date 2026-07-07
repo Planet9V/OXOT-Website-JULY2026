@@ -342,6 +342,12 @@ Artikel 99 stelt de plafonds vast, en het zijn de hoogste in het EU-digitale rec
 
 Boetes zijn proportioneel, en voor kmo's en start-ups is het bedrag begrensd op het laagste van het percentage of het absolute bedrag — een bewuste verzachting voor kleinere bedrijven. ([Artikel 99](https://artificialintelligenceact.eu/article/99/); [Artikel 101](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-101))
 
+```cta
+€35 miljoen of 7% van de omzet — maar is uw industriële AI eigenlijk hoog risico?
+Meestal niet. De waarde zit in het vinden van de weinige systemen die dat wél zijn en ze goed beheersen. Wij inventariseren en classificeren uw AI tegen de verordening.
+Classificeer mijn AI-systemen :: /nl/contact
+```
+
 ## Conformiteitsbeoordeling, CE-markering en de EU-databank
 
 Een hoog-risicosysteem bereikt de markt niet op de kracht van goede bedoelingen. Voordat het op de markt wordt gebracht of in gebruik wordt genomen, moet de aanbieder een **conformiteitsbeoordeling** uitvoeren — de formele controle dat aan Artikelen 8–15 is voldaan — en de route hangt af van hoe het systeem is geclassificeerd.

@@ -90,7 +90,7 @@ export default async function CmsPage({
         slug={slug}
         locale={locale}
       >
-        <MarkdownContent source={page.body} toc={false} />
+        <MarkdownContent source={page.body} toc={false} locale={locale} />
       </ArticleShell>
     </main>
   );

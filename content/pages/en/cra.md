@@ -383,6 +383,12 @@ Non-compliance with the **essential requirements or the core manufacturer obliga
 
 As with NIS2 and the [AI Act](/en/ai-act), the turnover linkage is deliberate: product security is now a board-level commercial risk, not a line item that lives and dies in engineering. ([Pillsbury — CRA requirements](https://www.pillsburylaw.com/en/news-and-insights/eu-cyber-resilience-act-requirements-products-software.html))
 
+```cta
+Not sure if you're a manufacturer, integrator, or importer under the CRA?
+Getting your role and product class wrong is the most expensive mistake in CRA readiness — and the support-period and reporting clocks are already running. We map it before they run out.
+Scope my CRA obligations :: /en/contact
+```
+
 ## Product or system? The scoping question that changes everything
 
 Before a single Annex I control is chosen, one deceptively simple question decides the entire compliance path: **what, exactly, is your "product"?** The CRA answers it in **Article 3(1)** — a product with digital elements is *"a software or hardware product and its remote data processing solutions, including software or hardware components being placed on the market separately."* ([EUR-Lex, official text](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))

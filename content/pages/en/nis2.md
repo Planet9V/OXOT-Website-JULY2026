@@ -300,6 +300,12 @@ Basis :: turnover-linked, GDPR-style — a board-level risk, not a line item
 
 The sharpest instrument is **Article 32(5)**: for essential entities, supervisory authorities may **temporarily suspend a certification or authorisation**, and **temporarily prohibit any person discharging managerial responsibilities at CEO or legal-representative level from exercising those functions**, until the entity remedies the failure. A regulator that can bar a CEO from running the company concentrates minds in a way a fine rarely does — and it is exactly why NIS2 compliance is now a board agenda item, not a task delegated into the security team and forgotten. The Dutch Cbw carries these accountability provisions through into national law.
 
+```cta
+€10 million or 2% of turnover — and personal liability for your board.
+NIS2 penalties land on the organisation and its leadership alike. We translate the ten measures into a defensible, board-ready OT security programme.
+Check my NIS2 exposure :: /en/contact
+```
+
 ## Where the law meets the plant
 
 NIS2 never uses the words "PLC" or "SCADA," but its all-hazards, risk-based demands land squarely on OT. Three tensions are worth naming honestly.

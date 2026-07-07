@@ -342,6 +342,12 @@ Article 99 sets the ceilings, and they are the highest in EU digital law. Like t
 
 Fines are proportionate, and for SMEs and start-ups the figure is capped at whichever of the percentage or the absolute amount is **lower** — a deliberate softening for smaller firms. ([Article 99](https://artificialintelligenceact.eu/article/99/); [Article 101](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-101))
 
+```cta
+€35 million or 7% of turnover — but is any of your industrial AI actually high-risk?
+Most of it isn't. The value is finding the few systems that are and governing them well. We inventory and classify your AI against the Act.
+Classify my AI systems :: /en/contact
+```
+
 ## Conformity assessment, CE marking and the EU database
 
 A high-risk system does not reach the market on the strength of good intentions. Before it is placed on the market or put into service, the provider must run a **conformity assessment** — the formal check that Articles 8–15 are met — and the route depends on how the system is classified.

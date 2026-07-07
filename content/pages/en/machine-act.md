@@ -284,6 +284,12 @@ The good news is that they are designed to reinforce, not collide. EU guidance i
 
 As with every New-Legislative-Framework law, the practical route to demonstrating conformity is a **harmonised standard**: apply one whose reference is published in the Official Journal and you gain a **presumption of conformity** with the requirement it covers. For the new cybersecurity clauses the headline instrument is **prEN 50742**, under development specifically to address *protection against corruption* in machinery and safety components — the standard written to operationalise Annex III §1.1.9. ([IBF, prEN 50742](https://www.ibf-solutions.com/en/seminars-and-news/news/new-standard-pren-50742-protection-against-corruption)) Alongside it, the established safety standards (**EN ISO 12100** for risk assessment, **EN ISO 13849** for safety-related control systems) continue to carry the mechanical and functional-safety requirements, and **[IEC 62443](/en/iec-62443)** supplies the recognised engineering method for the control systems inside the machine. Building your evidence against this stack once is what turns a wall of legal clauses into an auditable design.
 
+```cta
+One connected machine, five regimes — and you may already be the manufacturer.
+Machinery, AI Act, CRA, IEC 62443 and NIS2 can all land on the same line. We build it once, as one engineering problem, not five parallel audits.
+Map my machine's obligations :: /en/contact
+```
+
 ## A worked example: a networked robot welding cell
 
 A builder ships a **robot welding cell**: a six-axis robot, a safety PLC, a light curtain and interlocked doors, an HMI, and a **remote-support VPN** the builder uses for diagnostics and program updates. Under the 2006 Directive this was a well-understood safety product. Under the Regulation, the same cell asks new questions.

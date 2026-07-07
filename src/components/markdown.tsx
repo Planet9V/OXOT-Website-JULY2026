@@ -1,20 +1,18 @@
 import React from "react";
 import { Carousel, type Slide } from "./carousel";
+import { parseInline, slugify } from "./article/inline";
+import { RevealBlock, KeyFacts, TimelineBlock, CompareBlock, DataTable, CtaCard } from "./article/blocks";
 
 /**
- * Dependency-free, server-side Markdown renderer for CMS page bodies. Supports:
- * headings (# .. ####) with anchor ids, an auto "On this page" TOC, ---/*** rules,
- * > blockquotes and > [!NOTE|TIP|WARNING|IMPORTANT] callouts, - / * / 1. lists,
- * GFM tables, images ![alt](url), fenced blocks ``` (code, ```svg diagrams,
- * ```carousel slides), and inline **bold** *italic* `code` [text](url).
- * Content is authored by trusted admins; ```svg is rendered as raw SVG.
+ * Dependency-free, server-side Markdown renderer for CMS page bodies. Parsing
+ * runs on the server; interactive/animated feature blocks (keyfacts, timeline,
+ * compare, tables, CTAs, and scroll-reveal wrappers) are delegated to small
+ * client components in ./article/blocks so body prose stays SSR-visible.
+ * Supported: headings (# .. ####) w/ anchor ids + TOC, ---/*** rules,
+ * > blockquotes and > [!NOTE|TIP|WARNING|IMPORTANT] callouts, lists, GFM
+ * tables, images, fenced blocks (code, svg, carousel, keyfacts, timeline,
+ * compare, cta, html), and inline **bold** *italic* `code` [text](url).
  */
-
-type Inline = React.ReactNode;
-
-function slugify(s: string): string {
-  return s.toLowerCase().replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-").slice(0, 80);
-}
 
 /** Extract the H2 table of contents with the SAME de-duplicated ids the renderer
  *  assigns, so a sidebar TOC's anchors match the rendered headings. */
@@ -36,35 +34,6 @@ export function extractToc(source: string): { id: string; text: string }[] {
   return out;
 }
 
-function parseInline(text: string, keyBase: string): Inline[] {
-  const nodes: Inline[] = [];
-  const pattern =
-    /(!\[([^\]]*)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\))|(\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\))|(\*\*([^*]+)\*\*)|(`([^`]+)`)|(\*([^*]+)\*)/g;
-  let last = 0, m: RegExpExecArray | null, i = 0;
-  while ((m = pattern.exec(text)) !== null) {
-    if (m.index > last) nodes.push(<React.Fragment key={`${keyBase}-t${i++}`}>{text.slice(last, m.index)}</React.Fragment>);
-    const key = `${keyBase}-i${i++}`;
-    if (m[1]) {
-      nodes.push(<img key={key} src={m[3]} alt={m[2]} className="my-1 inline-block max-h-6 align-middle" />);
-    } else if (m[4]) {
-      const ext = m[6].startsWith("http");
-      nodes.push(
-        <a key={key} href={m[6]} target={ext ? "_blank" : undefined} rel={ext ? "noopener noreferrer" : undefined}
-           className="text-primary underline underline-offset-2 hover:opacity-80">{m[5]}</a>
-      );
-    } else if (m[7]) {
-      nodes.push(<strong key={key} className="font-semibold text-foreground">{m[8]}</strong>);
-    } else if (m[9]) {
-      nodes.push(<code key={key} className="rounded bg-muted px-1.5 py-0.5 text-sm">{m[10]}</code>);
-    } else if (m[11]) {
-      nodes.push(<em key={key}>{m[12]}</em>);
-    }
-    last = m.index + m[0].length;
-  }
-  if (last < text.length) nodes.push(<React.Fragment key={`${keyBase}-t${i++}`}>{text.slice(last)}</React.Fragment>);
-  return nodes;
-}
-
 const CALLOUT: Record<string, { cls: string; label: string }> = {
   NOTE: { cls: "border-primary/60 bg-primary/5", label: "Note" },
   TIP: { cls: "border-green-500/50 bg-green-500/5", label: "Tip" },
@@ -83,7 +52,8 @@ function parseCarousel(raw: string): Slide[] {
   }).filter((s) => s.title || s.body);
 }
 
-export function MarkdownContent({ source, toc = true }: { source: string; toc?: boolean }) {
+export function MarkdownContent({ source, toc = true, locale = "en" }: { source: string; toc?: boolean; locale?: string }) {
+  const nl = locale === "nl";
   const lines = source.replace(/\r\n/g, "\n").split("\n");
   const blocks: React.ReactNode[] = [];
   const headings: { id: string; text: string }[] = [];
@@ -104,7 +74,7 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
     const line = lines[i];
     if (!line.trim()) { i++; continue; }
 
-    // Fenced blocks: code / svg / carousel
+    // Fenced blocks
     const fence = /^\s*```(\w*)\s*$/.exec(line);
     if (fence) {
       const lang = fence[1];
@@ -115,69 +85,41 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
       const content = buf.join("\n");
       if (lang === "svg") {
         blocks.push(
-          <figure key={key++} className="oxot-diagram my-8 overflow-x-auto rounded-xl p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full"
-                   dangerouslySetInnerHTML={{ __html: content }} />
+          <RevealBlock key={key++}>
+            <figure className="oxot-diagram my-8 overflow-x-auto rounded-xl p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full"
+                     dangerouslySetInnerHTML={{ __html: content }} />
+          </RevealBlock>
         );
       } else if (lang === "carousel") {
-        blocks.push(<Carousel key={key++} slides={parseCarousel(content)} />);
+        blocks.push(<RevealBlock key={key++}><Carousel slides={parseCarousel(content)} /></RevealBlock>);
       } else if (lang === "keyfacts") {
-        // ```keyfacts  →  scannable fact grid. Lines: "Label :: Value".
+        // "Label :: Value" per line.
         const facts = content.split("\n").map((l) => l.split("::")).filter((p) => p.length >= 2)
           .map((p) => ({ k: p[0].trim(), v: p.slice(1).join("::").trim() }));
-        blocks.push(
-          <div key={key++} className="my-8 rounded-2xl border border-primary/25 bg-primary/5 p-5">
-            <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">At a glance</div>
-            <dl className="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
-              {facts.map((f, k2) => (
-                <div key={k2} className="border-l-2 border-primary/40 pl-3">
-                  <dt className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{f.k}</dt>
-                  <dd className="mt-0.5 text-sm font-semibold text-foreground">{parseInline(f.v, `kf${key}-${k2}`)}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        );
+        blocks.push(<KeyFacts key={key++} facts={facts} label={nl ? "In één oogopslag" : "At a glance"} />);
       } else if (lang === "timeline") {
-        // ```timeline  →  vertical dated milestones. Lines: "Date :: Event".
+        // "Date :: Event" per line.
         const items = content.split("\n").map((l) => l.split("::")).filter((p) => p.length >= 2)
           .map((p) => ({ d: p[0].trim(), e: p.slice(1).join("::").trim() }));
-        blocks.push(
-          <ol key={key++} className="my-8 space-y-0 border-l border-border pl-6">
-            {items.map((it, k2) => (
-              <li key={k2} className="relative pb-6 last:pb-0">
-                <span className="absolute -left-[27px] top-1 h-3 w-3 rounded-full border-2 border-primary bg-background" />
-                <div className="font-mono text-xs font-semibold uppercase tracking-wide text-primary">{it.d}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{parseInline(it.e, `tl${key}-${k2}`)}</div>
-              </li>
-            ))}
-          </ol>
-        );
+        blocks.push(<TimelineBlock key={key++} items={items} />);
       } else if (lang === "compare") {
-        // ```compare  →  side-by-side comparison cards. Columns split by a line
-        // of "---"; each column's first line is its title, the rest are "- " bullets.
+        // Columns split by a "---" line; first line = title, rest = "- " bullets.
         const cols = content.split(/\n-{3,}\n/).map((c) => {
           const ls = c.trim().split("\n");
           return { title: (ls[0] ?? "").replace(/^#+\s*/, "").trim(), rows: ls.slice(1).map((l) => l.replace(/^[-*]\s+/, "").trim()).filter(Boolean) };
         }).filter((c) => c.title || c.rows.length);
-        blocks.push(
-          <div key={key++} className="my-8 grid gap-4 sm:grid-cols-2">
-            {cols.map((c, k2) => (
-              <div key={k2} className="rounded-2xl border border-border bg-card p-5">
-                <div className="mb-3 border-b border-border pb-2 font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{c.title}</div>
-                <ul className="space-y-2">
-                  {c.rows.map((r, ri) => (
-                    <li key={ri} className="flex gap-2 text-sm text-muted-foreground">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                      <span>{parseInline(r, `cmp${key}-${k2}-${ri}`)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        );
+        blocks.push(<CompareBlock key={key++} cols={cols} />);
+      } else if (lang === "cta") {
+        // line0 = heading, line1 = body, line2 = "Label :: /href"
+        const ls = content.split("\n").map((s) => s.trim()).filter(Boolean);
+        const heading = ls[0] ?? (nl ? "Praat met een OT-beveiligingsexpert" : "Talk to an OT security expert");
+        const body = ls[1] ?? "";
+        const parts = (ls[2] ?? "").split("::");
+        const label = (parts[0]?.trim()) || (nl ? "Neem contact op" : "Talk to an expert");
+        const href = (parts[1]?.trim()) || `/${locale}/contact`;
+        blocks.push(<CtaCard key={key++} heading={heading} body={body} label={label} href={href} />);
       } else if (lang === "html") {
-        blocks.push(<div key={key++} className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} />);
+        blocks.push(<RevealBlock key={key++}><div className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} /></RevealBlock>);
       } else {
         blocks.push(
           <pre key={key++} className="my-6 overflow-x-auto rounded-lg border border-border bg-muted/40 p-4 text-sm">
@@ -188,29 +130,14 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
       continue;
     }
 
-    // GFM table: header row + separator row
+    // GFM table → interactive DataTable (sortable when large; zebra + hover)
     if (/^\s*\|.*\|/.test(line) && i + 1 < lines.length && /^\s*\|?[\s:|-]+\|?\s*$/.test(lines[i + 1]) && lines[i + 1].includes("-")) {
       const cells = (r: string) => r.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
       const header = cells(line);
       i += 2;
       const rows: string[][] = [];
       while (i < lines.length && /^\s*\|.*\|/.test(lines[i])) { rows.push(cells(lines[i])); i++; }
-      blocks.push(
-        <div key={key++} className="my-6 overflow-x-auto rounded-lg border border-border">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50">
-              <tr>{header.map((h, k) => <th key={k} className="px-4 py-2.5 text-left font-semibold">{parseInline(h, `th${key}-${k}`)}</th>)}</tr>
-            </thead>
-            <tbody>
-              {rows.map((r, ri) => (
-                <tr key={ri} className="border-t border-border">
-                  {r.map((c, ci) => <td key={ci} className="px-4 py-2.5 align-top text-muted-foreground">{parseInline(c, `td${key}-${ri}-${ci}`)}</td>)}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
+      blocks.push(<RevealBlock key={key++}><DataTable header={header} rows={rows} /></RevealBlock>);
       continue;
     }
 
@@ -245,10 +172,12 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
       if (cm) {
         const c = CALLOUT[cm[1]];
         blocks.push(
-          <aside key={key++} className={`my-6 rounded-lg border-l-4 p-4 ${c.cls}`}>
-            <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-foreground">{c.label}</div>
-            <div className="text-sm text-muted-foreground">{parseInline(cm[2].replace(/\n/g, " ").trim(), `cal${key}`)}</div>
-          </aside>
+          <RevealBlock key={key++} y={16}>
+            <aside className={`my-6 rounded-lg border-l-4 p-4 ${c.cls}`}>
+              <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-foreground">{c.label}</div>
+              <div className="text-sm text-muted-foreground">{parseInline(cm[2].replace(/\n/g, " ").trim(), `cal${key}`)}</div>
+            </aside>
+          </RevealBlock>
         );
       } else {
         blocks.push(
@@ -293,7 +222,7 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
   const tocNode =
     toc && headings.length >= 3 ? (
       <nav className="mb-10 rounded-xl border border-border bg-muted/20 p-5">
-        <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">On this page</div>
+        <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{nl ? "Op deze pagina" : "On this page"}</div>
         <ul className="grid gap-1.5 sm:grid-cols-2">
           {headings.map((hd) => (
             <li key={hd.id}>

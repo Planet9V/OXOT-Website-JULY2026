@@ -284,6 +284,12 @@ Het goede nieuws is dat ze zijn ontworpen om elkaar te versterken, niet te botse
 
 Zoals bij elke wet binnen het Nieuwe Wetgevingskader is de praktische route om conformiteit aan te tonen een **geharmoniseerde norm**: pas er een toe waarvan de referentie in het Publicatieblad is gepubliceerd en u verkrijgt een **vermoeden van conformiteit** met de eis die zij dekt. Voor de nieuwe cyberbeveiligingsclausules is het belangrijkste instrument **prEN 50742**, in ontwikkeling om specifiek *bescherming tegen corruptie* in machines en veiligheidscomponenten te behandelen — de norm geschreven om bijlage III §1.1.9 te operationaliseren. ([IBF, prEN 50742](https://www.ibf-solutions.com/en/seminars-and-news/news/new-standard-pren-50742-protection-against-corruption)) Daarnaast blijven de gevestigde veiligheidsnormen (**EN ISO 12100** voor risicobeoordeling, **EN ISO 13849** voor veiligheidsgerelateerde besturingssystemen) de mechanische en functionele-veiligheidseisen dragen, en levert **[IEC 62443](/nl/iec-62443)** de erkende technische methode voor de besturingssystemen binnen de machine. Uw bewijs één keer opbouwen tegen deze stapel is wat een muur van juridische clausules verandert in een controleerbaar ontwerp.
 
+```cta
+Eén connected machine, vijf regimes — en u bent mogelijk al de fabrikant.
+Machineverordening, AI-verordening, CRA, IEC 62443 en NIS2 kunnen allemaal op dezelfde lijn neerkomen. Wij bouwen het één keer, als één technisch probleem, niet vijf parallelle audits.
+Breng de verplichtingen van mijn machine in kaart :: /nl/contact
+```
+
 ## Een uitgewerkt voorbeeld: een genetwerkte robotlascel
 
 Een bouwer levert een **robotlascel**: een zesassige robot, een veiligheids-PLC, een lichtscherm en vergrendelde deuren, een HMI, en een **VPN voor ondersteuning op afstand** die de bouwer gebruikt voor diagnostiek en programma-updates. Onder de Richtlijn van 2006 was dit een goed begrepen veiligheidsproduct. Onder de Verordening stelt dezelfde cel nieuwe vragen.

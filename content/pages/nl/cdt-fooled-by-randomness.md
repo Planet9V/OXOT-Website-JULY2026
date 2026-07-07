@@ -181,6 +181,12 @@ Het conventionele antwoord zegt: ik ben veilig omdat ik de beheersmaatregelen he
 
 Raamwerken zoals [IEC 62443](/nl/iec-62443) en [NIS2](/nl/nis2) zijn in dit beeld niet de vijand — ze coderen echte, hard bevochten kennis, en geen serieuze exploitant moet ze negeren. Maar ze zijn gebouwd om de rechterkant van de tafel goed te beschrijven, en ze zouden nooit in staat zijn geweest de linkerkant te beschrijven, omdat de linkerkant specifiek is voor uw apparatuur, uw mensen, uw patchgeschiedenis, en de geopolitiek van deze week — niet voor de gemiddelde faciliteit waarvoor het raamwerk moest worden geschreven. Zie ons bredere [Raamwerken](/nl/frameworks)-overzicht voor hoe deze normen zich tot elkaar verhouden en waar de blinde vlek van elk zich bevindt.
 
+```cta
+Wilt u liever uw eigen waarschijnlijkheidslandschap zien dan discussiëren over gemiddelden?
+De Cyber Digital Twin maakt van uw OT-areaal een model dat u kunt stress-testen — zodat de weinige paden naar een veiligheidskritisch systeem zichtbaar worden voordat een aanvaller ze vindt.
+Bekijk uw waarschijnlijkheidslandschap :: /nl/contact
+```
+
 ## De kern van de zaak
 
 Nassim Taleb heeft zijn hele carrière betoogd dat de financiële wereld zichzelf systematisch voor de gek hield — dat de instrumenten die zij gebruikte om risico te meten stilletjes waren gebouwd om risico juist te verbergen, dat de narratieven die werden geconstrueerd om succes te verklaren artefacten van survivorship bias waren, en dat de enige eerlijke positie de ongemakkelijke was: volledige kansruimte, kennistheoretische bescheidenheid, wiskundige nauwgezetheid, geen kortere wegen terug naar een geruststellend verhaal.

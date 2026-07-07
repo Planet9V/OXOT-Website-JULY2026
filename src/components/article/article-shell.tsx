@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { Clock, CalendarDays, Link2, ArrowRight, List } from "lucide-react";
 import { Aurora } from "@/components/motion/fx";
 import { cn } from "@/lib/utils";
@@ -45,9 +45,17 @@ export function ArticleShell({
   const ids = React.useMemo(() => toc.map((t) => t.id), [toc]);
   const active = useScrollSpy(ids);
   const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
   return (
     <div className="bg-background">
+      {/* reading progress */}
+      <motion.div
+        aria-hidden
+        style={{ scaleX: reduce ? undefined : progress }}
+        className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left bg-gradient-to-r from-primary to-primary/60"
+      />
       {/* HERO */}
       <header className="relative overflow-hidden border-b border-border">
         <Aurora className="opacity-70" />
