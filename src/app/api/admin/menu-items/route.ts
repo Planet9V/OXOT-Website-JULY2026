@@ -39,6 +39,24 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true });
 }
 
+/** Update label / href / position of an existing item (inline edit + reorder). */
+export async function PATCH(req: NextRequest) {
+  if (!(await getAdminSession()))
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const b = (await req.json().catch(() => ({}))) as { id?: number; label?: string; href?: string; position?: number };
+  if (!b.id) return NextResponse.json({ error: "id required" }, { status: 400 });
+  const sets: string[] = [];
+  const vals: unknown[] = [];
+  let p = 1;
+  if (typeof b.label === "string") { sets.push(`label = $${p++}`); vals.push(b.label); }
+  if (typeof b.href === "string") { sets.push(`href = $${p++}`); vals.push(b.href); }
+  if (Number.isFinite(b.position)) { sets.push(`position = $${p++}`); vals.push(b.position); }
+  if (!sets.length) return NextResponse.json({ error: "nothing to update" }, { status: 400 });
+  vals.push(b.id);
+  await pool.query(`UPDATE menu_items SET ${sets.join(", ")} WHERE id = $${p}`, vals);
+  return NextResponse.json({ ok: true });
+}
+
 export async function DELETE(req: NextRequest) {
   if (!(await getAdminSession()))
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
