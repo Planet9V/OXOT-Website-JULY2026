@@ -14,6 +14,18 @@ Die ene ingreep herschrijft de compliance-vraag voor iedereen die machines bouwt
 > [!IMPORTANT]
 > Verordening (EU) 2023/1230 is op 19 juli 2023 in werking getreden en **is van toepassing vanaf 20 januari 2027**, waarbij Machinerichtlijn 2006/42/EG wordt ingetrokken. Vanaf die datum moeten machines die op de EU-markt worden gebracht voldoen aan de nieuwe essentiële gezondheids- en veiligheidseisen — inclusief de eisen met betrekking tot cyberbeveiliging. ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2023/1230/oj/eng))
 
+```keyfacts
+Instrument :: Verordening (EU) 2023/1230 — rechtstreeks toepasselijk, geen omzetting
+Vervangt :: Machinerichtlijn 2006/42/EG
+In werking sinds :: 19 juli 2023
+Van toepassing vanaf :: 20 januari 2027 (harde deadline)
+Cyberclausules :: Bijlage III §1.1.9 (bescherming tegen corruptie) + §1.2.1 (betrouwbaarheid besturing)
+Nieuwe hoogrisicocategorie :: op ML gebaseerde zelflerende veiligheidscomponenten (Bijlage I deel A)
+Ingrijpende wijziging :: wettelijk gedefinieerd — artikel 3, lid 16
+Koppeling AI-verordening :: AI-veiligheidscomponent in machine → automatisch hoogrisico
+Belangrijke opkomende norm :: prEN 50742 — bescherming tegen corruptie
+```
+
 ## De korte versie
 
 - De **Machineverordening (EU) 2023/1230** vervangt de langlopende **Machinerichtlijn 2006/42/EG**. ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2023/1230/oj/eng))
@@ -82,6 +94,35 @@ Uit die clausule, en de eisen inzake betrouwbaarheid van de besturing in **bijla
 | **Levenscyclusonderhoud** van bescherming | Beschermende maatregelen, updates en patches moeten houdbaar zijn gedurende de operationele levensduur van de machine, niet bevroren op het moment van levering |
 
 Dit is een echte herkadering, geen relabeling. Cyberbeveiliging voor machines is niet langer een parallel werkspoor dat naast veiligheid loopt en aan een andere manager rapporteert. Zij zit **binnen** het veiligheidsargument. Als een machine gevaarlijk kan worden gemaakt door corruptie van de software, dan is zij — in de logica van de Verordening — niet veilig, en voldoet zij niet. De beveiligingsfout en de veiligheidsfout zijn dezelfde fout.
+
+### Wat "bescherming tegen corruptie" daadwerkelijk vereist
+
+De Verordening formuleert de *uitkomst* — de veiligheid moet corruptie overleven — en laat het *hoe* over aan techniek en normen. In de praktijk convergeert het voldoen aan bijlage III §1.1.9 en §1.2.1 op een echte machine naar een herkenbare set maatregelen, dezelfde die een beveiligingsingenieur voor besturingssystemen zou kiezen:
+
+- **Ken uw software.** Identificeer de veiligheidsbeïnvloedende software en data — steeds vaker vastgelegd als een **software bill of materials (SBOM)** — want u kunt geen componenten beschermen die u niet heeft opgesomd. Dit is ook de naadlijn met de [CRA](/nl/cra), die de SBOM tot een expliciete verplichting maakt.
+- **Authenticeer wat draait.** **Ondertekende firmware** en een **secure/verified boot**-keten, zodat een gewijzigde veiligheidsimage wordt geweigerd in plaats van uitgevoerd. Het voorbeeld van de Verordening is bot: als iemand gewijzigde veiligheidsfirmware installeert, moet de machine dat kunnen detecteren.
+- **Authenticeer wie verbindt.** Veiligheidsrelevante instructies mogen alleen komen van geauthenticeerde, geautoriseerde bronnen. Een ongeauthenticeerd commando vanuit een portaal voor onderhoud op afstand mag nooit een veiligheidsfunctie kunnen bereiken.
+- **Beperk de verbinding.** Genetwerkte, draadloze en toegang-op-afstand-functies moeten zo zijn ontworpen dat een slechte of vijandige verbinding geen gevaarlijke situatie kan creëren — segmentatie, minimale rechten, en een veilige terugvalstand als de verbinding zich misdraagt.
+- **Maak manipulatie zichtbaar.** Log zowel **legitieme als illegitieme** interventies in veiligheidssoftware, met bewaring gedurende de operationele levensduur van de machine, zodat corruptie achteraf detecteerbaar en traceerbaar is.
+- **Houd bescherming in stand over de levenscyclus.** Updates en patches voor de veiligheidsbeïnvloedende software moeten leverbaar blijven zolang de machine in bedrijf is — bescherming bevroren op de leverdatum is geen bescherming.
+
+```compare
+Het veiligheidsdossier overleeft corruptie wanneer…
+- Veiligheidsbeïnvloedende software is **geïnventariseerd** (SBOM) en de integriteit is verifieerbaar
+- Firmware is **ondertekend** en boot is **geverifieerd** — gewijzigde images worden geweigerd
+- Toegang op afstand en via netwerk is **geauthenticeerd, geautoriseerd en gesegmenteerd**
+- Interventies worden **gelogd en bewaard** — manipulatie laat bewijs achter
+- Patches en updates blijven **leverbaar gedurende de levensduur** van de machine
+---
+De machine is niet-conform wanneer…
+- Een **vervalst netwerkcommando** een afscherming kan intrekken of een vergrendeling omzeilen
+- Veiligheids**firmware stilzwijgend kan worden overschreven** en uitgevoerd
+- Een **portaal voor onderhoud op afstand** een veiligheidsfunctie ongeauthenticeerd bereikt
+- Manipulatie van veiligheidssoftware **geen spoor achterlaat**
+- Beveiliging **niet kan worden onderhouden** nadat de machine is geleverd
+```
+
+Niets hiervan is nieuw voor een beveiligingsingenieur — en dat is precies het punt. De Verordening vindt geen nieuwe discipline uit; zij importeert een bestaande, [IEC 62443](/nl/iec-62443), in het machineveiligheidsdossier en maakt haar tot een voorwaarde voor de CE-markering.
 
 ```svg
 <svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,Segoe UI,Roboto,sans-serif">
@@ -233,6 +274,27 @@ De Machineverordening opereert niet alleen. Eén enkele connected, AI-ondersteun
 
 Een bouwer die dit behandelt als één samenhangend technisch probleem — één veilige ontwikkelingslevenscyclus, één risicomodel, één technisch dossier dat aan meerdere regimes voldoet — besteedt veel minder dan wie vier parallelle compliance-projecten uitvoert, en eindigt met een beter verdedigbaar product. Ons overzicht [Kaders](/nl/frameworks) brengt in kaart waar elke verplichting past.
 
+### De CRA en de Machineverordening — één machine, twee mandaten
+
+Het koppel dat bouwers het vaakst verwart is de [Cyber Resilience Act](/nl/cra) en de Machineverordening, omdat beide over cyberbeveiliging op dezelfde kast spreken — maar ze stellen verschillende vragen. De Machineverordening vraagt *"kan corruptie deze machine onveilig maken?"* — een **veiligheids**vraag, beantwoord in het veiligheidsdossier van de machine. De CRA vraagt *"is dit product met digitale elementen secure-by-design, en worden kwetsbaarheden over de levensduur beheerd?"* — een **productbeveiligings**vraag, beantwoord via de eigen essentiële eisen, SBOM- en kwetsbaarheidsmeldplichten van de CRA.
+
+Het goede nieuws is dat ze zijn ontworpen om elkaar te versterken, niet te botsen. EU-richtsnoeren zijn expliciet dat **naleving van de cyberbeveiligingseisen van de CRA de naleving kan vergemakkelijken** van de corruptiebeschermingsclausules van de Machineverordening — dezelfde bewijzen van veilige ontwikkeling, SBOM en updatemechanisme voeden beide dossiers. ([ORC WG CRA-FAQ](https://cra.orcwg.org/faq/official/faq_2-4-1/)) Een bouwer die één veilige ontwikkelingslevenscyclus draait, produceert de artefacten die beide regimes willen; wie ze als twee projecten behandelt, betaalt twee keer voor hetzelfde bewijs.
+
+### Geharmoniseerde normen en het vermoeden van conformiteit
+
+Zoals bij elke wet binnen het Nieuwe Wetgevingskader is de praktische route om conformiteit aan te tonen een **geharmoniseerde norm**: pas er een toe waarvan de referentie in het Publicatieblad is gepubliceerd en u verkrijgt een **vermoeden van conformiteit** met de eis die zij dekt. Voor de nieuwe cyberbeveiligingsclausules is het belangrijkste instrument **prEN 50742**, in ontwikkeling om specifiek *bescherming tegen corruptie* in machines en veiligheidscomponenten te behandelen — de norm geschreven om bijlage III §1.1.9 te operationaliseren. ([IBF, prEN 50742](https://www.ibf-solutions.com/en/seminars-and-news/news/new-standard-pren-50742-protection-against-corruption)) Daarnaast blijven de gevestigde veiligheidsnormen (**EN ISO 12100** voor risicobeoordeling, **EN ISO 13849** voor veiligheidsgerelateerde besturingssystemen) de mechanische en functionele-veiligheidseisen dragen, en levert **[IEC 62443](/nl/iec-62443)** de erkende technische methode voor de besturingssystemen binnen de machine. Uw bewijs één keer opbouwen tegen deze stapel is wat een muur van juridische clausules verandert in een controleerbaar ontwerp.
+
+## Een uitgewerkt voorbeeld: een genetwerkte robotlascel
+
+Een bouwer levert een **robotlascel**: een zesassige robot, een veiligheids-PLC, een lichtscherm en vergrendelde deuren, een HMI, en een **VPN voor ondersteuning op afstand** die de bouwer gebruikt voor diagnostiek en programma-updates. Onder de Richtlijn van 2006 was dit een goed begrepen veiligheidsproduct. Onder de Verordening stelt dezelfde cel nieuwe vragen.
+
+- **Waar zit het corruptierisico?** De logica van de veiligheids-PLC, de veiligheidsconfiguratie van de robot, en het pad voor ondersteuning op afstand. Als een vervalst commando via de VPN een snelheids-en-scheidingslimiet kan versoepelen, of als de veiligheids-PLC een ongetekende logica-download accepteert, kan de cel onveilig worden gemaakt door corruptie — recht binnen bijlage III §1.1.9.
+- **Wat vereist conformiteit nu?** De risicobeoordeling moet corruptie als een gevaar behandelen; het pad op afstand moet geauthenticeerd, geautoriseerd en gesegmenteerd zijn; veiligheidsfirmware moet ondertekend en de integriteit verifieerbaar zijn; en interventies moeten worden gelogd met levenslange bewaring. Het technisch dossier moet dit alles *aantonen*, niet slechts beweren.
+- **Komt er een aangemelde instantie bij?** Als de categorie van de cel, of een toegevoegde op ML gebaseerde zelflerende veiligheidscomponent, haar in **bijlage I deel A** plaatst, is zelfverklaring van tafel en is een aangemelde instantie verplicht — een doorlooptijdbeslissing die bij het ontwerp thuishoort, niet bij de lancering.
+- **Wie is er eigenaar na inbedrijfstelling?** Als de exploitant later een nieuwe netwerkverbinding toevoegt of de veiligheids-PLC opnieuw flasht op een manier die de bouwer nooit voorzag, kan dat een **ingrijpende wijziging** zijn onder artikel 3, lid 16 — en wordt de exploitant de fabrikant van de gewijzigde cel.
+
+Eén cel, en de veiligheidsingenieur, de beveiligingsingenieur en de inkoopverantwoordelijke werken opeens aan hetzelfde dossier. Die convergentie is de hele bedoeling van de Verordening — en de reden waarom één gedeeld model van de machine vier losstaande beoordelingen verslaat.
+
 ## Wat het betekent voor uw rol
 
 **Als u machines bouwt of integreert**, is dit een directe verplichting met een muur op januari 2027. Uw veiligheidsengineering moet nu cyberbeveiliging omvatten, en uw technisch dossier moet dit aantonen. Waar connectiviteit of een AI-veiligheidscomponent het risiconiveau verandert, kan een aangemelde instantie in beeld komen — en de AI-verordening kan daar bovenop van toepassing zijn. De goedkope versie van dit project begint nu; de dure versie begint eind 2026.
@@ -242,6 +304,20 @@ Een bouwer die dit behandelt als één samenhangend technisch probleem — één
 **Als u machines exploiteert**, verhoogt de Verordening de beveiligingsondergrens van de apparatuur die u in de loop van de tijd koopt — maar alleen als uw inkoop daarom vraagt. Begin met het specificeren van machines die ontworpen zijn om corruptie te weerstaan, met bewijs van manipulatie en een toezegging tot patches gedurende de levenscyclus, in uw volgende aanbesteding in plaats van uw volgende verordening.
 
 **Als u in de raad van bestuur zit**, is de blootstelling CE-markerings- en productaansprakelijkheidsrisico dat nu een cyberbeveiligingsgezicht draagt. Een machine die gevaarlijk is gemaakt door een softwarefout is een niet-conform product, met de gevolgen voor markttoegang en aansprakelijkheid die daaruit voortvloeien. Dit hoort op het risicoregister naast [NIS2](/nl/nis2), niet in een aparte kolom "IT".
+
+## De weg naar 20 januari 2027
+
+De data zijn eenvoudig; de verleiding om het gat als stilzittijd te behandelen is de valkuil.
+
+```timeline
+19 juli 2023 :: **Verordening treedt in werking.** De tekst ligt vast; het overgangsvenster opent. Er is nog niets vereist, maar de klok loopt.
+2023–2026 :: **Overgang en voorbereiding.** Machines mogen nog op de markt worden gebracht onder Richtlijn 2006/42/EG; bouwers passen ontwerpen, dossiers en processen aan. Geharmoniseerde normen (incl. prEN 50742) rijpen.
+20 januari 2027 :: **De Verordening is van toepassing.** Machines die op de EU-markt worden gebracht moeten voldoen aan de nieuwe essentiële eisen — inclusief die inzake cyberbeveiliging. De Richtlijn wordt ingetrokken.
+Na 20 jan 2027 :: **Levenscyclusverplichtingen lopen.** Bescherming tegen corruptie, bewijs van manipulatie en updatelevering moeten in stand blijven gedurende de operationele levensduur van elke machine.
+```
+
+> [!WARNING]
+> De periode tot 2027 is *overgangstijd, geen stilzittijd.* Cyberbeveiliging in het veiligheidsdossier vouwen, conformiteitsroutes opnieuw controleren, een aangemelde instantie inschakelen waar connectiviteit of AI het risiconiveau verandert, en manipulatiebestendige logging vanaf het begin ontwerpen zijn allemaal taken met een lange doorlooptijd. Een bouwer die eind 2026 begint, doet de dure versie van dit project.
 
 ## Een gereedheidsroutekaart voor bouwers richting januari 2027
 
@@ -271,6 +347,15 @@ Dat kan. Een **ingrijpende wijziging** onder artikel 3, lid 16 — fysiek of dig
 **Wanneer is een aangemelde instantie verplicht?**
 Voor categorieën van **bijlage I, deel A** — de hoogrisicomachines, nu met inbegrip van op machine-learning gebaseerde zelflerende veiligheidscomponenten — is een aangemelde instantie vereist en is zelfverklaring niet beschikbaar. Categorieën van deel B mogen alleen zelf beoordelen waar geharmoniseerde normen volledig zijn toegepast. ([Baker McKenzie](https://www.bakermckenzie.com/en/insight/publications/resources/product-risk-radar-articles/machinery-regulation))
 
+**Hoe verschilt dit van de Cyber Resilience Act?**
+Zij beantwoorden verschillende vragen over dezelfde machine. De Machineverordening vraagt of corruptie de machine *onveilig* kan maken (een veiligheidsvraag, in het veiligheidsdossier); de [CRA](/nl/cra) vraagt of het product met digitale elementen *secure-by-design* is met kwetsbaarheidsbeheer over de levensduur (een productbeveiligingsvraag). Ze zijn ontworpen om elkaar te versterken — CRA-naleving kan naleving van de Machineverordening vergemakkelijken — zodat één veilige ontwikkelingslevenscyclus beide dossiers voedt. ([ORC WG CRA-FAQ](https://cra.orcwg.org/faq/official/faq_2-4-1/))
+
+**Welke norm dekt de nieuwe cyberbeveiligingsclausules?**
+**prEN 50742** wordt specifiek ontwikkeld voor *bescherming tegen corruptie* in machines en veiligheidscomponenten, om bijlage III §1.1.9 te operationaliseren; het toepassen van een gepubliceerde geharmoniseerde norm geeft een vermoeden van conformiteit. EN ISO 12100 en EN ISO 13849 blijven de risicobeoordeling en de eisen aan veiligheidsgerelateerde besturingssystemen dragen, met IEC 62443 als de technische methode voor de besturingssystemen. ([IBF, prEN 50742](https://www.ibf-solutions.com/en/seminars-and-news/news/new-standard-pren-50742-protection-against-corruption))
+
+**Hebben we een SBOM nodig voor onze machine?**
+Het wordt snel de praktische basislijn. U moet de veiligheidsbeïnvloedende software identificeren en beschermen, en dat is precies wat een software bill of materials vastlegt — en de [CRA](/nl/cra) maakt de SBOM tot een expliciete verplichting voor producten met digitale elementen. Eén keer opbouwen bedient beide regimes.
+
 ## Hoe OXOT helpt
 
 De cyberbeveiligingseisen van de Verordening zijn in de kern beveiligingseisen voor de besturingssystemen binnen een machine — het thuisterrein van OXOT. Wij helpen machinebouwers en integrators de essentiële eisen van bijlage III te vertalen naar een technisch programma dat is afgestemd op **[IEC 62443](/nl/iec-62443)**, zodat de clausules een controleerbaar ontwerp worden in plaats van een ambitie. Wij helpen exploitanten machinebeveiligingsverwachtingen te integreren in inkoop en in hun bredere OT-beveiligings- en **[NIS2](/nl/nis2)**-programma's. En waar AI-veiligheidscomponenten in het spel zijn, plaatst onze **[Cyber Digital Twin](/nl/cyber-digital-twin)** ze in uw risicobeeld, zodat de verplichtingen van de Machineverordening en de [AI-verordening](/nl/ai-act) — en de overlap met de [CRA](/nl/cra) — samen worden aangepakt, in één keer, in plaats van in vier afzonderlijke haastklussen. Bekijk hoe dit past in het bredere beeld van [Kaders](/nl/frameworks).
@@ -282,5 +367,8 @@ De cyberbeveiligingseisen van de Verordening zijn in de kern beveiligingseisen v
 - EU Machinery Regulation 2023/1230: cybersecurity obligations for manufacturers — [Nemko](https://www.nemko.com/blog/eu-machinery-regulation-2023/1230)
 - Machinery Regulation — high-risk categories and conformity assessment analysis — [Baker McKenzie](https://www.bakermckenzie.com/en/insight/publications/resources/product-risk-radar-articles/machinery-regulation)
 - AI Act Annex I — Union harmonisation legislation (incl. machinery) — [artificialintelligenceact.eu](https://artificialintelligenceact.eu/annex/1/)
+- prEN 50742 — bescherming tegen corruptie in machines en veiligheidscomponenten — [IBF Solutions](https://www.ibf-solutions.com/en/seminars-and-news/news/new-standard-pren-50742-protection-against-corruption)
+- Samenspel CRA ↔ Machineverordening — [ORC WG CRA-FAQ](https://cra.orcwg.org/faq/official/faq_2-4-1/)
+- Machineverordening — naleving, AI & cyberbeveiliging (overzicht) — [Intertek](https://www.intertek.com/industrial-equipment/machinery-regulation/)
 
 *Deze pagina bevat algemene informatie over EU-wetgeving en vormt geen juridisch advies. Bevestig hoe de Machineverordening van toepassing is op uw producten en rol aan de hand van de Verordening zelf en, waar nodig, gekwalificeerd juridisch advies.*
