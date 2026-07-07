@@ -20,12 +20,21 @@ async function main() {
     const path = join(root, src);
     if (!existsSync(path)) { console.log(`SKIP (missing): ${src}`); continue; }
     const buf = readFileSync(path);
-    await pool.query(`DELETE FROM media WHERE filename = $1`, [name]);
-    const { rows } = await pool.query(
-      `INSERT INTO media (filename, mime, bytes, size) VALUES ($1,$2,$3,$4) RETURNING id`,
-      [name, "application/pdf", buf, buf.length]
-    );
-    console.log(`seeded ${name} -> media id ${rows[0].id} (${buf.length} bytes)`);
+    // Update-in-place to keep the id stable across re-runs (home content
+    // references the id, so a fresh id on every run would break the hero).
+    const existing = await pool.query(`SELECT id FROM media WHERE filename = $1 LIMIT 1`, [name]);
+    let id;
+    if (existing.rows.length) {
+      id = existing.rows[0].id;
+      await pool.query(`UPDATE media SET mime=$1, bytes=$2, size=$3 WHERE id=$4`, ["application/pdf", buf, buf.length, id]);
+    } else {
+      const { rows } = await pool.query(
+        `INSERT INTO media (filename, mime, bytes, size) VALUES ($1,$2,$3,$4) RETURNING id`,
+        [name, "application/pdf", buf, buf.length]
+      );
+      id = rows[0].id;
+    }
+    console.log(`seeded ${name} -> media id ${id} (${buf.length} bytes)`);
   }
   await pool.end();
   console.log("media seed done.");
