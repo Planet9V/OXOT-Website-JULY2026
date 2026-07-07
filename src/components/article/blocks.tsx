@@ -82,7 +82,7 @@ export function KeyFacts({ facts, label }: { facts: { k: string; v: string }[]; 
           <motion.div
             key={i}
             variants={reduce ? undefined : { hide: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } } }}
-            className="rounded-xl border border-primary/15 bg-background/40 p-3 transition-colors hover:border-primary/40"
+            className="rounded-xl border border-primary/15 bg-card p-3 transition-colors hover:border-primary/40"
           >
             <dt className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{f.k}</dt>
             <dd className="mt-1 text-base font-semibold text-foreground">
