@@ -67,6 +67,25 @@ Member States were supposed to have national law in force by 17 October 2024. Mo
 
 In the **Netherlands**, the **Cyberbeveiligingswet (Cbw)** implements NIS2. The **Dutch Parliament (Tweede Kamer) approved the draft on 15 April 2026**, with formal adoption targeted for later in 2026 following Senate review. ([Bird & Bird, Dutch Cybersecurity Act](https://www.twobirds.com/en/insights/2026/netherlands/dutch-parliament-approves-cybersecurity-act-implementing-nis2)) The delay does not change the substance operators must prepare for — and it does not pause the obligation to be ready.
 
+## Essential vs important entities — the split that sets your regime
+
+NIS2 sorts in-scope organisations into two tiers, and the tier decides how hard the law lands on you: the supervision model, the penalty ceiling, and how proactively a regulator can knock on your door. The split is driven by sector *and* size — as a rule, large enterprises in the highest-criticality sectors are **essential**, while medium-sized organisations and those in "other critical" sectors are **important**. Both tiers carry the same core security and reporting duties; what differs is the enforcement posture.
+
+```compare
+Essential entities
+- Highest-criticality sectors: energy, transport, banking, financial-market infrastructure, health, drinking & waste water, digital infrastructure, ICT service management, public administration, space
+- **Proactive (ex ante) supervision** — regulators may audit, inspect and demand evidence without waiting for an incident
+- Administrative fines up to **€10 million or 2% of global annual turnover**, whichever is higher
+---
+Important entities
+- Other critical sectors: postal & courier, waste management, chemicals, food, manufacturing (incl. medical devices, machinery, vehicles), digital providers, research
+- **Reactive (ex post) supervision** — scrutiny typically follows evidence of non-compliance or an incident
+- Administrative fines up to **€7 million or 1.4% of global annual turnover**, whichever is higher
+```
+
+> [!IMPORTANT]
+> The classification is not a self-assessment you can quietly round down. NIS2 introduces a **registration duty** — in-scope entities must register with their national authority (in the Netherlands, coordinated via the NCSC/RDI landscape under the Cbw), and the **"size-cap" rule** means a company can be pulled in below the usual size thresholds if it is the sole provider of a critical service or its disruption would have significant societal impact. Getting the classification wrong in either direction is itself a governance failure.
+
 ## Governance and scope, at a glance
 
 The diagram below traces the chain NIS2 constructs: from an accountable management body, down through the ten measures, into the supervision and enforcement that keep them honest.
@@ -187,6 +206,16 @@ Where the old regime was vague, NIS2 is specific. Article 23 requires covered en
 
 An incident is **significant** if it has caused or is capable of causing **severe operational disruption of the service or financial loss**, or has affected or is capable of affecting **other persons through considerable material or non-material damage**. ([Legiscope, 24h/72h framework](https://www.legiscope.com/blog/nis2-incident-reporting.html)) For an OT operator, a disruption to a physical process — a tripped safety system, a halted production line, a contaminated water supply — clears that bar with room to spare.
 
+```timeline
+T + 24 hours :: **Early warning** — is it suspected malicious? Could it cross borders?
+T + 72 hours :: **Incident notification** — severity, impact, indicators of compromise
+On request :: **Intermediate report** — status update when the authority asks
+T + 1 month :: **Final report** — root cause, mitigations, cross-border impact
+While ongoing :: **Progress report** at one month, then a final report within a month of resolution
+```
+
+The reason this rhythm bites in OT is that the clock starts at *awareness*, not at *resolution* — and awareness in an OT environment often arrives through operations, not the SOC. A 24-hour early-warning obligation presumes a detection-and-escalation path that reaches a decision-maker inside a day, on nights and weekends, for events that may first show up as a process anomaly rather than a security alert. Building that path is as much an organisational design problem as a technical one.
+
 There is a reciprocal obligation worth knowing: the CSIRT or competent authority must respond to the early warning **without undue delay and where possible within 24 hours**, including initial feedback and, on request, operational advice. The report is not shouting into a void.
 
 ```svg
@@ -257,6 +286,19 @@ Article 34 sets the ceilings for administrative fines. ([nis-2-directive.com, Ar
 These are ceilings, not tariffs. Actual fines must be **effective, proportionate and dissuasive**, judged against the nature, gravity and duration of the breach, the degree of culpability, and whether the entity cooperated. But the turnover-linked structure — familiar from the GDPR — signals intent. Non-compliance is meant to be a board-level financial risk, not a rounding error.
 
 Work the maths for a mid-sized group turning over €800 million: 2% is €16 million, comfortably above the €10 million floor, so the higher figure governs. For a €4 billion enterprise, 2% is €80 million. The percentage bites precisely where the fixed cap would otherwise be trivial — which is the point.
+
+But the fines are only half of the enforcement story, and arguably not the half that changes behaviour. NIS2 makes **management bodies personally accountable** for approving and overseeing cybersecurity risk-management measures, and it gives authorities powers that reach past the balance sheet to the individuals in charge.
+
+```keyfacts
+Essential entities :: up to €10M or 2% of global turnover (higher applies)
+Important entities :: up to €7M or 1.4% of global turnover (higher applies)
+Management duty :: approve & oversee measures; personal accountability (Art. 20)
+Training duty :: management must follow — and offer staff — cyber-risk training
+Authority powers :: audits, binding instructions, and temporary suspension of a manager
+Basis :: turnover-linked, GDPR-style — a board-level risk, not a line item
+```
+
+The sharpest instrument is **Article 32(5)**: for essential entities, supervisory authorities may **temporarily suspend a certification or authorisation**, and **temporarily prohibit any person discharging managerial responsibilities at CEO or legal-representative level from exercising those functions**, until the entity remedies the failure. A regulator that can bar a CEO from running the company concentrates minds in a way a fine rarely does — and it is exactly why NIS2 compliance is now a board agenda item, not a task delegated into the security team and forgotten. The Dutch Cbw carries these accountability provisions through into national law.
 
 ## Where the law meets the plant
 

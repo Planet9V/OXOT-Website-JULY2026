@@ -67,6 +67,25 @@ Lidstaten moesten uiterlijk 17 oktober 2024 nationale wetgeving van kracht hebbe
 
 In **Nederland** implementeert de **Cyberbeveiligingswet (Cbw)** NIS2. De **Tweede Kamer keurde het wetsvoorstel goed op 15 april 2026**, waarbij formele vaststelling later in 2026 wordt beoogd na behandeling in de Eerste Kamer. ([Bird & Bird, Nederlandse Cyberbeveiligingswet](https://www.twobirds.com/en/insights/2026/netherlands/dutch-parliament-approves-cybersecurity-act-implementing-nis2)) De vertraging verandert niets aan de inhoud waarop operators zich moeten voorbereiden — en zij schort de verplichting om gereed te zijn niet op.
 
+## Essentiële versus belangrijke entiteiten — de splitsing die uw regime bepaalt
+
+De tweedeling die u zojuist in de tabel zag, bepaalt méér dan alleen het boeteplafond: zij bepaalt hoe de wet u benadert. Beide categorieën dragen dezelfde kern van beveiligingsmaatregelen (Artikel 21) en dezelfde meldplichten (Artikel 23). Wat verschilt, is de **handhavingshouding** — en dat verschil is in de praktijk vaak ingrijpender dan het cijfer op de boete. Uw categorie volgt uit sector *én* omvang: grote ondernemingen in de meest kritieke sectoren zijn in de regel **essentieel**; middelgrote organisaties en die in "andere kritieke" sectoren zijn **belangrijk**.
+
+```compare
+Essentiële entiteiten
+- Meest kritieke sectoren (Bijlage I): energie, transport, bankwezen, financiëlemarktinfrastructuur, gezondheidszorg, drink- & afvalwater, digitale infrastructuur, ICT-servicebeheer, openbaar bestuur, ruimtevaart
+- **Proactief (ex ante) toezicht** — toezichthouders mogen auditen, inspecteren en bewijs opvragen zónder een incident of aanwijzing af te wachten
+- Bestuurlijke boetes tot **€10 miljoen of 2% van de wereldwijde jaaromzet**, het hoogste bedrag geldt
+---
+Belangrijke entiteiten
+- Andere kritieke sectoren (Bijlage II): post & koeriers, afvalbeheer, chemie, voeding, maakindustrie (medische hulpmiddelen, machines, voertuigen), digitale aanbieders, onderzoek
+- **Reactief (ex post) toezicht** — controle volgt doorgaans pas op aanwijzingen van niet-naleving of een incident
+- Bestuurlijke boetes tot **€7 miljoen of 1,4% van de wereldwijde jaaromzet**, het hoogste bedrag geldt
+```
+
+> [!IMPORTANT]
+> De classificatie is geen zelfbeoordeling die u stilletjes naar beneden afrondt. NIS2 kent een **registratieplicht** — betrokken entiteiten moeten zich melden bij hun nationale autoriteit (in Nederland gecoördineerd binnen het NCSC/RDI-landschap onder de Cbw) — en de **"size-cap"-uitzondering** betekent dat een organisatie ónder de gebruikelijke omvangsdrempels tóch in scope kan vallen als zij de enige aanbieder van een kritieke dienst is of als verstoring een aanzienlijke maatschappelijke impact zou hebben. De categorie verkeerd inschatten — in welke richting dan ook — is zelf een governancefalen.
+
 ## Governance en reikwijdte, in één oogopslag
 
 Onderstaand diagram volgt de keten die NIS2 opbouwt: van een verantwoordelijk bestuursorgaan, via de tien maatregelen, naar het toezicht en de handhaving die dit alles bewaken.
@@ -189,6 +208,16 @@ Een incident is **significant** als het ernstige operationele verstoring van de 
 
 Er is een wederkerige verplichting die het waard is te weten: het CSIRT of de bevoegde autoriteit moet reageren op de vroegtijdige waarschuwing **zonder onnodige vertraging en waar mogelijk binnen 24 uur**, inclusief eerste feedback en, op verzoek, operationeel advies. De melding is geen roepen in de leegte.
 
+```timeline
+T + 24 uur :: **Vroegtijdige waarschuwing** — meld of het incident vermoedelijk kwaadwillig is en of het grensoverschrijdende gevolgen kan hebben. Nog geen volledige analyse vereist.
+T + 72 uur :: **Incidentmelding** — werk de waarschuwing bij met een eerste beoordeling van ernst en impact, plus indicatoren van compromittering (IoC's) voor zover beschikbaar.
+Op verzoek :: **Tussentijds verslag** — een statusupdate wanneer de bevoegde autoriteit of het CSIRT daarom vraagt terwijl het incident nog loopt.
+T + 1 maand :: **Eindverslag** — een gedetailleerde beschrijving, oorzaakanalyse, toegepaste mitigaties en de grensoverschrijdende impact.
+Na afhandeling :: **Voortgangsverslag** — loopt het incident na één maand nog, dan volstaat een voortgangsverslag; het eindverslag volgt binnen één maand na afhandeling.
+```
+
+Het is essentieel om te begrijpen dat de klok start bij **bewustwording**, niet bij **oplossing**. U hoeft het incident op T+24u niet begrepen of ingeperkt te hebben — u moet het gemeld hebben. Dat verplaatst de last naar twee capaciteiten die OT-organisaties vaak missen: **detectie** die snel genoeg is om "bewustwording" binnen uren in plaats van weken te laten plaatsvinden, en een **geoefend meldproces** met vooraf ingevulde sjablonen en benoemde beslissers, zodat om drie uur 's nachts niemand hoeft uit te vogelen wie de autoriteit belt.
+
 ```svg
 <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
   <rect x="0" y="0" width="700" height="240" fill="none"/>
@@ -257,6 +286,17 @@ Artikel 34 stelt de bovengrenzen voor bestuurlijke boetes vast. ([nis-2-directiv
 Dit zijn bovengrenzen, geen tarieven. Werkelijke boetes moeten **doeltreffend, evenredig en afschrikwekkend** zijn, beoordeeld tegen de aard, ernst en duur van de overtreding, de mate van verwijtbaarheid, en of de entiteit heeft meegewerkt. Maar de aan de omzet gekoppelde structuur — bekend van de AVG — geeft een duidelijk signaal af. Niet-naleving is bedoeld als een financieel risico op bestuursniveau, geen afrondingsverschil.
 
 Reken het na voor een middelgrote groep met een omzet van €800 miljoen: 2% is €16 miljoen, ruim boven de vloer van €10 miljoen, dus geldt het hogere bedrag. Voor een onderneming met €4 miljard omzet is 2% gelijk aan €80 miljoen. Het percentage grijpt precies daar in waar de vaste bovengrens anders triviaal zou zijn — en dat is precies de bedoeling.
+
+```keyfacts
+Bovengrens essentieel :: €10 mln of 2% wereldwijde omzet (hoogste geldt)
+Bovengrens belangrijk :: €7 mln of 1,4% wereldwijde omzet (hoogste geldt)
+Toetssteen boete :: doeltreffend, evenredig én afschrikwekkend
+Boven op boetes :: bindende instructies, staken van gedrag, toezichthouder
+Uiterste maatregel :: tijdelijke schorsing van bestuurder/certificering (Art. 32(5))
+Persoonlijk risico :: bestuurders aansprakelijk voor toezichttekort (Art. 20)
+```
+
+De boete is niet de zwaarste hefboom in het arsenaal. Voor **essentiële entiteiten** kan een toezichthouder onder **Artikel 32(5)**, wanneer andere handhavingsmaatregelen zijn uitgeput, om een rechterlijke of administratieve maatregel vragen die de **certificering of vergunning voor een deel of het geheel van de diensten opschort**, en — scherper nog — een **natuurlijke persoon met bestuurs- of vertegenwoordigingsbevoegdheid (een CEO of wettelijk vertegenwoordiger) tijdelijk verbieden bestuursfuncties uit te oefenen**. Dat is een sanctie tegen de persoon, niet alleen de rechtspersoon. In samenhang met de aansprakelijkheid van Artikel 20 is de boodschap ondubbelzinnig: aanhoudende, verwijtbare niet-naleving kan de baan van een bestuurder kosten, niet slechts een regel op de winst-en-verliesrekening. In Nederland wordt deze handhavingsarchitectuur belegd via de Cyberbeveiligingswet en de aangewezen sectorale toezichthouders.
 
 ## Waar de wet de fabrieksvloer raakt
 

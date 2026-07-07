@@ -152,6 +152,30 @@ export function MarkdownContent({ source, toc = true }: { source: string; toc?: 
             ))}
           </ol>
         );
+      } else if (lang === "compare") {
+        // ```compare  →  side-by-side comparison cards. Columns split by a line
+        // of "---"; each column's first line is its title, the rest are "- " bullets.
+        const cols = content.split(/\n-{3,}\n/).map((c) => {
+          const ls = c.trim().split("\n");
+          return { title: (ls[0] ?? "").replace(/^#+\s*/, "").trim(), rows: ls.slice(1).map((l) => l.replace(/^[-*]\s+/, "").trim()).filter(Boolean) };
+        }).filter((c) => c.title || c.rows.length);
+        blocks.push(
+          <div key={key++} className="my-8 grid gap-4 sm:grid-cols-2">
+            {cols.map((c, k2) => (
+              <div key={k2} className="rounded-2xl border border-border bg-card p-5">
+                <div className="mb-3 border-b border-border pb-2 font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{c.title}</div>
+                <ul className="space-y-2">
+                  {c.rows.map((r, ri) => (
+                    <li key={ri} className="flex gap-2 text-sm text-muted-foreground">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                      <span>{parseInline(r, `cmp${key}-${k2}-${ri}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        );
       } else if (lang === "html") {
         blocks.push(<div key={key++} className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} />);
       } else {
