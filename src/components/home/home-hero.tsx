@@ -84,6 +84,7 @@ export function HomeHero({ hero, locale }: { hero: Hero; locale: string }) {
               items={[{ kind: "pdf", src: `/api/media/${hero.heroPdf}` }]}
               ratio="16 / 9"
               className="w-full"
+              autoPlayMs={5000}
             />
           ) : (
             <div className="ed-card">

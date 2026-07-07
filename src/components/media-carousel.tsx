@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -60,13 +61,15 @@ function PdfPage({ doc, page, active }: { doc: any; page: number; active: boolea
   );
 }
 
-export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8" }: { items: CarouselItem[]; ratio?: string; className?: string }) {
+export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", autoPlayMs = 0 }: { items: CarouselItem[]; ratio?: string; className?: string; autoPlayMs?: number }) {
   const [slides, setSlides] = React.useState<Slide[]>(
     items.filter((i) => i.kind === "image").map((i) => ({ type: "image", src: (i as any).src, caption: (i as any).caption }))
   );
   const [i, setI] = React.useState(0);
+  const [paused, setPaused] = React.useState(false);
   const drag = React.useRef<{ x: number } | null>(null);
   const hasPdf = items.some((it) => it.kind === "pdf");
+  const reduce = useReducedMotion();
 
   // Expand PDFs into page-slides once pdf.js is ready.
   React.useEffect(() => {
@@ -95,6 +98,12 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8" }: {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [go]);
+  // Autoplay: advance on a timer; pause on hover / off-screen; respect reduced-motion.
+  React.useEffect(() => {
+    if (!autoPlayMs || reduce || paused || n <= 1) return;
+    const t = setInterval(() => go(1), autoPlayMs);
+    return () => clearInterval(t);
+  }, [autoPlayMs, reduce, paused, n, go]);
 
   if (!n) {
     return (
@@ -109,6 +118,8 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8" }: {
       <div
         className="relative overflow-hidden rounded-2xl border border-border bg-card"
         style={{ aspectRatio: ratio }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
         onPointerDown={(e) => (drag.current = { x: e.clientX })}
         onPointerUp={(e) => { if (drag.current) { const dx = e.clientX - drag.current.x; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); drag.current = null; } }}
       >
