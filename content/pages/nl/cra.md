@@ -383,6 +383,67 @@ Niet-naleving van de **essentiële eisen of de kernverplichtingen van de fabrika
 
 Net als bij NIS2 en de [AI Act](/nl/ai-act) is de koppeling aan de omzet weloverwogen: productbeveiliging is nu een risico op bestuursniveau, geen begrotingspost die leeft en sterft binnen engineering. ([Pillsbury — CRA-vereisten](https://www.pillsburylaw.com/en/news-and-insights/eu-cyber-resilience-act-requirements-products-software.html))
 
+## Product of systeem? De scopingvraag die alles bepaalt
+
+Nog voordat één Bijlage I-maatregel wordt gekozen, bepaalt één bedrieglijk eenvoudige vraag het hele compliancetraject: **wat is precies uw "product"?** De CRA beantwoordt dit in **Artikel 3(1)** — een product met digitale elementen is *"een software- of hardwareproduct en de bijbehorende oplossingen voor gegevensverwerking op afstand, met inbegrip van software- of hardwarecomponenten die afzonderlijk in de handel worden gebracht."* ([EUR-Lex, officiële tekst](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))
+
+Het gevolg is makkelijk te missen en duur om verkeerd te doen. De CRA is van toepassing op **elke individuele producteenheid die op de EU-markt wordt gebracht** — niet op een systeem, een installatie of een geconfigureerde oplossing. Dat is de fundamentele architectonische breuk met [IEC 62443](/nl/iec-62443), dat redeneert op het niveau van een *System Under Consideration* opgebouwd uit zones en conduits. Twee fabrikanten die dezelfde hardware leveren, kunnen daardoor volledig verschillende verplichtingen hebben, afhankelijk van hoe ze die in de handel brengen:
+
+- Wordt een verpakte automatiseringsoplossing met vier interne zones als **één geïntegreerd product** in de handel gebracht, dan behandelt de CRA het als één product met één conformiteitsverklaring onder **Artikel 28**.
+- Wordt elk zone-apparaat **afzonderlijk** in de handel gebracht, dan wordt elk een **onafhankelijk beoordeeld product** — met een eigen risicobeoordeling, een eigen technisch dossier en mogelijk een eigen conformiteitsroute.
+
+> [!IMPORTANT]
+> Deze product-versus-systeem-scoping is het meest voorkomende punt van verwarring voor OT- en ICS-fabrikanten, die van nature in *systemen* denken, niet in *producten*. Het verkeerd inschatten werkt door: het bepaalt de conformiteitsroute, of een aangemelde instantie verplicht is, en de volledige omvang van het technisch dossier. Dit moet als eerste worden vastgesteld — vóór ontwerp, vóór maatregelen, vóór enige 62443-afstemming.
+
+## Hoe de CRA risico kalibreert — het "waar van toepassing"-mechanisme
+
+De CRA gebruikt nooit Security Levels. Het kalibratiemechanisme is de **cybersecurityrisicobeoordeling** uit **Artikel 13(2) en (3)** — en dit begrijpen is het verschil tussen rigoureuze, verdedigbare compliance en óf over-engineering óf niet-naleving.
+
+**Artikel 13(2)** verplicht fabrikanten om *"een beoordeling uit te voeren van de cybersecurityrisico's die verbonden zijn aan een product met digitale elementen"* en de uitkomst mee te nemen in alle levensfasen. **Artikel 13(3)** koppelt die beoordeling rechtstreeks aan de maatregelen: zij moet *"aangeven of, en zo ja op welke wijze, de beveiligingseisen in Bijlage I, deel I, punt (2), van toepassing zijn."* ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))
+
+De proportionaliteitspoort zit in twee begrippen. **Bijlage I, deel I, punt (1)** stelt de norm — producten moeten *"een passend niveau van cyberbeveiliging op basis van de risico's"* waarborgen. Het woord **"passend"** is de juridische haak voor proportionaliteit. **Bijlage I, deel I, punt (2)** somt vervolgens de specifieke technische eigenschappen op (toegangscontrole, vertrouwelijkheid, integriteit, beschikbaarheid, minimaal aanvalsoppervlak, en meer) die gelden *"op basis van de risicobeoordeling en **waar van toepassing**."*
+
+Die zinsnede — **"waar van toepassing"**, versterkt door **Overweging 55** — is bepalend. Waar een specifieke essentiële eis niet relevant is voor het beoogde doel of risicoprofiel van een product, hoeft de fabrikant die niet te implementeren, **mits** een duidelijke schriftelijke rechtvaardiging is vastgelegd in de technische documentatie onder **Artikel 13(4)**.
+
+```keyfacts
+Scope-eenheid :: Het individuele product (Art. 3(1)) — niet het systeem
+Risicomechanisme :: Cybersecurityrisicobeoordeling (Art. 13(2)–(3))
+Proportionaliteitshaak :: "passend" + "waar van toepassing" (Bijlage I, deel I)
+Niet-toepassing :: Toegestaan met schriftelijke rechtvaardiging (Art. 13(4), Overw. 55)
+Equivalent aan :: IEC 62443 SL-T-differentiatie — als uitkomst uitgedrukt
+```
+
+De commerciële inzet is reëel. Een fabrikant die een rigoureuze, verdedigbare Artikel 13(2)–(3)-beoordeling kan schrijven en nauwkeurig aan Bijlage I koppelt, vermijdt het over-implementeren van maatregelen die het risicoprofiel niet vereist. Wie dat niet kan, staat voor het omgekeerde: óf de boetes van Artikel 64, óf de dode last van elk product engineeren op een maximale specificatie die het nooit nodig had.
+
+## IEC 62443 Security Levels afbeelden op CRA-conformiteit
+
+De meeste betrokken OT-fabrikanten bezitten al [IEC 62443](/nl/iec-62443)-certificeringen — en ontdekken dat **geen van die certificaten automatisch aan de CRA voldoet.** De twee kaders zijn rond verschillende conformiteitseenheden opgebouwd, dus de afbeelding moet bewust worden opgebouwd.
+
+| Dimensie | IEC 62443 | Cyber Resilience Act |
+|---|---|---|
+| Conformiteitseenheid | System Under Consideration; zones & conduits | Het individuele product op de markt |
+| Risicokalibratie | Security Levels SL-1 → SL-4 per zone | Risicobeoordeling (Art. 13(2)–(3)), "waar van toepassing" |
+| Bewijs van naleving | SL-C-certificaat per component; SL-A per zone | Technisch dossier (Bijlage VII) + conformiteitsverklaring |
+| Beoordeling door derden | Optioneel (62443-4-2 SL-C-certificering) | Verplicht voor Belangrijk Klasse I (zonder geharmoniseerde norm) en Klasse II |
+| Target/Capability/Achieved | SL-T / SL-C / SL-A zijn onderscheiden | Samengevoegd tot één gedocumenteerde, risico-gerechtvaardigde uitkomst |
+
+De brug is even conceptueel als technisch: **SL-T** (het doel dat een zone vereist) wordt de *input* voor de Artikel 13(2)-beoordeling; **SL-C** (de gecertificeerde capaciteit van een component) wordt *bewijs* voor de componenteisen van Bijlage I, deel II; en **SL-A** (wat een zone werkelijk bereikt) heeft geen directe CRA-tegenhanger, omdat de CRA stopt bij de productgrens. Een 62443-4-2 SL-C-certificaat is krachtig ondersteunend bewijs in een CRA-technisch dossier — maar geen vervanging voor de Bijlage I-traceerbaarheid die de CRA vereist.
+
+## De kloof in geharmoniseerde normen — en de wachtrij bij aangemelde instanties
+
+De conformiteitsroutes van de CRA leunen sterk op **geharmoniseerde normen**: haal er één aan in het Publicatieblad van de EU, en een fabrikant van een Belangrijk Klasse I-product kan met een vermoeden van conformiteit zelf beoordelen. Het probleem in 2026–2027 is timing. Medio 2026 is **nog geen enkele geharmoniseerde norm voor de CRA in het Publicatieblad aangehaald**, en de verwachte kandidaat — **EN IEC 62443-4-2 met een A11 CRA-afstemmingsbijlage** — wordt pas rond **Q2 2027** verwacht, enkele maanden vóór de hoofdverplichtingen op **11 december 2027**.
+
+> [!WARNING]
+> Totdat een geharmoniseerde norm is aangehaald, moet **elk Belangrijk Klasse I-product zonder norm — en elk Klasse II-product ongeacht — via een aangemelde instantie** worden beoordeeld. De capaciteit van aangemelde instanties voor de CRA is eindig en wordt nu opgebouwd. Wie wacht op de norm, riskeert een wachtrij die al is ontstaan, met een vaste en onwrikbare deadline.
+
+Dit is de praktische reden waarom CRA-readiness niet tot 2027 kan wachten: de meldmachinerie is al verschuldigd in **september 2026**, en de conformiteitsroute voor hogere klassen loopt via derden waarvan de capaciteit ruim vóór de deadline schaars is.
+
+## De schaal van de deadline — 100.000 fabrikanten, één datum
+
+De CRA is geen nicheverplichting. De effectbeoordeling van de Europese Commissie identificeert in de orde van **100.000–110.000 marktdeelnemers** die producten met digitale elementen op de EU-markt brengen — die overgrote meerderheid moet conformiteit bereiken vóór **dezelfde datum van 11 december 2027**. Daarbovenop komt de meldplicht vanaf **11 september 2026** voor **elk reeds op de markt gebracht product**, inclusief langlevende industriële apparatuur van jaren geleden.
+
+Voor OT is die samenloop bijzonder scherp: industriële producten zijn langlevend, opgebouwd uit diepe toeleveringsketens, en zitten vaak in veiligheidsgerelateerde functies waar de [Machineverordening](/nl/machine-act) en, voor AI-gestuurde componenten, de [AI Act](/nl/ai-act) tegelijk gelden. Fabrikanten die de CRA als weer een losse checklist behandelen, voldoen laat en duur. Wie hem opneemt in één risicogebaseerd productbeveiligingsprogramma — verankerd in het 62443-werk dat de meesten al hebben — voldoet in één keer.
+
 ## OXOT's methodologie voor de afstemming van CRA en IEC 62443
 
 Dit is waar OXOT's eigen analyse verder gaat dan de algemene compliance-literatuur. Het zone-gedifferentieerde Security Level (SL)-raamwerk van IEC 62443 laat zich **niet** één-op-één afbeelden op de CRA — de twee regimes zijn opgebouwd rond verschillende eenheden. Maar het eigen risicogebaseerde proportionaliteitsmechanisme van de CRA levert een functioneel gelijkwaardig resultaat op, en OXOT heeft een herhaalbare methodologie ontwikkeld om tussen beide te vertalen.

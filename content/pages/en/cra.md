@@ -383,6 +383,67 @@ Non-compliance with the **essential requirements or the core manufacturer obliga
 
 As with NIS2 and the [AI Act](/en/ai-act), the turnover linkage is deliberate: product security is now a board-level commercial risk, not a line item that lives and dies in engineering. ([Pillsbury — CRA requirements](https://www.pillsburylaw.com/en/news-and-insights/eu-cyber-resilience-act-requirements-products-software.html))
 
+## Product or system? The scoping question that changes everything
+
+Before a single Annex I control is chosen, one deceptively simple question decides the entire compliance path: **what, exactly, is your "product"?** The CRA answers it in **Article 3(1)** — a product with digital elements is *"a software or hardware product and its remote data processing solutions, including software or hardware components being placed on the market separately."* ([EUR-Lex, official text](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))
+
+The consequence is easy to miss and expensive to get wrong. The CRA applies to **each individual product unit placed on the EU market** — not to a system, an installation, or a configured solution. This is the fundamental architectural break with [IEC 62443](/en/iec-62443), which reasons at the level of a *System Under Consideration* built from zones and conduits. Two manufacturers shipping the same hardware can therefore face completely different obligations depending on how they place it on the market:
+
+- If a packaged automation solution with four internal zones is placed on the market as **one integrated product**, the CRA treats it as a single product with a single Declaration of Conformity under **Article 28**.
+- If each zone-device is placed on the market **separately**, each becomes an **independently assessed product** — its own risk assessment, its own technical file, potentially its own conformity route.
+
+> [!IMPORTANT]
+> This product-versus-system scoping is the single most common point of confusion for OT and ICS manufacturers, most of whom think natively in *systems*, not *products*. Getting it wrong cascades: it determines the conformity assessment pathway, whether a Notified Body is mandatory, and the entire scope of the technical file. It is the first thing to settle — before design, before controls, before any 62443 mapping.
+
+## How the CRA calibrates risk — the "where applicable" mechanism
+
+The CRA never uses Security Levels. Its calibration mechanism is the **cybersecurity risk assessment** mandated by **Article 13(2) and (3)** — and understanding it is the difference between rigorous, defensible compliance and either over-engineering or non-compliance.
+
+**Article 13(2)** requires manufacturers to *"undertake an assessment of the cybersecurity risks associated with a product with digital elements and take the outcome of that assessment into account during the planning, design, development, production, delivery and maintenance phases."* **Article 13(3)** then ties that assessment directly to the controls: it must *"indicate whether and, if so in what manner, the security requirements set out in Part I, point (2), of Annex I are applicable."* ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng))
+
+The proportionality gateway sits in two phrases. **Annex I, Part I, point (1)** sets the overarching standard — products must ensure *"an appropriate level of cybersecurity based on the risks."* The word **"appropriate"** is the legal hook for proportionality. **Annex I, Part I, point (2)** then lists the specific technical properties (access control, confidentiality, integrity, availability, minimal attack surface, and more) that apply *"on the basis of the risk assessment referred to in Article 13(2) and **where applicable**."*
+
+That phrase — **"where applicable"**, reinforced by **Recital 55** — is the whole game. Where a specific essential requirement is not relevant to a product's intended purpose or risk profile, the manufacturer need not implement it, **provided** a clear written justification is recorded in the technical documentation under **Article 13(4)**. The official multi-stakeholder guidance (ORCWG) is explicit that manufacturers *"determine on the basis of the cybersecurity risk assessment which of those requirements are relevant"* and must document any non-application.
+
+```keyfacts
+Scope unit :: The individual product (Art. 3(1)) — not the system
+Risk mechanism :: Cybersecurity risk assessment (Art. 13(2)–(3))
+Proportionality hook :: "appropriate" + "where applicable" (Annex I, Part I)
+Non-application :: Allowed with written justification (Art. 13(4), Recital 55)
+Equivalent to :: IEC 62443 SL-T differentiation — expressed as outcomes
+```
+
+The commercial stakes are real. A manufacturer who can write a rigorous, defensible Article 13(2)–(3) assessment and map it precisely to Annex I avoids over-implementing controls that its risk profile does not warrant. A manufacturer who cannot faces the opposite: either the penalties of Article 64, or the dead-weight cost of engineering every product to a maximal specification it never needed.
+
+## Mapping IEC 62443 Security Levels to CRA conformity
+
+Most in-scope OT manufacturers already hold [IEC 62443](/en/iec-62443) certifications — and discover that **none of those certificates automatically satisfy the CRA.** The two frameworks are architected around different units of conformity, so the mapping has to be built deliberately. This is where OXOT's analysis goes beyond the general compliance literature.
+
+| Dimension | IEC 62443 | Cyber Resilience Act |
+|---|---|---|
+| Unit of conformity | System Under Consideration; zones & conduits | The individual product placed on the market |
+| Risk calibration | Security Levels SL-1 → SL-4 per zone | Risk assessment (Art. 13(2)–(3)), "where applicable" |
+| Compliance evidence | SL-C certificate per component; SL-A per zone | Technical file (Annex VII) + Declaration of Conformity |
+| Third-party assessment | Optional (62443-4-2 SL-C certification) | Mandatory for Important Class I (absent a harmonised standard) and Class II |
+| Target/Capability/Achieved | SL-T / SL-C / SL-A are distinct | Collapsed into one documented, risk-justified outcome |
+
+The bridge is conceptual as much as technical: **SL-T** (the target a zone requires) becomes the *input* to the Article 13(2) risk assessment; **SL-C** (a component's certified capability) becomes *evidence* toward Annex I, Part II component requirements; and **SL-A** (what a zone actually achieves) has no direct CRA analogue, because the CRA stops at the product boundary and does not certify the operator's installed system. A 62443-4-2 SL-C certificate is powerful supporting evidence in a CRA technical file — but it is not a substitute for the Annex I traceability the CRA demands.
+
+## The harmonised-standards gap — and the Notified Body queue
+
+The CRA's conformity routes lean heavily on **harmonised standards**: cite one in the Official Journal of the EU, and a manufacturer of an Important Class I product can self-assess against it with a presumption of conformity. The problem in 2026–2027 is timing. As of mid-2026, **no harmonised standard for the CRA has yet been cited in the Official Journal**, and the expected candidate — **EN IEC 62443-4-2 with an A11 CRA-alignment annex** — is not anticipated until roughly **Q2 2027**, only months before the main obligations bite on **11 December 2027**.
+
+> [!WARNING]
+> Until a harmonised standard is cited, **every Important Class I product without one — and every Class II product regardless — must go through a Notified Body** for conformity assessment. Notified Body capacity for the CRA is finite and being built now. Manufacturers who wait for the standard risk arriving at a queue that has already formed, with the deadline fixed and immovable.
+
+This is the practical reason CRA readiness cannot be deferred to 2027: the reporting machinery is already due in **September 2026**, and the conformity route for higher-class products runs through third-party bodies whose capacity is scarce well before the deadline.
+
+## The scale of the deadline — 100,000 manufacturers, one date
+
+The CRA is not a niche obligation. The European Commission's own impact assessment identifies on the order of **100,000–110,000 economic operators** placing products with digital elements on the EU market — the overwhelming majority of whom must reach conformity by the **same 11 December 2027 date**. Layered on top is the reporting duty from **11 September 2026** covering **every in-scope product already on the market**, including long-lived industrial equipment sold years ago.
+
+For OT specifically, that convergence is unusually sharp: industrial products are long-lived, assembled from deep supply chains, and frequently sit inside safety-related functions where the [Machinery Regulation](/en/machine-act) and, for AI-driven components, the [AI Act](/en/ai-act) apply simultaneously. The manufacturers who treat the CRA as one more standalone checklist will meet it late and expensively. The ones who fold it into a single, risk-based product-security programme — anchored in the 62443 work most already have — meet it once.
+
 ## OXOT's CRA ↔ IEC 62443 alignment methodology
 
 This is where OXOT's own analysis goes further than the general compliance literature. IEC 62443's zone-differentiated Security Level (SL) framework does **not** map one-to-one onto the CRA — the two regimes are architected around different units. But the CRA's own risk-based proportionality mechanism produces a functionally equivalent outcome, and OXOT has built a repeatable methodology for translating between them.
