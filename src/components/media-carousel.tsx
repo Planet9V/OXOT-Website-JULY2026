@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { useReducedMotion } from "motion/react";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2, Maximize2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type CarouselItem =
@@ -67,6 +67,7 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
   );
   const [i, setI] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false);
   const drag = React.useRef<{ x: number } | null>(null);
   const hasPdf = items.some((it) => it.kind === "pdf");
   const reduce = useReducedMotion();
@@ -98,12 +99,22 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [go]);
-  // Autoplay: advance on a timer; pause on hover / off-screen; respect reduced-motion.
+  // Autoplay: advance on a timer; pause on hover, when expanded, or off-screen; respect reduced-motion.
   React.useEffect(() => {
-    if (!autoPlayMs || reduce || paused || n <= 1) return;
+    if (!autoPlayMs || reduce || paused || expanded || n <= 1) return;
     const t = setInterval(() => go(1), autoPlayMs);
     return () => clearInterval(t);
-  }, [autoPlayMs, reduce, paused, n, go]);
+  }, [autoPlayMs, reduce, paused, expanded, n, go]);
+
+  // When expanded: lock body scroll and close on Escape.
+  React.useEffect(() => {
+    if (!expanded) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setExpanded(false); };
+    window.addEventListener("keydown", onKey);
+    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", onKey); };
+  }, [expanded]);
 
   if (!n) {
     return (
@@ -113,55 +124,90 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
     );
   }
 
-  return (
-    <figure className={className}>
-      <div
-        className="relative overflow-hidden rounded-2xl border border-border bg-card"
-        style={{ aspectRatio: ratio }}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onPointerDown={(e) => (drag.current = { x: e.clientX })}
-        onPointerUp={(e) => { if (drag.current) { const dx = e.clientX - drag.current.x; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); drag.current = null; } }}
-      >
-        <div className="flex h-full w-full transition-transform duration-300 ease-out" style={{ transform: `translateX(-${i * 100}%)` }}>
-          {slides.map((s, idx) => (
-            <div key={idx} className="h-full w-full shrink-0">
-              {s.type === "image"
-                ? <img src={s.src} alt={s.caption ?? ""} className="h-full w-full object-cover" draggable={false} />
-                : <PdfPage doc={s.doc} page={s.page} active={Math.abs(idx - i) <= 1} />}
-            </div>
-          ))}
-        </div>
+  // aspect number for sizing the fullscreen frame within the viewport
+  const arNum = (() => { const [a, b] = ratio.split("/").map((x) => parseFloat(x)); return a && b ? a / b : 16 / 9; })();
 
-        {n > 1 && (
-          <>
-            <button onClick={() => go(-1)} aria-label="Previous"
-              className="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background">
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button onClick={() => go(1)} aria-label="Next"
-              className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background">
-              <ChevronRight className="h-5 w-5" />
-            </button>
-            <div className="absolute bottom-2 right-3 rounded-full bg-background/80 px-2 py-0.5 text-xs font-medium text-muted-foreground ring-1 ring-border backdrop-blur">
-              {i + 1} / {n}
-            </div>
-          </>
-        )}
+  // The viewer frame — used both inline and in the fullscreen overlay.
+  const renderFrame = (fullscreen: boolean) => (
+    <div
+      className={cn("relative h-full w-full overflow-hidden rounded-2xl border border-border bg-card", fullscreen && "shadow-2xl")}
+      style={fullscreen ? undefined : { aspectRatio: ratio }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onPointerDown={(e) => (drag.current = { x: e.clientX })}
+      onPointerUp={(e) => { if (drag.current) { const dx = e.clientX - drag.current.x; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); drag.current = null; } }}
+    >
+      <div className="flex h-full w-full transition-transform duration-300 ease-out" style={{ transform: `translateX(-${i * 100}%)` }}>
+        {slides.map((s, idx) => (
+          <div key={idx} className="h-full w-full shrink-0">
+            {s.type === "image"
+              ? <img src={s.src} alt={s.caption ?? ""} className={cn("h-full w-full", fullscreen ? "object-contain" : "object-cover")} draggable={false} />
+              : <PdfPage doc={s.doc} page={s.page} active={Math.abs(idx - i) <= 1} />}
+          </div>
+        ))}
       </div>
 
-      {/* dots (only when few) */}
-      {n > 1 && n <= 12 && (
-        <div className="mt-3 flex justify-center gap-1.5">
-          {slides.map((_, idx) => (
-            <button key={idx} onClick={() => setI(idx)} aria-label={`Go to slide ${idx + 1}`}
-              className={cn("h-1.5 rounded-full transition-all", idx === i ? "w-5 bg-primary" : "w-1.5 bg-border hover:bg-primary/50")} />
-          ))}
+      {/* expand (inline) / close (fullscreen) */}
+      <button
+        onClick={() => setExpanded(!fullscreen)}
+        aria-label={fullscreen ? "Close full view" : "Expand to full view"}
+        title={fullscreen ? "Close (Esc)" : "Expand"}
+        className="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background"
+      >
+        {fullscreen ? <X className="h-5 w-5" /> : <Maximize2 className="h-4 w-4" />}
+      </button>
+
+      {n > 1 && (
+        <>
+          <button onClick={() => go(-1)} aria-label="Previous"
+            className="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background">
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button onClick={() => go(1)} aria-label="Next"
+            className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background">
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <div className="absolute bottom-2 right-3 rounded-full bg-background/80 px-2 py-0.5 text-xs font-medium text-muted-foreground ring-1 ring-border backdrop-blur">
+            {i + 1} / {n}
+          </div>
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      <figure className={className}>
+        {renderFrame(false)}
+        {n > 1 && n <= 12 && (
+          <div className="mt-3 flex justify-center gap-1.5">
+            {slides.map((_, idx) => (
+              <button key={idx} onClick={() => setI(idx)} aria-label={`Go to slide ${idx + 1}`}
+                className={cn("h-1.5 rounded-full transition-all", idx === i ? "w-5 bg-primary" : "w-1.5 bg-border hover:bg-primary/50")} />
+            ))}
+          </div>
+        )}
+        {slides[i]?.type === "image" && (slides[i] as any).caption && (
+          <figcaption className="mt-2 text-center text-sm text-muted-foreground">{(slides[i] as any).caption}</figcaption>
+        )}
+      </figure>
+
+      {expanded && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+          onClick={() => setExpanded(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="max-h-[90vh]"
+            style={{ width: `min(95vw, calc(90vh * ${arNum}))`, aspectRatio: ratio }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {renderFrame(true)}
+          </div>
         </div>
       )}
-      {slides[i]?.type === "image" && (slides[i] as any).caption && (
-        <figcaption className="mt-2 text-center text-sm text-muted-foreground">{(slides[i] as any).caption}</figcaption>
-      )}
-    </figure>
+    </>
   );
 }
