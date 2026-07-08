@@ -1,4 +1,37 @@
 import { pool } from "@/lib/db";
+import { scryptSync, randomBytes, createCipheriv, createDecipheriv } from "node:crypto";
+
+/**
+ * Secret-at-rest encryption for the OpenRouter key (AES-256-GCM). The key is
+ * derived from SETTINGS_SECRET (falls back to AUTH_SECRET) via scrypt. Stored
+ * values are tagged "enc:v1:…"; anything without the tag is treated as plaintext
+ * (backward-compatible with values written before encryption existed).
+ */
+const SECRET = process.env.SETTINGS_SECRET ?? process.env.AUTH_SECRET ?? "dev-insecure-settings-secret";
+const ENC_PREFIX = "enc:v1:";
+
+function encryptSecret(plain: string): string {
+  const salt = randomBytes(16);
+  const iv = randomBytes(12);
+  const dk = scryptSync(SECRET, salt, 32);
+  const cipher = createCipheriv("aes-256-gcm", dk, iv);
+  const ct = Buffer.concat([cipher.update(plain, "utf8"), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return ENC_PREFIX + [salt, iv, tag, ct].map((b) => b.toString("base64")).join(":");
+}
+
+function decryptSecret(stored: string): string {
+  if (!stored.startsWith(ENC_PREFIX)) return stored; // legacy plaintext
+  try {
+    const [saltB, ivB, tagB, ctB] = stored.slice(ENC_PREFIX.length).split(":");
+    const dk = scryptSync(SECRET, Buffer.from(saltB, "base64"), 32);
+    const decipher = createDecipheriv("aes-256-gcm", dk, Buffer.from(ivB, "base64"));
+    decipher.setAuthTag(Buffer.from(tagB, "base64"));
+    return Buffer.concat([decipher.update(Buffer.from(ctB, "base64")), decipher.final()]).toString("utf8");
+  } catch {
+    return ""; // secret rotated or corrupt — fall back to env key
+  }
+}
 
 /**
  * Admin-editable AI provider config, stored in app_settings (key/value) and merged
@@ -73,7 +106,7 @@ export async function getAiConfig(): Promise<AiConfig> {
     chatProvider: provider,
     ollamaChatModel: s.ollama_chat_model || ENV.ollamaChatModel,
     openrouterModel: s.openrouter_model || ENV.openrouterModel,
-    openrouterKey: s.openrouter_api_key || ENV.openrouterKey
+    openrouterKey: (s.openrouter_api_key ? decryptSecret(s.openrouter_api_key) : "") || ENV.openrouterKey
   };
 }
 
@@ -101,10 +134,12 @@ export async function saveAiSettings(patch: Partial<Record<AiSettingKey, string>
     if (value === "") {
       await pool.query(`DELETE FROM app_settings WHERE key = $1`, [key]);
     } else {
+      // Encrypt the OpenRouter key at rest; other settings are non-secret.
+      const stored = key === "openrouter_api_key" ? encryptSecret(value as string) : (value as string);
       await pool.query(
         `INSERT INTO app_settings (key, value, updated_at) VALUES ($1,$2, now())
          ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()`,
-        [key, value]
+        [key, stored]
       );
     }
   }
