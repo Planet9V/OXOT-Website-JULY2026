@@ -152,7 +152,7 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
         onClick={() => setExpanded(!fullscreen)}
         aria-label={fullscreen ? "Close full view" : "Expand to full view"}
         title={fullscreen ? "Close (Esc)" : "Expand"}
-        className="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background"
+        className="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/55 text-white shadow-lg ring-1 ring-white/25 backdrop-blur transition hover:bg-black/75"
       >
         {fullscreen ? <X className="h-5 w-5" /> : <Maximize2 className="h-4 w-4" />}
       </button>
@@ -160,14 +160,14 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
       {n > 1 && (
         <>
           <button onClick={() => go(-1)} aria-label="Previous"
-            className="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background">
+            className="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg ring-1 ring-white/25 backdrop-blur transition hover:bg-black/75">
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button onClick={() => go(1)} aria-label="Next"
-            className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border backdrop-blur transition hover:bg-background">
+            className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg ring-1 ring-white/25 backdrop-blur transition hover:bg-black/75">
             <ChevronRight className="h-5 w-5" />
           </button>
-          <div className="absolute bottom-2 right-3 rounded-full bg-background/80 px-2 py-0.5 text-xs font-medium text-muted-foreground ring-1 ring-border backdrop-blur">
+          <div className="absolute bottom-2 right-3 rounded-full bg-black/55 px-2 py-0.5 text-xs font-medium text-white/90 ring-1 ring-white/25 backdrop-blur">
             {i + 1} / {n}
           </div>
         </>
