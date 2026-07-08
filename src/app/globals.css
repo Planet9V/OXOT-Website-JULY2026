@@ -197,6 +197,33 @@
   .ed-sec-head, .ed-hero { padding-left: 24px; padding-right: 24px; }
 }
 
+/* --- Editorial DARK MODE — align the homepage to the site dark theme
+   (navy background + light ink + orange highlights), like the other pages.
+   Light mode is untouched: this only applies under .dark. The homepage's
+   `.editorial` palette is otherwise a hardcoded light scheme, so we remap its
+   CSS variables and the few inline rgba() values that aren't variableised. --- */
+.dark .editorial {
+  --ed-ink: #e7eaf0;
+  --ed-ink2: #f2f4f8;
+  --ed-paper: #0f1f2e;
+  --ed-white: #16283a;
+  --ed-line: rgba(255, 255, 255, 0.08);
+  --ed-line-2: rgba(255, 255, 255, 0.10);
+  --ed-muted: rgba(231, 234, 240, 0.64);
+}
+.dark .editorial .ed-trust-label { color: rgba(231, 234, 240, 0.5); }
+.dark .editorial .ed-trust-list { color: rgba(231, 234, 240, 0.6); }
+.dark .editorial .ed-card { box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.6); }
+.dark .editorial .ed-card-tag { color: rgba(231, 234, 240, 0.45); }
+.dark .editorial .ed-stats { border-top-color: rgba(255, 255, 255, 0.1); }
+.dark .editorial .ed-stat-l { color: rgba(231, 234, 240, 0.55); }
+.dark .editorial .ed-sec-intro { color: rgba(231, 234, 240, 0.62); }
+.dark .editorial .ed-btn-primary:hover { background: #cfd5df; }
+.dark .editorial .ed-svc-cta { background: #16283a; border-bottom-color: rgba(255, 255, 255, 0.1); }
+.dark .editorial .ed-svc-cta h3 { color: #f2f4f8; }
+.dark .editorial .ed-svc-cta p { color: rgba(231, 234, 240, 0.62); }
+.dark .editorial .ed-svc-cta a { color: #0f1f2e; }
+
 /* ============================================================================
    Admin WYSIWYG editor (TipTap) content styling — scoped to .oxot-editor.
 ============================================================================ */
