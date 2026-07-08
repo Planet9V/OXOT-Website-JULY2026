@@ -41,6 +41,14 @@ export function SiteNavClient({ locale, items }: { locale: string; items: Item[]
       )}
     >
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+        {/* OXOT wordmark — links home. Orange X echoes "eXcellence". */}
+        <Link
+          href={home}
+          aria-label="OXOT — home"
+          className="mr-1 select-none text-[15px] font-semibold tracking-[0.28em] text-foreground no-underline transition-opacity duration-150 ease-brand hover:opacity-80"
+        >
+          O<span className="text-primary">X</span>OT
+        </Link>
         {items.map((it, i) => {
           const active = isActive(it.href);
           return (

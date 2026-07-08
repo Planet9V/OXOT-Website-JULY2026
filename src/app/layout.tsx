@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -26,6 +26,14 @@ export const metadata: Metadata = {
     images: [DEFAULT_OG_IMAGE]
   },
   robots: { index: true, follow: true }
+};
+
+// Browser UI / address-bar tint — OXOT navy in dark, paper in light.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf9f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#102030" }
+  ]
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

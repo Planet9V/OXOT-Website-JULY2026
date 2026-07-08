@@ -4,6 +4,7 @@ import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ChatWidget } from "@/components/agent/chat-widget";
 import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +26,7 @@ export default async function LocaleLayout({
     <div lang={locale}>
       <SiteNav locale={locale} />
       {children}
+      <SiteFooter locale={locale} />
       <ChatWidget locale={locale} strings={t.agent} />
     </div>
   );
