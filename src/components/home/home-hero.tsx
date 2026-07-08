@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import type { HomeHero as Hero } from "@/lib/site-content";
-import { Aurora, Reveal, Stagger, CountUp } from "@/components/motion/fx";
+import { Aurora, Reveal, Stagger, CountUp, Parallax } from "@/components/motion/fx";
 import { MediaCarousel } from "@/components/media-carousel";
 
 function RiskMap({ findingsLabel }: { findingsLabel: string }) {
@@ -79,6 +79,7 @@ export function HomeHero({ hero, locale }: { hero: Hero; locale: string }) {
         </div>
 
         <Reveal delay={0.15} y={30}>
+          <Parallax distance={16}>
           {hero.heroPdf ? (
             <MediaCarousel
               items={[{ kind: "pdf", src: `/api/media/${hero.heroPdf}` }]}
@@ -103,6 +104,7 @@ export function HomeHero({ hero, locale }: { hero: Hero; locale: string }) {
               </div>
             </div>
           )}
+          </Parallax>
         </Reveal>
       </div>
     </section>

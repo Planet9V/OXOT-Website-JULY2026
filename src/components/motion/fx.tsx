@@ -2,6 +2,7 @@
 import * as React from "react";
 import {
   motion, useInView, useMotionValue, useMotionTemplate, animate, useReducedMotion,
+  useScroll, useTransform,
   type TargetAndTransition
 } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -84,6 +85,21 @@ export function Aurora({ className }: { className?: string }) {
       {blob("top-[10%] right-[8%] h-[40vh] w-[40vh] bg-sky-500/10", { x: [0, -60, 0], y: [0, 50, 0] })}
       {blob("bottom-[-10%] left-[30%] h-[42vh] w-[42vh] bg-primary/10", { x: [0, 40, 0], y: [0, -40, 0] })}
     </div>
+  );
+}
+
+/** Subtle scroll-linked vertical parallax for a top-of-page hero visual.
+ *  Driven off window scrollY (dev/prod consistent, no per-element measurement):
+ *  the visual drifts up to `distance`px over the first `range`px of scroll.
+ *  Restrained by design; disabled entirely for reduced-motion. */
+export function Parallax({ children, distance = 18, range = 600, className }: { children: React.ReactNode; distance?: number; range?: number; className?: string }) {
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, range], [0, -distance]);
+  return (
+    <motion.div style={reduce ? undefined : { y }} className={className}>
+      {children}
+    </motion.div>
   );
 }
 
