@@ -1,9 +1,8 @@
-import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { getMenu } from "@/lib/content";
-import { LocaleSwitcher } from "@/components/locale-switcher";
+import { SiteNavClient } from "@/components/site-nav-client";
 
-// Renders the 'main' menu + language switcher for the active locale.
+// Fetches the 'main' menu server-side and hands it to the sticky client nav shell.
 export async function SiteNav({ locale }: { locale: Locale }) {
   let items: { label: string; href: string }[] = [];
   try {
@@ -11,16 +10,5 @@ export async function SiteNav({ locale }: { locale: Locale }) {
   } catch {
     items = [];
   }
-  return (
-    <nav className="flex items-center justify-between gap-4 border-b border-border px-6 py-3 text-sm">
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-        {items.map((it, i) => (
-          <Link key={i} href={it.href} className="hover:text-primary">
-            {it.label}
-          </Link>
-        ))}
-      </div>
-      <LocaleSwitcher locale={locale} />
-    </nav>
-  );
+  return <SiteNavClient locale={locale} items={items} />;
 }
