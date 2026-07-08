@@ -49,7 +49,7 @@ export function LocaleSwitcher({ locale }: { locale: string }) {
         aria-current={active ? "true" : undefined}
         title={label}
         className={cn(
-          "block h-4 w-6 overflow-hidden rounded-[3px] ring-1 transition-all",
+          "block h-4 w-6 overflow-hidden rounded-[3px] ring-1 transition-all duration-150 ease-brand active:scale-95",
           active
             ? "ring-primary opacity-100"
             : "ring-border opacity-55 hover:opacity-100 hover:ring-primary/50"

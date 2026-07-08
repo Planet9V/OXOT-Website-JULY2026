@@ -110,7 +110,7 @@ export function ArticleShell({
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {related.map((r) => (
                   <Link key={r.slug} href={`/${locale}/${r.slug}`}
-                    className="group flex items-start justify-between gap-3 rounded-xl border border-border p-4 transition-colors hover:border-primary hover:bg-accent">
+                    className="group flex items-start justify-between gap-3 rounded-xl border border-border p-4 shadow-e1 transition-[colors,box-shadow] duration-200 ease-brand hover:border-primary hover:bg-accent hover:shadow-e2">
                     <span>
                       <span className="block text-sm font-semibold group-hover:text-primary">{r.label}</span>
                       <span className="mt-0.5 block text-xs text-muted-foreground">{r.note[locale as "en" | "nl"] ?? r.note.en}</span>

@@ -336,11 +336,11 @@ export function CardGrid({ items }: { items: { title: string; href: string; desc
           >
             {linked ? (
               <Link href={it.href} target={external(it.href) ? "_blank" : undefined} rel={external(it.href) ? "noopener noreferrer" : undefined} className="block h-full no-underline">
-                <SpotlightCard className="h-full rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50">{body}</SpotlightCard>
+                <SpotlightCard className="h-full rounded-2xl border border-border bg-card p-5 shadow-e1 transition-[colors,box-shadow] duration-200 ease-brand hover:border-primary/50 hover:shadow-e2">{body}</SpotlightCard>
               </Link>
             ) : (
-              // non-linked info card: no arrow, no hover-lift/glow (not misleadingly clickable)
-              <div className="h-full rounded-2xl border border-border bg-card p-5">{body}</div>
+              // non-linked info card: no arrow, no hover-lift/glow (not misleadingly clickable); subtle resting depth only
+              <div className="h-full rounded-2xl border border-border bg-card p-5 shadow-e1">{body}</div>
             )}
           </motion.div>
         );
