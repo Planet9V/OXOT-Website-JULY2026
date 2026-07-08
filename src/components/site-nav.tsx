@@ -1,12 +1,12 @@
 import type { Locale } from "@/i18n/config";
-import { getMenu } from "@/lib/content";
+import { getMenuTree, type MenuNode } from "@/lib/content";
 import { SiteNavClient } from "@/components/site-nav-client";
 
-// Fetches the 'main' menu server-side and hands it to the sticky client nav shell.
+// Fetches the nested 'main' menu server-side and hands it to the sticky mega-menu shell.
 export async function SiteNav({ locale }: { locale: Locale }) {
-  let items: { label: string; href: string }[] = [];
+  let items: MenuNode[] = [];
   try {
-    items = await getMenu("main", locale);
+    items = await getMenuTree("main", locale);
   } catch {
     items = [];
   }

@@ -27,12 +27,32 @@ export function PagesManager() {
   const [raw, setRaw] = useState(false);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
+  const [menuTops, setMenuTops] = useState<{ id: number; label: string; locale: string; parentId: number | null }[]>([]);
+  const [menuParent, setMenuParent] = useState("");
+  const [menuMsg, setMenuMsg] = useState("");
 
   const load = useCallback(async () => {
     const res = await fetch("/api/admin/pages");
     if (res.ok) setRows((await res.json()).pages);
   }, []);
-  useEffect(() => { void load(); }, [load]);
+  const loadMenu = useCallback(async () => {
+    const res = await fetch("/api/admin/menu-items?menu=main");
+    if (res.ok) setMenuTops((await res.json()).items);
+  }, []);
+  useEffect(() => { void load(); void loadMenu(); }, [load, loadMenu]);
+
+  // Add the page currently in the editor to the main menu (optionally under a parent).
+  async function addToMenu() {
+    if (!form.slug) { setMenuMsg("Enter a slug first."); return; }
+    const href = form.slug ? `/${form.locale}/${form.slug}` : `/${form.locale}`;
+    const res = await fetch("/api/admin/menu-items", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ menu: "main", locale: form.locale, label: form.title || form.slug, href,
+        parentId: menuParent ? Number(menuParent) : null, description: form.excerpt || "" })
+    });
+    setMenuMsg(res.ok ? "Added to menu." : ((await res.json()).error ?? "error"));
+    if (res.ok) void loadMenu();
+  }
 
   function set<K extends keyof Form>(k: K, v: Form[K]) { setForm((f) => ({ ...f, [k]: v })); }
   function reset() { setForm(EMPTY); setEditorKey((k) => k + 1); setMsg(""); }
@@ -151,6 +171,21 @@ export function PagesManager() {
               <input type="checkbox" checked={form.published} onChange={(e) => set("published", e.target.checked)} />
               Published <span className="text-muted-foreground">(requires both nl + en)</span>
             </label>
+
+            <div className="rounded-lg border border-border/60 bg-muted/20 p-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Navigation</p>
+              <p className="mb-3 text-xs text-muted-foreground">Place this page in the top menu. Choose a parent to nest it into that dropdown (mega-menu). The page&apos;s excerpt becomes the dropdown description.</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <select className={`${selectCls} min-w-[12rem]`} value={menuParent} onChange={(e) => setMenuParent(e.target.value)}>
+                  <option value="">— top level —</option>
+                  {menuTops.filter((m) => m.locale === form.locale && m.parentId === null).map((m) => (
+                    <option key={m.id} value={m.id}>under: {m.label}</option>
+                  ))}
+                </select>
+                <Button type="button" variant="outline" onClick={addToMenu}>Add “{form.title || form.slug || "page"}” to menu</Button>
+                {menuMsg && <span className="text-sm text-muted-foreground">{menuMsg}</span>}
+              </div>
+            </div>
 
             <div className="flex items-center gap-3">
               <Button type="submit" disabled={busy}>{busy ? "Saving…" : "Save page"}</Button>
