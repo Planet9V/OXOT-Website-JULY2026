@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images
+  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,15 +12,17 @@ import { PagesManager } from "@/components/admin/pages-manager";
 import { MenuManager } from "@/components/admin/menu-manager";
 import { InquiriesManager } from "@/components/admin/inquiries-manager";
 import { MediaManager } from "@/components/admin/media-manager";
+import { AiSettings } from "@/components/admin/ai-settings";
 
-type Section = "overview" | "homepage" | "pages" | "menus" | "media" | "enquiries";
+type Section = "overview" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   { key: "homepage", label: "Homepage", icon: Home },
   { key: "pages", label: "Pages", icon: FileText },
   { key: "menus", label: "Menus", icon: MenuIcon },
   { key: "media", label: "Media", icon: Images },
-  { key: "enquiries", label: "Enquiries", icon: Inbox }
+  { key: "enquiries", label: "Enquiries", icon: Inbox },
+  { key: "ai", label: "AI & Models", icon: Bot }
 ];
 
 export function AdminShell({ email }: { email: string }) {
@@ -105,6 +107,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "menus" && <MenuManager />}
           {section === "media" && <MediaManager />}
           {section === "enquiries" && <InquiriesManager />}
+          {section === "ai" && <AiSettings />}
         </main>
       </div>
     </div>

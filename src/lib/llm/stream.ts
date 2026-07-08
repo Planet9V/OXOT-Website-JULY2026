@@ -1,29 +1,20 @@
 import type { ChatMessage } from "./provider";
+import { getAiConfig } from "@/lib/ai-settings";
 
-// --- Ollama (local) ---
-const OLLAMA_HOST = process.env.OLLAMA_HOST ?? "http://ollama:11434";
-const CHAT_MODEL = process.env.OLLAMA_CHAT_MODEL ?? "qwen3.5:9b";
+// Timeouts stay env-tunable (not part of admin settings).
 const IDLE_MS = Number(process.env.OLLAMA_IDLE_TIMEOUT_MS ?? 60000);
-
-// --- OpenRouter (cloud) ---
-const OR_KEY = process.env.OPENROUTER_API_KEY;
-const OR_MODEL = process.env.OPENROUTER_MODEL ?? "openai/gpt-4o-mini";
 const OR_TIMEOUT_MS = Number(process.env.OPENROUTER_TIMEOUT_MS ?? 60000);
 
-// Which provider serves the chat first. Default: openrouter (set LLM_PRIMARY=ollama
-// to prefer the local model). The other provider is the automatic fallback.
-const PRIMARY = (process.env.LLM_PRIMARY ?? "openrouter").toLowerCase();
-
 // Ollama streaming (NDJSON). A watchdog aborts a stalled stream so we can fall back.
-async function* ollamaStream(messages: ChatMessage[]): AsyncGenerator<string> {
+async function* ollamaStream(messages: ChatMessage[], host: string, model: string): AsyncGenerator<string> {
   const ac = new AbortController();
   let watchdog = setTimeout(() => ac.abort(), IDLE_MS);
   let res: Response;
   try {
-    res = await fetch(`${OLLAMA_HOST}/api/chat`, {
+    res = await fetch(`${host}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ model: CHAT_MODEL, messages, stream: true }),
+      body: JSON.stringify({ model, messages, stream: true }),
       signal: ac.signal
     });
   } catch (e) { clearTimeout(watchdog); throw e; }
@@ -53,12 +44,12 @@ async function* ollamaStream(messages: ChatMessage[]): AsyncGenerator<string> {
 }
 
 // OpenRouter streaming (SSE: `data: {json}` lines, terminated by `data: [DONE]`).
-async function* openrouterStream(messages: ChatMessage[]): AsyncGenerator<string> {
-  if (!OR_KEY) throw new Error("OPENROUTER_API_KEY not set");
+async function* openrouterStream(messages: ChatMessage[], key: string, model: string): AsyncGenerator<string> {
+  if (!key) throw new Error("OpenRouter API key not set");
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
-    headers: { "content-type": "application/json", authorization: `Bearer ${OR_KEY}` },
-    body: JSON.stringify({ model: OR_MODEL, messages, stream: true }),
+    headers: { "content-type": "application/json", authorization: `Bearer ${key}` },
+    body: JSON.stringify({ model, messages, stream: true }),
     signal: AbortSignal.timeout(OR_TIMEOUT_MS)
   });
   if (!res.ok || !res.body) throw new Error(`OpenRouter stream failed: ${res.status}`);
@@ -94,12 +85,16 @@ export async function* chatStream(
   messages: ChatMessage[],
   onProvider?: (name: string) => void
 ): AsyncGenerator<string> {
-  const order = PRIMARY === "ollama" ? (["ollama", "openrouter"] as const) : (["openrouter", "ollama"] as const);
+  // Resolve effective provider config (admin settings over env) once per request.
+  const cfg = await getAiConfig();
+  const order = cfg.chatProvider === "ollama" ? (["ollama", "openrouter"] as const) : (["openrouter", "ollama"] as const);
   let yielded = false;
   for (const name of order) {
     try {
       onProvider?.(name);
-      const gen = name === "ollama" ? ollamaStream(messages) : openrouterStream(messages);
+      const gen = name === "ollama"
+        ? ollamaStream(messages, cfg.ollamaHost, cfg.ollamaChatModel)
+        : openrouterStream(messages, cfg.openrouterKey, cfg.openrouterModel);
       for await (const delta of gen) { yielded = true; yield delta; }
       if (!yielded) throw new Error(`${name} produced no content`);
       return; // success
