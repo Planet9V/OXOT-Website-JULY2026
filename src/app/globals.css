@@ -32,6 +32,16 @@
     --ring: 28 100% 47%;
     --radius: 0.75rem;
     --font-display: "Fraunces", "Newsreader", Georgia, "Palatino Linotype", "Iowan Old Style", serif;
+    /* Elevation — warm, low-spread, layered (light mode). */
+    --elev-1: 0 1px 2px hsl(212 51% 11% / 0.04), 0 1px 1px hsl(212 51% 11% / 0.03);
+    --elev-2: 0 4px 12px hsl(212 51% 11% / 0.06), 0 2px 4px hsl(212 51% 11% / 0.04);
+    --elev-3: 0 12px 32px hsl(212 51% 11% / 0.10), 0 4px 10px hsl(212 51% 11% / 0.05);
+    /* Motion scale — shared easing + duration ramp. --ease-out matches fx.tsx EASE. */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-1: 150ms;
+    --dur-2: 250ms;
+    --dur-3: 400ms;
   }
   .dark {
     --background: 210 50% 12%;          /* OXOT navy #102030 */
@@ -53,8 +63,22 @@
     --border: 210 30% 24%;
     --input: 210 30% 26%;
     --ring: 28 100% 53%;
+    /* On navy: inset top highlight + ambient depth, minimal black drop shadow. */
+    --elev-1: inset 0 1px 0 hsl(0 0% 100% / 0.04), 0 1px 2px hsl(0 0% 0% / 0.30);
+    --elev-2: inset 0 1px 0 hsl(0 0% 100% / 0.05), 0 6px 16px hsl(0 0% 0% / 0.38);
+    --elev-3: inset 0 1px 0 hsl(0 0% 100% / 0.06), 0 16px 40px hsl(0 0% 0% / 0.45);
   }
   * { border-color: hsl(var(--border)); }
+  html { scroll-behavior: smooth; }
+  /* Global reduced-motion guard — belt-and-suspenders across all components. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
   body {
     background: hsl(var(--background));
     color: hsl(var(--foreground));
