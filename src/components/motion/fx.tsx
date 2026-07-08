@@ -9,6 +9,18 @@ import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/** Reveal after a max delay even if IntersectionObserver never fires
+ *  (slow hydration, layout edge cases, background tabs) — so content built
+ *  on Reveal/Stagger can never get stuck invisible at opacity 0. */
+function useRevealFallback(ms = 1400) {
+  const [fallback, setFallback] = React.useState(false);
+  React.useEffect(() => {
+    const t = setTimeout(() => setFallback(true), ms);
+    return () => clearTimeout(t);
+  }, [ms]);
+  return fallback;
+}
+
 /** Fade + rise into view once. */
 export function Reveal({
   children, delay = 0, y = 26, className
@@ -16,11 +28,13 @@ export function Reveal({
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-70px" });
   const reduce = useReducedMotion();
+  const fallback = useRevealFallback();
+  const show = inView || fallback;
   return (
     <motion.div
       ref={ref}
       initial={reduce ? false : { opacity: 0, y }}
-      animate={inView ? { opacity: 1, y: 0 } : undefined}
+      animate={show ? { opacity: 1, y: 0 } : undefined}
       transition={{ duration: 0.65, delay, ease: EASE }}
       className={className}
     >
@@ -33,8 +47,10 @@ export function Reveal({
 export function Stagger({ children, className, gap = 0.08 }: { children: React.ReactNode; className?: string; gap?: number }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-70px" });
+  const fallback = useRevealFallback();
+  const show = inView || fallback;
   return (
-    <motion.div ref={ref} initial="hide" animate={inView ? "show" : "hide"}
+    <motion.div ref={ref} initial="hide" animate={show ? "show" : "hide"}
       variants={{ show: { transition: { staggerChildren: gap } } }} className={className}>
       {children}
     </motion.div>
