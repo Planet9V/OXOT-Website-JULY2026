@@ -51,8 +51,11 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   if (!(await getAdminSession())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  const id = new URL(req.url).searchParams.get("id");
-  if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+  const idParam = new URL(req.url).searchParams.get("id");
+  const id = Number(idParam);
+  if (!idParam || !Number.isInteger(id) || id <= 0) {
+    return NextResponse.json({ error: "valid numeric id required" }, { status: 400 });
+  }
   await pool.query(`DELETE FROM media WHERE id=$1`, [id]);
   return NextResponse.json({ ok: true });
 }

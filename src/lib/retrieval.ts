@@ -6,7 +6,7 @@ export interface RetrievedChunk {
   id: number;
   text: string;
   pageId: string;
-  score: number; // cosine distance (lower = closer), after page boost
+  score: number; // raw cosine distance (0..2, lower = closer). Page boost affects ranking only.
 }
 
 // pgvector similarity, filtered by active locale, boosted toward current page.
@@ -18,13 +18,15 @@ export async function retrieve(
 ): Promise<RetrievedChunk[]> {
   const vector = await embed(query);
   const literal = `[${vector.join(",")}]`;
+  // Rank by page-boosted distance, but return the RAW cosine distance so `score`
+  // stays a valid non-negative distance for any downstream confidence gating.
   const { rows } = await pool.query(
     `SELECT id, text, page_id,
-       (embedding <=> $1::vector)
-         - (CASE WHEN page_id = $3 THEN 0.05 ELSE 0 END) AS score
+       (embedding <=> $1::vector) AS score
      FROM content_chunks
      WHERE locale = $2
-     ORDER BY score ASC
+     ORDER BY (embedding <=> $1::vector)
+       - (CASE WHEN page_id = $3 THEN 0.05 ELSE 0 END) ASC
      LIMIT $4`,
     [literal, locale, currentPageId ?? null, k]
   );

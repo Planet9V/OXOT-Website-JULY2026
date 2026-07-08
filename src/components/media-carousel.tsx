@@ -6,7 +6,13 @@ import { cn } from "@/lib/utils";
 
 export type CarouselItem =
   | { kind: "image"; src: string; caption?: string }
-  | { kind: "pdf"; src: string };
+  | { kind: "pdf"; src: string; caption?: string };
+
+// Bilingual control strings (no user-facing string ships in one language).
+const STR = {
+  en: { prev: "Previous", next: "Next", expand: "Expand to full view", expandTitle: "Expand", close: "Close full view", closeTitle: "Close (Esc)", goto: (n: number) => `Go to slide ${n}` },
+  nl: { prev: "Vorige", next: "Volgende", expand: "Vergroot naar volledig scherm", expandTitle: "Vergroten", close: "Volledig scherm sluiten", closeTitle: "Sluiten (Esc)", goto: (n: number) => `Ga naar dia ${n}` }
+} as const;
 
 /* Load the vendored pdf.js (UMD) once; expose window.pdfjsLib. */
 let pdfjsPromise: Promise<any> | null = null;
@@ -31,7 +37,7 @@ function loadPdfJs(): Promise<any> {
 
 type Slide =
   | { type: "image"; src: string; caption?: string }
-  | { type: "pdfpage"; doc: any; page: number };
+  | { type: "pdfpage"; doc: any; page: number; caption?: string };
 
 function PdfPage({ doc, page, active }: { doc: any; page: number; active: boolean }) {
   const ref = React.useRef<HTMLCanvasElement>(null);
@@ -61,7 +67,8 @@ function PdfPage({ doc, page, active }: { doc: any; page: number; active: boolea
   );
 }
 
-export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", autoPlayMs = 0 }: { items: CarouselItem[]; ratio?: string; className?: string; autoPlayMs?: number }) {
+export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", autoPlayMs = 0, locale = "en" }: { items: CarouselItem[]; ratio?: string; className?: string; autoPlayMs?: number; locale?: string }) {
+  const t = locale === "nl" ? STR.nl : STR.en;
   const [slides, setSlides] = React.useState<Slide[]>(
     items.filter((i) => i.kind === "image").map((i) => ({ type: "image", src: (i as any).src, caption: (i as any).caption }))
   );
@@ -83,10 +90,10 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
         if (it.kind === "image") built.push({ type: "image", src: it.src, caption: it.caption });
         else {
           const doc = await lib.getDocument(it.src).promise;
-          for (let p = 1; p <= doc.numPages; p++) built.push({ type: "pdfpage", doc, page: p });
+          for (let p = 1; p <= doc.numPages; p++) built.push({ type: "pdfpage", doc, page: p, caption: p === 1 ? it.caption : undefined });
         }
       }
-      if (!cancelled) setSlides(built);
+      if (!cancelled) { setSlides(built); setI(0); } // reset index — slide list changed
     })().catch(() => {});
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,8 +157,8 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
       {/* expand (inline) / close (fullscreen) */}
       <button
         onClick={() => setExpanded(!fullscreen)}
-        aria-label={fullscreen ? "Close full view" : "Expand to full view"}
-        title={fullscreen ? "Close (Esc)" : "Expand"}
+        aria-label={fullscreen ? t.close : t.expand}
+        title={fullscreen ? t.closeTitle : t.expandTitle}
         className="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/55 text-white shadow-lg ring-1 ring-white/25 backdrop-blur transition hover:bg-black/75"
       >
         {fullscreen ? <X className="h-5 w-5" /> : <Maximize2 className="h-4 w-4" />}
@@ -159,11 +166,11 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
 
       {n > 1 && (
         <>
-          <button onClick={() => go(-1)} aria-label="Previous"
+          <button onClick={() => go(-1)} aria-label={t.prev}
             className="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg ring-1 ring-white/25 backdrop-blur transition hover:bg-black/75">
             <ChevronLeft className="h-5 w-5" />
           </button>
-          <button onClick={() => go(1)} aria-label="Next"
+          <button onClick={() => go(1)} aria-label={t.next}
             className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg ring-1 ring-white/25 backdrop-blur transition hover:bg-black/75">
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -182,12 +189,12 @@ export function MediaCarousel({ items, ratio = "16 / 9", className = "my-8", aut
         {n > 1 && n <= 12 && (
           <div className="mt-3 flex justify-center gap-1.5">
             {slides.map((_, idx) => (
-              <button key={idx} onClick={() => setI(idx)} aria-label={`Go to slide ${idx + 1}`}
+              <button key={idx} onClick={() => setI(idx)} aria-label={t.goto(idx + 1)}
                 className={cn("h-1.5 rounded-full transition-all", idx === i ? "w-5 bg-primary" : "w-1.5 bg-border hover:bg-primary/50")} />
             ))}
           </div>
         )}
-        {slides[i]?.type === "image" && (slides[i] as any).caption && (
+        {(slides[i] as any)?.caption && (
           <figcaption className="mt-2 text-center text-sm text-muted-foreground">{(slides[i] as any).caption}</figcaption>
         )}
       </figure>

@@ -206,7 +206,8 @@ function numify(s: string): number | null {
   return isNaN(n) ? null : n;
 }
 
-export function DataTable({ header, rows }: { header: string[]; rows: string[][] }) {
+export function DataTable({ header, rows, locale = "en" }: { header: string[]; rows: string[][]; locale?: string }) {
+  const sortLabel = (col: string) => (locale === "nl" ? `Sorteer op ${col}` : `Sort by ${col}`);
   const sortable = rows.length >= 5;
   const colIsNumeric = React.useMemo(
     () => header.map((_, c) => {
@@ -249,7 +250,7 @@ export function DataTable({ header, rows }: { header: string[]; rows: string[][]
                   <button
                     onClick={() => toggle(c)}
                     className="group inline-flex items-center gap-1.5 transition-colors hover:text-primary"
-                    aria-label={`Sort by ${plainText(h)}`}
+                    aria-label={sortLabel(plainText(h))}
                   >
                     {parseInline(h, `th-${c}`)}
                     {sort?.col === c ? (
@@ -290,7 +291,7 @@ export function CtaCard({ heading, body, label, href }: { heading: string; body:
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">OXOT</p>
         <h3 className="mt-2 text-xl font-semibold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>{heading}</h3>
         <p className="mt-2 max-w-xl text-sm text-muted-foreground">{body}</p>
-        <Link href={href} className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium !text-[#0d1a26] !no-underline transition-all hover:bg-primary/90 hover:gap-3">
+        <Link href={href} className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium !text-on-accent !no-underline transition-all hover:bg-primary/90 hover:gap-3">
           {label} <ArrowRight className="h-4 w-4" />
         </Link>
       </div>

@@ -19,6 +19,7 @@
     --popover-foreground: 212 51% 11%;
     --primary: 28 100% 47%;            /* OXOT orange #F07000 */
     --primary-foreground: 0 0% 100%;
+    --on-accent: 212 51% 11%;          /* readable text on the orange accent (both themes) */
     --secondary: 210 30% 95%;
     --secondary-foreground: 212 51% 11%;
     --muted: 210 30% 94%;
@@ -52,6 +53,7 @@
     --popover-foreground: 220 20% 92%;
     --primary: 28 100% 53%;            /* orange, brighter on navy */
     --primary-foreground: 210 50% 10%;
+    --on-accent: 212 51% 11%;          /* same dark ink — reads on orange in dark too */
     --secondary: 210 34% 19%;
     --secondary-foreground: 220 20% 92%;
     --muted: 210 34% 18%;

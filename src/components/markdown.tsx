@@ -3,6 +3,7 @@ import { Carousel, type Slide } from "./carousel";
 import { MediaCarousel, type CarouselItem } from "./media-carousel";
 import { parseInline, slugify } from "./article/inline";
 import { RevealBlock, KeyFacts, TimelineBlock, CompareBlock, DataTable, CtaCard, CardGrid, Widget } from "./article/blocks";
+import { sanitizeEmbeddedHtml } from "@/lib/sanitize";
 
 /**
  * Dependency-free, server-side Markdown renderer for CMS page bodies. Parsing
@@ -88,7 +89,7 @@ export function MarkdownContent({ source, toc = true, locale = "en" }: { source:
         blocks.push(
           <RevealBlock key={key++}>
             <figure className="oxot-diagram my-8 overflow-x-auto rounded-xl p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full"
-                     dangerouslySetInnerHTML={{ __html: content }} />
+                     dangerouslySetInnerHTML={{ __html: sanitizeEmbeddedHtml(content) }} />
           </RevealBlock>
         );
       } else if (lang === "carousel" || lang === "gallery") {
@@ -109,7 +110,7 @@ export function MarkdownContent({ source, toc = true, locale = "en" }: { source:
             if (/^(https?:\/\/|\/)/.test(ref)) return { kind: "image", src: ref, caption };
             return null;
           }).filter(Boolean) as CarouselItem[];
-          blocks.push(<RevealBlock key={key++}><MediaCarousel items={mediaItems} /></RevealBlock>);
+          blocks.push(<RevealBlock key={key++}><MediaCarousel items={mediaItems} locale={locale} /></RevealBlock>);
         } else {
           blocks.push(<RevealBlock key={key++}><Carousel slides={parseCarousel(content)} /></RevealBlock>);
         }
@@ -149,7 +150,7 @@ export function MarkdownContent({ source, toc = true, locale = "en" }: { source:
       } else if (lang === "widget") {
         blocks.push(<Widget key={key++} name={content.trim().split("\n")[0].trim()} locale={locale} />);
       } else if (lang === "html") {
-        blocks.push(<RevealBlock key={key++}><div className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: content }} /></RevealBlock>);
+        blocks.push(<RevealBlock key={key++}><div className="my-6 [&_video]:w-full [&_video]:rounded-xl [&_iframe]:w-full" dangerouslySetInnerHTML={{ __html: sanitizeEmbeddedHtml(content) }} /></RevealBlock>);
       } else {
         blocks.push(
           <pre key={key++} className="my-6 overflow-x-auto rounded-lg border border-border bg-muted/40 p-4 text-sm">
@@ -167,7 +168,7 @@ export function MarkdownContent({ source, toc = true, locale = "en" }: { source:
       i += 2;
       const rows: string[][] = [];
       while (i < lines.length && /^\s*\|.*\|/.test(lines[i])) { rows.push(cells(lines[i])); i++; }
-      blocks.push(<RevealBlock key={key++}><DataTable header={header} rows={rows} /></RevealBlock>);
+      blocks.push(<RevealBlock key={key++}><DataTable header={header} rows={rows} locale={locale} /></RevealBlock>);
       continue;
     }
 

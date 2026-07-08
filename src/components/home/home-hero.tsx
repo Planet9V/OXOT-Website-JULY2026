@@ -86,6 +86,7 @@ export function HomeHero({ hero, locale }: { hero: Hero; locale: string }) {
               ratio="16 / 9"
               className="w-full"
               autoPlayMs={5000}
+              locale={locale}
             />
           ) : (
             <div className="ed-card">

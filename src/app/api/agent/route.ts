@@ -53,8 +53,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "consent required" }, { status: 403 });
   }
 
-  // Retrieve grounding chunks (locale-filtered, current-page boosted).
-  const chunks = await retrieve(body.message, locale, body.pageId);
+  // Retrieve grounding chunks (locale-filtered, current-page boosted). If the
+  // embedding backend (Ollama) is down, degrade gracefully to no context rather
+  // than 500ing the whole request — the agent can still answer / offer contact.
+  let chunks: Awaited<ReturnType<typeof retrieve>> = [];
+  try {
+    chunks = await retrieve(body.message, locale, body.pageId);
+  } catch (err) {
+    console.error("[agent] retrieval failed, answering without context:", err);
+  }
   const context = chunks
     .map((c) => `[${c.id}] (${c.pageId}) ${c.text}`)
     .join("\n\n");

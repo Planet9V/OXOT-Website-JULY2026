@@ -126,7 +126,7 @@ export function ArticleShell({
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">OXOT</p>
             <h3 className="mt-2 text-2xl font-semibold tracking-tight" style={{ fontFamily: "var(--font-display)" }}>{nl ? "Praat met een expert over uw compliance" : `Talk to an expert about ${kicker.toLowerCase().includes("regulation") || kicker.toLowerCase().includes("directive") || kicker.toLowerCase().includes("standard") ? "this" : "your"} compliance`}</h3>
             <p className="mt-2 max-w-xl text-muted-foreground">{ctaLabel}</p>
-            <Link href={ctaHref} className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium !text-[#0d1a26] !no-underline transition-colors hover:bg-primary/90">
+            <Link href={ctaHref} className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium !text-on-accent !no-underline transition-colors hover:bg-primary/90">
               {nl ? "Praat met een OT-beveiligingsexpert" : "Talk to an OT security expert"} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

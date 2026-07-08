@@ -9,16 +9,20 @@ import pg from "pg";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-// stable media filename  ->  source file in content-source/
+// stable media filename -> candidate source files (first existing wins). Prefer the
+// normalized (-norm) copy — content streams rewritten, rotation forced to 0 — to
+// avoid a renderer-specific page flip; fall back to the original.
 const FILES = [
-  { name: "cra-hero-en.pdf", src: "content-source/OXOT CRA Hero Carousel-English-paginatedL.pdf" },
-  { name: "cra-hero-nl.pdf", src: "content-source/OXOT CRA Hero Carousel-N-paginatedL.pdf" }
+  { name: "cra-hero-en.pdf", src: ["content-source/OXOT CRA Hero Carousel-English-paginatedL-norm.pdf", "content-source/OXOT CRA Hero Carousel-English-paginatedL.pdf"] },
+  { name: "cra-hero-nl.pdf", src: ["content-source/OXOT CRA Hero Carousel-N-paginatedL-norm.pdf", "content-source/OXOT CRA Hero Carousel-N-paginatedL.pdf"] }
 ];
 
 async function main() {
   for (const { name, src } of FILES) {
-    const path = join(root, src);
-    if (!existsSync(path)) { console.log(`SKIP (missing): ${src}`); continue; }
+    const candidates = Array.isArray(src) ? src : [src];
+    const rel = candidates.find((c) => existsSync(join(root, c)));
+    if (!rel) { console.log(`SKIP (missing): ${candidates.join(" | ")}`); continue; }
+    const path = join(root, rel);
     const buf = readFileSync(path);
     // Update-in-place to keep the id stable across re-runs (home content
     // references the id, so a fresh id on every run would break the hero).
