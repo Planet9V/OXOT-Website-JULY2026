@@ -27,15 +27,22 @@ RUN npm install -g @anthropic-ai/claude-code || true
 
 ########## builder ##########
 FROM base AS builder
+ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm ci || npm install
 COPY . .
-RUN npm run build || echo "no build script yet"
+# Build must succeed. Do NOT mask failures: a masked build ships an incomplete
+# .next and `next start` then crashes at runtime with
+# "ENOENT ... .next/prerender-manifest.json".
+RUN npm run build
 
-########## runner (production, -> GHCR) ##########
+########## runner (production, -> GHCR / Railway) ##########
 FROM node:22-bookworm-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
+# Full copy (incl. the completed .next, scripts/ and db/migrations/ so migrations
+# and seeds can be run against the production DB). `next start` serves .next.
 COPY --from=builder /workspace/ ./
 EXPOSE 3000
+# Railway/GHCR inject PORT; next start honours it.
 CMD ["npm", "run", "start"]
