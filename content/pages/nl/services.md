@@ -25,13 +25,13 @@ Uitgangspunt :: uw data en uw model blijven van u (EU-soevereiniteit)
 Zeven diensten, één methode. Elk kan op zichzelf staan of samenvloeien tot een programma.
 
 ```cards
-OT-securityassessments :: /nl/contact :: Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen — afgestemd op uw operationele realiteit.
+OT-securityassessments :: /nl/ot-security-assessments :: Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen — afgestemd op uw operationele realiteit.
 Cyber Digital Twin :: /nl/cyber-digital-twin :: Een levend model van uw OT-omgeving waarmee u op schaal risicogebaseerde beslissingen neemt en aantoont.
-OT-securityprogramma's :: /nl/contact :: Ontwerp en voer gestructureerde OT-securityverbeterprogramma's uit over locaties, bedrijfsonderdelen of regio's.
-Architectuur & segmentatie :: /nl/contact :: Definieer veilige OT-netwerkarchitecturen — zones, conduits en praktische segmentatiepatronen, afgestemd op IEC 62443.
-Veilige externe toegang :: /nl/contact :: Verminder risico van leverancierstoegang, onderhoud op afstand en externe connectiviteit zonder de bedrijfsvoering te verstoren.
-OT-securitybaseline :: /nl/contact :: Definieer minimale beveiligingsmaatregelen die realistisch, herhaalbaar en afgestemd op operationele behoeften zijn.
-Kennisoverdracht :: /nl/contact :: Bouw de kennis, structuur en het eigenaarschap op die uw interne team nodig heeft om OT-security duurzaam te onderhouden.
+OT-securityprogramma's :: /nl/ot-security-programmes :: Ontwerp en voer gestructureerde OT-securityverbeterprogramma's uit over locaties, bedrijfsonderdelen of regio's.
+Architectuur & segmentatie :: /nl/architecture-segmentation :: Definieer veilige OT-netwerkarchitecturen — zones, conduits en praktische segmentatiepatronen, afgestemd op IEC 62443.
+Veilige externe toegang :: /nl/secure-remote-access :: Verminder risico van leverancierstoegang, onderhoud op afstand en externe connectiviteit zonder de bedrijfsvoering te verstoren.
+OT-securitybaseline :: /nl/ot-security-baseline :: Definieer minimale beveiligingsmaatregelen die realistisch, herhaalbaar en afgestemd op operationele behoeften zijn.
+Kennisoverdracht :: /nl/capability-transfer :: Bouw de kennis, structuur en het eigenaarschap op die uw interne team nodig heeft om OT-security duurzaam te onderhouden.
 ```
 
 ## Hoe we werken

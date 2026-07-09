@@ -19,7 +19,14 @@ const KICKER: Record<string, { en: string; nl: string }> = {
   frameworks: { en: "OT Frameworks & Regulations", nl: "OT-kaders & regelgeving" },
   services: { en: "What we do", nl: "Wat we doen" },
   "cyber-digital-twin": { en: "OXOT Platform", nl: "OXOT-platform" },
-  about: { en: "About OXOT", nl: "Over OXOT" }
+  about: { en: "About OXOT", nl: "Over OXOT" },
+  // Individual service pages
+  "ot-security-assessments": { en: "OXOT Service", nl: "OXOT-dienst" },
+  "ot-security-programmes": { en: "OXOT Service", nl: "OXOT-dienst" },
+  "architecture-segmentation": { en: "OXOT Service", nl: "OXOT-dienst" },
+  "secure-remote-access": { en: "OXOT Service", nl: "OXOT-dienst" },
+  "ot-security-baseline": { en: "OXOT Service", nl: "OXOT-dienst" },
+  "capability-transfer": { en: "OXOT Service", nl: "OXOT-dienst" }
 };
 
 export async function generateMetadata({

@@ -25,13 +25,13 @@ Principle :: your data and your model stay yours (EU sovereignty)
 Seven services, one method. Each can stand alone or combine into a programme.
 
 ```cards
-OT Security Assessments :: /en/contact :: Understand your current OT security posture, key risks and practical next steps — scoped to your operational reality.
+OT Security Assessments :: /en/ot-security-assessments :: Understand your current OT security posture, key risks and practical next steps — scoped to your operational reality.
 Cyber Digital Twin :: /en/cyber-digital-twin :: A living model of your OT environment that lets you make risk-based decisions at scale and prove them.
-OT Security Programmes :: /en/contact :: Design and execute structured OT security improvement programmes across sites, business units or regions.
-Architecture & Segmentation :: /en/contact :: Define secure OT network architectures — zones, conduits and practical segmentation patterns aligned to IEC 62443.
-Secure Remote Access :: /en/contact :: Reduce risk from vendor access, remote maintenance and external connectivity without breaking operations.
-OT Security Baseline :: /en/contact :: Define minimum security controls that are realistic, repeatable and aligned with operational needs.
-Capability Transfer :: /en/contact :: Build the knowledge, structure and ownership your internal team needs to sustain OT security over time.
+OT Security Programmes :: /en/ot-security-programmes :: Design and execute structured OT security improvement programmes across sites, business units or regions.
+Architecture & Segmentation :: /en/architecture-segmentation :: Define secure OT network architectures — zones, conduits and practical segmentation patterns aligned to IEC 62443.
+Secure Remote Access :: /en/secure-remote-access :: Reduce risk from vendor access, remote maintenance and external connectivity without breaking operations.
+OT Security Baseline :: /en/ot-security-baseline :: Define minimum security controls that are realistic, repeatable and aligned with operational needs.
+Capability Transfer :: /en/capability-transfer :: Build the knowledge, structure and ownership your internal team needs to sustain OT security over time.
 ```
 
 ## How we work
