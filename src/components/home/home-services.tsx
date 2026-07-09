@@ -4,7 +4,8 @@ import { motion, useMotionValue, useMotionTemplate } from "motion/react";
 import type { HomeServices as Services } from "@/lib/site-content";
 import { Reveal, Marquee } from "@/components/motion/fx";
 
-const FRAMEWORKS = [
+// Fallback marquee if the CMS block hasn't set one (kept in sync with the dictionary default).
+const FRAMEWORKS_FALLBACK = [
   { label: "IEC 62443", href: "/iec-62443" },
   { label: "NIS2", href: "/nis2" },
   { label: "Cyber Resilience Act", href: "/cra" },
@@ -37,6 +38,7 @@ function ServiceCell({ i, name, desc, href, more, locale }: {
 }
 
 export function HomeServices({ services, locale }: { services: Services; locale: string }) {
+  const frameworks = services.frameworks?.length ? services.frameworks : FRAMEWORKS_FALLBACK;
   return (
     <section>
       <Reveal>
@@ -52,7 +54,7 @@ export function HomeServices({ services, locale }: { services: Services; locale:
       {/* frameworks marquee */}
       <div className="border-b border-[rgba(22,29,43,0.1)] py-4">
         <Marquee duration={30}>
-          {FRAMEWORKS.map((f) => (
+          {frameworks.map((f) => (
             <Link key={f.label} href={`/${locale}${f.href}`}
               className="flex items-center gap-2 whitespace-nowrap font-[500] text-[13px] tracking-wide text-[rgba(22,29,43,0.55)] transition-colors hover:text-[#e8700a]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e8700a]" /> {f.label}

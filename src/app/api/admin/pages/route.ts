@@ -84,6 +84,10 @@ export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug"), locale = searchParams.get("locale");
   if (!slug || !locale) return NextResponse.json({ error: "slug & locale required" }, { status: 400 });
+  const other = locale === "nl" ? "en" : "nl";
+  // Bilingual integrity: never leave a lone published sibling. If the other locale
+  // is published, unpublish it as part of the delete (mirrors the publish guard).
+  await pool.query(`UPDATE pages SET published=false, updated_at=now() WHERE slug=$1 AND locale=$2 AND published=true`, [slug, other]);
   await pool.query(`DELETE FROM pages WHERE slug=$1 AND locale=$2`, [slug, locale]);
   return NextResponse.json({ ok: true });
 }

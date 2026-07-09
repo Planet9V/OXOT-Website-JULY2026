@@ -7,15 +7,32 @@
       "cta": "Talk to an OT security expert",
       "cta2": "Explore our approach",
       "trustLabel": "Trusted across",
-      "industries": ["Energy", "Water", "Manufacturing", "Logistics"],
+      "industries": [
+        "Energy",
+        "Water",
+        "Manufacturing",
+        "Logistics"
+      ],
       "card": {
         "title": "One structured view",
         "tag": "assets · risks · controls",
         "findingsLabel": "FINDINGS",
         "stats": [
-          { "n": "86", "l": "assets in scope", "accent": false },
-          { "n": "3", "l": "critical risks", "accent": true },
-          { "n": "62443", "l": "IEC framework", "accent": false }
+          {
+            "n": "86",
+            "l": "assets in scope",
+            "accent": false
+          },
+          {
+            "n": "3",
+            "l": "critical risks",
+            "accent": true
+          },
+          {
+            "n": "62443",
+            "l": "IEC framework",
+            "accent": false
+          }
         ]
       }
     },
@@ -30,18 +47,81 @@
         "button": "Talk to an expert"
       },
       "items": [
-        { "name": "OT Security Assessments", "desc": "Understand your current OT security posture, key risks and practical next steps.", "href": "/services" },
-        { "name": "Cyber Digital Twin", "desc": "Create a living model of your OT environment to support risk-based decisions at scale.", "href": "/cyber-digital-twin" },
-        { "name": "OT Security Programmes", "desc": "Design and execute structured OT security improvement programmes across sites, business units or regions.", "href": "/services" },
-        { "name": "Architecture & Segmentation", "desc": "Define secure OT network architectures, zones, conduits and practical segmentation patterns.", "href": "/services" },
-        { "name": "Secure Remote Access", "desc": "Reduce risk from vendor access, remote maintenance and external connectivity.", "href": "/services" },
-        { "name": "OT Security Baseline", "desc": "Define minimum security controls that are realistic, repeatable and aligned with operational needs.", "href": "/services" },
-        { "name": "Capability Transfer", "desc": "Help internal teams build the knowledge, structure and ownership needed to maintain OT security over time.", "href": "/services" }
+        {
+          "name": "OT Security Assessments",
+          "desc": "Understand your current OT security posture, key risks and practical next steps.",
+          "href": "/ot-security-assessments"
+        },
+        {
+          "name": "Cyber Digital Twin",
+          "desc": "Create a living model of your OT environment to support risk-based decisions at scale.",
+          "href": "/cyber-digital-twin"
+        },
+        {
+          "name": "OT Security Programmes",
+          "desc": "Design and execute structured OT security improvement programmes across sites, business units or regions.",
+          "href": "/ot-security-programmes"
+        },
+        {
+          "name": "Architecture & Segmentation",
+          "desc": "Define secure OT network architectures, zones, conduits and practical segmentation patterns.",
+          "href": "/architecture-segmentation"
+        },
+        {
+          "name": "Secure Remote Access",
+          "desc": "Reduce risk from vendor access, remote maintenance and external connectivity.",
+          "href": "/secure-remote-access"
+        },
+        {
+          "name": "OT Security Baseline",
+          "desc": "Define minimum security controls that are realistic, repeatable and aligned with operational needs.",
+          "href": "/ot-security-baseline"
+        },
+        {
+          "name": "Capability Transfer",
+          "desc": "Help internal teams build the knowledge, structure and ownership needed to maintain OT security over time.",
+          "href": "/capability-transfer"
+        }
+      ],
+      "frameworks": [
+        {
+          "label": "IEC 62443",
+          "href": "/iec-62443"
+        },
+        {
+          "label": "NIS2",
+          "href": "/nis2"
+        },
+        {
+          "label": "Cyber Resilience Act",
+          "href": "/cra"
+        },
+        {
+          "label": "AI Act",
+          "href": "/ai-act"
+        },
+        {
+          "label": "Machinery Regulation",
+          "href": "/machine-act"
+        },
+        {
+          "label": "TS 50701",
+          "href": "/ts-50701"
+        }
       ]
     }
   },
-  "nav": { "home": "Home", "services": "Services", "cyberDigitalTwin": "Cyber Digital Twin", "frameworks": "Frameworks", "about": "About", "contact": "Contact" },
-  "theme": { "toggle": "Toggle theme" },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "cyberDigitalTwin": "Cyber Digital Twin",
+    "frameworks": "Frameworks",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  },
   "agent": {
     "title": "Ask OXOT",
     "greeting": "Hi — ask me anything about this page.",

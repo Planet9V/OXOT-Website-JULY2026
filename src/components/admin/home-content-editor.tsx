@@ -116,6 +116,16 @@ export function HomeContentEditor() {
         ))}
         <Button type="button" variant="outline" onClick={() => edit((c) => { c.services.items.push({ name: "", desc: "", href: "/services" }); })}>+ Add service</Button>
 
+        <p className="pt-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Frameworks marquee</p>
+        {(s.frameworks ?? []).map((f, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <input className={field} placeholder="label (e.g. NIS2)" value={f.label} onChange={(e) => edit((c) => { (c.services.frameworks ??= [])[i].label = e.target.value; })} />
+            <input className={field} placeholder="link (e.g. /nis2)" value={f.href} onChange={(e) => edit((c) => { (c.services.frameworks ??= [])[i].href = e.target.value; })} />
+            <button className="shrink-0 text-xs text-red-500" onClick={() => edit((c) => { c.services.frameworks?.splice(i, 1); })}>remove</button>
+          </div>
+        ))}
+        <Button type="button" variant="outline" onClick={() => edit((c) => { (c.services.frameworks ??= []).push({ label: "", href: "/" }); })}>+ Add framework</Button>
+
         <p className="pt-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">CTA cell</p>
         <div className="grid grid-cols-3 gap-2">
           <div><label className={lbl}>Title</label><input className={field} value={s.cta.title} onChange={(e) => edit((c) => { c.services.cta.title = e.target.value; })} /></div>

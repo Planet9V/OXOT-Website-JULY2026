@@ -7,15 +7,32 @@
       "cta": "Praat met een OT-securityexpert",
       "cta2": "Ontdek onze aanpak",
       "trustLabel": "Vertrouwd binnen",
-      "industries": ["Energie", "Water", "Maakindustrie", "Logistiek"],
+      "industries": [
+        "Energie",
+        "Water",
+        "Maakindustrie",
+        "Logistiek"
+      ],
       "card": {
         "title": "Eén gestructureerd beeld",
         "tag": "assets · risks · controls",
         "findingsLabel": "BEVINDINGEN",
         "stats": [
-          { "n": "86", "l": "assets in scope", "accent": false },
-          { "n": "3", "l": "kritieke risico's", "accent": true },
-          { "n": "62443", "l": "IEC-kader", "accent": false }
+          {
+            "n": "86",
+            "l": "assets in scope",
+            "accent": false
+          },
+          {
+            "n": "3",
+            "l": "kritieke risico's",
+            "accent": true
+          },
+          {
+            "n": "62443",
+            "l": "IEC-kader",
+            "accent": false
+          }
         ]
       }
     },
@@ -30,18 +47,81 @@
         "button": "Praat met een expert"
       },
       "items": [
-        { "name": "OT-securityassessments", "desc": "Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen.", "href": "/services" },
-        { "name": "Cyber Digital Twin", "desc": "Creëer een levend model van uw OT-omgeving om risicogebaseerde beslissingen op schaal te ondersteunen.", "href": "/cyber-digital-twin" },
-        { "name": "OT-securityprogramma's", "desc": "Ontwerp en voer gestructureerde OT-securityverbeterprogramma's uit over locaties, bedrijfsonderdelen of regio's.", "href": "/services" },
-        { "name": "Architectuur & segmentatie", "desc": "Definieer veilige OT-netwerkarchitecturen, zones, conduits en praktische segmentatiepatronen.", "href": "/services" },
-        { "name": "Veilige externe toegang", "desc": "Verminder risico van leverancierstoegang, onderhoud op afstand en externe connectiviteit.", "href": "/services" },
-        { "name": "OT-securitybaseline", "desc": "Definieer minimale beveiligingsmaatregelen die realistisch, herhaalbaar en afgestemd op operationele behoeften zijn.", "href": "/services" },
-        { "name": "Kennisoverdracht", "desc": "Help interne teams de kennis, structuur en eigenaarschap op te bouwen om OT-security duurzaam te onderhouden.", "href": "/services" }
+        {
+          "name": "OT-securityassessments",
+          "desc": "Begrijp uw huidige OT-securityhouding, belangrijkste risico's en praktische vervolgstappen.",
+          "href": "/ot-security-assessments"
+        },
+        {
+          "name": "Cyber Digital Twin",
+          "desc": "Creëer een levend model van uw OT-omgeving om risicogebaseerde beslissingen op schaal te ondersteunen.",
+          "href": "/cyber-digital-twin"
+        },
+        {
+          "name": "OT-securityprogramma's",
+          "desc": "Ontwerp en voer gestructureerde OT-securityverbeterprogramma's uit over locaties, bedrijfsonderdelen of regio's.",
+          "href": "/ot-security-programmes"
+        },
+        {
+          "name": "Architectuur & segmentatie",
+          "desc": "Definieer veilige OT-netwerkarchitecturen, zones, conduits en praktische segmentatiepatronen.",
+          "href": "/architecture-segmentation"
+        },
+        {
+          "name": "Veilige externe toegang",
+          "desc": "Verminder risico van leverancierstoegang, onderhoud op afstand en externe connectiviteit.",
+          "href": "/secure-remote-access"
+        },
+        {
+          "name": "OT-securitybaseline",
+          "desc": "Definieer minimale beveiligingsmaatregelen die realistisch, herhaalbaar en afgestemd op operationele behoeften zijn.",
+          "href": "/ot-security-baseline"
+        },
+        {
+          "name": "Kennisoverdracht",
+          "desc": "Help interne teams de kennis, structuur en eigenaarschap op te bouwen om OT-security duurzaam te onderhouden.",
+          "href": "/capability-transfer"
+        }
+      ],
+      "frameworks": [
+        {
+          "label": "IEC 62443",
+          "href": "/iec-62443"
+        },
+        {
+          "label": "NIS2",
+          "href": "/nis2"
+        },
+        {
+          "label": "Cyber Resilience Act",
+          "href": "/cra"
+        },
+        {
+          "label": "AI-verordening",
+          "href": "/ai-act"
+        },
+        {
+          "label": "Machineverordening",
+          "href": "/machine-act"
+        },
+        {
+          "label": "TS 50701",
+          "href": "/ts-50701"
+        }
       ]
     }
   },
-  "nav": { "home": "Home", "services": "Diensten", "cyberDigitalTwin": "Cyber Digital Twin", "frameworks": "Kaders", "about": "Over ons", "contact": "Contact" },
-  "theme": { "toggle": "Thema wisselen" },
+  "nav": {
+    "home": "Home",
+    "services": "Diensten",
+    "cyberDigitalTwin": "Cyber Digital Twin",
+    "frameworks": "Kaders",
+    "about": "Over ons",
+    "contact": "Contact"
+  },
+  "theme": {
+    "toggle": "Thema wisselen"
+  },
   "agent": {
     "title": "Vraag het OXOT",
     "greeting": "Hallo — stel me gerust een vraag over deze pagina.",

@@ -22,6 +22,7 @@ export interface HomeHero {
   heroPdf?: number | null;
 }
 export interface HomeServiceItem { name: string; desc: string; href: string }
+export interface HomeFrameworkLink { label: string; href: string }
 export interface HomeServices {
   eyebrow: string;
   heading: string;
@@ -29,6 +30,8 @@ export interface HomeServices {
   more: string;
   cta: { title: string; body: string; button: string };
   items: HomeServiceItem[];
+  /** The frameworks marquee under the services heading (admin-editable). */
+  frameworks?: HomeFrameworkLink[];
 }
 export interface HomeContent { hero: HomeHero; services: HomeServices }
 
