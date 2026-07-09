@@ -3,7 +3,7 @@ import * as React from "react";
 import Link from "next/link";
 import { motion, useInView, useReducedMotion, animate as motionAnimate } from "motion/react";
 import { ArrowUpDown, ArrowUp, ArrowDown, ArrowRight } from "lucide-react";
-import { parseInline, plainText } from "./inline";
+import { parseInline, plainText, slugify } from "./inline";
 import { SpotlightCard } from "@/components/motion/fx";
 import { cn } from "@/lib/utils";
 
@@ -333,6 +333,8 @@ export function CardGrid({ items }: { items: { title: string; href: string; desc
         return (
           <motion.div
             key={i}
+            id={slugify(plainText(it.title))}
+            className="scroll-mt-24"
             variants={reduce ? undefined : { hide: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } } }}
           >
             {linked ? (

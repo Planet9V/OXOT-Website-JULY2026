@@ -118,7 +118,7 @@ export function SiteNavClient({ locale, items }: { locale: string; items: MenuNo
                         <ul className="grid gap-1 sm:grid-cols-2">
                           {n.children.map((c) => (
                             <li key={c.id}>
-                              <Link href={c.href}
+                              <Link href={c.href} onClick={() => setOpenId(null)}
                                 className="group block rounded-xl p-3 no-underline transition-colors duration-150 ease-brand hover:bg-accent">
                                 <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
                                   {c.label}
