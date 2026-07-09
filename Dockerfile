@@ -44,5 +44,7 @@ ENV NODE_ENV=production
 # and seeds can be run against the production DB). `next start` serves .next.
 COPY --from=builder /workspace/ ./
 EXPOSE 3000
-# Railway/GHCR inject PORT; next start honours it.
-CMD ["npm", "run", "start"]
+# Bind to the platform-provided $PORT (Railway/Fly/Cloud Run inject it) on all
+# interfaces; fall back to 3000 locally. This avoids the "502 Application failed
+# to respond" you get when the app listens on 3000 but the proxy routes to $PORT.
+CMD ["sh", "-c", "node_modules/.bin/next start -H 0.0.0.0 -p ${PORT:-3000}"]
