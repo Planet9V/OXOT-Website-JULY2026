@@ -123,6 +123,38 @@ the AI/model settings — all changes reflect on the site immediately.
 
 ---
 
+## Deploy to Railway (private / dev)
+
+Railway runs the single `Dockerfile` service; its Postgres is a **separate linked
+plugin** (a Dockerfile can't contain its own DB). Railway **variables cannot live in
+`railway.json`** (config-as-code covers build/deploy, not variables), so a one-time
+script sets them all via the Railway CLI.
+
+**One-time setup:**
+
+```bash
+npm i -g @railway/cli
+railway login
+railway link                         # pick the project + environment
+./scripts/railway-provision.command <app-service-name>   # e.g. web
+```
+
+`railway-provision.command` provisions a Postgres plugin (if absent) and sets every
+required variable on the app service: `DATABASE_URL` (referenced from Postgres),
+freshly generated `AUTH_SECRET` + `SETTINGS_SECRET`, `ADMIN_EMAIL`/`ADMIN_PASSWORD`
+(defaults `admin@oxot.local` / `changeme`, overridable via env before running),
+`EMBED_DIM`, locales, and `NODE_ENV`. It's idempotent — re-running only updates
+values and never adds a second database.
+
+On each deploy, `railway.json`'s `preDeployCommand` runs migrations + seeds + the
+default admin, so the site and admin login work with no dashboard steps.
+
+> **pgvector:** migration 001 runs `CREATE EXTENSION vector`. If Railway's plain
+> Postgres lacks it, deploy the Postgres from Railway's **pgvector template** instead,
+> then redeploy the app.
+
+---
+
 ## Caveats (read these on a fresh machine)
 
 1. **`EMBED_DIM` must match the embedding model.** It's `2560` for
