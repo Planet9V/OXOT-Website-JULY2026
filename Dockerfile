@@ -27,10 +27,13 @@ RUN npm install -g @anthropic-ai/claude-code || true
 
 ########## builder ##########
 FROM base AS builder
-ENV NODE_ENV=production
 COPY package*.json ./
+# Install ALL dependencies (including devDependencies like typescript, tailwindcss,
+# postcss) needed to compile the app. NODE_ENV must NOT be "production" here or
+# npm skips devDependencies and `next build` fails to resolve TypeScript path aliases.
 RUN npm ci || npm install
 COPY . .
+ENV NODE_ENV=production
 # Build must succeed. Do NOT mask failures: a masked build ships an incomplete
 # .next and `next start` then crashes at runtime with
 # "ENOENT ... .next/prerender-manifest.json".
