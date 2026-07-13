@@ -70,17 +70,35 @@ docker compose ps
 docker compose logs -f app        # Ctrl-C to stop following
 ```
 
-## 5. Initialise the database (run inside the app container)
+## 5. Database + admin — automatic
+
+On `docker compose up` the app container runs `scripts/docker-init.sh` **before** the
+dev server: it waits for Postgres, applies all migrations, seeds the CMS pages +
+homepage, and creates a **default admin if none exists**. Every step is idempotent,
+so it's safe on every boot — a fresh clone needs **zero manual DB steps**.
+
+Default admin (from `.env.local`, LOCAL dev only — change after first login):
+
+| | |
+|---|---|
+| email | `ADMIN_EMAIL` (default `admin@oxot.local`) |
+| password | `ADMIN_PASSWORD` (default `changeme`) |
+
+Watch it happen: `docker compose logs -f app` (look for the `[init]` lines).
+
+Optional — embed the corpus for the AI agent (needs Ollama reachable):
 
 ```bash
-docker compose exec app npm run db:migrate    # schema, CMS, pgvector, menus (all migrations)
-docker compose exec app npm run seed:pages     # imports content/pages/**.md into the CMS
-docker compose exec app npm run seed:site      # homepage hero/services block
-# optional (needs Ollama reachable): embed the corpus for the AI agent
 docker compose exec app npm run ingest
 ```
 
-## 6. Create an admin login
+You can also re-run any step by hand: `docker compose exec app npm run db:migrate`
+(or `seed:pages`, `seed:site`, `seed:admin`).
+
+## 6. Create additional / production admins
+
+For a public deploy, do **not** use the default admin. Create one with your own
+password:
 
 ```bash
 docker compose exec app node scripts/create-admin.mjs you@example.com 'a-strong-password'

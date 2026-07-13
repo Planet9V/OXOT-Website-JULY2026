@@ -25,6 +25,7 @@ services:
           rm -f package-lock.json;
           npm install --no-audit --no-fund;
         fi;
+        sh scripts/docker-init.sh;
         touch /tmp/seed.stamp;
         ( while true; do
             if find content/pages -type f -newer /tmp/seed.stamp 2>/dev/null | grep -q .; then
