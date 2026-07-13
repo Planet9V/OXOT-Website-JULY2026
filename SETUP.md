@@ -77,12 +77,22 @@ dev server: it waits for Postgres, applies all migrations, seeds the CMS pages +
 homepage, and creates a **default admin if none exists**. Every step is idempotent,
 so it's safe on every boot — a fresh clone needs **zero manual DB steps**.
 
-Default admin (from `.env.local`, LOCAL dev only — change after first login):
+### Default admin login (works out of the box — no change required)
+
+This is a private / dev deployment, so a default admin is created automatically and
+you can log straight in. Same behaviour locally and on Railway.
 
 | | |
 |---|---|
-| email | `ADMIN_EMAIL` (default `admin@oxot.local`) |
-| password | `ADMIN_PASSWORD` (default `changeme`) |
+| **email** | `admin@oxot.local` |
+| **password** | `changeme` |
+
+- Log in at **`/admin/login`**.
+- To use different credentials instead, set `ADMIN_EMAIL` and `ADMIN_PASSWORD`
+  **before the first deploy** — in `.env.local` locally, or as Railway variables.
+  Once an admin row exists these values are ignored and never overwrite it.
+- No password change is enforced. To rotate later, either change it in the admin
+  UI or re-run `scripts/create-admin.mjs` (below).
 
 Watch it happen: `docker compose logs -f app` (look for the `[init]` lines).
 
@@ -95,10 +105,9 @@ docker compose exec app npm run ingest
 You can also re-run any step by hand: `docker compose exec app npm run db:migrate`
 (or `seed:pages`, `seed:site`, `seed:admin`).
 
-## 6. Create additional / production admins
+## 6. Add or change an admin
 
-For a public deploy, do **not** use the default admin. Create one with your own
-password:
+Create additional admins (or set a stronger password) any time:
 
 ```bash
 docker compose exec app node scripts/create-admin.mjs you@example.com 'a-strong-password'

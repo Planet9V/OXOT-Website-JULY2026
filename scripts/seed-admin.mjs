@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // Seed a DEFAULT admin ONLY when the admin_users table is empty. Idempotent:
 // once any admin exists (created here or via create-admin.mjs) this is a no-op and
-// never touches existing credentials. Used by the turnkey `docker compose up` boot.
+// never touches existing credentials. Runs on both the turnkey `docker compose up`
+// boot and the Railway pre-deploy step.
 //
-// Credentials come from ADMIN_EMAIL / ADMIN_PASSWORD (defaults below) — intended
-// for LOCAL dev only. Do NOT run this on a public deploy; there, create an admin
-// explicitly with your own password via scripts/create-admin.mjs.
+// This is a PRIVATE / dev deployment, so the default credentials are intentional
+// and no password change is required. Override them by setting ADMIN_EMAIL /
+// ADMIN_PASSWORD in the environment (.env.local locally, or Railway variables).
 import { scryptSync, randomBytes } from "node:crypto";
 import pg from "pg";
 
@@ -26,10 +27,10 @@ try {
       [email, `${salt}:${hash}`]
     );
     console.log("┌───────────────────────────────────────────────┐");
-    console.log("│  DEFAULT ADMIN CREATED — CHANGE THE PASSWORD    │");
+    console.log("│  DEFAULT ADMIN CREATED (private/dev deployment) │");
     console.log(`│  email:    ${email}`);
     console.log(`│  password: ${password}`);
-    console.log("│  Log in at /admin/login, then change it.        │");
+    console.log("│  Log in at /admin/login.                        │");
     console.log("└───────────────────────────────────────────────┘");
   }
 } finally {
