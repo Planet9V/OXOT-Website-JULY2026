@@ -7,7 +7,7 @@
 # re-running only updates values; it won't add a second database.
 #
 # What it configures on the app service:
-#   DATABASE_URL      -> reference to the Postgres plugin  ${{Postgres.DATABASE_URL}}
+#   DATABASE_URL      -> pgvector service over private net  ${{pgvector.RAILWAY_PRIVATE_DOMAIN}}
 #   AUTH_SECRET       -> freshly generated 32-byte secret (session signing)
 #   SETTINGS_SECRET   -> freshly generated 32-byte secret (encrypts stored keys)
 #   ADMIN_EMAIL       -> admin@oxot.local   (override: ADMIN_EMAIL=… before running)
@@ -16,6 +16,7 @@
 #   DEFAULT_LOCALE    -> en
 #   SUPPORTED_LOCALES -> nl,en
 #   NODE_ENV          -> production
+#   PORT              -> 3000 (must match the public HTTP domain's target port)
 #
 # The default admin is auto-created on deploy by the railway.json preDeployCommand
 # (npm run seed:admin) — no first-login change required (private/dev deployment).
@@ -34,7 +35,7 @@ set -euo pipefail
 cd "$(cd "$(dirname "$0")/.." && pwd)"
 
 APP_SERVICE="${1:-${RAILWAY_APP_SERVICE:-}}"
-PG_SERVICE="${RAILWAY_PG_SERVICE:-Postgres}"
+PG_SERVICE="${RAILWAY_PG_SERVICE:-pgvector}"
 ADMIN_EMAIL="${ADMIN_EMAIL:-admin@oxot.local}"
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-changeme}"
 
@@ -51,17 +52,27 @@ AUTH_SECRET="$(gen_secret)"
 SETTINGS_SECRET="$(gen_secret)"
 
 # ── 1) Postgres (skip if it already exists) ──────────────────────────────────
+# We deploy the pgvector/pgvector image (NOT Railway's plain Postgres, which lacks
+# the `vector` extension that migration 001 needs). Pass the SAME RAILWAY_PG_PASSWORD
+# on re-runs so the app's DATABASE_URL keeps matching the DB.
+PG_PASSWORD="${RAILWAY_PG_PASSWORD:-$(gen_secret)}"
 if railway variable list -s "$PG_SERVICE" >/dev/null 2>&1; then
-  log "Postgres service '$PG_SERVICE' already exists — leaving it in place."
+  log "DB service '$PG_SERVICE' already exists — leaving it in place (using RAILWAY_PG_PASSWORD for the URL)."
 else
-  log "Adding Postgres database…"
-  railway add --database postgres
+  log "Adding pgvector Postgres (pgvector/pgvector:pg17)…"
+  railway add --image pgvector/pgvector:pg17 --service "$PG_SERVICE" \
+    --variables "POSTGRES_USER=oxot" \
+    --variables "POSTGRES_PASSWORD=${PG_PASSWORD}" \
+    --variables "POSTGRES_DB=oxot"
+  echo "   TIP: attach a volume to '$PG_SERVICE' at /var/lib/postgresql/data for persistence"
+  echo "        (Railway dashboard → the service → right-click → Attach Volume)."
 fi
 
 # ── 2) App variables (single set = single redeploy) ──────────────────────────
+# DATABASE_URL points at the pgvector service over Railway's private network.
 log "Setting variables on app service '$APP_SERVICE'…"
 railway variable set \
-  "DATABASE_URL=\${{${PG_SERVICE}.DATABASE_URL}}" \
+  "DATABASE_URL=postgresql://oxot:${PG_PASSWORD}@\${{${PG_SERVICE}.RAILWAY_PRIVATE_DOMAIN}}:5432/oxot" \
   "AUTH_SECRET=${AUTH_SECRET}" \
   "SETTINGS_SECRET=${SETTINGS_SECRET}" \
   "ADMIN_EMAIL=${ADMIN_EMAIL}" \
@@ -70,12 +81,14 @@ railway variable set \
   "DEFAULT_LOCALE=en" \
   "SUPPORTED_LOCALES=nl,en" \
   "NODE_ENV=production" \
+  "PORT=3000" \
   -s "$APP_SERVICE"
+# PORT=3000 pins the app to the port the public HTTP domain targets (3000). Without
+# it Railway injects PORT=80, the app binds :80, and the 3000 domain 502s.
 
 log "Done. Railway will redeploy the app; preDeploy runs migrations + seeds + the default admin."
 echo    "   Admin login after deploy:  ${ADMIN_EMAIL} / ${ADMIN_PASSWORD}   (at /admin/login)"
-echo    "   NOTE: Railway's Postgres must have the pgvector extension. If migration 001"
-echo    "         fails on 'CREATE EXTENSION vector', deploy the Postgres from Railway's"
-echo    "         pgvector template instead of the plain Postgres, then re-run the deploy."
+echo    "   Public target port must be 3000 (matches the app). The image is pg17 + pgvector,"
+echo    "   so migration 001's 'CREATE EXTENSION vector' succeeds."
 # Keep the Terminal window open when double-clicked from Finder.
 if [ -t 1 ]; then read -r -p "Press Return to close…" _; fi
