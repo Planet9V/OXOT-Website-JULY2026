@@ -11,5 +11,59 @@
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 3,
     "numReplicas": 1
+  },
+  "variables": {
+    "DATABASE_URL": {
+      "description": "PostgreSQL connection string. Set to ${{ PostgreSQL.DATABASE_URL }} (reference variable from PostgreSQL service)"
+    },
+    "AUTH_SECRET": {
+      "description": "Admin session encryption secret. Generate a long random string (32+ chars). Used for secure cookies.",
+      "value": "${{ secret(43) }}"
+    },
+    "SETTINGS_SECRET": {
+      "description": "Optional: AES-256-GCM encryption for admin-stored API keys. Falls back to AUTH_SECRET if unset.",
+      "value": "${{ secret(43) }}"
+    },
+    "NODE_ENV": {
+      "description": "Runtime environment",
+      "value": "production"
+    },
+    "DEFAULT_LOCALE": {
+      "description": "Default language for the site",
+      "value": "en"
+    },
+    "SUPPORTED_LOCALES": {
+      "description": "Comma-separated list of supported locales",
+      "value": "nl,en"
+    },
+    "EMBED_DIM": {
+      "description": "Embedding dimension. MUST match your embedding model output (qwen3-embedding:4b = 2560)",
+      "value": "2560"
+    },
+    "LLM_PRIMARY": {
+      "description": "Primary LLM provider: 'ollama' (local) or 'openrouter' (remote)",
+      "value": "openrouter"
+    },
+    "OPENROUTER_MODEL": {
+      "description": "OpenRouter model to use for chat/generation",
+      "value": "openai/gpt-4o-mini"
+    },
+    "OPENROUTER_API_KEY": {
+      "description": "OpenRouter API key for remote LLM inference. If empty, chat feature falls back to Ollama.",
+      "value": ""
+    },
+    "OLLAMA_HOST": {
+      "description": "Ollama service endpoint (local fallback for chat)",
+      "value": "http://ollama:11434"
+    },
+    "OLLAMA_CHAT_MODEL": {
+      "description": "Ollama model for chat (used as fallback if OpenRouter not configured)",
+      "value": "qwen3.5:9b"
+    },
+    "OLLAMA_EMBED_MODEL": {
+      "description": "Ollama model for embeddings",
+      "value": "qwen3-embedding:4b"
+    }
   }
 }
+
