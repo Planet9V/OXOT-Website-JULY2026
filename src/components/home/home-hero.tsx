@@ -5,7 +5,7 @@ import type { HomeHero as Hero } from "@/lib/site-content";
 import { Aurora, Reveal, Stagger, CountUp, Parallax } from "@/components/motion/fx";
 import { MediaCarousel } from "@/components/media-carousel";
 
-function RiskMap({ findingsLabel }: { findingsLabel: string }) {
+export function RiskMap({ findingsLabel }: { findingsLabel: string }) {
   const reduce = useReducedMotion();
   const line = (d: string, i: number) => (
     <motion.line key={i} {...parse(d)} stroke="#c9cdd6" strokeWidth="1"

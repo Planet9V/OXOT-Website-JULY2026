@@ -109,6 +109,48 @@
           "href": "/ts-50701"
         }
       ]
+    },
+    "approach": {
+      "eyebrow": "Hoe we werken",
+      "heading": "Een helder pad van inzicht naar beheersing.",
+      "intro": "Eén samenhangend traject — geen stapel losse rapporten. Elke stap bouwt voort op de vorige, zodat OT-cyberrisico meetbaar, verdedigbaar en beheersbaar wordt.",
+      "steps": [
+        {
+          "k": "01",
+          "title": "Beoordelen",
+          "body": "Zie uw werkelijke situatie. We brengen assets, zones en risico’s in kaart tegen IEC 62443 en geven u een geprioriteerd, praktisch startpunt."
+        },
+        {
+          "k": "02",
+          "title": "Modelleren",
+          "body": "Bouw een levende Cyber Digital Twin van uw OT, zodat beslissingen gebaseerd zijn op de actuele werkelijkheid — niet op een spreadsheet van vorig jaar."
+        },
+        {
+          "k": "03",
+          "title": "Verbeteren",
+          "body": "Voer programma’s uit die verschil maken: architectuur, segmentatie, veilige toegang op afstand en realistische security-baselines over locaties heen."
+        },
+        {
+          "k": "04",
+          "title": "Borgen",
+          "body": "Draag eigenaarschap en kennis over, zodat uw teams OT-risico beheersbaar houden — ook lang na de opdracht."
+        }
+      ]
+    },
+    "twin": {
+      "eyebrow": "Cyber Digital Twin",
+      "heading": "Eén gestructureerd beeld van assets, risico’s en maatregelen.",
+      "body": "Versnipperde technische bevindingen worden één continu bijgewerkt model van uw operationele technologie — zodat CISO’s, COO’s en plantmanagers met vertrouwen risicogebaseerde beslissingen nemen.",
+      "points": [
+        "Een levend model, continu bijgewerkt terwijl uw OT verandert",
+        "Elk risico gescoord en geprioriteerd tegen IEC 62443",
+        "Rapportage op bestuursniveau die detail vertaalt naar beslissingen"
+      ],
+      "cta": "Ontdek de Cyber Digital Twin"
+    },
+    "frameworksBand": {
+      "eyebrow": "Gebouwd op de normen die ertoe doen",
+      "heading": "Wij vertalen regelgeving naar verdedigbare security."
     }
   },
   "nav": {

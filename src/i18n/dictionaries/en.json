@@ -109,6 +109,48 @@
           "href": "/ts-50701"
         }
       ]
+    },
+    "approach": {
+      "eyebrow": "How we work",
+      "heading": "A clear path from insight to control.",
+      "intro": "One coherent journey — not a stack of disconnected reports. Each step builds on the last, so OT cyber risk becomes measurable, defensible and manageable.",
+      "steps": [
+        {
+          "k": "01",
+          "title": "Assess",
+          "body": "See your real posture. We map assets, zones and risks against IEC 62443 and hand you a prioritized, practical starting point."
+        },
+        {
+          "k": "02",
+          "title": "Model",
+          "body": "Build a living Cyber Digital Twin of your OT, so decisions are based on the current reality of your environment — not last year’s spreadsheet."
+        },
+        {
+          "k": "03",
+          "title": "Improve",
+          "body": "Execute programmes that move the needle: architecture, segmentation, secure remote access and realistic security baselines across sites."
+        },
+        {
+          "k": "04",
+          "title": "Sustain",
+          "body": "Transfer ownership and capability, so your teams keep OT risk manageable long after the engagement ends."
+        }
+      ]
+    },
+    "twin": {
+      "eyebrow": "Cyber Digital Twin",
+      "heading": "One structured view of assets, risks and controls.",
+      "body": "Fragmented technical findings become a single, continuously-updated model of your operational technology — so CISOs, COOs and plant managers can make risk-based decisions with confidence.",
+      "points": [
+        "A living model, continuously updated as your OT changes",
+        "Every risk scored and prioritized against IEC 62443",
+        "Board-ready reporting that turns detail into decisions"
+      ],
+      "cta": "Explore the Cyber Digital Twin"
+    },
+    "frameworksBand": {
+      "eyebrow": "Built on the standards that matter",
+      "heading": "We turn regulation into defensible security."
     }
   },
   "nav": {

@@ -204,6 +204,41 @@
 .ed-svc-cta a { align-self: flex-start; background: var(--ed-orange); color: var(--ed-ink2); font: 600 14px/1 var(--ed-sans); padding: 14px 22px; border-radius: 8px; transition: background 0.18s ease; }
 .ed-svc-cta a:hover { background: var(--ed-orange-h); }
 
+/* --- home: approach (how we work) --- */
+.ed-appr { padding: 70px 52px 12px; border-bottom: 1px solid var(--ed-line-2); }
+.ed-appr-head { max-width: 760px; margin-bottom: 44px; }
+.ed-appr-intro { font: 400 17px/1.62 var(--ed-sans); color: var(--ed-muted); margin: 20px 0 0; max-width: 640px; }
+.ed-appr-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ed-line); }
+.ed-appr-step { padding: 34px 30px 44px; border-right: 1px solid var(--ed-line); }
+.ed-appr-step:last-child { border-right: none; }
+.ed-appr-k { font: 700 13px/1 var(--ed-mono); color: var(--ed-orange); display: inline-block; margin-bottom: 18px; letter-spacing: 0.06em; }
+.ed-appr-step h3 { font: 500 22px/1.2 var(--ed-serif); color: var(--ed-ink2); margin: 0 0 12px; }
+.ed-appr-step p { font: 400 15px/1.62 var(--ed-sans); color: var(--ed-muted); margin: 0; }
+
+/* --- home: cyber digital twin highlight --- */
+.ed-twin { padding: 72px 52px; border-bottom: 1px solid var(--ed-line-2); }
+.ed-twin-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+.ed-twin-body { font: 400 18px/1.66 var(--ed-sans); color: var(--ed-muted); margin: 22px 0 28px; max-width: 520px; }
+.ed-twin-points { list-style: none; margin: 0 0 32px; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.ed-twin-points li { display: flex; gap: 12px; align-items: flex-start; font: 400 16px/1.5 var(--ed-sans); color: var(--ed-ink); }
+.ed-twin-dot { margin-top: 8px; height: 7px; width: 7px; flex: none; border-radius: 999px; background: var(--ed-orange); }
+
+/* --- home: frameworks band --- */
+.ed-fwb { padding: 62px 52px; border-bottom: 1px solid var(--ed-line-2); }
+.ed-fwb-head { margin-bottom: 30px; max-width: 760px; }
+.ed-fwb-rail { border-top: 1px solid var(--ed-line); border-bottom: 1px solid var(--ed-line); padding: 18px 0; }
+.ed-fwb-chip { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font: 500 14px/1 var(--ed-sans); letter-spacing: 0.02em; color: var(--ed-muted); transition: color 0.18s ease; }
+.ed-fwb-chip:hover { color: var(--ed-orange); }
+.ed-fwb-dot { height: 6px; width: 6px; border-radius: 999px; background: var(--ed-orange); }
+
+/* --- home: closing CTA band (deliberately dark in both themes) --- */
+.ed-ctaband { padding: 44px 52px 76px; }
+.ed-ctaband-inner { background: var(--ed-ink2); border-radius: 18px; padding: 48px 52px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+.ed-ctaband-title { font: 400 34px/1.12 var(--ed-serif); color: var(--ed-paper); margin: 0 0 10px; }
+.ed-ctaband-body { font: 400 16px/1.55 var(--ed-sans); color: rgba(246, 244, 239, 0.66); margin: 0; max-width: 520px; }
+.ed-ctaband-btn { flex: none; background: var(--ed-orange); color: var(--ed-ink2); font: 600 15px/1 var(--ed-sans); padding: 16px 28px; border-radius: 10px; transition: background 0.18s ease; }
+.ed-ctaband-btn:hover { background: var(--ed-orange-h); }
+
 /* --- responsive --- */
 @media (max-width: 900px) {
   .ed-hero { grid-template-columns: 1fr; gap: 40px; padding: 44px 24px 52px; }
@@ -214,6 +249,14 @@
   .ed-grid { grid-template-columns: repeat(2, 1fr); }
   .ed-svc:nth-child(3n) { border-right: 1px solid var(--ed-line); }
   .ed-svc:nth-child(2n) { border-right: none; }
+  .ed-appr, .ed-twin, .ed-fwb { padding-left: 24px; padding-right: 24px; }
+  .ed-appr-grid { grid-template-columns: repeat(2, 1fr); }
+  .ed-appr-step:nth-child(2n) { border-right: none; }
+  .ed-appr-step { border-bottom: 1px solid var(--ed-line); }
+  .ed-twin-grid { grid-template-columns: 1fr; gap: 36px; }
+  .ed-ctaband { padding: 32px 24px 56px; }
+  .ed-ctaband-inner { padding: 36px 30px; }
+  .ed-ctaband-title { font-size: 28px; }
 }
 @media (max-width: 600px) {
   .ed-h1 { font-size: 36px; }
@@ -221,6 +264,8 @@
   .ed-svc, .ed-svc:nth-child(2n), .ed-svc:nth-child(3n) { border-right: none; }
   .ed-svc { padding: 30px 24px; }
   .ed-sec-head, .ed-hero { padding-left: 24px; padding-right: 24px; }
+  .ed-appr-grid { grid-template-columns: 1fr; }
+  .ed-appr-step, .ed-appr-step:nth-child(2n) { border-right: none; }
 }
 
 /* --- Editorial DARK MODE — align the homepage to the site dark theme
@@ -249,6 +294,10 @@
 .dark .editorial .ed-svc-cta h3 { color: #f2f4f8; }
 .dark .editorial .ed-svc-cta p { color: rgba(231, 234, 240, 0.62); }
 .dark .editorial .ed-svc-cta a { color: #0f1f2e; }
+.dark .editorial .ed-ctaband-inner { background: #16283a; }
+.dark .editorial .ed-ctaband-title { color: #f2f4f8; }
+.dark .editorial .ed-ctaband-body { color: rgba(231, 234, 240, 0.66); }
+.dark .editorial .ed-ctaband-btn { color: #0f1f2e; }
 
 /* ============================================================================
    Admin WYSIWYG editor (TipTap) content styling — scoped to .oxot-editor.

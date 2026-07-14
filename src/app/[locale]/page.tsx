@@ -5,7 +5,10 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { getHomeContent } from "@/lib/site-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { HomeHero } from "@/components/home/home-hero";
-import { HomeServices } from "@/components/home/home-services";
+import { HomeApproach } from "@/components/home/home-approach";
+import { HomeTwin } from "@/components/home/home-twin";
+import { HomeFrameworks } from "@/components/home/home-frameworks";
+import { HomeCta } from "@/components/home/home-cta";
 import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
 
 // Read the CMS content fresh on every request so admin edits appear immediately.
@@ -31,6 +34,7 @@ export default async function Home({
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
   const { hero, services } = await getHomeContent(locale);
+  const home = t.home;
 
   return (
     <main className="editorial">
@@ -38,7 +42,15 @@ export default async function Home({
       <div className="ed-toggle"><ThemeToggle label={t.theme.toggle} /></div>
       <div className="ed-wrap">
         <HomeHero hero={hero} locale={locale} />
-        <HomeServices services={services} locale={locale} />
+        <HomeApproach content={home.approach} />
+        <HomeTwin content={home.twin} card={hero.card} locale={locale} />
+        <HomeFrameworks
+          eyebrow={home.frameworksBand.eyebrow}
+          heading={home.frameworksBand.heading}
+          frameworks={services.frameworks}
+          locale={locale}
+        />
+        <HomeCta cta={services.cta} locale={locale} />
       </div>
     </main>
   );
