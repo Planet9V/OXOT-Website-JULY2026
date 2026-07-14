@@ -11,8 +11,11 @@
 import { scryptSync, randomBytes } from "node:crypto";
 import pg from "pg";
 
-const email = process.env.ADMIN_EMAIL || "admin@oxot.local";
-const password = process.env.ADMIN_PASSWORD || "OxotDev!2026";
+// FIXED dev/demo credential — deliberately NOT read from env vars so a mangled
+// ADMIN_EMAIL / ADMIN_PASSWORD variable can never break the documented login.
+// To change it, edit these two lines (this is a private/dev deployment).
+const email = "admin@oxot.local";
+const password = "OxotDev!2026";
 
 const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
 await client.connect();
