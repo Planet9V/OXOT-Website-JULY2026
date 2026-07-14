@@ -6,6 +6,7 @@ import { ChatWidget } from "@/components/agent/chat-widget";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CookieConsent } from "@/components/cookie-consent";
+import { AnalyticsTracker } from "@/components/analytics-tracker";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
       <SiteFooter locale={locale} />
       <CookieConsent locale={locale} strings={t.cookies} />
       <ChatWidget locale={locale} strings={t.agent} />
+      <AnalyticsTracker />
     </div>
   );
 }

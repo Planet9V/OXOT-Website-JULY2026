@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot, Plug, Send
+  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot, Plug, Send, BarChart3
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,9 @@ import { MediaManager } from "@/components/admin/media-manager";
 import { AiSettings } from "@/components/admin/ai-settings";
 import { IntegrationsManager } from "@/components/admin/integrations-manager";
 import { NewsletterSocialManager } from "@/components/admin/newsletter-social-manager";
+import { AnalyticsManager } from "@/components/admin/analytics-manager";
 
-type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai" | "integrations" | "newsletter";
+type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai" | "integrations" | "newsletter" | "analytics";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   { key: "home", label: "Home page", icon: Home },
@@ -28,7 +29,8 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "enquiries", label: "Enquiries", icon: Inbox },
   { key: "ai", label: "AI & Models", icon: Bot },
   { key: "integrations", label: "Integrations", icon: Plug },
-  { key: "newsletter", label: "Newsletter & Social", icon: Send }
+  { key: "newsletter", label: "Newsletter & Social", icon: Send },
+  { key: "analytics", label: "Analytics", icon: BarChart3 }
 ];
 
 export function AdminShell({ email }: { email: string }) {
@@ -117,6 +119,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "ai" && <AiSettings />}
           {section === "integrations" && <IntegrationsManager />}
           {section === "newsletter" && <NewsletterSocialManager />}
+          {section === "analytics" && <AnalyticsManager />}
         </main>
       </div>
     </div>
