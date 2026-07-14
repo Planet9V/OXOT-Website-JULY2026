@@ -75,18 +75,25 @@ export function CountUp({ value, className }: { value: string; className?: strin
   const ref = React.useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const reduce = useReducedMotion();
+  const fallback = useRevealFallback();
   const digits = value.replace(/[^0-9]/g, "");
   const target = parseInt(digits || "0", 10);
   const [display, setDisplay] = React.useState(reduce ? value : value.replace(digits, "0"));
 
   React.useEffect(() => {
-    if (!inView || reduce || !digits) { if (reduce) setDisplay(value); return; }
-    const controls = animate(0, target, {
-      duration: 1.4, ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => setDisplay(value.replace(digits, String(Math.round(v))))
-    });
-    return () => controls.stop();
-  }, [inView, reduce, target, digits, value]);
+    if (reduce || !digits) { setDisplay(value); return; }
+    if (inView) {
+      const controls = animate(0, target, {
+        duration: 1.4, ease: [0.16, 1, 0.3, 1],
+        onUpdate: (v) => setDisplay(value.replace(digits, String(Math.round(v))))
+      });
+      return () => controls.stop();
+    }
+    // IntersectionObserver never reported the element in view (already above the
+    // fold on load, hydration timing, etc.) — show the final value so it never
+    // stays stuck at the initial 0.
+    if (fallback) setDisplay(value);
+  }, [inView, fallback, reduce, target, digits, value]);
 
   return <span ref={ref} className={className}>{display}</span>;
 }
