@@ -675,3 +675,10 @@ Watch the CRA Readiness overview:
 - OXOT internal analysis: CRA Obligations Reference, CRA Class I/II Products, CRA and NIS2 Penalties, CRA × IEC 62443 Alignment Reference (OXOT B.V. internal strategic reference material, 2026)
 
 *This page is general information about EU law, not legal advice. Confirm how the CRA applies to your products and role against the Regulation and, where needed, qualified counsel. The CRA↔IEC 62443 alignment analysis reflects OXOT's own methodology and interpretation as of mid-2026; formal harmonised-standard citation may refine specific mappings.*
+
+## Go deeper on the CRA
+
+This overview is the field guide. For exhaustive detail, OXOT maintains two companion references:
+
+- **[CRA — Complete Technical Reference](/en/cra-technical-reference)** — the full clause-by-clause map: regulation structure (8 chapters, 71 articles, 8 annexes), the three-tier product classification, every Annex I essential requirement, and the compliance timeline.
+- **[CRA — CE Marking Pathways & Conformity Assessment](/en/cra-ce-marking-pathways)** — how you actually demonstrate conformity: Modules A / B+C / H, the EUCC route, notified-body engagement, the Annex VII technical file and the Annex V Declaration of Conformity, with templates and timelines.
