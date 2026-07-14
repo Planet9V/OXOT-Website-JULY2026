@@ -283,5 +283,195 @@
         "other": "Overig"
       }
     }
+  },
+  "conformityHome": {
+    "meta": {
+      "title": "Vier verordeningen. Eén bewijssysteem.",
+      "description": "OXOT brengt de Cyber Resilience Act, de AI-verordening, de Machineverordening en IEC 62443 samen in één levende bron van conformiteitsbewijs — zodat uw teams naleving aantonen in plaats van er achteraan te jagen."
+    },
+    "hero": {
+      "kicker": "Compliance, engineered",
+      "title": "Vier verordeningen. Eén bewijssysteem.",
+      "subtitle": "OXOT brengt de Cyber Resilience Act, de AI-verordening, de Machineverordening en IEC 62443 samen in één levende bron van conformiteitsbewijs — zodat uw teams naleving aantonen in plaats van er achteraan te jagen.",
+      "ctaPrimary": "Ontdek het platform",
+      "ctaSecondary": "Bekijk onze aanpak",
+      "bullets": [
+        "Overlap één keer in kaart gebracht, overal hergebruikt",
+        "Auditklaar bewijs, altijd actueel",
+        "Engineers blijven in hun eigen tools"
+      ]
+    },
+    "carousel": {
+      "labels": {
+        "prev": "Vorige slide",
+        "next": "Volgende slide",
+        "goTo": "Ga naar slide"
+      },
+      "slides": [
+        {
+          "eyebrow": "OXOT CONSULTING",
+          "title": "Beveilig industriële operaties met heldere, risicogebaseerde beslissingen",
+          "body": "Naast het platform vertalen de OT-securityconsultants van OXOT regelgeving naar verdedigbare beveiliging voor uw installaties en producten.",
+          "cta": "Bekijk onze aanpak",
+          "href": "/industrial-operations"
+        },
+        {
+          "eyebrow": "OXOT CONSULTING",
+          "title": "Eén gestructureerd overzicht van assets, risico's en maatregelen",
+          "body": "Eén continu bijgewerkt model van uw OT — zodat elke risicogebaseerde beslissing rust op de actuele werkelijkheid van uw omgeving.",
+          "cta": "Bekijk onze aanpak",
+          "href": "/industrial-operations"
+        },
+        {
+          "eyebrow": "OXOT CONSULTING",
+          "title": "Wij vertalen regelgeving naar verdedigbare beveiliging",
+          "body": "Onze consultants vertalen overlappende regelgeving naar maatregelen waar uw engineers en auditors echt achter kunnen staan.",
+          "cta": "Ontdek de frameworks",
+          "href": "/frameworks"
+        }
+      ]
+    },
+    "regBand": {
+      "label": "Gebouwd voor de regelgeving die industriële producten hervormt",
+      "items": [
+        "Cyber Resilience Act",
+        "EU AI-verordening",
+        "Machineverordening 2023/1230",
+        "IEC 62443",
+        "NIS2-richtlijn",
+        "Richtlijn radioapparatuur"
+      ]
+    },
+    "stats": {
+      "items": [
+        { "value": "4-in-1", "label": "verordeningen gekoppeld aan één set maatregelen" },
+        { "value": "70%", "label": "minder dubbel werk bij overlappende vereisten" },
+        { "value": "Weken", "label": "geen kwartalen tot een auditklaar dossier" },
+        { "value": "100%", "label": "traceerbaar, elke claim gekoppeld aan bewijs" }
+      ]
+    },
+    "platform": {
+      "eyebrow": "Het platform",
+      "heading": "Alles wat een conformiteitsdossier nodig heeft, op één plek",
+      "intro": "Stop met het bijhouden van vier parallelle spreadsheets. OXOT modelleert de gedeelde werkelijkheid onder elke verordening en houdt die actueel terwijl uw product evolueert.",
+      "cta": "Ontdek het platform",
+      "cards": [
+        {
+          "title": "Uniforme maatregelenbibliotheek",
+          "body": "Eén vereistenmodel over CRA, AI-verordening, Machineverordening en IEC 62443 — gekoppeld, ontdubbeld en geversioneerd."
+        },
+        {
+          "title": "Levend bewijs",
+          "body": "Koppel tickets, tests, SBOMs en ontwerpdocumenten aan maatregelen. Bewijs werkt mee zodra uw product verandert."
+        },
+        {
+          "title": "Gapdetectie",
+          "body": "Zie precies welke verplichtingen gedekt, gedeeltelijk of open zijn — per product, per verordening, in realtime."
+        },
+        {
+          "title": "Auditklare export",
+          "body": "Genereer een gestructureerd technisch dossier en conformiteitsverklaring die uw aangemelde instantie echt kan volgen."
+        },
+        {
+          "title": "Risico- en dreigingsmodellering",
+          "body": "Gestructureerde risicobeoordelingen afgestemd op IEC 62443 en de AI-verordening, herbruikbaar over productlijnen heen."
+        },
+        {
+          "title": "Expert in de lus",
+          "body": "OXOT-consultants beoordelen uw dossier en coachen uw team — het platform laat u nooit alleen met de moeilijke keuzes."
+        }
+      ]
+    },
+    "problem": {
+      "eyebrow": "Het probleem",
+      "heading": "De regelgeving overlapt. Uw tooling niet.",
+      "body": "CRA wil secure-by-design bewijs. IEC 62443 wil hetzelfde, in zijn eigen taal. De Machineverordening voegt veiligheid toe. De AI-verordening voegt risicobeheer toe. De meeste teams beantwoorden elk apart — en betalen vier keer voor hetzelfde werk.",
+      "items": [
+        "Dubbele vereisten opnieuw gedocumenteerd per framework",
+        "Bewijs dat verouderd raakt zodra code live gaat",
+        "Geen enkel overzicht van wat werkelijk gedekt is"
+      ]
+    },
+    "shift": {
+      "eyebrow": "De omslag",
+      "heading": "Toon conformiteit aan als bijproduct van bouwen",
+      "body": "OXOT koppelt elke verplichting één keer aan een gedeelde maatregel en verbindt die maatregelen vervolgens met het bewijs dat uw teams al produceren. Compliance stopt een project te zijn en wordt een eigenschap van hoe u werkt.",
+      "cta": "Ontdek het platform",
+      "items": [
+        "Eén maatregel voldoet aan meerdere verordeningen",
+        "Engineers leveren bewijs zonder hun tools te verlaten",
+        "Het management ziet de conformiteitsstatus in één oogopslag"
+      ]
+    },
+    "comparison": {
+      "eyebrow": "Waarom OXOT",
+      "heading": "Eén systeem versus vier silo's",
+      "columns": {
+        "feature": "Kenmerk",
+        "silos": "Vier aparte trajecten",
+        "oxot": "OXOT gebundeld systeem"
+      },
+      "rows": [
+        { "feature": "Vereisten koppelen", "silos": "Herhaald per verordening" },
+        { "feature": "Actualiteit van bewijs", "silos": "Handmatig, veroudert snel" },
+        { "feature": "Hergebruik over verordeningen", "silos": "—" },
+        { "feature": "Auditvoorbereiding", "silos": "Kwartaallange stress" },
+        { "feature": "Expertbegeleiding", "silos": "Ad-hoc consultants" },
+        { "feature": "Realtime dekkingsoverzicht", "silos": "—" }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "Hoe het werkt",
+      "heading": "Van verspreide documenten naar een levend dossier",
+      "steps": [
+        {
+          "k": "01",
+          "title": "Afbakenen",
+          "body": "We koppelen uw producten aan de verordeningen die van toepassing zijn en de maatregelen die ze delen."
+        },
+        {
+          "k": "02",
+          "title": "Verbinden",
+          "body": "Bewijsbronnen — tests, SBOMs, risicobeoordelingen — worden aan het maatregelenmodel gekoppeld."
+        },
+        {
+          "k": "03",
+          "title": "Gaps dichten",
+          "body": "OXOT brengt in beeld wat open staat; onze experts helpen u dit efficiënt te sluiten."
+        }
+      ]
+    },
+    "testimonial": {
+      "quote": "Vroeger behandelden we elke verordening als een aparte brandoefening. Met OXOT schrijft het bewijs zichzelf één keer en beantwoordt het ze allemaal.",
+      "author": "Head of Product Security",
+      "company": "Leverancier van industriële automatisering"
+    },
+    "faq": {
+      "eyebrow": "Vragen",
+      "heading": "Wat teams vragen voordat ze beginnen",
+      "items": [
+        {
+          "q": "Welke regelgeving dekt OXOT?",
+          "a": "CRA, de EU AI-verordening, de Machineverordening en IEC 62443 vandaag, met NIS2 en de Richtlijn radioapparatuur ernaast in kaart gebracht."
+        },
+        {
+          "q": "Is dit software of consultancy?",
+          "a": "Allebei — een levend bewijsplatform, ondersteund door de OT-securityconsultants van OXOT voor de afwegingen."
+        },
+        {
+          "q": "Moeten onze engineers een nieuwe tool leren?",
+          "a": "Nee — bewijs wordt gekoppeld vanuit de tools die ze al gebruiken; het platform brengt het samen."
+        },
+        {
+          "q": "Hoe snel kunnen we auditklaar zijn?",
+          "a": "Weken, geen kwartalen — zodra uw bewijsbronnen zijn aangesloten, blijft het dossier automatisch actueel."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Zie uw conformiteitsstatus in één overzicht",
+      "ctaPrimary": "Ontdek het platform",
+      "ctaSecondary": "Neem contact op"
+    }
   }
 }

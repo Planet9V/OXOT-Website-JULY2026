@@ -283,5 +283,195 @@
         "other": "Other"
       }
     }
+  },
+  "conformityHome": {
+    "meta": {
+      "title": "Four regulations. One evidence system.",
+      "description": "OXOT unifies the Cyber Resilience Act, the AI Act, the Machinery Regulation and IEC 62443 into a single, living source of conformity evidence — so your teams prove compliance instead of chasing it."
+    },
+    "hero": {
+      "kicker": "Compliance, engineered",
+      "title": "Four regulations. One evidence system.",
+      "subtitle": "OXOT unifies the Cyber Resilience Act, the AI Act, the Machinery Regulation and IEC 62443 into a single, living source of conformity evidence — so your teams prove compliance instead of chasing it.",
+      "ctaPrimary": "Explore the platform",
+      "ctaSecondary": "See our approach",
+      "bullets": [
+        "Overlap mapped once, reused everywhere",
+        "Audit-ready evidence, always current",
+        "Engineers stay in their tools"
+      ]
+    },
+    "carousel": {
+      "labels": {
+        "prev": "Previous slide",
+        "next": "Next slide",
+        "goTo": "Go to slide"
+      },
+      "slides": [
+        {
+          "eyebrow": "OXOT CONSULTING",
+          "title": "Secure industrial operations with clear, risk-based decisions",
+          "body": "Beyond the platform, OXOT's OT-security consultants turn regulation into defensible security for your plants and products.",
+          "cta": "See our approach",
+          "href": "/industrial-operations"
+        },
+        {
+          "eyebrow": "OXOT CONSULTING",
+          "title": "One structured view of assets, risks and controls",
+          "body": "A single, continuously-updated model of your OT — so every risk-based decision rests on the current reality of your environment.",
+          "cta": "See our approach",
+          "href": "/industrial-operations"
+        },
+        {
+          "eyebrow": "OXOT CONSULTING",
+          "title": "We turn regulation into defensible security",
+          "body": "Our consultants translate overlapping regulation into controls your engineers and auditors can actually stand behind.",
+          "cta": "Explore the frameworks",
+          "href": "/frameworks"
+        }
+      ]
+    },
+    "regBand": {
+      "label": "Built for the regulations reshaping industrial products",
+      "items": [
+        "Cyber Resilience Act",
+        "EU AI Act",
+        "Machinery Regulation 2023/1230",
+        "IEC 62443",
+        "NIS2 Directive",
+        "Radio Equipment Directive"
+      ]
+    },
+    "stats": {
+      "items": [
+        { "value": "4-in-1", "label": "regulations mapped to one control set" },
+        { "value": "70%", "label": "less duplicate work across overlapping requirements" },
+        { "value": "Weeks", "label": "not quarters to an audit-ready dossier" },
+        { "value": "100%", "label": "traceable, every claim linked to evidence" }
+      ]
+    },
+    "platform": {
+      "eyebrow": "The platform",
+      "heading": "Everything a conformity dossier needs, in one place",
+      "intro": "Stop maintaining four parallel spreadsheets. OXOT models the shared reality underneath every regulation and keeps it current as your product evolves.",
+      "cta": "Explore the platform",
+      "cards": [
+        {
+          "title": "Unified control library",
+          "body": "One requirement model spanning CRA, AI Act, Machinery and IEC 62443 — mapped, deduplicated and versioned."
+        },
+        {
+          "title": "Living evidence",
+          "body": "Link tickets, tests, SBOMs and design docs to controls. Evidence updates as your product does."
+        },
+        {
+          "title": "Gap detection",
+          "body": "See exactly which obligations are covered, partial or open — per product, per regulation, in real time."
+        },
+        {
+          "title": "Audit-ready export",
+          "body": "Generate a structured technical file and declaration of conformity your notified body can actually follow."
+        },
+        {
+          "title": "Risk & threat modeling",
+          "body": "Structured risk assessments aligned to IEC 62443 and the AI Act, reusable across product lines."
+        },
+        {
+          "title": "Expert in the loop",
+          "body": "OXOT consultants review your dossier and coach your team — the platform never leaves you alone with the hard calls."
+        }
+      ]
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "heading": "The regulations overlap. Your tooling doesn't.",
+      "body": "CRA wants secure-by-design evidence. IEC 62443 wants the same, in its own language. The Machinery Regulation adds safety. The AI Act adds risk management. Most teams answer each one separately — and pay for the same work four times.",
+      "items": [
+        "Duplicate requirements re-documented per framework",
+        "Evidence that goes stale the moment code ships",
+        "No single view of what is actually covered"
+      ]
+    },
+    "shift": {
+      "eyebrow": "The shift",
+      "heading": "Prove conformity as a by-product of building",
+      "body": "OXOT maps every obligation to a shared control once, then wires those controls to the evidence your teams already produce. Compliance stops being a project and becomes a property of how you work.",
+      "cta": "Explore the platform",
+      "items": [
+        "One control satisfies many regulations",
+        "Engineers contribute evidence without leaving their tools",
+        "Leadership sees conformity status at a glance"
+      ]
+    },
+    "comparison": {
+      "eyebrow": "Why OXOT",
+      "heading": "One system versus four silos",
+      "columns": {
+        "feature": "Feature",
+        "silos": "Four separate efforts",
+        "oxot": "OXOT unified system"
+      },
+      "rows": [
+        { "feature": "Requirement mapping", "silos": "Repeated per regulation" },
+        { "feature": "Evidence freshness", "silos": "Manual, drifts quickly" },
+        { "feature": "Cross-regulation reuse", "silos": "—" },
+        { "feature": "Audit preparation", "silos": "Quarter-long scramble" },
+        { "feature": "Expert guidance", "silos": "Ad-hoc consultants" },
+        { "feature": "Real-time coverage view", "silos": "—" }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "heading": "From scattered documents to a living dossier",
+      "steps": [
+        {
+          "k": "01",
+          "title": "Scope",
+          "body": "We map your products to the regulations that apply and the controls they share."
+        },
+        {
+          "k": "02",
+          "title": "Connect",
+          "body": "Evidence sources — tests, SBOMs, risk assessments — are wired into the control model."
+        },
+        {
+          "k": "03",
+          "title": "Close gaps",
+          "body": "OXOT surfaces what's open; our experts help you close it efficiently."
+        }
+      ]
+    },
+    "testimonial": {
+      "quote": "We used to treat every regulation as a separate fire drill. With OXOT the evidence writes itself once and answers all of them.",
+      "author": "Head of Product Security",
+      "company": "Industrial automation vendor"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "heading": "What teams ask before starting",
+      "items": [
+        {
+          "q": "Which regulations does OXOT cover?",
+          "a": "CRA, the EU AI Act, the Machinery Regulation and IEC 62443 today, with NIS2 and the Radio Equipment Directive mapped alongside them."
+        },
+        {
+          "q": "Is this software or consulting?",
+          "a": "Both — a living evidence platform, backed by OXOT's OT-security consultants for the judgment calls."
+        },
+        {
+          "q": "Do our engineers have to learn a new tool?",
+          "a": "No — evidence is linked from the tools they already use; the platform pulls it together."
+        },
+        {
+          "q": "How quickly can we be audit-ready?",
+          "a": "Weeks, not quarters — once your evidence sources are wired in, the dossier stays current automatically."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "See your conformity status in one view",
+      "ctaPrimary": "Explore the platform",
+      "ctaSecondary": "Talk to us"
+    }
   }
 }
