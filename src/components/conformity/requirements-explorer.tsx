@@ -43,16 +43,23 @@ export function RequirementsExplorer({
   regulations,
   themes,
   obligationTypeKeys,
-  labels
+  labels,
+  initialRegulation = "",
+  initialTheme = ""
 }: {
   requirements: Requirement[];
   regulations: Option[];
   themes: Option[];
   obligationTypeKeys: string[];
   labels: RequirementsExplorerLabels;
+  initialRegulation?: string;
+  initialTheme?: string;
 }) {
-  const [regulation, setRegulation] = React.useState("");
-  const [theme, setTheme] = React.useState("");
+  // Pre-filter from URL (?reg=, ?theme=) when linked from a framework page.
+  const validReg = regulations.some((o) => o.value === initialRegulation) ? initialRegulation : "";
+  const validTheme = themes.some((o) => o.value === initialTheme) ? initialTheme : "";
+  const [regulation, setRegulation] = React.useState(validReg);
+  const [theme, setTheme] = React.useState(validTheme);
   const [obligation, setObligation] = React.useState("");
   const [query, setQuery] = React.useState("");
 

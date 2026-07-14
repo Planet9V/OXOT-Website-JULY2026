@@ -4,6 +4,7 @@ import { isLocale } from "@/i18n/config";
 import { getPublishedPage } from "@/lib/content";
 import { MarkdownContent, extractToc } from "@/components/markdown";
 import { ArticleShell } from "@/components/article/article-shell";
+import { FrameworkPlatformLink } from "@/components/conformity/framework-platform-link";
 import { alternates, articleJsonLd, jsonLdScript, ogImageUrl, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -100,6 +101,7 @@ export default async function CmsPage({
         slug={slug}
         locale={locale}
       >
+        <FrameworkPlatformLink slug={slug} locale={locale} />
         <MarkdownContent source={page.body} toc={false} locale={locale} />
       </ArticleShell>
     </main>

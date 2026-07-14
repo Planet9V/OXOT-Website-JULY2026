@@ -24,12 +24,15 @@ export async function generateMetadata({
 }
 
 export default async function RequirementsPage({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ reg?: string; theme?: string }>;
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const { reg, theme } = await searchParams;
   const t = getDictionary(locale).conformity;
   const [requirements, regulations, themes] = await Promise.all([
     getRequirements(locale as Locale),
@@ -43,6 +46,8 @@ export default async function RequirementsPage({
       regulations={regulations.map((r) => ({ value: r.key, label: r.shortName }))}
       themes={themes.map((th) => ({ value: th.key, label: th.name }))}
       obligationTypeKeys={[...OBLIGATION_TYPES]}
+      initialRegulation={reg ?? ""}
+      initialTheme={theme ?? ""}
       labels={{
         regulation: t.filters.regulation,
         theme: t.filters.theme,

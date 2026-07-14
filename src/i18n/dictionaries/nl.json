@@ -223,7 +223,9 @@
       "byRegulationHint": "De balkbreedte is relatief ten opzichte van de regelgeving met de meeste gekoppelde vereisten.",
       "keyDates": "Belangrijke data",
       "keyDatesHint": "Implementatiemijlpalen binnen de regelgeving die we volgen.",
-      "requirementsShort": "vereisten"
+      "requirementsShort": "vereisten",
+      "coverage": "Themadekking per regelgeving",
+      "coverageHint": "Hoeveel van de overkoepelende thema's elke regelgeving raakt."
     },
     "regulations": {
       "intro": "De regelgeving en normen die OT-conformiteit in de EU bepalen.",
@@ -267,10 +269,19 @@
     "matrix": {
       "intro": "Thema's aan de zijkant, regelgeving bovenaan. Elke cel telt de daaraan gekoppelde vereisten.",
       "themeColumn": "Thema",
-      "legend": "Getal = vereisten gekoppeld aan dit thema en deze regelgeving. Selecteer een gevulde cel voor details.",
+      "legend": "De kleurintensiteit toont hoeveel vereisten aan elk thema en elke regelgeving zijn gekoppeld. Selecteer een gevulde cel om ze te bekijken.",
       "empty": "Selecteer een gevulde cel om de gekoppelde vereisten te zien.",
       "detailTitle": "Gekoppelde vereisten",
-      "refsLabel": "Vereistereferenties"
+      "refsLabel": "Vereistereferenties",
+      "connector": "×",
+      "close": "Sluiten",
+      "heatLess": "Minder",
+      "heatMore": "Meer"
+    },
+    "timeline": {
+      "inForce": "Van kracht",
+      "upcoming": "Aankomend",
+      "today": "Vandaag"
     },
     "sources": {
       "intro": "Dit zijn de brondocumenten achter de koppelingen — het onderzoek, de referenties en de uitgewerkte voorbeelden waaruit de verplichtingen zijn afgeleid.",

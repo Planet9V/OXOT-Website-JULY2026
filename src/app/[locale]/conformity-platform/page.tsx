@@ -5,10 +5,11 @@ import { ArrowRight } from "lucide-react";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/lib/seo";
-import { getSummary, getRegulations, getTimeline } from "@/lib/conformity";
+import { getSummary, getRegulations, getTimeline, getThemes, getMatrixCells } from "@/lib/conformity";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Reveal, Stagger, CountUp , StaggerItem} from "@/components/motion/fx";
+import { CoverageRing } from "@/components/conformity/coverage-ring";
+import { Timeline } from "@/components/conformity/timeline";
 
 export const dynamic = "force-dynamic";
 
@@ -44,11 +45,26 @@ export default async function ConformityOverview({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale).conformity;
-  const [summary, regulations, timeline] = await Promise.all([
+  const [summary, regulations, timeline, themes, cells] = await Promise.all([
     getSummary(),
     getRegulations(locale as Locale),
-    getTimeline(locale as Locale)
+    getTimeline(locale as Locale),
+    getThemes(locale as Locale),
+    getMatrixCells()
   ]);
+
+  // Theme coverage per regulation: a theme is "covered" when a matrix cell for
+  // that theme+regulation maps at least one requirement.
+  const coverage = regulations.map((r) => ({
+    key: r.key,
+    shortName: r.shortName,
+    covered: themes.filter((th) =>
+      cells.some(
+        (c) => c.themeKey === th.key && c.regulationKey === r.key && c.requirementCount > 0
+      )
+    ).length,
+    total: themes.length
+  }));
 
   const kpis = [
     { label: t.kpi.regulations, value: summary.regulationCount },
@@ -58,13 +74,10 @@ export default async function ConformityOverview({
   ];
 
   const maxReq = Math.max(1, ...regulations.map((r) => r.requirementCount));
-  const shortNameByKey = new Map(regulations.map((r) => [r.key, r.shortName]));
-  const dateFmt = (d: string) =>
-    new Date(d).toLocaleDateString(locale === "nl" ? "nl-NL" : "en-GB", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
+  const regShortNames: Record<string, string> = Object.fromEntries(
+    regulations.map((r) => [r.key, r.shortName])
+  );
+  const today = new Date().toISOString();
 
   return (
     <div className="space-y-12">
@@ -125,6 +138,26 @@ export default async function ConformityOverview({
         </section>
       </Reveal>
 
+      {/* Theme coverage by regulation */}
+      <Reveal>
+        <section>
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            {t.overview.coverage}
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">{t.overview.coverageHint}</p>
+          <div className="mt-6 grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-3 lg:grid-cols-5">
+            {coverage.map((c) => (
+              <CoverageRing
+                key={c.key}
+                covered={c.covered}
+                total={c.total}
+                shortName={c.shortName}
+              />
+            ))}
+          </div>
+        </section>
+      </Reveal>
+
       {/* Key dates */}
       <Reveal>
         <section>
@@ -132,22 +165,17 @@ export default async function ConformityOverview({
             {t.overview.keyDates}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">{t.overview.keyDatesHint}</p>
-          <ol className="mt-5 space-y-4 border-l border-border pl-6">
-            {timeline.map((e, i) => (
-              <li key={`${e.date}-${i}`} className="relative">
-                <span className="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-primary bg-background" />
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <time className="text-sm font-semibold tabular-nums text-foreground">
-                    {dateFmt(e.date)}
-                  </time>
-                  {e.regulationKey && shortNameByKey.has(e.regulationKey) && (
-                    <Badge variant="secondary">{shortNameByKey.get(e.regulationKey)}</Badge>
-                  )}
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">{e.label}</p>
-              </li>
-            ))}
-          </ol>
+          <Timeline
+            events={timeline}
+            regShortNames={regShortNames}
+            today={today}
+            locale={locale as Locale}
+            labels={{
+              inForce: t.timeline.inForce,
+              upcoming: t.timeline.upcoming,
+              today: t.timeline.today
+            }}
+          />
         </section>
       </Reveal>
 
