@@ -85,14 +85,14 @@ you can log straight in. Same behaviour locally and on Railway.
 | | |
 |---|---|
 | **email** | `admin@oxot.local` |
-| **password** | `changeme` |
+| **password** | `OxotDev!2026` |
 
 - Log in at **`/admin/login`**.
-- To use different credentials instead, set `ADMIN_EMAIL` and `ADMIN_PASSWORD`
-  **before the first deploy** — in `.env.local` locally, or as Railway variables.
-  Once an admin row exists these values are ignored and never overwrite it.
-- No password change is enforced. To rotate later, either change it in the admin
-  UI or re-run `scripts/create-admin.mjs` (below).
+- The dev/demo admin's password is **force-set to `ADMIN_PASSWORD` on every deploy**
+  (create-or-update), so this login always works even after a DB reset. Change the
+  value via `ADMIN_PASSWORD` (`.env.local` locally, or a Railway variable).
+- For a real, private admin whose password should NOT be reset by deploys, create it
+  under a **different email** with `scripts/create-admin.mjs` (below).
 
 Watch it happen: `docker compose logs -f app` (look for the `[init]` lines).
 
@@ -143,7 +143,7 @@ railway link                         # pick the project + environment
 — Railway's plain Postgres lacks the `vector` extension migration 001 needs) and sets
 every required variable on the app service: `DATABASE_URL` (pointing at the pgvector
 service over the private network), freshly generated `AUTH_SECRET` + `SETTINGS_SECRET`,
-`ADMIN_EMAIL`/`ADMIN_PASSWORD` (defaults `admin@oxot.local` / `changeme`), `EMBED_DIM`,
+`ADMIN_EMAIL`/`ADMIN_PASSWORD` (defaults `admin@oxot.local` / `OxotDev!2026`), `EMBED_DIM`,
 locales, `NODE_ENV`, and **`PORT=3000`**. It's idempotent — re-running only updates
 values and never adds a second database.
 
