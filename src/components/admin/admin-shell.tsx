@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot
+  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot, Plug
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,9 @@ import { MenuManager } from "@/components/admin/menu-manager";
 import { InquiriesManager } from "@/components/admin/inquiries-manager";
 import { MediaManager } from "@/components/admin/media-manager";
 import { AiSettings } from "@/components/admin/ai-settings";
+import { IntegrationsManager } from "@/components/admin/integrations-manager";
 
-type Section = "overview" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai";
+type Section = "overview" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai" | "integrations";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   { key: "homepage", label: "Homepage", icon: Home },
@@ -22,7 +23,8 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "menus", label: "Menus", icon: MenuIcon },
   { key: "media", label: "Media", icon: Images },
   { key: "enquiries", label: "Enquiries", icon: Inbox },
-  { key: "ai", label: "AI & Models", icon: Bot }
+  { key: "ai", label: "AI & Models", icon: Bot },
+  { key: "integrations", label: "Integrations", icon: Plug }
 ];
 
 export function AdminShell({ email }: { email: string }) {
@@ -108,6 +110,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "media" && <MediaManager />}
           {section === "enquiries" && <InquiriesManager />}
           {section === "ai" && <AiSettings />}
+          {section === "integrations" && <IntegrationsManager />}
         </main>
       </div>
     </div>
