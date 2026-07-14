@@ -3,6 +3,7 @@ import { ArrowRight, Check, X } from "lucide-react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { HeroCarousel } from "@/components/conformity-home/hero-carousel";
 import {
   Aurora,
   Reveal,
@@ -26,16 +27,16 @@ export function Hero({ t, locale }: { t: CH["hero"]; locale: string }) {
   return (
     <section className="relative overflow-hidden border-b border-border">
       <Aurora />
-      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-28">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:py-28 lg:grid-cols-2 lg:gap-12">
         <Reveal>
           <p className={EYEBROW}>{t.kicker}</p>
           <h1
-            className="mt-4 max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl"
+            className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl"
             style={DISPLAY}
           >
             {t.title}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             {t.subtitle}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -57,6 +58,11 @@ export function Hero({ t, locale }: { t: CH["hero"]; locale: string }) {
               </li>
             ))}
           </ul>
+        </Reveal>
+
+        {/* Auto-advancing PDF hero showcase on the right (stacks below on mobile). */}
+        <Reveal delay={0.12}>
+          <HeroCarousel locale={locale} />
         </Reveal>
       </div>
     </section>
