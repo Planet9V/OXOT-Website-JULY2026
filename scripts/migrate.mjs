@@ -14,7 +14,7 @@ await client.connect();
 try {
   for (const f of files) {
     console.log(`applying ${f}`);
-    const dim = Number(process.env.EMBED_DIM ?? 2560);
+    const dim = Number(process.env.EMBED_DIM ?? 1536);
     const sql = readFileSync(join(dir, f), "utf8").replaceAll("__EMBED_DIM__", String(dim));
     await client.query(sql);
   }

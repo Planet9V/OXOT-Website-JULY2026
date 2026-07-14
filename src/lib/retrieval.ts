@@ -18,34 +18,27 @@ export async function retrieve(
 ): Promise<RetrievedChunk[]> {
   const vector = await embed(query);
   const literal = `[${vector.join(",")}]`;
-  // Cast both sides to halfvec(2560) so the HNSW index (migration 034) is usable —
-  // plain vector(2560) has no ANN index (2000-dim cap). We over-fetch a candidate
-  // set by pure cosine distance (index-backed), then re-rank in JS to apply the
-  // current-page boost. This keeps the boost without defeating the index, and the
-  // halfvec distance is fine for ranking. If halfvec is unavailable the query
-  // errors and the caller (/api/agent) degrades gracefully to no context.
-  const candidates = Math.max(k * 4, 24);
+  // Plain pgvector cosine, dimension-agnostic (works at 1536 or 2560). Page-boosted
+  // ranking in SQL, returning the RAW cosine distance as `score`. When embeddings
+  // are <=2000 dims a plain HNSW index (migration 035) accelerates the ORDER BY;
+  // at higher dims it's an exact sequential scan (correct, fine for this corpus).
+  // No halfvec dependency — the earlier halfvec cast was removed because halfvec
+  // support on the live instance was unverifiable and a failed cast would have
+  // silently stripped the agent's grounding.
   const { rows } = await pool.query(
     `SELECT id, text, page_id,
-       (embedding::halfvec(2560) <=> $1::halfvec(2560)) AS score
+       (embedding <=> $1::vector) AS score
      FROM content_chunks
      WHERE locale = $2
-     ORDER BY embedding::halfvec(2560) <=> $1::halfvec(2560)
-     LIMIT $3`,
-    [literal, locale, candidates]
+     ORDER BY (embedding <=> $1::vector)
+       - (CASE WHEN page_id = $3 THEN 0.05 ELSE 0 END) ASC
+     LIMIT $4`,
+    [literal, locale, currentPageId ?? null, k]
   );
-  const mapped = rows.map((r) => ({
+  return rows.map((r) => ({
     id: Number(r.id),
     text: r.text as string,
     pageId: r.page_id as string,
     score: Number(r.score)
   }));
-  // Current-page boost: subtract 0.05 from the effective distance for chunks on the
-  // page the visitor is viewing, re-sort, and return the top k. `score` stays the
-  // RAW distance so downstream confidence gating remains valid.
-  return mapped
-    .map((r) => ({ r, adj: r.score - (currentPageId && r.pageId === currentPageId ? 0.05 : 0) }))
-    .sort((a, b) => a.adj - b.adj)
-    .slice(0, k)
-    .map((x) => x.r);
 }

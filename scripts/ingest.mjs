@@ -10,8 +10,17 @@ import { parseFrontmatter } from "./lib/frontmatter.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OLLAMA_HOST = process.env.OLLAMA_HOST ?? "http://ollama:11434";
 const EMBED_MODEL = process.env.OLLAMA_EMBED_MODEL ?? "qwen3-embedding:4b";
-const EMBED_DIM = Number(process.env.EMBED_DIM ?? 2560);
+const EMBED_DIM = Number(process.env.EMBED_DIM ?? 1536);
 const LOCALES = ["nl", "en"];
+
+// Matryoshka truncation to EMBED_DIM — MUST match src/lib/embeddings.ts::fitDim so
+// index-side and query-side vectors share one space. No-op if already EMBED_DIM.
+function fitDim(v, dim = EMBED_DIM) {
+  if (!Array.isArray(v) || v.length <= dim) return v;
+  const t = v.slice(0, dim);
+  const n = Math.sqrt(t.reduce((s, x) => s + x * x, 0)) || 1;
+  return t.map((x) => x / n);
+}
 
 function chunk(text, max = 800) {
   const paras = text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
@@ -39,9 +48,9 @@ async function embed(text) {
   });
   if (!res.ok) throw new Error(`embed failed ${res.status}`);
   const j = await res.json();
-  if (j.embedding?.length !== EMBED_DIM)
-    throw new Error(`expected ${EMBED_DIM}-dim, got ${j.embedding?.length}`);
-  return j.embedding;
+  if (!Array.isArray(j.embedding) || j.embedding.length < EMBED_DIM)
+    throw new Error(`expected >= ${EMBED_DIM}-dim, got ${j.embedding?.length}`);
+  return fitDim(j.embedding);
 }
 
 const client = new pg.Client({ connectionString: process.env.DATABASE_URL });

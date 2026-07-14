@@ -71,7 +71,7 @@ export type AiSettingKey = (typeof AI_SETTING_KEYS)[number];
 const ENV = {
   ollamaHost: process.env.OLLAMA_HOST ?? "http://ollama:11434",
   embedModel: process.env.OLLAMA_EMBED_MODEL ?? "qwen3-embedding:4b",
-  embedDim: Number(process.env.EMBED_DIM ?? 2560),
+  embedDim: Number(process.env.EMBED_DIM ?? 1536),
   // stream.ts historically defaults primary to openrouter
   chatProvider: (process.env.LLM_PRIMARY ?? "openrouter").toLowerCase() === "ollama" ? "ollama" : "openrouter",
   ollamaChatModel: process.env.OLLAMA_CHAT_MODEL ?? "qwen3.5:9b",

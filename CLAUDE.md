@@ -34,7 +34,7 @@ interactive AI agent that watches visitor behavior and aligns answers to what th
 - **Frontend:** Next.js (latest) + Tailwind CSS + shadcn/ui. A **global stylesheet is the single source of truth**; dark/light mode always enforced through it.
 - **Backend/admin:** simple admin system for a small team to log in, edit menus, add pages, and add content.
 - **Data:** PostgreSQL (latest) with **pgvector**; **file storage lives in Postgres itself**.
-- **Embeddings:** **Ollama, `qwen3-embedding:4b`.** Vector dimension is set by `EMBED_DIM` to match the installed model (native **2560**); the pgvector column, the `embeddings.ts` assertion, and migration 001 must all agree. (The original brief said 4096; the real model emits 2560 — confirm against your instance.)
+- **Embeddings:** **Ollama, `qwen3-embedding:4b`.** Vector dimension is **1536** (`EMBED_DIM=1536`, decision 2026-07-14). qwen3-embedding:4b emits **2560** natively, so we take the first 1536 dims and L2-renormalize (Matryoshka/MRL truncation) via the shared `fitDim` helper — applied identically in `src/lib/embeddings.ts` (query) and `scripts/ingest.mjs` (index) so vectors share one space. 1536 ≤ 2000 enables a plain pgvector **HNSW** index (no halfvec). The pgvector column, `fitDim`/`EMBED_DIM`, migration 001's placeholder, and migration 035 must all agree at 1536. Changing the dimension requires a full re-ingest.
 - **Generation (AI agent):** **local Ollama primary, OpenRouter as automatic fallback.**
 - **Everything runs in Docker** (see `docker-compose.yml`).
 
