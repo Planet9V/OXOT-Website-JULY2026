@@ -73,10 +73,11 @@ export function Hero({ hero, locale }: { hero: ConformityHomeHero; locale: strin
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:py-28 lg:grid-cols-2 lg:gap-12">
         <HeroIntro hero={hero} locale={locale} />
 
-        {/* Auto-advancing PDF hero showcase on the right (stacks below on mobile). */}
-        <Reveal delay={0.12}>
+        {/* Auto-advancing PDF hero showcase on the right (stacks below on mobile).
+            CSS animation (not JS Reveal) so it can never get stuck hidden. */}
+        <div className="animate-in fade-in fill-mode-both delay-200 duration-700">
           <HeroCarousel locale={locale} />
-        </Reveal>
+        </div>
       </div>
     </section>
   );
