@@ -177,6 +177,31 @@
       "decline": "Nee bedankt"
     }
   },
+  "footer": {
+    "connect": "Verbinden",
+    "newsletter": {
+      "heading": "Nieuwsbrief",
+      "placeholder": "u@bedrijf.nl",
+      "subscribe": "Aanmelden",
+      "subscribing": "Bezig met aanmelden…",
+      "helper": "Compliance-updates over de CRA, AI-verordening, Machineverordening & NIS2. U kunt zich altijd afmelden.",
+      "success": "Bedankt — u staat op de lijst. Bevestig via uw inbox.",
+      "invalid": "Voer een geldig e-mailadres in.",
+      "error": "Er ging iets mis. Probeer het opnieuw."
+    },
+    "disclaimer": "OXOT verandert overlappende EU-regelgeving in één levend bewijssysteem — zodat uw teams conforme producten leveren zonder te verdrinken in papierwerk.",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden",
+    "cookieSettings": "Cookie-instellingen"
+  },
+  "cookies": {
+    "title": "Uw privacykeuzes",
+    "body": "We gebruiken essentiële cookies om deze site te laten werken. Met uw toestemming gebruiken we ook analytische cookies om te begrijpen hoe de site wordt gebruikt — u bepaalt.",
+    "acceptAll": "Alles accepteren",
+    "declineNonEssential": "Niet-essentiële weigeren",
+    "policyLink": "Cookiebeleid",
+    "settingsLabel": "Cookie-instellingen"
+  },
   "contact": {
     "nameLabel": "Naam",
     "namePlaceholder": "Uw naam",

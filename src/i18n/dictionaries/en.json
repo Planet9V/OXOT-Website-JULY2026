@@ -177,6 +177,31 @@
       "decline": "No thanks"
     }
   },
+  "footer": {
+    "connect": "Connect",
+    "newsletter": {
+      "heading": "Newsletter",
+      "placeholder": "you@company.com",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing…",
+      "helper": "Compliance updates on the CRA, AI Act, Machinery Regulation & NIS2. Unsubscribe anytime.",
+      "success": "Thanks — you're on the list. Check your inbox to confirm.",
+      "invalid": "Please enter a valid email address.",
+      "error": "Something went wrong. Please try again."
+    },
+    "disclaimer": "OXOT turns overlapping EU regulations into a single, living evidence system — so your teams ship compliant products without drowning in paperwork.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookieSettings": "Cookie settings"
+  },
+  "cookies": {
+    "title": "Your privacy choices",
+    "body": "We use essential cookies to make this site work. With your consent we also use analytics cookies to understand how the site is used — you decide.",
+    "acceptAll": "Accept all",
+    "declineNonEssential": "Decline non-essential",
+    "policyLink": "Cookie policy",
+    "settingsLabel": "Cookie settings"
+  },
   "contact": {
     "nameLabel": "Name",
     "namePlaceholder": "Your name",

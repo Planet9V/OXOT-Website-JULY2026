@@ -5,6 +5,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { ChatWidget } from "@/components/agent/chat-widget";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { CookieConsent } from "@/components/cookie-consent";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +28,7 @@ export default async function LocaleLayout({
       <SiteNav locale={locale} />
       {children}
       <SiteFooter locale={locale} />
+      <CookieConsent locale={locale} strings={t.cookies} />
       <ChatWidget locale={locale} strings={t.agent} />
     </div>
   );
