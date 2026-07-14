@@ -194,5 +194,94 @@
     "errName": "Please enter your name.",
     "errEmail": "Please enter a valid email address.",
     "errMessage": "Please add a few sentences so we can help."
+  },
+  "conformity": {
+    "kicker": "CONFORMITY PLATFORM",
+    "title": "OT conformity, mapped across every regulation",
+    "subtitle": "One model that connects EU regulations, cross-cutting themes and the concrete obligations they place on operational technology.",
+    "tabs": {
+      "overview": "Overview",
+      "regulations": "Regulations",
+      "requirements": "Requirements",
+      "themes": "Themes",
+      "matrix": "Matrix",
+      "sources": "Sources"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "frameworks": "Frameworks",
+      "platform": "Conformity Platform"
+    },
+    "kpi": {
+      "regulations": "Regulations",
+      "requirements": "Requirements",
+      "themes": "Themes",
+      "mappings": "Mappings"
+    },
+    "overview": {
+      "byRegulation": "Requirements by regulation",
+      "byRegulationHint": "Bar width is relative to the regulation with the most mapped requirements.",
+      "keyDates": "Key dates",
+      "keyDatesHint": "Implementation milestones across the regulations we track.",
+      "requirementsShort": "requirements"
+    },
+    "regulations": {
+      "intro": "The regulations and standards that shape OT conformity in the EU.",
+      "requirementsCount": "requirements"
+    },
+    "inForce": "In force",
+    "officialText": "Official text",
+    "viewInMatrix": "View in matrix",
+    "mappedRequirements": "mapped requirements",
+    "filters": {
+      "regulation": "Regulation",
+      "theme": "Theme",
+      "obligation": "Obligation type",
+      "allRegulations": "All regulations",
+      "allThemes": "All themes",
+      "allObligations": "All obligations",
+      "search": "Search",
+      "searchPlaceholder": "Search title, description or reference…",
+      "countSuffix": "requirements",
+      "of": "of",
+      "empty": "No requirements match these filters."
+    },
+    "table": {
+      "regulation": "Regulation",
+      "ref": "Ref",
+      "requirement": "Requirement",
+      "theme": "Theme",
+      "obligation": "Obligation",
+      "mappings": "Mappings"
+    },
+    "obligationTypes": {
+      "product_requirement": "Product requirement",
+      "process": "Process",
+      "documentation": "Documentation",
+      "reporting": "Reporting",
+      "governance": "Governance"
+    },
+    "themes": {
+      "intro": "Cross-cutting themes that recur across the regulations — the connective tissue of the matrix."
+    },
+    "matrix": {
+      "intro": "Themes down the side, regulations across the top. Each cell counts the requirements mapped there.",
+      "themeColumn": "Theme",
+      "legend": "Number = requirements mapped for this theme and regulation. Select a filled cell for detail.",
+      "empty": "Select a filled cell to see the mapped requirements.",
+      "detailTitle": "Mapped requirements",
+      "refsLabel": "Requirement references"
+    },
+    "sources": {
+      "intro": "These are the source documents behind the mappings — the research, references and worked examples the obligations are drawn from.",
+      "kinds": {
+        "research": "Research",
+        "reference": "Reference",
+        "field_guide": "Field Guide",
+        "prd": "PRD",
+        "example": "Example",
+        "other": "Other"
+      }
+    }
   }
 }

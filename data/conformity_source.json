@@ -1,0 +1,2886 @@
+{
+  "summary": {
+    "regulationCount": 5,
+    "requirementCount": 78,
+    "themeCount": 15,
+    "mappingCount": 61,
+    "regulations": [
+      {
+        "key": "cra",
+        "name": "Cyber Resilience Act",
+        "shortName": "CRA",
+        "requirementCount": 19
+      },
+      {
+        "key": "ai_act",
+        "name": "EU Artificial Intelligence Act",
+        "shortName": "AI Act",
+        "requirementCount": 12
+      },
+      {
+        "key": "machinery",
+        "name": "Machinery Regulation",
+        "shortName": "Machinery",
+        "requirementCount": 8
+      },
+      {
+        "key": "iec_62443",
+        "name": "IEC 62443 Series",
+        "shortName": "IEC 62443",
+        "requirementCount": 27
+      },
+      {
+        "key": "nis2",
+        "name": "NIS2 Directive",
+        "shortName": "NIS2",
+        "requirementCount": 12
+      }
+    ],
+    "keyDates": [
+      {
+        "regulationKey": "iec_62443",
+        "date": "2013-08-01",
+        "label": "IEC 62443-3-3 published (system security requirements)"
+      },
+      {
+        "regulationKey": "iec_62443",
+        "date": "2018-01-01",
+        "label": "IEC 62443-4-1 published (secure development lifecycle)"
+      },
+      {
+        "regulationKey": "iec_62443",
+        "date": "2019-02-01",
+        "label": "IEC 62443-4-2 published (component requirements)"
+      },
+      {
+        "regulationKey": "nis2",
+        "date": "2023-01-16",
+        "label": "NIS2 Directive enters into force"
+      },
+      {
+        "regulationKey": "machinery",
+        "date": "2023-07-19",
+        "label": "Machinery Regulation enters into force"
+      },
+      {
+        "regulationKey": "ai_act",
+        "date": "2024-08-01",
+        "label": "AI Act enters into force"
+      },
+      {
+        "regulationKey": "nis2",
+        "date": "2024-10-17",
+        "label": "Member State transposition deadline"
+      },
+      {
+        "regulationKey": "nis2",
+        "date": "2024-10-18",
+        "label": "National measures apply"
+      },
+      {
+        "regulationKey": "cra",
+        "date": "2024-12-10",
+        "label": "CRA enters into force"
+      },
+      {
+        "regulationKey": "ai_act",
+        "date": "2025-02-02",
+        "label": "Prohibited practices (Art 5) apply"
+      },
+      {
+        "regulationKey": "nis2",
+        "date": "2025-04-17",
+        "label": "Member States establish registers of entities"
+      },
+      {
+        "regulationKey": "ai_act",
+        "date": "2025-08-02",
+        "label": "GPAI and governance rules apply"
+      },
+      {
+        "regulationKey": "cra",
+        "date": "2026-06-11",
+        "label": "Notified-body rules apply"
+      },
+      {
+        "regulationKey": "ai_act",
+        "date": "2026-08-02",
+        "label": "High-risk (Annex III) obligations apply"
+      },
+      {
+        "regulationKey": "cra",
+        "date": "2026-09-11",
+        "label": "Reporting obligations (Art 14) apply"
+      },
+      {
+        "regulationKey": "machinery",
+        "date": "2027-01-20",
+        "label": "Full application — repeals Directive 2006/42/EC"
+      },
+      {
+        "regulationKey": "ai_act",
+        "date": "2027-08-02",
+        "label": "High-risk (Annex I) obligations apply"
+      },
+      {
+        "regulationKey": "cra",
+        "date": "2027-12-11",
+        "label": "Full application — CE marking required"
+      }
+    ]
+  },
+  "regulations": [
+    {
+      "id": 9,
+      "key": "cra",
+      "name": "Cyber Resilience Act",
+      "shortName": "CRA",
+      "fullTitle": "Regulation (EU) 2024/2847 on horizontal cybersecurity requirements for products with digital elements",
+      "jurisdiction": "European Union",
+      "summary": "Sets mandatory cybersecurity requirements for the design, development, production and vulnerability handling of any product with digital elements placed on the EU market. Introduces essential product requirements (Annex I Part I), vulnerability-handling requirements (Annex I Part II), CE marking, and risk-based conformity routes tied to product classes.",
+      "inForceDate": "2024-12-10",
+      "sourceUrl": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+      "requirementCount": 19,
+      "sortOrder": 1,
+      "keyDates": [
+        {
+          "regulationKey": "cra",
+          "date": "2024-12-10",
+          "label": "CRA enters into force"
+        },
+        {
+          "regulationKey": "cra",
+          "date": "2026-06-11",
+          "label": "Notified-body rules apply"
+        },
+        {
+          "regulationKey": "cra",
+          "date": "2026-09-11",
+          "label": "Reporting obligations (Art 14) apply"
+        },
+        {
+          "regulationKey": "cra",
+          "date": "2027-12-11",
+          "label": "Full application — CE marking required"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "key": "ai_act",
+      "name": "EU Artificial Intelligence Act",
+      "shortName": "AI Act",
+      "fullTitle": "Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence",
+      "jurisdiction": "European Union",
+      "summary": "Risk-based framework for AI systems. High-risk systems must meet requirements on risk management, data governance, technical documentation, logging, transparency, human oversight, and accuracy/robustness/cybersecurity, backed by a quality management system, conformity assessment, registration, and post-market monitoring.",
+      "inForceDate": "2024-08-01",
+      "sourceUrl": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "requirementCount": 12,
+      "sortOrder": 2,
+      "keyDates": [
+        {
+          "regulationKey": "ai_act",
+          "date": "2024-08-01",
+          "label": "AI Act enters into force"
+        },
+        {
+          "regulationKey": "ai_act",
+          "date": "2025-02-02",
+          "label": "Prohibited practices (Art 5) apply"
+        },
+        {
+          "regulationKey": "ai_act",
+          "date": "2025-08-02",
+          "label": "GPAI and governance rules apply"
+        },
+        {
+          "regulationKey": "ai_act",
+          "date": "2026-08-02",
+          "label": "High-risk (Annex III) obligations apply"
+        },
+        {
+          "regulationKey": "ai_act",
+          "date": "2027-08-02",
+          "label": "High-risk (Annex I) obligations apply"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "key": "machinery",
+      "name": "Machinery Regulation",
+      "shortName": "Machinery",
+      "fullTitle": "Regulation (EU) 2023/1230 on machinery, repealing Directive 2006/42/EC",
+      "jurisdiction": "European Union",
+      "summary": "Essential health and safety requirements for machinery, now including explicit cybersecurity provisions for safety-related control systems (protection against corruption, reliability of control systems). Requires a technical file, risk assessment, EU Declaration of Conformity, and — for high-risk categories — third-party conformity assessment.",
+      "inForceDate": "2023-07-19",
+      "sourceUrl": "https://eur-lex.europa.eu/eli/reg/2023/1230/oj",
+      "requirementCount": 8,
+      "sortOrder": 3,
+      "keyDates": [
+        {
+          "regulationKey": "machinery",
+          "date": "2023-07-19",
+          "label": "Machinery Regulation enters into force"
+        },
+        {
+          "regulationKey": "machinery",
+          "date": "2027-01-20",
+          "label": "Full application — repeals Directive 2006/42/EC"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "key": "iec_62443",
+      "name": "IEC 62443 Series",
+      "shortName": "IEC 62443",
+      "fullTitle": "IEC 62443 — Security for industrial automation and control systems (IACS)",
+      "jurisdiction": "International standard",
+      "summary": "The reference standard series for OT/ICS cybersecurity. 62443-4-1 defines a secure product development lifecycle (eight practices); 62443-4-2 defines technical component requirements across seven foundational requirements. Target Security Levels (SL 1-4) scale controls to the threat. Widely used as evidence for CRA and Machinery cybersecurity obligations.",
+      "inForceDate": null,
+      "sourceUrl": "https://www.iec.ch/blog/understanding-iec-62443",
+      "requirementCount": 27,
+      "sortOrder": 4,
+      "keyDates": [
+        {
+          "regulationKey": "iec_62443",
+          "date": "2013-08-01",
+          "label": "IEC 62443-3-3 published (system security requirements)"
+        },
+        {
+          "regulationKey": "iec_62443",
+          "date": "2018-01-01",
+          "label": "IEC 62443-4-1 published (secure development lifecycle)"
+        },
+        {
+          "regulationKey": "iec_62443",
+          "date": "2019-02-01",
+          "label": "IEC 62443-4-2 published (component requirements)"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "key": "nis2",
+      "name": "NIS2 Directive",
+      "shortName": "NIS2",
+      "fullTitle": "Directive (EU) 2022/2555 on measures for a high common level of cybersecurity across the Union",
+      "jurisdiction": "European Union",
+      "summary": "EU-wide cybersecurity directive imposing risk-management, governance and incident-reporting obligations on essential and important entities across critical sectors (energy, transport, water, health, digital infrastructure, manufacturing and more). Unlike the product-focused CRA, NIS2 governs the operator: management accountability, a defined set of technical and organisational measures (Art 21), and strict incident notification timelines (Art 23).",
+      "inForceDate": "2023-01-16",
+      "sourceUrl": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj",
+      "requirementCount": 12,
+      "sortOrder": 5,
+      "keyDates": [
+        {
+          "regulationKey": "nis2",
+          "date": "2023-01-16",
+          "label": "NIS2 Directive enters into force"
+        },
+        {
+          "regulationKey": "nis2",
+          "date": "2024-10-17",
+          "label": "Member State transposition deadline"
+        },
+        {
+          "regulationKey": "nis2",
+          "date": "2024-10-18",
+          "label": "National measures apply"
+        },
+        {
+          "regulationKey": "nis2",
+          "date": "2025-04-17",
+          "label": "Member States establish registers of entities"
+        }
+      ]
+    }
+  ],
+  "themes": [
+    {
+      "theme": {
+        "id": 31,
+        "key": "secure_by_design",
+        "name": "Secure by Design & Default",
+        "description": "Building appropriate, risk-proportionate security into a product from the outset, including secure default configuration and minimised attack surface.",
+        "sortOrder": 1
+      },
+      "totalRequirements": 7,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 2
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 4
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 32,
+        "key": "risk_management",
+        "name": "Risk Management",
+        "description": "Establishing and maintaining a process to identify, assess and treat security and safety risks throughout the product lifecycle.",
+        "sortOrder": 2
+      },
+      "totalRequirements": 9,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 2
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 4
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 33,
+        "key": "vulnerability_handling",
+        "name": "Vulnerability Handling",
+        "description": "Identifying, testing for, remediating and disclosing vulnerabilities, including coordinated disclosure.",
+        "sortOrder": 3
+      },
+      "totalRequirements": 7,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 4
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 2
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 34,
+        "key": "secure_update",
+        "name": "Secure Update Management",
+        "description": "Providing and securely distributing security updates and patches over the product's supported lifetime.",
+        "sortOrder": 4
+      },
+      "totalRequirements": 4,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 2
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 35,
+        "key": "sbom_supply_chain",
+        "name": "SBOM & Supply Chain",
+        "description": "Identifying and managing components and third-party dependencies, including a software bill of materials.",
+        "sortOrder": 5
+      },
+      "totalRequirements": 3,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 36,
+        "key": "access_control",
+        "name": "Access Control",
+        "description": "Identification, authentication and authorization controls that prevent unauthorised access to the product and its functions.",
+        "sortOrder": 6
+      },
+      "totalRequirements": 10,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 6
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 2
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 37,
+        "key": "data_protection",
+        "name": "Data Protection & Integrity",
+        "description": "Protecting the confidentiality and integrity of stored, transmitted and processed data, commands and configuration.",
+        "sortOrder": 7
+      },
+      "totalRequirements": 8,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 2
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 5
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 38,
+        "key": "logging_monitoring",
+        "name": "Logging & Monitoring",
+        "description": "Recording security-relevant activity and enabling detection of, and response to, security events.",
+        "sortOrder": 8
+      },
+      "totalRequirements": 6,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 3
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 39,
+        "key": "incident_reporting",
+        "name": "Incident Reporting",
+        "description": "Notifying authorities and users of actively exploited vulnerabilities and severe or serious incidents within mandated timeframes.",
+        "sortOrder": 9
+      },
+      "totalRequirements": 4,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 2
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 40,
+        "key": "technical_documentation",
+        "name": "Technical Documentation",
+        "description": "Compiling and maintaining the technical documentation / technical file that demonstrates conformity.",
+        "sortOrder": 10
+      },
+      "totalRequirements": 4,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 41,
+        "key": "conformity_declaration",
+        "name": "Conformity Declaration",
+        "description": "Drawing up the EU Declaration of Conformity and applying the appropriate marking.",
+        "sortOrder": 11
+      },
+      "totalRequirements": 3,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 42,
+        "key": "human_oversight",
+        "name": "Human Oversight & Transparency",
+        "description": "Ensuring systems are transparent to and can be effectively overseen and controlled by humans.",
+        "sortOrder": 12
+      },
+      "totalRequirements": 2,
+      "coverage": [
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 2
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 43,
+        "key": "data_governance",
+        "name": "Data Governance",
+        "description": "Governing the quality, relevance and representativeness of data used to train, validate and operate systems.",
+        "sortOrder": 13
+      },
+      "totalRequirements": 1,
+      "coverage": [
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 44,
+        "key": "resilience",
+        "name": "Resilience & Availability",
+        "description": "Maintaining availability of essential functions and resisting denial-of-service, manipulation and other disruptions.",
+        "sortOrder": 14
+      },
+      "totalRequirements": 8,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 2
+        },
+        {
+          "regulationKey": "machinery",
+          "regulationShortName": "Machinery",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "iec_62443",
+          "regulationShortName": "IEC 62443",
+          "requirementCount": 3
+        },
+        {
+          "regulationKey": "nis2",
+          "regulationShortName": "NIS2",
+          "requirementCount": 1
+        }
+      ]
+    },
+    {
+      "theme": {
+        "id": 45,
+        "key": "post_market",
+        "name": "Post-market Monitoring",
+        "description": "Actively monitoring products in the field and feeding findings back into risk management over the support period.",
+        "sortOrder": 15
+      },
+      "totalRequirements": 2,
+      "coverage": [
+        {
+          "regulationKey": "cra",
+          "regulationShortName": "CRA",
+          "requirementCount": 1
+        },
+        {
+          "regulationKey": "ai_act",
+          "regulationShortName": "AI Act",
+          "requirementCount": 1
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": 146,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "4-1 SM",
+      "title": "Security management",
+      "description": "Establish a security management process governing the development lifecycle, including roles, responsibilities and a defined scope of the process.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 1
+    },
+    {
+      "id": 126,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 9",
+      "title": "Risk management system",
+      "description": "Establish, implement, document and maintain a risk management system running throughout the entire lifecycle of the high-risk AI system.",
+      "obligationType": "process",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 1
+    },
+    {
+      "id": 173,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 20",
+      "title": "Governance and management accountability",
+      "description": "The management bodies of essential and important entities shall approve the cybersecurity risk-management measures, oversee their implementation, and follow training; they can be held liable for infringements.",
+      "obligationType": "governance",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 1
+    },
+    {
+      "id": 138,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "Annex III 1.1.9",
+      "title": "Protection against corruption",
+      "description": "Machinery shall be designed and constructed so that connection to it of another device does not lead to a hazardous situation, and that hardware/software transmitting safety signals are protected against corruption.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 1
+    },
+    {
+      "id": 107,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "Annex I(1)",
+      "title": "Appropriate level of cybersecurity based on risk",
+      "description": "Products with digital elements shall be designed, developed and produced to ensure an appropriate level of cybersecurity based on the risks.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 5,
+      "sortOrder": 1
+    },
+    {
+      "id": 127,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "data_governance",
+      "themeName": "Data Governance",
+      "refCode": "Art 10",
+      "title": "Data and data governance",
+      "description": "Training, validation and testing data sets shall be subject to data governance and management practices appropriate to the intended purpose.",
+      "obligationType": "process",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 2
+    },
+    {
+      "id": 147,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "sbom_supply_chain",
+      "themeName": "SBOM & Supply Chain",
+      "refCode": "4-1 SM-9",
+      "title": "Third-party component management",
+      "description": "Identify, assess and manage security risks of third-party and open-source components used in the product, maintaining a record of components.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 2
+    },
+    {
+      "id": 139,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "Annex III 1.2.1",
+      "title": "Safety and reliability of control systems",
+      "description": "Control systems shall be designed and constructed to prevent hazardous situations, withstanding intended operating stresses and external influences, including malicious attempts from third parties to create a hazardous situation.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 2
+    },
+    {
+      "id": 108,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "Annex I(2)(a)",
+      "title": "No known exploitable vulnerabilities on release",
+      "description": "Products shall be made available on the market without known exploitable vulnerabilities.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 2
+    },
+    {
+      "id": 174,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 21(2)(a)",
+      "title": "Risk analysis and information system security policies",
+      "description": "Entities shall adopt policies on risk analysis and information system security as the foundation of an all-hazards, risk-based approach to protecting network and information systems.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 2
+    },
+    {
+      "id": 128,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "technical_documentation",
+      "themeName": "Technical Documentation",
+      "refCode": "Art 11",
+      "title": "Technical documentation (Annex IV)",
+      "description": "Draw up technical documentation before the system is placed on the market and keep it up to date, demonstrating conformity as set out in Annex IV.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 3
+    },
+    {
+      "id": 175,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "incident_reporting",
+      "themeName": "Incident Reporting",
+      "refCode": "Art 21(2)(b)",
+      "title": "Incident handling",
+      "description": "Entities shall implement incident-handling measures covering prevention, detection, analysis, containment, response and recovery.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 3
+    },
+    {
+      "id": 148,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "4-1 SR",
+      "title": "Specification of security requirements",
+      "description": "Document and maintain security requirements for the product, derived from its intended environment and threat model.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 3
+    },
+    {
+      "id": 109,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "Annex I(2)(b)",
+      "title": "Secure by default configuration",
+      "description": "Products shall be made available with a secure by default configuration, including the possibility to reset the product to its original state.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 3
+    },
+    {
+      "id": 140,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "Annex III 1.2.1(a)",
+      "title": "Protection of safety-related control software",
+      "description": "Safety-related control software and access to it shall be protected against unintended or intentional corruption and unauthorised modification.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 3
+    },
+    {
+      "id": 149,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "4-1 SD",
+      "title": "Secure by design",
+      "description": "Apply secure design principles, including defence in depth and threat modelling, throughout product design.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 4
+    },
+    {
+      "id": 110,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "secure_update",
+      "themeName": "Secure Update Management",
+      "refCode": "Annex I(2)(c)",
+      "title": "Security updates",
+      "description": "Ensure vulnerabilities can be addressed through security updates, including, where applicable, automatic updates and user notification.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 4
+    },
+    {
+      "id": 129,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "logging_monitoring",
+      "themeName": "Logging & Monitoring",
+      "refCode": "Art 12",
+      "title": "Record-keeping and logging",
+      "description": "High-risk AI systems shall technically allow for the automatic recording of events (logs) over the lifetime of the system.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 4
+    },
+    {
+      "id": 176,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "Art 21(2)(c)",
+      "title": "Business continuity and crisis management",
+      "description": "Entities shall ensure business continuity through backup management, disaster recovery, and crisis-management arrangements.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 4
+    },
+    {
+      "id": 141,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "logging_monitoring",
+      "themeName": "Logging & Monitoring",
+      "refCode": "Annex III 1.2.1(b)",
+      "title": "Recording of intervention data",
+      "description": "Evidence of intervention and of a fault, where it affects safety functions, shall be recorded to support fault detection and traceability.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 4
+    },
+    {
+      "id": 150,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "4-1 SVV",
+      "title": "Security verification and validation",
+      "description": "Perform security verification and validation testing, including threat mitigation, vulnerability and penetration testing, before release.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 5
+    },
+    {
+      "id": 111,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "Annex I(2)(d)",
+      "title": "Protection from unauthorised access",
+      "description": "Protect against unauthorised access by appropriate control mechanisms, including authentication, identity and access management systems.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 5,
+      "sortOrder": 5
+    },
+    {
+      "id": 177,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "sbom_supply_chain",
+      "themeName": "SBOM & Supply Chain",
+      "refCode": "Art 21(2)(d)",
+      "title": "Supply chain security",
+      "description": "Entities shall address security in their supply chain, including security-related aspects of the relationships between each entity and its direct suppliers or service providers.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 5
+    },
+    {
+      "id": 130,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "human_oversight",
+      "themeName": "Human Oversight & Transparency",
+      "refCode": "Art 13",
+      "title": "Transparency and information to deployers",
+      "description": "Design and develop systems so that operation is sufficiently transparent to enable deployers to interpret output and use it appropriately; provide instructions for use.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 5
+    },
+    {
+      "id": 142,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "secure_update",
+      "themeName": "Secure Update Management",
+      "refCode": "Annex III 1.2.1(c)",
+      "title": "Software updates preserving safety",
+      "description": "Modifications to safety-related software, including updates, shall not compromise the safety of the machinery.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 5
+    },
+    {
+      "id": 151,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "4-1 DM",
+      "title": "Management of security-related issues",
+      "description": "Establish a process to receive, track, assess and remediate security-related issues (defects and vulnerabilities) in the product.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 6
+    },
+    {
+      "id": 131,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "human_oversight",
+      "themeName": "Human Oversight & Transparency",
+      "refCode": "Art 14",
+      "title": "Human oversight",
+      "description": "Design and develop high-risk AI systems so that they can be effectively overseen by natural persons during the period in which they are in use.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 6
+    },
+    {
+      "id": 112,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "Annex I(2)(e)",
+      "title": "Confidentiality of data",
+      "description": "Protect the confidentiality of stored, transmitted or processed data, by encrypting relevant data at rest or in transit by state-of-the-art mechanisms.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 6
+    },
+    {
+      "id": 178,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "Art 21(2)(e)",
+      "title": "Security in acquisition, development and maintenance",
+      "description": "Entities shall ensure security in the acquisition, development and maintenance of network and information systems, including vulnerability handling and disclosure.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 6
+    },
+    {
+      "id": 143,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Annex III (general)",
+      "title": "Risk assessment",
+      "description": "The manufacturer shall carry out a risk assessment to determine the health and safety requirements that apply, and design and construct the machinery taking its results into account.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 6
+    },
+    {
+      "id": 132,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "Art 15",
+      "title": "Accuracy, robustness and cybersecurity",
+      "description": "Design and develop systems to achieve appropriate levels of accuracy, robustness and cybersecurity, performing consistently throughout their lifecycle.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 7
+    },
+    {
+      "id": 179,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 21(2)(f)",
+      "title": "Assessing effectiveness of measures",
+      "description": "Entities shall adopt policies and procedures to assess the effectiveness of the cybersecurity risk-management measures they have put in place.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 7
+    },
+    {
+      "id": 144,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "technical_documentation",
+      "themeName": "Technical Documentation",
+      "refCode": "Annex IV",
+      "title": "Technical file",
+      "description": "Compile a technical file demonstrating that the machinery complies with the applicable essential health and safety requirements.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 7
+    },
+    {
+      "id": 113,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "Annex I(2)(f)",
+      "title": "Integrity of data and configuration",
+      "description": "Protect the integrity of stored, transmitted or processed data, commands, programs and configuration against unauthorised manipulation.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 7
+    },
+    {
+      "id": 152,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "secure_update",
+      "themeName": "Secure Update Management",
+      "refCode": "4-1 SUM",
+      "title": "Security update management",
+      "description": "Establish a process to develop, test, qualify and securely deliver security updates to product users in a timely manner.",
+      "obligationType": "process",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 7
+    },
+    {
+      "id": 153,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "technical_documentation",
+      "themeName": "Technical Documentation",
+      "refCode": "4-1 SG",
+      "title": "Security guidelines",
+      "description": "Provide documentation (security guidelines) enabling the secure integration, configuration, operation, maintenance and decommissioning of the product.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 8
+    },
+    {
+      "id": 145,
+      "regulationKey": "machinery",
+      "regulationShortName": "Machinery",
+      "themeKey": "conformity_declaration",
+      "themeName": "Conformity Declaration",
+      "refCode": "Annex II",
+      "title": "EU Declaration of Conformity",
+      "description": "Draw up the EU declaration of conformity and affix the CE marking before placing the machinery on the market.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 8
+    },
+    {
+      "id": 114,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "Annex I(2)(h)",
+      "title": "Availability of essential functions",
+      "description": "Protect the availability of essential and basic functions, including resilience against and mitigation of denial-of-service attacks.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 5,
+      "sortOrder": 8
+    },
+    {
+      "id": 133,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "Art 15(5)",
+      "title": "Resilience against manipulation",
+      "description": "High-risk AI systems shall be resilient against attempts to alter their use, outputs or performance by exploiting vulnerabilities, including data poisoning and adversarial examples.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 8
+    },
+    {
+      "id": 180,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 21(2)(g)",
+      "title": "Basic cyber hygiene and training",
+      "description": "Entities shall apply basic cyber-hygiene practices and provide cybersecurity training to staff.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 8
+    },
+    {
+      "id": 154,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "4-2 FR1",
+      "title": "Identification and authentication control",
+      "description": "Identify and authenticate all users (humans, software processes and devices) before allowing access to the component.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 9
+    },
+    {
+      "id": 134,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 17",
+      "title": "Quality management system",
+      "description": "Providers shall put in place a quality management system that ensures compliance with the Regulation, documented in a systematic and orderly manner.",
+      "obligationType": "governance",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 9
+    },
+    {
+      "id": 181,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "Art 21(2)(h)",
+      "title": "Cryptography and encryption",
+      "description": "Entities shall adopt policies and procedures on the use of cryptography and, where appropriate, encryption.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 9
+    },
+    {
+      "id": 115,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "logging_monitoring",
+      "themeName": "Logging & Monitoring",
+      "refCode": "Annex I(2)(l)",
+      "title": "Security-relevant logging",
+      "description": "Provide security-related information by recording and monitoring relevant internal activity, including access to or modification of data, services or functions.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 4,
+      "sortOrder": 9
+    },
+    {
+      "id": 116,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "sbom_supply_chain",
+      "themeName": "SBOM & Supply Chain",
+      "refCode": "Annex I Part II(1)",
+      "title": "Identify and document components (SBOM)",
+      "description": "Identify and document vulnerabilities and components, including by drawing up a software bill of materials in a commonly used machine-readable format.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 10
+    },
+    {
+      "id": 135,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "conformity_declaration",
+      "themeName": "Conformity Declaration",
+      "refCode": "Art 47",
+      "title": "EU declaration of conformity",
+      "description": "Draw up a written EU declaration of conformity for each high-risk AI system and keep it for ten years after placing on the market.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 10
+    },
+    {
+      "id": 155,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "4-2 FR2",
+      "title": "Use control",
+      "description": "Enforce assigned privileges to restrict use of the component to authorised actions (authorization).",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 10
+    },
+    {
+      "id": 182,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "Art 21(2)(i)",
+      "title": "Access control and asset management",
+      "description": "Entities shall implement human-resources security, access-control policies and asset management appropriate to the risk.",
+      "obligationType": "process",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 10
+    },
+    {
+      "id": 183,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "Art 21(2)(j)",
+      "title": "Multi-factor authentication and secured communications",
+      "description": "Entities shall use multi-factor or continuous authentication, secured voice/video/text communications, and secured emergency communication systems where appropriate.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 11
+    },
+    {
+      "id": 156,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "4-2 FR3",
+      "title": "System integrity",
+      "description": "Protect the integrity of the component against unauthorised manipulation, including of firmware, software and information.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 11
+    },
+    {
+      "id": 117,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "Annex I Part II(2)",
+      "title": "Address vulnerabilities without delay",
+      "description": "In relation to the risks, address and remediate vulnerabilities without delay, including by providing security updates.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 11
+    },
+    {
+      "id": 136,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "post_market",
+      "themeName": "Post-market Monitoring",
+      "refCode": "Art 72",
+      "title": "Post-market monitoring",
+      "description": "Establish and document a post-market monitoring system that actively collects and reviews experience gained from the use of high-risk AI systems.",
+      "obligationType": "process",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 11
+    },
+    {
+      "id": 157,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "4-2 FR4",
+      "title": "Data confidentiality",
+      "description": "Protect the confidentiality of information at rest and in transit, including through cryptographic protection.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 12
+    },
+    {
+      "id": 184,
+      "regulationKey": "nis2",
+      "regulationShortName": "NIS2",
+      "themeKey": "incident_reporting",
+      "themeName": "Incident Reporting",
+      "refCode": "Art 23",
+      "title": "Incident reporting obligations",
+      "description": "Entities shall notify significant incidents to the CSIRT or competent authority: an early warning within 24 hours, an incident notification within 72 hours, and a final report within one month.",
+      "obligationType": "reporting",
+      "appliesTo": [
+        "operator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 12
+    },
+    {
+      "id": 137,
+      "regulationKey": "ai_act",
+      "regulationShortName": "AI Act",
+      "themeKey": "incident_reporting",
+      "themeName": "Incident Reporting",
+      "refCode": "Art 73",
+      "title": "Reporting of serious incidents",
+      "description": "Report any serious incident to the market surveillance authorities of the Member States concerned, within the deadlines set out in the Regulation.",
+      "obligationType": "reporting",
+      "appliesTo": [
+        "provider"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 12
+    },
+    {
+      "id": 118,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "Annex I Part II(3)",
+      "title": "Regular security testing",
+      "description": "Apply effective and regular tests and reviews of the security of the product with digital elements.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 12
+    },
+    {
+      "id": 119,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "vulnerability_handling",
+      "themeName": "Vulnerability Handling",
+      "refCode": "Annex I Part II(5)",
+      "title": "Coordinated vulnerability disclosure",
+      "description": "Put in place and enforce a policy on coordinated vulnerability disclosure.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 13
+    },
+    {
+      "id": 158,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "logging_monitoring",
+      "themeName": "Logging & Monitoring",
+      "refCode": "4-2 FR6",
+      "title": "Timely response to events",
+      "description": "Provide audit logging and the capability to respond to security violations by notifying the proper authority and reporting evidence.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 13
+    },
+    {
+      "id": 159,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "4-2 FR7",
+      "title": "Resource availability",
+      "description": "Ensure availability of the component against the degradation or denial of essential services, including under denial-of-service conditions.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "supplier"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 14
+    },
+    {
+      "id": 120,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "secure_update",
+      "themeName": "Secure Update Management",
+      "refCode": "Annex I Part II(7)",
+      "title": "Secure distribution of updates",
+      "description": "Ensure that mechanisms to securely distribute updates are in place to disseminate patches or updates in a timely manner.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 14
+    },
+    {
+      "id": 160,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "3-3 SR 1.1",
+      "title": "Human user identification and authentication",
+      "description": "The control system shall identify and authenticate all human users, and enforce authentication on all interfaces, before allowing access to the system.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 15
+    },
+    {
+      "id": 121,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "risk_management",
+      "themeName": "Risk Management",
+      "refCode": "Art 13",
+      "title": "Cybersecurity risk assessment",
+      "description": "Undertake an assessment of the cybersecurity risks associated with the product and take the outcome into account during planning, design, development, production, delivery and maintenance.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 15
+    },
+    {
+      "id": 122,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "technical_documentation",
+      "themeName": "Technical Documentation",
+      "refCode": "Annex VII",
+      "title": "Technical documentation",
+      "description": "Draw up technical documentation containing all relevant data and details of the means used to ensure conformity, kept for at least ten years.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 16
+    },
+    {
+      "id": 161,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "3-3 SR 1.2",
+      "title": "Software process and device identification",
+      "description": "The control system shall identify and authenticate all software processes and devices before allowing them to access the system.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 16
+    },
+    {
+      "id": 162,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "3-3 SR 2.1",
+      "title": "Authorization enforcement",
+      "description": "The control system shall enforce authorizations assigned to all users and processes, restricting access to the minimum necessary for the assigned role (least privilege).",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 17
+    },
+    {
+      "id": 123,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "incident_reporting",
+      "themeName": "Incident Reporting",
+      "refCode": "Art 14",
+      "title": "Report exploited vulnerabilities and severe incidents",
+      "description": "Notify an actively exploited vulnerability or a severe incident: an early warning within 24 hours and a notification within 72 hours to the CSIRT and ENISA.",
+      "obligationType": "reporting",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 17
+    },
+    {
+      "id": 124,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "conformity_declaration",
+      "themeName": "Conformity Declaration",
+      "refCode": "Annex V",
+      "title": "EU Declaration of Conformity",
+      "description": "Draw up an EU declaration of conformity stating that the essential requirements have been fulfilled, and affix the CE marking.",
+      "obligationType": "documentation",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 18
+    },
+    {
+      "id": 163,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "access_control",
+      "themeName": "Access Control",
+      "refCode": "3-3 SR 2.5",
+      "title": "Session lock and termination",
+      "description": "The control system shall lock or terminate a session after a configurable period of inactivity or on demand, preventing further access until re-authentication.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 18
+    },
+    {
+      "id": 125,
+      "regulationKey": "cra",
+      "regulationShortName": "CRA",
+      "themeKey": "post_market",
+      "themeName": "Post-market Monitoring",
+      "refCode": "Art 13(8)",
+      "title": "Support period and updates over lifetime",
+      "description": "Ensure that vulnerabilities are handled effectively during a defined support period reflecting the expected product lifetime.",
+      "obligationType": "process",
+      "appliesTo": [
+        "manufacturer"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 19
+    },
+    {
+      "id": 164,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "3-3 SR 3.1",
+      "title": "Communication integrity",
+      "description": "The control system shall protect the integrity of transmitted information, detecting unauthorised changes to communications during transmission.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 19
+    },
+    {
+      "id": 165,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "3-3 SR 3.2",
+      "title": "Malicious code protection",
+      "description": "The control system shall provide protection against, and detection of, malicious code at entry and exit points and on affected devices.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 20
+    },
+    {
+      "id": 166,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "data_protection",
+      "themeName": "Data Protection & Integrity",
+      "refCode": "3-3 SR 4.1",
+      "title": "Information confidentiality",
+      "description": "The control system shall protect the confidentiality of information at rest and in transit for which explicit read authorization is required, using cryptographic mechanisms where appropriate.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 3,
+      "sortOrder": 21
+    },
+    {
+      "id": 167,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "3-3 SR 5.1",
+      "title": "Network segmentation",
+      "description": "The control system shall logically segment control networks from non-control networks and partition the system into zones and conduits according to the risk assessment.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 1,
+      "sortOrder": 22
+    },
+    {
+      "id": 168,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "secure_by_design",
+      "themeName": "Secure by Design & Default",
+      "refCode": "3-3 SR 5.2",
+      "title": "Zone boundary protection",
+      "description": "The control system shall monitor and control communications at zone boundaries to enforce the defined conduits, denying network traffic by default and allowing it by exception.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 23
+    },
+    {
+      "id": 169,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "logging_monitoring",
+      "themeName": "Logging & Monitoring",
+      "refCode": "3-3 SR 6.1",
+      "title": "Audit log accessibility",
+      "description": "The control system shall provide the capability to access audit logs on a read-only basis to authorised personnel and tools.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 24
+    },
+    {
+      "id": 170,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "logging_monitoring",
+      "themeName": "Logging & Monitoring",
+      "refCode": "3-3 SR 6.2",
+      "title": "Continuous monitoring",
+      "description": "The control system shall provide the capability to continuously monitor security-relevant events using commonly accepted tools and mechanisms.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 25
+    },
+    {
+      "id": 171,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "3-3 SR 7.1",
+      "title": "Denial-of-service protection",
+      "description": "The control system shall maintain essential functions when operating in a degraded mode as the result of a denial-of-service event.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 2,
+      "sortOrder": 26
+    },
+    {
+      "id": 172,
+      "regulationKey": "iec_62443",
+      "regulationShortName": "IEC 62443",
+      "themeKey": "resilience",
+      "themeName": "Resilience & Availability",
+      "refCode": "3-3 SR 7.2",
+      "title": "Resource management and recovery",
+      "description": "The control system shall limit the use of resources by security functions to prevent resource exhaustion, and support backup and recovery to a known secure state after a disruption.",
+      "obligationType": "product_requirement",
+      "appliesTo": [
+        "integrator"
+      ],
+      "mappingCount": 0,
+      "sortOrder": 27
+    }
+  ],
+  "mappings": {
+    "themes": [
+      {
+        "id": 31,
+        "key": "secure_by_design",
+        "name": "Secure by Design & Default",
+        "description": "Building appropriate, risk-proportionate security into a product from the outset, including secure default configuration and minimised attack surface.",
+        "sortOrder": 1
+      },
+      {
+        "id": 32,
+        "key": "risk_management",
+        "name": "Risk Management",
+        "description": "Establishing and maintaining a process to identify, assess and treat security and safety risks throughout the product lifecycle.",
+        "sortOrder": 2
+      },
+      {
+        "id": 33,
+        "key": "vulnerability_handling",
+        "name": "Vulnerability Handling",
+        "description": "Identifying, testing for, remediating and disclosing vulnerabilities, including coordinated disclosure.",
+        "sortOrder": 3
+      },
+      {
+        "id": 34,
+        "key": "secure_update",
+        "name": "Secure Update Management",
+        "description": "Providing and securely distributing security updates and patches over the product's supported lifetime.",
+        "sortOrder": 4
+      },
+      {
+        "id": 35,
+        "key": "sbom_supply_chain",
+        "name": "SBOM & Supply Chain",
+        "description": "Identifying and managing components and third-party dependencies, including a software bill of materials.",
+        "sortOrder": 5
+      },
+      {
+        "id": 36,
+        "key": "access_control",
+        "name": "Access Control",
+        "description": "Identification, authentication and authorization controls that prevent unauthorised access to the product and its functions.",
+        "sortOrder": 6
+      },
+      {
+        "id": 37,
+        "key": "data_protection",
+        "name": "Data Protection & Integrity",
+        "description": "Protecting the confidentiality and integrity of stored, transmitted and processed data, commands and configuration.",
+        "sortOrder": 7
+      },
+      {
+        "id": 38,
+        "key": "logging_monitoring",
+        "name": "Logging & Monitoring",
+        "description": "Recording security-relevant activity and enabling detection of, and response to, security events.",
+        "sortOrder": 8
+      },
+      {
+        "id": 39,
+        "key": "incident_reporting",
+        "name": "Incident Reporting",
+        "description": "Notifying authorities and users of actively exploited vulnerabilities and severe or serious incidents within mandated timeframes.",
+        "sortOrder": 9
+      },
+      {
+        "id": 40,
+        "key": "technical_documentation",
+        "name": "Technical Documentation",
+        "description": "Compiling and maintaining the technical documentation / technical file that demonstrates conformity.",
+        "sortOrder": 10
+      },
+      {
+        "id": 41,
+        "key": "conformity_declaration",
+        "name": "Conformity Declaration",
+        "description": "Drawing up the EU Declaration of Conformity and applying the appropriate marking.",
+        "sortOrder": 11
+      },
+      {
+        "id": 42,
+        "key": "human_oversight",
+        "name": "Human Oversight & Transparency",
+        "description": "Ensuring systems are transparent to and can be effectively overseen and controlled by humans.",
+        "sortOrder": 12
+      },
+      {
+        "id": 43,
+        "key": "data_governance",
+        "name": "Data Governance",
+        "description": "Governing the quality, relevance and representativeness of data used to train, validate and operate systems.",
+        "sortOrder": 13
+      },
+      {
+        "id": 44,
+        "key": "resilience",
+        "name": "Resilience & Availability",
+        "description": "Maintaining availability of essential functions and resisting denial-of-service, manipulation and other disruptions.",
+        "sortOrder": 14
+      },
+      {
+        "id": 45,
+        "key": "post_market",
+        "name": "Post-market Monitoring",
+        "description": "Actively monitoring products in the field and feeding findings back into risk management over the support period.",
+        "sortOrder": 15
+      }
+    ],
+    "regulations": [
+      {
+        "key": "cra",
+        "name": "Cyber Resilience Act",
+        "shortName": "CRA",
+        "requirementCount": 19
+      },
+      {
+        "key": "ai_act",
+        "name": "EU Artificial Intelligence Act",
+        "shortName": "AI Act",
+        "requirementCount": 12
+      },
+      {
+        "key": "machinery",
+        "name": "Machinery Regulation",
+        "shortName": "Machinery",
+        "requirementCount": 8
+      },
+      {
+        "key": "iec_62443",
+        "name": "IEC 62443 Series",
+        "shortName": "IEC 62443",
+        "requirementCount": 27
+      },
+      {
+        "key": "nis2",
+        "name": "NIS2 Directive",
+        "shortName": "NIS2",
+        "requirementCount": 12
+      }
+    ],
+    "cells": [
+      {
+        "themeKey": "secure_by_design",
+        "regulationKey": "cra",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Annex I(1)",
+          "Annex I(2)(b)"
+        ]
+      },
+      {
+        "themeKey": "secure_by_design",
+        "regulationKey": "ai_act",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "secure_by_design",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex III 1.1.9"
+        ]
+      },
+      {
+        "themeKey": "secure_by_design",
+        "regulationKey": "iec_62443",
+        "requirementCount": 4,
+        "requirementRefs": [
+          "4-1 SR",
+          "4-1 SD",
+          "3-3 SR 5.1",
+          "3-3 SR 5.2"
+        ]
+      },
+      {
+        "themeKey": "secure_by_design",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "risk_management",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 13"
+        ]
+      },
+      {
+        "themeKey": "risk_management",
+        "regulationKey": "ai_act",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Art 9",
+          "Art 17"
+        ]
+      },
+      {
+        "themeKey": "risk_management",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex III (general)"
+        ]
+      },
+      {
+        "themeKey": "risk_management",
+        "regulationKey": "iec_62443",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "4-1 SM"
+        ]
+      },
+      {
+        "themeKey": "risk_management",
+        "regulationKey": "nis2",
+        "requirementCount": 4,
+        "requirementRefs": [
+          "Art 20",
+          "Art 21(2)(a)",
+          "Art 21(2)(f)",
+          "Art 21(2)(g)"
+        ]
+      },
+      {
+        "themeKey": "vulnerability_handling",
+        "regulationKey": "cra",
+        "requirementCount": 4,
+        "requirementRefs": [
+          "Annex I(2)(a)",
+          "Annex I Part II(2)",
+          "Annex I Part II(3)",
+          "Annex I Part II(5)"
+        ]
+      },
+      {
+        "themeKey": "vulnerability_handling",
+        "regulationKey": "ai_act",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "vulnerability_handling",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "vulnerability_handling",
+        "regulationKey": "iec_62443",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "4-1 SVV",
+          "4-1 DM"
+        ]
+      },
+      {
+        "themeKey": "vulnerability_handling",
+        "regulationKey": "nis2",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 21(2)(e)"
+        ]
+      },
+      {
+        "themeKey": "secure_update",
+        "regulationKey": "cra",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Annex I(2)(c)",
+          "Annex I Part II(7)"
+        ]
+      },
+      {
+        "themeKey": "secure_update",
+        "regulationKey": "ai_act",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "secure_update",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex III 1.2.1(c)"
+        ]
+      },
+      {
+        "themeKey": "secure_update",
+        "regulationKey": "iec_62443",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "4-1 SUM"
+        ]
+      },
+      {
+        "themeKey": "secure_update",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "sbom_supply_chain",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex I Part II(1)"
+        ]
+      },
+      {
+        "themeKey": "sbom_supply_chain",
+        "regulationKey": "ai_act",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "sbom_supply_chain",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "sbom_supply_chain",
+        "regulationKey": "iec_62443",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "4-1 SM-9"
+        ]
+      },
+      {
+        "themeKey": "sbom_supply_chain",
+        "regulationKey": "nis2",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 21(2)(d)"
+        ]
+      },
+      {
+        "themeKey": "access_control",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex I(2)(d)"
+        ]
+      },
+      {
+        "themeKey": "access_control",
+        "regulationKey": "ai_act",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "access_control",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex III 1.2.1(a)"
+        ]
+      },
+      {
+        "themeKey": "access_control",
+        "regulationKey": "iec_62443",
+        "requirementCount": 6,
+        "requirementRefs": [
+          "4-2 FR1",
+          "4-2 FR2",
+          "3-3 SR 1.1",
+          "3-3 SR 1.2",
+          "3-3 SR 2.1",
+          "3-3 SR 2.5"
+        ]
+      },
+      {
+        "themeKey": "access_control",
+        "regulationKey": "nis2",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Art 21(2)(i)",
+          "Art 21(2)(j)"
+        ]
+      },
+      {
+        "themeKey": "data_protection",
+        "regulationKey": "cra",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Annex I(2)(e)",
+          "Annex I(2)(f)"
+        ]
+      },
+      {
+        "themeKey": "data_protection",
+        "regulationKey": "ai_act",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "data_protection",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "data_protection",
+        "regulationKey": "iec_62443",
+        "requirementCount": 5,
+        "requirementRefs": [
+          "4-2 FR3",
+          "4-2 FR4",
+          "3-3 SR 3.1",
+          "3-3 SR 3.2",
+          "3-3 SR 4.1"
+        ]
+      },
+      {
+        "themeKey": "data_protection",
+        "regulationKey": "nis2",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 21(2)(h)"
+        ]
+      },
+      {
+        "themeKey": "logging_monitoring",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex I(2)(l)"
+        ]
+      },
+      {
+        "themeKey": "logging_monitoring",
+        "regulationKey": "ai_act",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 12"
+        ]
+      },
+      {
+        "themeKey": "logging_monitoring",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex III 1.2.1(b)"
+        ]
+      },
+      {
+        "themeKey": "logging_monitoring",
+        "regulationKey": "iec_62443",
+        "requirementCount": 3,
+        "requirementRefs": [
+          "4-2 FR6",
+          "3-3 SR 6.1",
+          "3-3 SR 6.2"
+        ]
+      },
+      {
+        "themeKey": "logging_monitoring",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "incident_reporting",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 14"
+        ]
+      },
+      {
+        "themeKey": "incident_reporting",
+        "regulationKey": "ai_act",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 73"
+        ]
+      },
+      {
+        "themeKey": "incident_reporting",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "incident_reporting",
+        "regulationKey": "iec_62443",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "incident_reporting",
+        "regulationKey": "nis2",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Art 21(2)(b)",
+          "Art 23"
+        ]
+      },
+      {
+        "themeKey": "technical_documentation",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex VII"
+        ]
+      },
+      {
+        "themeKey": "technical_documentation",
+        "regulationKey": "ai_act",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 11"
+        ]
+      },
+      {
+        "themeKey": "technical_documentation",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex IV"
+        ]
+      },
+      {
+        "themeKey": "technical_documentation",
+        "regulationKey": "iec_62443",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "4-1 SG"
+        ]
+      },
+      {
+        "themeKey": "technical_documentation",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "conformity_declaration",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex V"
+        ]
+      },
+      {
+        "themeKey": "conformity_declaration",
+        "regulationKey": "ai_act",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 47"
+        ]
+      },
+      {
+        "themeKey": "conformity_declaration",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex II"
+        ]
+      },
+      {
+        "themeKey": "conformity_declaration",
+        "regulationKey": "iec_62443",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "conformity_declaration",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "human_oversight",
+        "regulationKey": "cra",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "human_oversight",
+        "regulationKey": "ai_act",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Art 13",
+          "Art 14"
+        ]
+      },
+      {
+        "themeKey": "human_oversight",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "human_oversight",
+        "regulationKey": "iec_62443",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "human_oversight",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "data_governance",
+        "regulationKey": "cra",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "data_governance",
+        "regulationKey": "ai_act",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 10"
+        ]
+      },
+      {
+        "themeKey": "data_governance",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "data_governance",
+        "regulationKey": "iec_62443",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "data_governance",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "resilience",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex I(2)(h)"
+        ]
+      },
+      {
+        "themeKey": "resilience",
+        "regulationKey": "ai_act",
+        "requirementCount": 2,
+        "requirementRefs": [
+          "Art 15",
+          "Art 15(5)"
+        ]
+      },
+      {
+        "themeKey": "resilience",
+        "regulationKey": "machinery",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Annex III 1.2.1"
+        ]
+      },
+      {
+        "themeKey": "resilience",
+        "regulationKey": "iec_62443",
+        "requirementCount": 3,
+        "requirementRefs": [
+          "4-2 FR7",
+          "3-3 SR 7.1",
+          "3-3 SR 7.2"
+        ]
+      },
+      {
+        "themeKey": "resilience",
+        "regulationKey": "nis2",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 21(2)(c)"
+        ]
+      },
+      {
+        "themeKey": "post_market",
+        "regulationKey": "cra",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 13(8)"
+        ]
+      },
+      {
+        "themeKey": "post_market",
+        "regulationKey": "ai_act",
+        "requirementCount": 1,
+        "requirementRefs": [
+          "Art 72"
+        ]
+      },
+      {
+        "themeKey": "post_market",
+        "regulationKey": "machinery",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "post_market",
+        "regulationKey": "iec_62443",
+        "requirementCount": 0,
+        "requirementRefs": []
+      },
+      {
+        "themeKey": "post_market",
+        "regulationKey": "nis2",
+        "requirementCount": 0,
+        "requirementRefs": []
+      }
+    ]
+  },
+  "sources": [
+    {
+      "title": "CRA Obligations — Product & Vendor Matrix",
+      "filename": "cra-obligations.md",
+      "url": "/conformity/sources/cra-obligations.md",
+      "kind": "Research",
+      "description": "Deep research mapping CRA product categories to real commercial products, vendors, and origins, with Class I/II/Critical notes.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA Obligations (Part 2)",
+      "filename": "cra-obligations-2.md",
+      "url": "/conformity/sources/cra-obligations-2.md",
+      "kind": "Research",
+      "description": "Continuation of the CRA obligations research and product classification analysis.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA Security Attestation (Section 7)",
+      "filename": "cra-security-attestation-s7.md",
+      "url": "/conformity/sources/cra-security-attestation-s7.md",
+      "kind": "Reference",
+      "description": "Working notes on CRA security attestation and Section 7 obligations.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA & SBOM — Product Flows Research",
+      "filename": "cra-sbom-research.md",
+      "url": "/conformity/sources/cra-sbom-research.md",
+      "kind": "Research",
+      "description": "Research on CRA-relevant product flows into and within the EU, SBOM readiness, and the notified-body bottleneck.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA Hyperscale Power System — P&ID Spec",
+      "filename": "cra-hyperscale-power-system-pid-spec.md",
+      "url": "/conformity/sources/cra-hyperscale-power-system-pid-spec.md",
+      "kind": "Example",
+      "description": "Worked product example: a hyperscale power system P&ID specification used to illustrate CRA scoping.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA Supplier Cooling Readiness",
+      "filename": "cra-supplier-cooling-readiness.pdf",
+      "url": "/conformity/sources/cra-supplier-cooling-readiness.pdf",
+      "kind": "Reference",
+      "description": "Supplier cooling-readiness assessment used as a worked CRA supply-chain and readiness reference.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "PRD — CRA Conformity Application",
+      "filename": "prd-cra-conformity-application.md",
+      "url": "/conformity/sources/prd-cra-conformity-application.md",
+      "kind": "PRD",
+      "description": "Product requirements document for the CRA conformity application: scope, personas, and the regulation knowledge & mapping engine.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "AI Act — Multi-Regulation Conformity Research",
+      "filename": "ai-act-cra-crosswalk.md",
+      "url": "/conformity/sources/ai-act-cra-crosswalk.md",
+      "kind": "Research",
+      "description": "Research on serving the AI Act alongside CRA, Machinery, and IEC 62443: shared evidence model, conformity-path selection, and notified-body orchestration.",
+      "regulationKey": "ai_act"
+    },
+    {
+      "title": "IEC 62443 — Data Center Zones & Tiers",
+      "filename": "iec-62443-data-center-zones-and-tiers.pdf",
+      "url": "/conformity/sources/iec-62443-data-center-zones-and-tiers.pdf",
+      "kind": "Reference",
+      "description": "IEC 62443 zones, conduits, and tier model applied to data-center environments.",
+      "regulationKey": "iec_62443"
+    },
+    {
+      "title": "IEC 62443 — Compliance Workshop",
+      "filename": "iec-62443-compliance-workshop.pdf",
+      "url": "/conformity/sources/iec-62443-compliance-workshop.pdf",
+      "kind": "Reference",
+      "description": "Workshop material walking through IEC 62443 compliance for industrial automation and control systems.",
+      "regulationKey": "iec_62443"
+    },
+    {
+      "title": "IEC 62443 — Deep Research",
+      "filename": "iec-62443-deep-research.docx",
+      "url": "/conformity/sources/iec-62443-deep-research.docx",
+      "kind": "Research",
+      "description": "In-depth research on the IEC 62443 series (4-1 secure development lifecycle, 4-2 component requirements).",
+      "regulationKey": "iec_62443"
+    },
+    {
+      "title": "PRD — Digital Twin Report & Funnel",
+      "filename": "prd-digital-twin-report-and-funnel.txt",
+      "url": "/conformity/sources/prd-digital-twin-report-and-funnel.txt",
+      "kind": "PRD",
+      "description": "Requirements for the digital-twin conformity report and lead funnel concept.",
+      "regulationKey": null
+    },
+    {
+      "title": "CRA — Field Guide",
+      "filename": "cra-field-guide.md",
+      "url": "/conformity/sources/cra-field-guide.md",
+      "kind": "Field Guide",
+      "description": "Comprehensive field guide to the Cyber Resilience Act: scope, product classes, obligations, conformity paths, and timelines.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "IEC 62443 — Field Guide",
+      "filename": "iec-62443-field-guide.md",
+      "url": "/conformity/sources/iec-62443-field-guide.md",
+      "kind": "Field Guide",
+      "description": "Field guide to the IEC 62443 series: security levels, zones and conduits, and the 4-1/4-2 requirement families.",
+      "regulationKey": "iec_62443"
+    },
+    {
+      "title": "EU AI Act — Field Guide",
+      "filename": "ai-act-field-guide.md",
+      "url": "/conformity/sources/ai-act-field-guide.md",
+      "kind": "Field Guide",
+      "description": "Field guide to the EU AI Act: risk tiers, high-risk obligations, conformity assessment, and interplay with product regulations.",
+      "regulationKey": "ai_act"
+    },
+    {
+      "title": "Machinery Regulation — Field Guide",
+      "filename": "machinery-field-guide.md",
+      "url": "/conformity/sources/machinery-field-guide.md",
+      "kind": "Field Guide",
+      "description": "Field guide to the EU Machinery Regulation: essential health & safety requirements, conformity procedures, and digital documentation.",
+      "regulationKey": "machinery"
+    },
+    {
+      "title": "NIS2 — Field Guide",
+      "filename": "nis2-field-guide.md",
+      "url": "/conformity/sources/nis2-field-guide.md",
+      "kind": "Field Guide",
+      "description": "Field guide to the NIS2 Directive: covered entities, risk-management measures, incident reporting, and management accountability.",
+      "regulationKey": "nis2"
+    },
+    {
+      "title": "TS 50701 — Field Guide",
+      "filename": "ts-50701-field-guide.md",
+      "url": "/conformity/sources/ts-50701-field-guide.md",
+      "kind": "Field Guide",
+      "description": "Field guide to CLC/TS 50701 for railway cybersecurity: applying IEC 62443 concepts to the railway domain.",
+      "regulationKey": "nis2"
+    },
+    {
+      "title": "CRA CE Marking Pathways — Conformity Assessment Deep Reference",
+      "filename": "cra-ce-marking-pathways.md",
+      "url": "/conformity/sources/cra-ce-marking-pathways.md",
+      "kind": "Reference",
+      "description": "Deep reference on CRA conformity assessment: Module A / B+C / H and EUCC pathways, Notified-Body engagement, the Annex VII technical file, the Annex V Declaration of Conformity, and the NB capacity crisis.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA ↔ NIS2 Class-Designation Interlock",
+      "filename": "cra-nis2-class-designation-interlock.pdf",
+      "url": "/conformity/sources/cra-nis2-class-designation-interlock.pdf",
+      "kind": "Reference",
+      "description": "How NIS2 essential-entity status drives CRA product classification (IR (EU) 2025/2392): the 'intended for use by' trigger, Class I vs Class II, the reporting interlock via ENISA, and a worked Siemens SIMATIC S7 example.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA Customer Journeys",
+      "filename": "cra-customer-journeys.pdf",
+      "url": "/conformity/sources/cra-customer-journeys.pdf",
+      "kind": "Reference",
+      "description": "Entry points, exposure and engagement sequences for OT product suppliers (OEMs), system integrators, and asset owners / critical-infrastructure operators approaching CRA conformity.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "CRA Preparation Service — Module A Walkthrough",
+      "filename": "cra-preparation-service.key",
+      "url": "/conformity/sources/cra-preparation-service.key",
+      "kind": "Reference",
+      "description": "OXOT CRA service deck: a dual-perspective CRA readiness and IEC 62443 baseline assessment for equipment and OEM products — from operational IACS to a shippable product baseline meeting the CRA's 13 criteria and 8 processes.",
+      "regulationKey": "cra"
+    },
+    {
+      "title": "Data Center — TIA-942 Framework",
+      "filename": "data-center-tia-942.md",
+      "url": "/conformity/sources/data-center-tia-942.md",
+      "kind": "Reference",
+      "description": "The TIA-942 data-center infrastructure standard: the four resilience tiers, the 2005→2022 revision history, and the site, power, cooling, cabling, fire and physical-security elements of compliance.",
+      "regulationKey": "iec_62443"
+    },
+    {
+      "title": "TIA Family of Standards",
+      "filename": "tia-family-of-standards.md",
+      "url": "/conformity/sources/tia-family-of-standards.md",
+      "kind": "Reference",
+      "description": "The TIA TR-42 hierarchy of telecommunications cabling-infrastructure standards for premises, data centers and industrial buildings — the 568 series, 569, 942-C, 1005-A, 862-C and related bulletins.",
+      "regulationKey": "iec_62443"
+    },
+    {
+      "title": "Datacenter Supplier Status to SL-3 and SL-4",
+      "filename": "datacenter-supplier-status-sl3-sl4.md",
+      "url": "/conformity/sources/datacenter-supplier-status-sl3-sl4.md",
+      "kind": "Research",
+      "description": "Certification-landscape research: no data-center-native OT product holds IEC 62443-4-2 SL-3 (and SL-4 exists nowhere), the five global SL-3 components, the SL-2 frontier, and category-by-category gap analysis.",
+      "regulationKey": "iec_62443"
+    }
+  ]
+}

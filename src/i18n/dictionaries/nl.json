@@ -194,5 +194,94 @@
     "errName": "Voer uw naam in.",
     "errEmail": "Voer een geldig e-mailadres in.",
     "errMessage": "Voeg enkele zinnen toe zodat we u kunnen helpen."
+  },
+  "conformity": {
+    "kicker": "CONFORMITEITSPLATFORM",
+    "title": "OT-conformiteit, in kaart gebracht over alle regelgeving",
+    "subtitle": "Eén model dat EU-regelgeving, overkoepelende thema's en de concrete verplichtingen voor operationele technologie met elkaar verbindt.",
+    "tabs": {
+      "overview": "Overzicht",
+      "regulations": "Regelgeving",
+      "requirements": "Vereisten",
+      "themes": "Thema's",
+      "matrix": "Matrix",
+      "sources": "Bronnen"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "frameworks": "Kaders",
+      "platform": "Conformiteitsplatform"
+    },
+    "kpi": {
+      "regulations": "Regelgeving",
+      "requirements": "Vereisten",
+      "themes": "Thema's",
+      "mappings": "Koppelingen"
+    },
+    "overview": {
+      "byRegulation": "Vereisten per regelgeving",
+      "byRegulationHint": "De balkbreedte is relatief ten opzichte van de regelgeving met de meeste gekoppelde vereisten.",
+      "keyDates": "Belangrijke data",
+      "keyDatesHint": "Implementatiemijlpalen binnen de regelgeving die we volgen.",
+      "requirementsShort": "vereisten"
+    },
+    "regulations": {
+      "intro": "De regelgeving en normen die OT-conformiteit in de EU bepalen.",
+      "requirementsCount": "vereisten"
+    },
+    "inForce": "Van kracht",
+    "officialText": "Officiële tekst",
+    "viewInMatrix": "Bekijk in matrix",
+    "mappedRequirements": "gekoppelde vereisten",
+    "filters": {
+      "regulation": "Regelgeving",
+      "theme": "Thema",
+      "obligation": "Type verplichting",
+      "allRegulations": "Alle regelgeving",
+      "allThemes": "Alle thema's",
+      "allObligations": "Alle verplichtingen",
+      "search": "Zoeken",
+      "searchPlaceholder": "Zoek op titel, omschrijving of referentie…",
+      "countSuffix": "vereisten",
+      "of": "van",
+      "empty": "Geen vereisten voldoen aan deze filters."
+    },
+    "table": {
+      "regulation": "Regelgeving",
+      "ref": "Ref",
+      "requirement": "Vereiste",
+      "theme": "Thema",
+      "obligation": "Verplichting",
+      "mappings": "Koppelingen"
+    },
+    "obligationTypes": {
+      "product_requirement": "Producteis",
+      "process": "Proces",
+      "documentation": "Documentatie",
+      "reporting": "Rapportage",
+      "governance": "Governance"
+    },
+    "themes": {
+      "intro": "Overkoepelende thema's die in de regelgeving terugkeren — het bindweefsel van de matrix."
+    },
+    "matrix": {
+      "intro": "Thema's aan de zijkant, regelgeving bovenaan. Elke cel telt de daaraan gekoppelde vereisten.",
+      "themeColumn": "Thema",
+      "legend": "Getal = vereisten gekoppeld aan dit thema en deze regelgeving. Selecteer een gevulde cel voor details.",
+      "empty": "Selecteer een gevulde cel om de gekoppelde vereisten te zien.",
+      "detailTitle": "Gekoppelde vereisten",
+      "refsLabel": "Vereistereferenties"
+    },
+    "sources": {
+      "intro": "Dit zijn de brondocumenten achter de koppelingen — het onderzoek, de referenties en de uitgewerkte voorbeelden waaruit de verplichtingen zijn afgeleid.",
+      "kinds": {
+        "research": "Onderzoek",
+        "reference": "Referentie",
+        "field_guide": "Praktijkgids",
+        "prd": "PRD",
+        "example": "Voorbeeld",
+        "other": "Overig"
+      }
+    }
   }
 }
