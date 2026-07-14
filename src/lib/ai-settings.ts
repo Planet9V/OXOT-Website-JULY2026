@@ -52,6 +52,8 @@ export interface AiConfig {
   ollamaHost: string;
   embedModel: string;
   embedDim: number;
+  embedProvider: ChatProvider; // which backend produces embeddings
+  openrouterEmbedModel: string; // OpenRouter embedding model id (qwen/qwen3-embedding-4b)
   chatProvider: ChatProvider; // which provider is tried first (other is fallback)
   ollamaChatModel: string;
   openrouterModel: string;
@@ -61,6 +63,8 @@ export interface AiConfig {
 export const AI_SETTING_KEYS = [
   "ollama_host",
   "embed_model",
+  "embed_provider",
+  "openrouter_embed_model",
   "chat_provider",
   "ollama_chat_model",
   "openrouter_model",
@@ -72,6 +76,10 @@ const ENV = {
   ollamaHost: process.env.OLLAMA_HOST ?? "http://ollama:11434",
   embedModel: process.env.OLLAMA_EMBED_MODEL ?? "qwen3-embedding:4b",
   embedDim: Number(process.env.EMBED_DIM ?? 1536),
+  // Embeddings default to OpenRouter (reachable from Railway; Ollama isn't deployed
+  // there). qwen3-embedding-4b is hosted on OpenRouter. Ollama stays as a fallback.
+  embedProvider: (process.env.EMBED_PROVIDER ?? "openrouter").toLowerCase() === "ollama" ? "ollama" : "openrouter",
+  openrouterEmbedModel: process.env.OPENROUTER_EMBED_MODEL ?? "qwen/qwen3-embedding-4b",
   // stream.ts historically defaults primary to openrouter
   chatProvider: (process.env.LLM_PRIMARY ?? "openrouter").toLowerCase() === "ollama" ? "ollama" : "openrouter",
   ollamaChatModel: process.env.OLLAMA_CHAT_MODEL ?? "qwen3.5:9b",
@@ -99,10 +107,16 @@ async function readSettings(): Promise<Record<string, string>> {
 export async function getAiConfig(): Promise<AiConfig> {
   const s = await readSettings();
   const provider = s.chat_provider === "ollama" || s.chat_provider === "openrouter" ? (s.chat_provider as ChatProvider) : ENV.chatProvider as ChatProvider;
+  const embedProvider =
+    s.embed_provider === "ollama" || s.embed_provider === "openrouter"
+      ? (s.embed_provider as ChatProvider)
+      : (ENV.embedProvider as ChatProvider);
   return {
     ollamaHost: (s.ollama_host || ENV.ollamaHost).replace(/\/$/, ""),
     embedModel: s.embed_model || ENV.embedModel,
     embedDim: ENV.embedDim,
+    embedProvider,
+    openrouterEmbedModel: s.openrouter_embed_model || ENV.openrouterEmbedModel,
     chatProvider: provider,
     ollamaChatModel: s.ollama_chat_model || ENV.ollamaChatModel,
     openrouterModel: s.openrouter_model || ENV.openrouterModel,
@@ -118,6 +132,8 @@ export async function getAiConfigMasked() {
     ollamaHost: cfg.ollamaHost,
     embedModel: cfg.embedModel,
     embedDim: cfg.embedDim,
+    embedProvider: cfg.embedProvider,
+    openrouterEmbedModel: cfg.openrouterEmbedModel,
     chatProvider: cfg.chatProvider,
     ollamaChatModel: cfg.ollamaChatModel,
     openrouterModel: cfg.openrouterModel,
