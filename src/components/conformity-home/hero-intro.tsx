@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
@@ -10,18 +11,33 @@ const DISPLAY = { fontFamily: "var(--font-display)" } as const;
 
 /**
  * The animated text column of the hero. Ported from the source hero-section:
- * framer-motion load-in slide-ups (eyebrow → h1 → subtitle → CTAs), reduced-motion
- * aware, rounded-full pill CTAs. Rendered inside the server <Hero> alongside the
- * PDF <HeroCarousel>. Uses the `motion` package (not framer-motion).
+ * load-in slide-ups (eyebrow → h1 → subtitle → CTAs), reduced-motion aware,
+ * rounded-full pill CTAs. Rendered inside the server <Hero> alongside the PDF
+ * <HeroCarousel>. Uses the `motion` package (not framer-motion).
+ *
+ * The animation is triggered by a post-mount state flip (not a static `animate`
+ * on mount): a bare `animate` on an SSR-rendered motion element does not reliably
+ * transition from `initial`, which left the above-the-fold hero stuck at opacity 0.
+ * Flipping `shown` in an effect forces the animation to play, and a safety timeout
+ * guarantees the content can never stay hidden.
  */
 export function HeroIntro({ hero, locale }: { hero: ConformityHomeHero; locale: string }) {
   const reduce = useReducedMotion();
+  const [shown, setShown] = React.useState(false);
+  React.useEffect(() => {
+    const raf = requestAnimationFrame(() => setShown(true));
+    const t = setTimeout(() => setShown(true), 400); // belt-and-braces fallback
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+    };
+  }, []);
   const rise = (delay: number, y = 20) =>
     reduce
       ? {}
       : {
           initial: { opacity: 0, y },
-          animate: { opacity: 1, y: 0 },
+          animate: shown ? { opacity: 1, y: 0 } : { opacity: 0, y },
           transition: { duration: 0.5, delay }
         };
 
