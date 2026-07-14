@@ -1,0 +1,224 @@
+{
+  "hero": {
+    "eyebrow": "Conformiteit, doordacht",
+    "title": "Vier regelgevingen. Eén bewijssysteem.",
+    "subtitle": "OXOT verenigt de Cyber Resilience Act, de AI Act, de Machineverordening en IEC 62443 in één levende bron van conformiteitsbewijs — zodat uw teams conformiteit aantonen in plaats van najagen.",
+    "primaryCta": {
+      "label": "Ontdek het platform",
+      "href": "/conformity-platform"
+    },
+    "secondaryCta": {
+      "label": "Bekijk onze aanpak",
+      "href": "/industrial-operations"
+    },
+    "bullets": [
+      "Overlap eenmaal in kaart, overal hergebruikt",
+      "Auditklaar bewijs, altijd actueel",
+      "Ingenieurs blijven in hun tools"
+    ]
+  },
+  "logoWall": {
+    "title": "Gebouwd voor de regelgeving die industriële producten hervormt",
+    "logos": [
+      "Cyber Resilience Act",
+      "EU AI Act",
+      "Machinery Regulation 2023/1230",
+      "IEC 62443",
+      "NIS2 Directive",
+      "Radio Equipment Directive"
+    ]
+  },
+  "stats": [
+    {
+      "value": "4-in-1",
+      "label": "regelgevingen",
+      "sublabel": "op één set controles"
+    },
+    {
+      "value": "70%",
+      "label": "minder dubbel werk",
+      "sublabel": "over overlappende eisen"
+    },
+    {
+      "value": "Weken",
+      "label": "geen kwartalen",
+      "sublabel": "tot een auditklaar dossier"
+    },
+    {
+      "value": "100%",
+      "label": "traceerbaar",
+      "sublabel": "elke claim gekoppeld aan bewijs"
+    }
+  ],
+  "featureGrid": {
+    "eyebrow": "Het platform",
+    "title": "Alles wat een conformiteitsdossier nodig heeft, op één plek",
+    "subtitle": "Stop met het bijhouden van vier parallelle spreadsheets. OXOT modelleert de gedeelde werkelijkheid onder elke regelgeving en houdt die actueel terwijl uw product evolueert.",
+    "features": [
+      {
+        "title": "Uniforme controlebibliotheek",
+        "description": "Eén eisenmodel over CRA, AI Act, Machinerichtlijn en IEC 62443 — gekoppeld, ontdubbeld en geversioneerd.",
+        "icon": "Library"
+      },
+      {
+        "title": "Levend bewijs",
+        "description": "Koppel tickets, tests, SBOM's en ontwerpdocumenten aan controles. Bewijs werkt mee met uw product.",
+        "icon": "FileCheck"
+      },
+      {
+        "title": "Gatdetectie",
+        "description": "Zie precies welke verplichtingen gedekt, gedeeltelijk of open zijn — per product, per regelgeving, realtime.",
+        "icon": "ScanSearch"
+      },
+      {
+        "title": "Auditklare export",
+        "description": "Genereer een gestructureerd technisch dossier en conformiteitsverklaring die uw aangemelde instantie kan volgen.",
+        "icon": "FileOutput"
+      },
+      {
+        "title": "Risico- en dreigingsmodellering",
+        "description": "Gestructureerde risicoanalyses conform IEC 62443 en de AI Act, herbruikbaar over productlijnen.",
+        "icon": "ShieldAlert"
+      },
+      {
+        "title": "Expert in de lus",
+        "description": "OXOT-consultants beoordelen uw dossier en coachen uw team — het platform laat u nooit alleen met de moeilijke keuzes.",
+        "icon": "Users"
+      }
+    ]
+  },
+  "problem": {
+    "eyebrow": "Het probleem",
+    "title": "De regelgeving overlapt. Uw tooling niet.",
+    "body": "CRA wil secure-by-design bewijs. IEC 62443 wil hetzelfde, in eigen taal. De Machineverordening voegt veiligheid toe. De AI Act voegt risicobeheer toe. De meeste teams beantwoorden elk apart — en betalen vier keer voor hetzelfde werk.",
+    "bullets": [
+      "Dubbele eisen per raamwerk opnieuw gedocumenteerd",
+      "Bewijs dat veroudert zodra code live gaat",
+      "Geen enkel overzicht van wat werkelijk gedekt is"
+    ],
+    "cta": {
+      "label": "Zie hoe wij dit oplossen",
+      "href": "/industrial-operations"
+    }
+  },
+  "shift": {
+    "eyebrow": "De omslag",
+    "title": "Toon conformiteit als bijproduct van het bouwen",
+    "body": "OXOT koppelt elke verplichting eenmalig aan een gedeelde controle en verbindt die controles met het bewijs dat uw teams al produceren. Conformiteit is geen project meer, maar een eigenschap van hoe u werkt.",
+    "bullets": [
+      "Eén controle voldoet aan meerdere regelgevingen",
+      "Ingenieurs leveren bewijs zonder hun tools te verlaten",
+      "Leiding ziet de conformiteitsstatus in één oogopslag"
+    ],
+    "cta": {
+      "label": "Ontdek het platform",
+      "href": "/conformity-platform"
+    }
+  },
+  "comparison": {
+    "eyebrow": "Waarom OXOT",
+    "title": "Eén systeem versus vier silo's",
+    "subtitle": "Wat verandert wanneer overlappende regelgeving één bewijsruggengraat deelt.",
+    "columns": [
+      "Vier losse trajecten",
+      "OXOT uniform systeem"
+    ],
+    "rows": [
+      {
+        "label": "Eisen in kaart brengen",
+        "left": "Per regelgeving herhaald",
+        "right": true
+      },
+      {
+        "label": "Actualiteit van bewijs",
+        "left": "Handmatig, verschuift snel",
+        "right": true
+      },
+      {
+        "label": "Hergebruik over regelgevingen",
+        "left": "",
+        "right": true
+      },
+      {
+        "label": "Auditvoorbereiding",
+        "left": "Kwartaal lang haasten",
+        "right": true
+      },
+      {
+        "label": "Expertbegeleiding",
+        "left": "Ad-hoc consultants",
+        "right": true
+      },
+      {
+        "label": "Realtime dekkingsoverzicht",
+        "left": "",
+        "right": true
+      }
+    ]
+  },
+  "steps": {
+    "eyebrow": "Hoe het werkt",
+    "title": "Van verspreide documenten naar een levend dossier",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Afbakenen",
+        "description": "We koppelen uw producten aan de van toepassing zijnde regelgeving en de gedeelde controles."
+      },
+      {
+        "number": "02",
+        "title": "Verbinden",
+        "description": "Bewijsbronnen — tests, SBOM's, risicoanalyses — worden aan het controlemodel gekoppeld."
+      },
+      {
+        "number": "03",
+        "title": "Gaten dichten",
+        "description": "OXOT toont wat open staat; onze experts helpen het efficiënt te sluiten."
+      },
+      {
+        "number": "04",
+        "title": "Onderhouden",
+        "description": "Het dossier blijft automatisch actueel, klaar voor audit op elk moment."
+      }
+    ]
+  },
+  "quote": {
+    "quote": "Vroeger was elke regelgeving een aparte brandoefening. Met OXOT schrijft het bewijs zich eenmaal en beantwoordt het ze allemaal.",
+    "author": "Hoofd Productbeveiliging",
+    "role": "Leverancier industriële automatisering"
+  },
+  "faq": {
+    "eyebrow": "Vragen",
+    "title": "Wat teams vragen voordat ze starten",
+    "items": [
+      {
+        "question": "Welke regelgeving dekt OXOT?",
+        "answer": "De Cyber Resilience Act, de EU AI Act, de Machineverordening (2023/1230) en IEC 62443, met aangrenzende raamwerken zoals NIS2 mee in kaart."
+      },
+      {
+        "question": "Is dit software of advies?",
+        "answer": "Beide. Het platform onderhoudt uw bewijs; OXOT-experts beoordelen dossiers en begeleiden uw team bij de moeilijke keuzes."
+      },
+      {
+        "question": "Moeten onze ingenieurs een nieuwe tool leren?",
+        "answer": "Minimaal. Bewijs komt uit de systemen die zij al gebruiken, dus bijdragen gebeurt in de flow van hun werk."
+      },
+      {
+        "question": "Hoe snel zijn we auditklaar?",
+        "answer": "De meeste teams bereiken een auditklaar dossier in weken in plaats van kwartalen, omdat overlappend werk maar één keer wordt gedaan."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Zie uw conformiteitsstatus in één overzicht",
+    "subtitle": "Boek een rondleiding en we koppelen uw producten aan de relevante regelgeving.",
+    "primaryCta": {
+      "label": "Praat met OXOT",
+      "href": "/contact"
+    },
+    "secondaryCta": {
+      "label": "Ontdek het platform",
+      "href": "/conformity-platform"
+    }
+  }
+}

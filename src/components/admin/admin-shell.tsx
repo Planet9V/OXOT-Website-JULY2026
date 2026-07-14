@@ -1,12 +1,13 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot, Plug
+  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot, Plug
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DashboardOverview } from "@/components/admin/dashboard-overview";
+import { ConformityHomeEditor } from "@/components/admin/conformity-home-editor";
 import { HomeContentEditor } from "@/components/admin/home-content-editor";
 import { PagesManager } from "@/components/admin/pages-manager";
 import { MenuManager } from "@/components/admin/menu-manager";
@@ -15,10 +16,11 @@ import { MediaManager } from "@/components/admin/media-manager";
 import { AiSettings } from "@/components/admin/ai-settings";
 import { IntegrationsManager } from "@/components/admin/integrations-manager";
 
-type Section = "overview" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai" | "integrations";
+type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai" | "integrations";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
-  { key: "homepage", label: "Homepage", icon: Home },
+  { key: "home", label: "Home page", icon: Home },
+  { key: "homepage", label: "Approach page", icon: LayoutTemplate },
   { key: "pages", label: "Pages", icon: FileText },
   { key: "menus", label: "Menus", icon: MenuIcon },
   { key: "media", label: "Media", icon: Images },
@@ -104,6 +106,7 @@ export function AdminShell({ email }: { email: string }) {
 
         <main className="mx-auto w-full max-w-6xl flex-1 p-4 lg:p-8">
           {section === "overview" && <DashboardOverview />}
+          {section === "home" && <ConformityHomeEditor />}
           {section === "homepage" && <HomeContentEditor />}
           {section === "pages" && <PagesManager />}
           {section === "menus" && <MenuManager />}

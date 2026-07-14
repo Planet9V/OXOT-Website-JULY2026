@@ -1,11 +1,21 @@
 import Link from "next/link";
-import { ArrowRight, Check, X } from "lucide-react";
-import type { Dictionary } from "@/i18n/dictionaries";
+import {
+  ArrowRight,
+  Check,
+  X,
+  Library,
+  FileCheck,
+  ScanSearch,
+  FileOutput,
+  ShieldAlert,
+  Users,
+  type LucideIcon
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { HeroCarousel } from "@/components/conformity-home/hero-carousel";
+import { HeroIntro } from "@/components/conformity-home/hero-intro";
 import {
-  Aurora,
   Reveal,
   Stagger,
   StaggerItem,
@@ -13,52 +23,55 @@ import {
   Marquee,
   SpotlightCard
 } from "@/components/motion/fx";
-
-// The `conformityHome` slice of the dictionary drives every string on this page.
-type CH = Dictionary["conformityHome"];
+import type {
+  ConformityHomeHero,
+  ConformityHomeLogoWall,
+  ConformityHomeStat,
+  ConformityHomeFeatureGrid,
+  ConformityHomeProblemShift,
+  ConformityHomeComparison,
+  ConformityHomeSteps,
+  ConformityHomeQuote,
+  ConformityHomeCta
+} from "@/lib/conformity-home";
 
 const EYEBROW = "text-xs font-semibold uppercase tracking-[0.2em] text-primary";
 const H2 =
   "mt-3 max-w-2xl text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl";
 const DISPLAY = { fontFamily: "var(--font-display)" } as const;
 
-/** 1 — Hero. */
-export function Hero({ t, locale }: { t: CH["hero"]; locale: string }) {
+// Map the icon-name strings stored in the DB content to lucide components.
+const ICONS: Record<string, LucideIcon> = {
+  Library,
+  FileCheck,
+  ScanSearch,
+  FileOutput,
+  ShieldAlert,
+  Users
+};
+function iconFor(name: string): LucideIcon {
+  return ICONS[name] ?? FileCheck;
+}
+
+/** 1 — Hero. Ported animation lives in <HeroIntro>; PDF <HeroCarousel> on the right. */
+export function Hero({ hero, locale }: { hero: ConformityHomeHero; locale: string }) {
   return (
     <section className="relative overflow-hidden border-b border-border">
-      <Aurora />
+      {/* Background décor — dark/light-safe radial blobs + masked grid (source port). */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-24 -top-24 -z-10 h-[42vh] w-[42vh] rounded-full bg-primary/5 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-24 -left-24 -z-10 h-[38vh] w-[38vh] rounded-full bg-primary/5 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] dark:opacity-10"
+      />
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:py-28 lg:grid-cols-2 lg:gap-12">
-        <Reveal>
-          <p className={EYEBROW}>{t.kicker}</p>
-          <h1
-            className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl"
-            style={DISPLAY}
-          >
-            {t.title}
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            {t.subtitle}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg">
-              <Link href={`/${locale}/conformity-platform`}>
-                {t.ctaPrimary}
-                <ArrowRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link href={`/${locale}/industrial-operations`}>{t.ctaSecondary}</Link>
-            </Button>
-          </div>
-          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
-            {t.bullets.map((b) => (
-              <li key={b} className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Check className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                {b}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        <HeroIntro hero={hero} locale={locale} />
 
         {/* Auto-advancing PDF hero showcase on the right (stacks below on mobile). */}
         <Reveal delay={0.12}>
@@ -70,17 +83,17 @@ export function Hero({ t, locale }: { t: CH["hero"]; locale: string }) {
 }
 
 /** 3 — Regulation band (marquee). */
-export function RegulationBand({ t }: { t: CH["regBand"] }) {
+export function RegulationBand({ logoWall }: { logoWall: ConformityHomeLogoWall }) {
   return (
     <section className="border-b border-border py-12">
       <div className="mx-auto max-w-6xl px-4">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-          {t.label}
+          {logoWall.title}
         </p>
       </div>
       <div className="mt-8">
         <Marquee duration={34}>
-          {t.items.map((it) => (
+          {logoWall.logos.map((it) => (
             <span
               key={it}
               className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-medium text-foreground"
@@ -96,13 +109,13 @@ export function RegulationBand({ t }: { t: CH["regBand"] }) {
 }
 
 /** 4 — Stats. CountUp only for the pure-number values. */
-export function Stats({ t }: { t: CH["stats"] }) {
+export function Stats({ stats }: { stats: ConformityHomeStat[] }) {
   const isNumeric = (v: string) => /^[0-9]+%?$/.test(v);
   return (
     <section className="border-b border-border py-16">
       <div className="mx-auto max-w-6xl px-4">
         <Stagger className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-          {t.items.map((s) => (
+          {stats.map((s) => (
             <StaggerItem key={s.label}>
               <div
                 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl"
@@ -110,7 +123,10 @@ export function Stats({ t }: { t: CH["stats"] }) {
               >
                 {isNumeric(s.value) ? <CountUp value={s.value} /> : s.value}
               </div>
-              <div className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.label}</div>
+              <div className="mt-2 text-sm font-medium leading-relaxed text-foreground">
+                {s.label}
+              </div>
+              <div className="mt-1 text-sm leading-relaxed text-muted-foreground">{s.sublabel}</div>
             </StaggerItem>
           ))}
         </Stagger>
@@ -119,61 +135,61 @@ export function Stats({ t }: { t: CH["stats"] }) {
   );
 }
 
-/** 5 — The Platform (6-card grid). */
-export function Platform({ t, locale }: { t: CH["platform"]; locale: string }) {
+/** 5 — The Platform (6-card feature grid, with named icons). */
+export function Platform({ featureGrid }: { featureGrid: ConformityHomeFeatureGrid }) {
   return (
     <section className="border-b border-border py-20">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <p className={EYEBROW}>{t.eyebrow}</p>
+          <p className={EYEBROW}>{featureGrid.eyebrow}</p>
           <h2 className={H2} style={DISPLAY}>
-            {t.heading}
+            {featureGrid.title}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            {t.intro}
+            {featureGrid.subtitle}
           </p>
         </Reveal>
         <Stagger className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {t.cards.map((c) => (
-            <StaggerItem key={c.title} className="h-full">
-              <SpotlightCard className="h-full">
-                <Card className="h-full p-6">
-                  <h3 className="text-base font-semibold text-foreground">{c.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
-                </Card>
-              </SpotlightCard>
-            </StaggerItem>
-          ))}
+          {featureGrid.features.map((f) => {
+            const Icon = iconFor(f.icon);
+            return (
+              <StaggerItem key={f.title} className="h-full">
+                <SpotlightCard className="h-full">
+                  <Card className="h-full p-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </div>
+                    <h3 className="mt-4 text-base font-semibold text-foreground">{f.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {f.description}
+                    </p>
+                  </Card>
+                </SpotlightCard>
+              </StaggerItem>
+            );
+          })}
         </Stagger>
-        <Reveal>
-          <Button asChild className="mt-10">
-            <Link href={`/${locale}/conformity-platform`}>
-              {t.cta}
-              <ArrowRight />
-            </Link>
-          </Button>
-        </Reveal>
       </div>
     </section>
   );
 }
 
 /** 6 — The Problem. */
-export function Problem({ t }: { t: CH["problem"] }) {
+export function Problem({ problem }: { problem: ConformityHomeProblemShift }) {
   return (
     <section className="border-b border-border py-20">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <p className={EYEBROW}>{t.eyebrow}</p>
+          <p className={EYEBROW}>{problem.eyebrow}</p>
           <h2 className={H2} style={DISPLAY}>
-            {t.heading}
+            {problem.title}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            {t.body}
+            {problem.body}
           </p>
         </Reveal>
         <Stagger className="mt-8 grid gap-4 sm:grid-cols-3">
-          {t.items.map((it) => (
+          {problem.bullets.map((it) => (
             <StaggerItem key={it}>
               <div className="flex h-full items-start gap-3 rounded-[var(--radius)] border border-border bg-card p-5">
                 <X className="mt-0.5 h-4 w-4 shrink-0 text-destructive" aria-hidden />
@@ -188,21 +204,27 @@ export function Problem({ t }: { t: CH["problem"] }) {
 }
 
 /** 7 — The Shift. */
-export function Shift({ t, locale }: { t: CH["shift"]; locale: string }) {
+export function Shift({
+  shift,
+  locale
+}: {
+  shift: ConformityHomeProblemShift;
+  locale: string;
+}) {
   return (
     <section className="border-b border-border py-20">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <p className={EYEBROW}>{t.eyebrow}</p>
+          <p className={EYEBROW}>{shift.eyebrow}</p>
           <h2 className={H2} style={DISPLAY}>
-            {t.heading}
+            {shift.title}
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            {t.body}
+            {shift.body}
           </p>
         </Reveal>
         <Stagger className="mt-8 grid gap-4 sm:grid-cols-3">
-          {t.items.map((it) => (
+          {shift.bullets.map((it) => (
             <StaggerItem key={it}>
               <div className="flex h-full items-start gap-3 rounded-[var(--radius)] border border-border bg-card p-5">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
@@ -213,8 +235,8 @@ export function Shift({ t, locale }: { t: CH["shift"]; locale: string }) {
         </Stagger>
         <Reveal>
           <Button asChild className="mt-10">
-            <Link href={`/${locale}/conformity-platform`}>
-              {t.cta}
+            <Link href={`/${locale}${shift.cta.href}`}>
+              {shift.cta.label}
               <ArrowRight />
             </Link>
           </Button>
@@ -225,33 +247,45 @@ export function Shift({ t, locale }: { t: CH["shift"]; locale: string }) {
 }
 
 /** 8 — Comparison table. */
-export function Comparison({ t }: { t: CH["comparison"] }) {
+export function Comparison({ comparison }: { comparison: ConformityHomeComparison }) {
+  const [leftCol, rightCol] = comparison.columns;
   return (
     <section className="border-b border-border py-20">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <p className={EYEBROW}>{t.eyebrow}</p>
+          <p className={EYEBROW}>{comparison.eyebrow}</p>
           <h2 className={H2} style={DISPLAY}>
-            {t.heading}
+            {comparison.title}
           </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            {comparison.subtitle}
+          </p>
         </Reveal>
         <Reveal>
           <div className="mt-8 overflow-x-auto rounded-[var(--radius)] border border-border">
             <table className="w-full border-collapse text-left text-sm">
               <thead>
                 <tr className="bg-muted/50">
-                  <th className="p-4 font-medium text-foreground">{t.columns.feature}</th>
-                  <th className="p-4 font-medium text-muted-foreground">{t.columns.silos}</th>
-                  <th className="p-4 font-medium text-primary">{t.columns.oxot}</th>
+                  <th className="p-4 font-medium text-foreground" />
+                  <th className="p-4 font-medium text-muted-foreground">{leftCol}</th>
+                  <th className="p-4 font-medium text-primary">{rightCol}</th>
                 </tr>
               </thead>
               <tbody>
-                {t.rows.map((r) => (
-                  <tr key={r.feature} className="border-t border-border">
-                    <td className="p-4 font-medium text-foreground">{r.feature}</td>
-                    <td className="p-4 text-muted-foreground">{r.silos}</td>
+                {comparison.rows.map((r) => (
+                  <tr key={r.label} className="border-t border-border">
+                    <td className="p-4 font-medium text-foreground">{r.label}</td>
+                    <td className="p-4 text-muted-foreground">
+                      {r.left || (
+                        <X className="h-5 w-5 text-destructive/70" aria-label={leftCol} />
+                      )}
+                    </td>
                     <td className="p-4">
-                      <Check className="h-5 w-5 text-primary" aria-label={t.columns.oxot} />
+                      {r.right ? (
+                        <Check className="h-5 w-5 text-primary" aria-label={rightCol} />
+                      ) : (
+                        <X className="h-5 w-5 text-destructive/70" aria-label={rightCol} />
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -264,26 +298,26 @@ export function Comparison({ t }: { t: CH["comparison"] }) {
   );
 }
 
-/** 9 — How it works. */
-export function HowItWorks({ t }: { t: CH["howItWorks"] }) {
+/** 9 — How it works (4 steps). */
+export function HowItWorks({ steps }: { steps: ConformityHomeSteps }) {
   return (
     <section className="border-b border-border py-20">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <p className={EYEBROW}>{t.eyebrow}</p>
+          <p className={EYEBROW}>{steps.eyebrow}</p>
           <h2 className={H2} style={DISPLAY}>
-            {t.heading}
+            {steps.title}
           </h2>
         </Reveal>
-        <Stagger className="mt-10 grid gap-6 sm:grid-cols-3">
-          {t.steps.map((s) => (
-            <StaggerItem key={s.k}>
+        <Stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.steps.map((s) => (
+            <StaggerItem key={s.number}>
               <div className="h-full rounded-[var(--radius)] border border-border bg-card p-6">
                 <div className="text-3xl font-bold tracking-tight text-primary" style={DISPLAY}>
-                  {s.k}
+                  {s.number}
                 </div>
                 <h3 className="mt-3 text-base font-semibold text-foreground">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
               </div>
             </StaggerItem>
           ))}
@@ -294,7 +328,7 @@ export function HowItWorks({ t }: { t: CH["howItWorks"] }) {
 }
 
 /** 10 — Testimonial. */
-export function Testimonial({ t }: { t: CH["testimonial"] }) {
+export function Testimonial({ quote }: { quote: ConformityHomeQuote }) {
   return (
     <section className="border-b border-border py-20">
       <div className="mx-auto max-w-4xl px-4">
@@ -304,12 +338,12 @@ export function Testimonial({ t }: { t: CH["testimonial"] }) {
               className="text-2xl font-medium leading-snug tracking-tight text-foreground sm:text-3xl"
               style={DISPLAY}
             >
-              &ldquo;{t.quote}&rdquo;
+              &ldquo;{quote.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-6 text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">{t.author}</span>
+              <span className="font-semibold text-foreground">{quote.author}</span>
               {" — "}
-              {t.company}
+              {quote.role}
             </figcaption>
           </figure>
         </Reveal>
@@ -319,7 +353,7 @@ export function Testimonial({ t }: { t: CH["testimonial"] }) {
 }
 
 /** 12 — Final CTA. */
-export function FinalCta({ t, locale }: { t: CH["cta"]; locale: string }) {
+export function FinalCta({ cta, locale }: { cta: ConformityHomeCta; locale: string }) {
   return (
     <section className="py-24">
       <div className="mx-auto max-w-4xl px-4 text-center">
@@ -328,17 +362,20 @@ export function FinalCta({ t, locale }: { t: CH["cta"]; locale: string }) {
             className="text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl"
             style={DISPLAY}
           >
-            {t.heading}
+            {cta.title}
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            {cta.subtitle}
+          </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg">
-              <Link href={`/${locale}/conformity-platform`}>
-                {t.ctaPrimary}
+              <Link href={`/${locale}${cta.primaryCta.href}`}>
+                {cta.primaryCta.label}
                 <ArrowRight />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link href={`/${locale}/contact`}>{t.ctaSecondary}</Link>
+              <Link href={`/${locale}${cta.secondaryCta.href}`}>{cta.secondaryCta.label}</Link>
             </Button>
           </div>
         </Reveal>

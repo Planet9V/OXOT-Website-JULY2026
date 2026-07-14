@@ -4,8 +4,8 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface FaqItem {
-  q: string;
-  a: string;
+  question: string;
+  answer: string;
 }
 
 /** Client-only accordion. First item open by default; no localStorage. */
@@ -29,7 +29,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
                 aria-controls={panelId}
                 className="flex w-full items-center justify-between gap-4 p-5 text-left"
               >
-                <span className="text-sm font-medium text-foreground sm:text-base">{it.q}</span>
+                <span className="text-sm font-medium text-foreground sm:text-base">{it.question}</span>
                 <ChevronDown
                   className={cn(
                     "h-4 w-4 shrink-0 text-muted-foreground transition-transform",
@@ -41,7 +41,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
             </h3>
             {isOpen && (
               <div id={panelId} role="region" aria-labelledby={buttonId}>
-                <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">{it.a}</p>
+                <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">{it.answer}</p>
               </div>
             )}
           </div>
