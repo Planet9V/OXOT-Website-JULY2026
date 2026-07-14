@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { HeroCarousel } from "@/components/conformity-home/hero-carousel";
 import { HeroIntro } from "@/components/conformity-home/hero-intro";
+import { getCarouselSlides, staticHeroSlides } from "@/lib/carousel";
 import {
   Reveal,
   Stagger,
@@ -53,8 +54,13 @@ function iconFor(name: string): LucideIcon {
   return ICONS[name] ?? FileCheck;
 }
 
-/** 1 — Hero. Ported animation lives in <HeroIntro>; PDF <HeroCarousel> on the right. */
-export function Hero({ hero, locale }: { hero: ConformityHomeHero; locale: string }) {
+/** 1 — Hero. Ported animation lives in <HeroIntro>; DB-backed <HeroCarousel> on
+ * the right. Slides come from carousel_slides (migration 033); if the table is
+ * empty or the DB is down, getCarouselSlides() returns [] and we fall back to the
+ * shipped static deck so the front door never breaks. */
+export async function Hero({ hero, locale }: { hero: ConformityHomeHero; locale: string }) {
+  const dbSlides = await getCarouselSlides(locale);
+  const slides = dbSlides.length > 0 ? dbSlides : staticHeroSlides(locale);
   return (
     <section className="relative overflow-hidden border-b border-border">
       {/* Background décor — dark/light-safe radial blobs + masked grid (source port). */}
@@ -73,10 +79,11 @@ export function Hero({ hero, locale }: { hero: ConformityHomeHero; locale: strin
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:py-28 lg:grid-cols-2 lg:gap-12">
         <HeroIntro hero={hero} locale={locale} />
 
-        {/* Auto-advancing PDF hero showcase on the right (stacks below on mobile).
-            CSS animation (not JS Reveal) so it can never get stuck hidden. */}
+        {/* Auto-advancing hero showcase on the right (stacks below on mobile).
+            DB-backed slides (carousel_slides) with static fallback; CSS animation
+            (not JS Reveal) so it can never get stuck hidden. */}
         <div className="animate-in fade-in fill-mode-both delay-200 duration-700">
-          <HeroCarousel locale={locale} />
+          <HeroCarousel locale={locale} slides={slides} />
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, Bot, Plug, Send, BarChart3
+  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,10 @@ import { AiSettings } from "@/components/admin/ai-settings";
 import { IntegrationsManager } from "@/components/admin/integrations-manager";
 import { NewsletterSocialManager } from "@/components/admin/newsletter-social-manager";
 import { AnalyticsManager } from "@/components/admin/analytics-manager";
+import { AffiliateSeoManager } from "@/components/admin/affiliate-seo-manager";
+import { CarouselManager } from "@/components/admin/carousel-manager";
 
-type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "enquiries" | "ai" | "integrations" | "newsletter" | "analytics";
+type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   { key: "home", label: "Home page", icon: Home },
@@ -26,11 +28,13 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "pages", label: "Pages", icon: FileText },
   { key: "menus", label: "Menus", icon: MenuIcon },
   { key: "media", label: "Media", icon: Images },
+  { key: "carousel", label: "Carousel", icon: GalleryHorizontal },
   { key: "enquiries", label: "Enquiries", icon: Inbox },
   { key: "ai", label: "AI & Models", icon: Bot },
   { key: "integrations", label: "Integrations", icon: Plug },
   { key: "newsletter", label: "Newsletter & Social", icon: Send },
-  { key: "analytics", label: "Analytics", icon: BarChart3 }
+  { key: "analytics", label: "Analytics", icon: BarChart3 },
+  { key: "affiliate-seo", label: "Affiliate & SEO", icon: LineChart }
 ];
 
 export function AdminShell({ email }: { email: string }) {
@@ -115,11 +119,13 @@ export function AdminShell({ email }: { email: string }) {
           {section === "pages" && <PagesManager />}
           {section === "menus" && <MenuManager />}
           {section === "media" && <MediaManager />}
+          {section === "carousel" && <CarouselManager />}
           {section === "enquiries" && <InquiriesManager />}
           {section === "ai" && <AiSettings />}
           {section === "integrations" && <IntegrationsManager />}
           {section === "newsletter" && <NewsletterSocialManager />}
           {section === "analytics" && <AnalyticsManager />}
+          {section === "affiliate-seo" && <AffiliateSeoManager />}
         </main>
       </div>
     </div>

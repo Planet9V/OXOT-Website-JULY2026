@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import { isBotUserAgent } from "@/lib/bot-detection";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,6 +12,12 @@ export const dynamic = "force-dynamic";
 // kept out of the numbers but the request is always acked so a tracking failure
 // never surfaces to the visitor.
 export async function POST(req: NextRequest) {
+  // Anti-flood cap. Always ack (like the rest of this beacon) so a limited client
+  // never sees an error — just silently stop recording beyond the window.
+  if (!rateLimit(`track:${clientIp(req)}`, 300, 60_000).ok) {
+    return NextResponse.json({ ok: true });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = (await req.json()) as Record<string, unknown>;

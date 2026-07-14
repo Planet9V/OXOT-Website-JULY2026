@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Save, Cpu, Cloud, KeyRound, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { RefreshCw, Save, Cpu, Cloud, KeyRound, AlertTriangle, CheckCircle2, XCircle, Database, BrainCircuit } from "lucide-react";
 
 type Model = { id: string; label: string };
 type Masked = {
@@ -28,6 +28,7 @@ export function AiSettings() {
   const [orFilter, setOrFilter] = React.useState("");
   const [status, setStatus] = React.useState<{ kind: "idle" | "ok" | "err"; msg: string }>({ kind: "idle", msg: "" });
   const [busy, setBusy] = React.useState<string | null>(null);
+  const [chunks, setChunks] = React.useState<number | null>(null);
 
   const load = React.useCallback(async () => {
     const res = await fetch("/api/admin/ai-settings");
@@ -39,7 +40,17 @@ export function AiSettings() {
     });
     setMeta({ embedDim: d.embedDim, openrouterKeySet: d.openrouterKeySet, openrouterKeyLast4: d.openrouterKeyLast4, openrouterKeyFromEnv: d.openrouterKeyFromEnv });
   }, []);
-  React.useEffect(() => { void load(); }, [load]);
+
+  const loadStats = React.useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/stats");
+      if (!res.ok) return;
+      const d = (await res.json()) as { kpis?: { chunks?: number } };
+      if (typeof d.kpis?.chunks === "number") setChunks(d.kpis.chunks);
+    } catch { /* ignore — count stays as-is */ }
+  }, []);
+
+  React.useEffect(() => { void load(); void loadStats(); }, [load, loadStats]);
 
   async function fetchModels(provider: "ollama" | "openrouter") {
     setBusy(provider); setStatus({ kind: "idle", msg: "" });
@@ -79,7 +90,25 @@ export function AiSettings() {
     setStatus({ kind: "ok", msg: "OpenRouter key cleared (using .env fallback if present)." });
   }
 
+  async function reindex() {
+    setBusy("reindex"); setStatus({ kind: "idle", msg: "" });
+    try {
+      const res = await fetch("/api/admin/content/reindex", { method: "POST" });
+      const d = (await res.json().catch(() => ({}))) as { ok?: boolean; pages?: number; chunks?: number; error?: string };
+      if (!res.ok || !d.ok) {
+        setStatus({ kind: "err", msg: `Rebuild failed: ${d.error ?? "Ollama unreachable or server error"}` });
+        return;
+      }
+      await loadStats();
+      setStatus({ kind: "ok", msg: `Knowledge rebuilt: ${d.chunks ?? 0} passage(s) from ${d.pages ?? 0} page(s).` });
+    } catch (e) {
+      setStatus({ kind: "err", msg: `Rebuild failed: ${e instanceof Error ? e.message : "network error"}` });
+    } finally { setBusy(null); }
+  }
+
   const orFiltered = orFilter ? orModels.filter((m) => m.id.toLowerCase().includes(orFilter.toLowerCase())) : orModels;
+  const ollamaConfigured = !!form.ollamaHost.trim();
+  const openrouterConfigured = meta.openrouterKeySet;
 
   return (
     <section className="max-w-3xl space-y-8">
@@ -95,34 +124,79 @@ export function AiSettings() {
         </div>
       )}
 
-      {/* Embedding / vector */}
+      {/* 1. Assistant knowledge */}
       <div className="rounded-xl border border-border p-5">
-        <div className="mb-4 flex items-center gap-2"><Cpu className="h-4 w-4 text-primary" /><h3 className="font-semibold">Embeddings (vector store)</h3></div>
+        <div className="mb-4 flex items-center gap-2"><Database className="h-4 w-4 text-primary" /><h3 className="font-semibold">Assistant knowledge</h3></div>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">
+              The assistant answers from your published page content, embedded with the Ollama model below. Rebuild after bulk edits — the rebuild re-embeds every published page.
+            </p>
+            <div className="pt-1 text-sm">
+              <span className="text-muted-foreground">Indexed passages: </span>
+              <span className="font-medium">{chunks ?? "—"}</span>
+            </div>
+          </div>
+          <Button type="button" variant="outline" onClick={reindex} disabled={busy === "reindex"}>
+            <RefreshCw className={`h-4 w-4 ${busy === "reindex" ? "animate-spin" : ""}`} />
+            {busy === "reindex" ? "Rebuilding…" : "Rebuild now"}
+          </Button>
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">Rebuilding calls Ollama to re-embed content. If Ollama isn&apos;t reachable from the server, the rebuild reports the error and leaves the existing index untouched.</p>
+      </div>
+
+      {/* 2. Provider connections */}
+      <div className="rounded-xl border border-border p-5">
+        <div className="mb-4 flex items-center gap-2"><Cloud className="h-4 w-4 text-primary" /><h3 className="font-semibold">Provider connections</h3></div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="flex items-start gap-3 rounded-lg border border-border p-3">
+            {ollamaConfigured ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" /> : <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />}
+            <div>
+              <div className="flex items-center gap-2">
+                <Cpu className="h-4 w-4 text-muted-foreground" />
+                <span className="font-medium">Ollama (local)</span>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${ollamaConfigured ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{ollamaConfigured ? "Connected" : "Not set"}</span>
+              </div>
+              <p className="mt-0.5 text-xs text-muted-foreground">Powers local generation and all embeddings. Configured via the Ollama host below.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 rounded-lg border border-border p-3">
+            {openrouterConfigured ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" /> : <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />}
+            <div>
+              <div className="flex items-center gap-2">
+                <Cloud className="h-4 w-4 text-muted-foreground" />
+                <span className="font-medium">OpenRouter (cloud)</span>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${openrouterConfigured ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{openrouterConfigured ? "Connected" : "Not set"}</span>
+              </div>
+              <p className="mt-0.5 text-xs text-muted-foreground">Automatic cloud fallback for generation. Set its API key in Model assignments below.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Model assignments */}
+      <div className="rounded-xl border border-border p-5">
+        <div className="mb-4 flex items-center gap-2"><BrainCircuit className="h-4 w-4 text-primary" /><h3 className="font-semibold">Model assignments</h3></div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className={lbl}>Ollama host</label>
             <input className={`${inp} mt-1`} value={form.ollamaHost} onChange={(e) => setForm({ ...form, ollamaHost: e.target.value })} placeholder="http://host.docker.internal:11434" />
           </div>
+
           <div className="sm:col-span-2">
-            <label className={lbl}>Embedding model</label>
+            <label className={lbl}>Embeddings model</label>
             <div className="mt-1 flex gap-2">
               <input className={inp} list="ollama-models" value={form.embedModel} onChange={(e) => setForm({ ...form, embedModel: e.target.value })} placeholder="qwen3-embedding:4b" />
               <Button type="button" variant="outline" onClick={() => fetchModels("ollama")} disabled={busy === "ollama"}>
                 <RefreshCw className={`h-4 w-4 ${busy === "ollama" ? "animate-spin" : ""}`} /> Lookup
               </Button>
             </div>
+            <div className="mt-2 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 p-3 text-xs text-muted-foreground">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+              <span>Vector dimension <strong className="text-foreground">EMBED_DIM = {meta.embedDim}</strong> is fixed by the database schema. Choosing a model with a different native dimension requires a new migration and a full re-index, so it isn&apos;t editable here.</span>
+            </div>
           </div>
-        </div>
-        <div className="mt-4 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 p-3 text-xs text-muted-foreground">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-          <span>Vector dimension <strong className="text-foreground">EMBED_DIM = {meta.embedDim}</strong> is fixed by the database schema. Choosing a model with a different native dimension requires a new migration and a full re-index, so it isn&apos;t editable here.</span>
-        </div>
-      </div>
 
-      {/* Generation */}
-      <div className="rounded-xl border border-border p-5">
-        <div className="mb-4 flex items-center gap-2"><Cloud className="h-4 w-4 text-primary" /><h3 className="font-semibold">Generation (AI agent)</h3></div>
-        <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className={lbl}>Primary provider <span className="font-normal normal-case tracking-normal text-muted-foreground">(the other is the automatic fallback)</span></label>
             <select className={`${inp} mt-1`} value={form.chatProvider} onChange={(e) => setForm({ ...form, chatProvider: e.target.value as "ollama" | "openrouter" })}>
@@ -166,14 +240,14 @@ export function AiSettings() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* datalists populated by lookups */}
-      <datalist id="ollama-models">{ollamaModels.map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
-      <datalist id="or-models">{orFiltered.slice(0, 200).map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
+        {/* datalists populated by lookups */}
+        <datalist id="ollama-models">{ollamaModels.map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
+        <datalist id="or-models">{orFiltered.slice(0, 200).map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
 
-      <div className="flex items-center gap-3">
-        <Button onClick={save} disabled={busy === "save"}><Save className="h-4 w-4" /> {busy === "save" ? "Saving…" : "Save settings"}</Button>
+        <div className="mt-6 flex items-center gap-3">
+          <Button onClick={save} disabled={busy === "save"}><Save className="h-4 w-4" /> {busy === "save" ? "Saving…" : "Save settings"}</Button>
+        </div>
       </div>
     </section>
   );

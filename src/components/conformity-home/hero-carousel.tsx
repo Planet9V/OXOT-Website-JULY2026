@@ -3,12 +3,16 @@ import * as React from "react";
 import { useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { HeroSlide } from "@/lib/carousel";
 
-// Auto-advancing hero showcase on the right of the home hero. Renders the
-// pre-rendered pages of the OXOT CRA hero deck (public/hero/<locale>/slide-N.png,
-// 6 slides, 16:9). Pauses on hover/focus, honours reduced-motion, keyboard-
-// accessible controls. Bilingual control labels (no single-language strings).
-const COUNT = 6;
+// Auto-advancing hero showcase on the right of the home hero. Now DB-backed:
+// the server <Hero> passes `slides` from carousel_slides (migration 033). When
+// the DB is empty or unreachable, <Hero> passes the shipped static deck instead
+// (public/hero/<locale>/slide-N.png, 6 slides, 16:9) — and this component also
+// self-falls-back if it ever receives an empty array, so the hero can never go
+// blank. Pauses on hover/focus, honours reduced-motion, keyboard-accessible
+// controls. Bilingual control labels (no single-language strings).
+const STATIC_COUNT = 6;
 const STR = {
   en: {
     prev: "Previous slide",
@@ -24,25 +28,40 @@ const STR = {
   }
 } as const;
 
-export function HeroCarousel({ locale }: { locale: string }) {
+function staticFallback(l: "en" | "nl"): HeroSlide[] {
+  return Array.from({ length: STATIC_COUNT }, (_, k) => ({
+    src: `/hero/${l}/slide-${k + 1}.png`,
+    caption: null,
+    link: null
+  }));
+}
+
+export function HeroCarousel({ locale, slides }: { locale: string; slides?: HeroSlide[] }) {
   const l = locale === "nl" ? "nl" : "en";
   const t = STR[l];
   const reduce = useReducedMotion();
   const [index, setIndex] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
 
-  const slides = React.useMemo(
-    () => Array.from({ length: COUNT }, (_, k) => `/hero/${l}/slide-${k + 1}.png`),
-    [l]
+  // Guaranteed non-empty: fall back to the shipped static deck if no DB slides.
+  const items = React.useMemo<HeroSlide[]>(
+    () => (slides && slides.length > 0 ? slides : staticFallback(l)),
+    [slides, l]
   );
+  const count = items.length;
+
+  // Keep index in range if the slide set shrinks.
+  React.useEffect(() => {
+    setIndex((p) => (p >= count ? 0 : p));
+  }, [count]);
 
   React.useEffect(() => {
-    if (reduce || paused) return;
-    const id = setInterval(() => setIndex((p) => (p + 1) % COUNT), 5200);
+    if (reduce || paused || count <= 1) return;
+    const id = setInterval(() => setIndex((p) => (p + 1) % count), 5200);
     return () => clearInterval(id);
-  }, [reduce, paused]);
+  }, [reduce, paused, count]);
 
-  const go = (n: number) => setIndex((n + COUNT) % COUNT);
+  const go = (n: number) => setIndex((n + count) % count);
 
   return (
     <div
@@ -56,21 +75,44 @@ export function HeroCarousel({ locale }: { locale: string }) {
       onBlurCapture={() => setPaused(false)}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-border bg-card shadow-xl ring-1 ring-primary/10">
-        {slides.map((src, k) => (
+        {items.map((slide, k) => {
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={src}
-            src={src}
-            alt=""
-            aria-hidden={k !== index}
-            draggable={false}
-            loading={k === 0 ? "eager" : "lazy"}
-            className={cn(
-              "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
-              k === index ? "opacity-100" : "opacity-0"
-            )}
-          />
-        ))}
+          const img = (
+            <img
+              src={slide.src}
+              alt={slide.caption ?? ""}
+              aria-hidden={k !== index}
+              draggable={false}
+              loading={k === 0 ? "eager" : "lazy"}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          );
+          return (
+            <div
+              key={`${slide.src}-${k}`}
+              className={cn(
+                "absolute inset-0 transition-opacity duration-700 ease-out",
+                k === index ? "opacity-100" : "opacity-0"
+              )}
+            >
+              {slide.link ? (
+                <a href={slide.link} tabIndex={k === index ? 0 : -1} aria-label={slide.caption ?? t.goto(k + 1)}>
+                  {img}
+                </a>
+              ) : (
+                img
+              )}
+              {slide.caption ? (
+                <div
+                  aria-hidden={k !== index}
+                  className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/80 to-transparent p-3 text-sm font-medium text-foreground"
+                >
+                  {slide.caption}
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
 
         <button
           type="button"
@@ -91,7 +133,7 @@ export function HeroCarousel({ locale }: { locale: string }) {
       </div>
 
       <div className="mt-3 flex justify-center gap-2">
-        {slides.map((_, k) => (
+        {items.map((_, k) => (
           <button
             key={k}
             type="button"

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { subscribe, isValidEmail } from "@/lib/newsletter";
+import { rateLimit, clientIp, tooMany } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,6 +11,10 @@ export const dynamic = "force-dynamic";
 // error still returns ok so a subscribe attempt never surfaces an error or leaks
 // whether the address already existed.
 export async function POST(req: NextRequest) {
+  // Tight cap: subscribe triggers an outbound email, so throttle hard per IP.
+  const rl = rateLimit(`subscribe:${clientIp(req)}`, 5, 60_000);
+  if (!rl.ok) return tooMany(rl.retryAfter);
+
   const body = await req.json().catch(() => ({}));
   const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
   const locale = typeof body?.locale === "string" ? body.locale : null;
