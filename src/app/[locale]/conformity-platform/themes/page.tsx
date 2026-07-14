@@ -7,7 +7,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/lib/seo";
 import { getThemes } from "@/lib/conformity";
 import { Card } from "@/components/ui/card";
-import { Reveal, Stagger } from "@/components/motion/fx";
+import { Reveal, Stagger , StaggerItem} from "@/components/motion/fx";
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +44,7 @@ export default async function ThemesPage({
 
       <Stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {themes.map((theme) => (
-          <Stagger.Item key={theme.key}>
+          <StaggerItem key={theme.key}>
             <Link
               href={`/${locale}/conformity-platform/matrix`}
               className="group block h-full no-underline"
@@ -67,7 +67,7 @@ export default async function ThemesPage({
                 </div>
               </Card>
             </Link>
-          </Stagger.Item>
+          </StaggerItem>
         ))}
       </Stagger>
     </div>

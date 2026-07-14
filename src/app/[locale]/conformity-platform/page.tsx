@@ -8,7 +8,7 @@ import { alternates } from "@/lib/seo";
 import { getSummary, getRegulations, getTimeline } from "@/lib/conformity";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Reveal, Stagger, CountUp } from "@/components/motion/fx";
+import { Reveal, Stagger, CountUp , StaggerItem} from "@/components/motion/fx";
 
 export const dynamic = "force-dynamic";
 
@@ -71,14 +71,14 @@ export default async function ConformityOverview({
       {/* KPI cards */}
       <Stagger className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {kpis.map((k) => (
-          <Stagger.Item key={k.label}>
+          <StaggerItem key={k.label}>
             <Card className="p-5">
               <div className="text-3xl font-bold tracking-tight text-foreground">
                 <CountUp value={String(k.value)} />
               </div>
               <div className="mt-1 text-sm text-muted-foreground">{k.label}</div>
             </Card>
-          </Stagger.Item>
+          </StaggerItem>
         ))}
       </Stagger>
 

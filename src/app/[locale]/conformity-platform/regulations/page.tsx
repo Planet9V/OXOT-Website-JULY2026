@@ -8,7 +8,7 @@ import { alternates } from "@/lib/seo";
 import { getRegulations } from "@/lib/conformity";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Reveal, Stagger, SpotlightCard } from "@/components/motion/fx";
+import { Reveal, Stagger, SpotlightCard , StaggerItem} from "@/components/motion/fx";
 
 export const dynamic = "force-dynamic";
 
@@ -47,7 +47,7 @@ export default async function RegulationsPage({
         {regulations.map((r) => {
           const year = r.inForceDate ? r.inForceDate.slice(0, 4) : null;
           return (
-            <Stagger.Item key={r.key}>
+            <StaggerItem key={r.key}>
               <SpotlightCard className="h-full">
                 <Card className="flex h-full flex-col p-6">
                   <div className="flex items-start justify-between gap-3">
@@ -106,7 +106,7 @@ export default async function RegulationsPage({
                   </div>
                 </Card>
               </SpotlightCard>
-            </Stagger.Item>
+            </StaggerItem>
           );
         })}
       </Stagger>

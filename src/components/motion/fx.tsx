@@ -56,13 +56,19 @@ export function Stagger({ children, className, gap = 0.08 }: { children: React.R
     </motion.div>
   );
 }
-Stagger.Item = function Item({ children, className, y = 20 }: { children: React.ReactNode; className?: string; y?: number }) {
+/** A single staggered child. Exported as a top-level component so it can be used
+ *  from Server Components too — accessing `Stagger.Item` (a static property of a
+ *  "use client" component) from a server component returns undefined across the
+ *  RSC boundary, so server pages must import `StaggerItem` directly. */
+export function StaggerItem({ children, className, y = 20 }: { children: React.ReactNode; className?: string; y?: number }) {
   return (
     <motion.div variants={{ hide: { opacity: 0, y }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } } }} className={className}>
       {children}
     </motion.div>
   );
-};
+}
+// Backwards-compatible alias for existing client-component call sites.
+Stagger.Item = StaggerItem;
 
 /** Count a number up when it scrolls into view. Preserves non-digit suffix/prefix. */
 export function CountUp({ value, className }: { value: string; className?: string }) {

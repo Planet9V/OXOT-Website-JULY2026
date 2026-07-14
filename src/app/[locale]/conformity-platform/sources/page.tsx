@@ -6,7 +6,7 @@ import { alternates } from "@/lib/seo";
 import { getSources, type SourceDoc } from "@/lib/conformity";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Reveal, Stagger } from "@/components/motion/fx";
+import { Reveal, Stagger , StaggerItem} from "@/components/motion/fx";
 
 export const dynamic = "force-dynamic";
 
@@ -65,7 +65,7 @@ export default async function SourcesPage({
           </h2>
           <Stagger className="grid gap-4 md:grid-cols-2">
             {(groups.get(slug) ?? []).map((s) => (
-              <Stagger.Item key={s.title}>
+              <StaggerItem key={s.title}>
                 <Card className="flex h-full flex-col p-5">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-medium text-foreground">{s.title}</h3>
@@ -88,7 +88,7 @@ export default async function SourcesPage({
                     </div>
                   )}
                 </Card>
-              </Stagger.Item>
+              </StaggerItem>
             ))}
           </Stagger>
         </section>
