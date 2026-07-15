@@ -42,6 +42,20 @@ function decryptSecret(stored: string): string {
  *   ollama_host, embed_model, chat_provider ('ollama'|'openrouter'),
  *   ollama_chat_model, openrouter_model, openrouter_api_key
  *
+ * Per-role model assignments (Phase 5): each role picks an OpenRouter model id
+ * from the static catalog (src/lib/ai-catalog.ts). These only parameterize the
+ * OpenRouter leg of a call — when a role's call resolves to Ollama instead, the
+ * single `ollama_chat_model` is used regardless of role (one local model, no
+ * per-role Ollama variants — YAGNI: local model swapping is already covered by
+ * the Ollama lookup above).
+ *   chat_model          — Assistant chat (agent's normal, in-context answers)
+ *   brief_model         — Wizard & briefs (reserved: no consumer yet, see report)
+ *   translation_model    — EN<->NL page translation (src/lib/translate.ts)
+ *   long_context_model  — used instead of chat_model when the assembled agent
+ *                          prompt exceeds a char threshold (src/app/api/agent/route.ts)
+ *   search_model        — Perplexity Sonar web-search fallback when RAG retrieval
+ *                          finds no/low-confidence context (agent route)
+ *
  * EMBED_DIM is intentionally NOT runtime-editable: the pgvector column dimension is
  * fixed by migration 001, so changing it requires a migration + re-index.
  */
@@ -58,6 +72,11 @@ export interface AiConfig {
   ollamaChatModel: string;
   openrouterModel: string;
   openrouterKey: string; // "" if unset
+  chatModel: string; // OpenRouter model id for the Assistant chat role
+  briefModel: string; // OpenRouter model id for Wizard & briefs (reserved)
+  translationModel: string; // OpenRouter model id for Translation
+  longContextModel: string; // OpenRouter model id for Long context
+  searchModel: string; // OpenRouter model id for Web search (Perplexity Sonar)
 }
 
 export const AI_SETTING_KEYS = [
@@ -68,7 +87,12 @@ export const AI_SETTING_KEYS = [
   "chat_provider",
   "ollama_chat_model",
   "openrouter_model",
-  "openrouter_api_key"
+  "openrouter_api_key",
+  "chat_model",
+  "brief_model",
+  "translation_model",
+  "long_context_model",
+  "search_model"
 ] as const;
 export type AiSettingKey = (typeof AI_SETTING_KEYS)[number];
 
@@ -84,7 +108,14 @@ const ENV = {
   chatProvider: (process.env.LLM_PRIMARY ?? "openrouter").toLowerCase() === "ollama" ? "ollama" : "openrouter",
   ollamaChatModel: process.env.OLLAMA_CHAT_MODEL ?? "qwen3.5:9b",
   openrouterModel: process.env.OPENROUTER_MODEL ?? "openai/gpt-4o-mini",
-  openrouterKey: process.env.OPENROUTER_API_KEY ?? ""
+  openrouterKey: process.env.OPENROUTER_API_KEY ?? "",
+  // Per-role OpenRouter model assignments — see src/lib/ai-catalog.ts for the
+  // selectable catalog these defaults must stay in sync with.
+  chatModel: process.env.CHAT_MODEL ?? "openai/gpt-4o-mini",
+  briefModel: process.env.BRIEF_MODEL ?? "anthropic/claude-3.5-haiku",
+  translationModel: process.env.TRANSLATION_MODEL ?? "anthropic/claude-3.5-haiku",
+  longContextModel: process.env.LONG_CONTEXT_MODEL ?? "google/gemini-2.5-pro",
+  searchModel: process.env.SEARCH_MODEL ?? "perplexity/sonar"
 } as const;
 
 let cache: { at: number; rows: Record<string, string> } | null = null;
@@ -120,7 +151,12 @@ export async function getAiConfig(): Promise<AiConfig> {
     chatProvider: provider,
     ollamaChatModel: s.ollama_chat_model || ENV.ollamaChatModel,
     openrouterModel: s.openrouter_model || ENV.openrouterModel,
-    openrouterKey: (s.openrouter_api_key ? decryptSecret(s.openrouter_api_key) : "") || ENV.openrouterKey
+    openrouterKey: (s.openrouter_api_key ? decryptSecret(s.openrouter_api_key) : "") || ENV.openrouterKey,
+    chatModel: s.chat_model || ENV.chatModel,
+    briefModel: s.brief_model || ENV.briefModel,
+    translationModel: s.translation_model || ENV.translationModel,
+    longContextModel: s.long_context_model || ENV.longContextModel,
+    searchModel: s.search_model || ENV.searchModel
   };
 }
 
@@ -139,7 +175,12 @@ export async function getAiConfigMasked() {
     openrouterModel: cfg.openrouterModel,
     openrouterKeySet: !!key,
     openrouterKeyLast4: key ? key.slice(-4) : null,
-    openrouterKeyFromEnv: !!process.env.OPENROUTER_API_KEY && !("openrouter_api_key" in (cache?.rows ?? {}))
+    openrouterKeyFromEnv: !!process.env.OPENROUTER_API_KEY && !("openrouter_api_key" in (cache?.rows ?? {})),
+    chatModel: cfg.chatModel,
+    briefModel: cfg.briefModel,
+    translationModel: cfg.translationModel,
+    longContextModel: cfg.longContextModel,
+    searchModel: cfg.searchModel
   };
 }
 

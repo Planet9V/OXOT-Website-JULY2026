@@ -1,5 +1,6 @@
 import type { ChatMessage } from "@/lib/llm/provider";
 import { chat } from "@/lib/llm";
+import { getAiConfig } from "@/lib/ai-settings";
 
 export interface TranslatablePage {
   title: string;
@@ -44,9 +45,10 @@ function stripCodeFences(text: string): string {
 
 /**
  * Translate a page's fields from sourceLocale to targetLocale via the shared
- * chat() LLM provider (Ollama primary / OpenRouter fallback). Returns the same
- * shape, translated. Throws a clear error if the LLM call fails or the
- * response cannot be parsed as the expected JSON shape.
+ * chat() LLM provider (Ollama primary / OpenRouter fallback). Uses the admin
+ * "Translation" role model (translation_model) when the call resolves to
+ * OpenRouter. Returns the same shape, translated. Throws a clear error if the
+ * LLM call fails or the response cannot be parsed as the expected JSON shape.
  */
 export async function translatePage(
   input: TranslatablePage,
@@ -60,7 +62,8 @@ export async function translatePage(
 
   let raw: string;
   try {
-    const result = await chat(messages);
+    const cfg = await getAiConfig();
+    const result = await chat(messages, { model: cfg.translationModel });
     raw = result.content;
   } catch (err) {
     throw new Error(

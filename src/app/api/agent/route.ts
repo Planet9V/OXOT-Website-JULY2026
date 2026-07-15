@@ -2,11 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import { isLocale, type Locale } from "@/i18n/config";
 import { retrieve } from "@/lib/retrieval";
-import { chatStream } from "@/lib/llm/stream";
+import { chatStream, webSearchOrChatStream } from "@/lib/llm/stream";
 import type { ChatMessage } from "@/lib/llm/provider";
 import { rateLimit, clientIp, tooMany } from "@/lib/rate-limit";
+import { getAiConfig } from "@/lib/ai-settings";
 
 export const runtime = "nodejs";
+
+// A retrieved chunk this far away (cosine distance, 0..2, lower = closer) counts
+// as "no real match" for grounding purposes, even though retrieve() returned it.
+const LOW_CONFIDENCE_DISTANCE = 0.8;
+
+// Above this many characters of assembled context, route to long_context_model
+// instead of chat_model (simple char threshold — Karpathy rule 2: keep it simple).
+const LONG_CONTEXT_CHAR_THRESHOLD = Number(process.env.LONG_CONTEXT_CHAR_THRESHOLD ?? 4000);
 
 // Bilingual, grounded system prompt. The agent answers in the visitor's locale,
 // cites retrieved chunks, and admits uncertainty instead of inventing (Karpathy rule 6).
@@ -23,6 +32,24 @@ function systemPrompt(locale: Locale, context: string): string {
     "",
     "CONTEXT:",
     context || "(no relevant content found)"
+  ].join("\n");
+}
+
+// System prompt for the web-search fallback branch (no/low-confidence site
+// context). Still bilingual; explicitly tells the model to disclose that it
+// used live web search rather than the site's own indexed content.
+function webSearchSystemPrompt(locale: Locale): string {
+  const langRule =
+    locale === "nl"
+      ? "Antwoord altijd in het Nederlands."
+      : "Always answer in English.";
+  return [
+    "You are the OXOT website assistant.",
+    langRule,
+    "No matching content was found in the site's own indexed knowledge base for this question.",
+    "You have live web search access for this reply. Answer using current, well-sourced information from the web.",
+    "Explicitly say that this answer used a live web search rather than the site's own content.",
+    "Be concise. If you are still not confident in the answer, say so rather than inventing facts."
   ].join("\n");
 }
 
@@ -72,8 +99,14 @@ export async function POST(req: NextRequest) {
     .join("\n\n");
   const citedIds = chunks.map((c) => c.id);
 
+  // No chunks at all, or nothing close enough to be a real match: treat as
+  // "no/low context" and answer via the web-search fallback (search_model)
+  // instead of asking the normal chat model to reason over noise.
+  const bestScore = chunks.length ? Math.min(...chunks.map((c) => c.score)) : Infinity;
+  const noOrLowContext = chunks.length === 0 || bestScore > LOW_CONFIDENCE_DISTANCE;
+
   const messages: ChatMessage[] = [
-    { role: "system", content: systemPrompt(locale, context) },
+    { role: "system", content: noOrLowContext ? webSearchSystemPrompt(locale) : systemPrompt(locale, context) },
     { role: "user", content: body.message }
   ];
 
@@ -83,6 +116,10 @@ export async function POST(req: NextRequest) {
     [body.sessionId, body.message]
   );
 
+  const cfg = await getAiConfig();
+  // Large assembled context -> long_context_model instead of chat_model.
+  const chatModel = context.length > LONG_CONTEXT_CHAR_THRESHOLD ? cfg.longContextModel : cfg.chatModel;
+
   // Stream the answer; persist the assistant turn (with provider + citations) at the end.
   let full = "";
   let provider = "unknown";
@@ -90,7 +127,10 @@ export async function POST(req: NextRequest) {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        for await (const delta of chatStream(messages, (p) => (provider = p))) {
+        const gen = noOrLowContext
+          ? webSearchOrChatStream(messages, (p) => (provider = p), cfg.searchModel)
+          : chatStream(messages, (p) => (provider = p), { model: chatModel });
+        for await (const delta of gen) {
           full += delta;
           controller.enqueue(encoder.encode(delta));
         }

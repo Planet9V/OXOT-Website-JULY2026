@@ -22,7 +22,12 @@ export async function PUT(req: NextRequest) {
     chatProvider: "chat_provider",
     ollamaChatModel: "ollama_chat_model",
     openrouterModel: "openrouter_model",
-    openrouterApiKey: "openrouter_api_key"
+    openrouterApiKey: "openrouter_api_key",
+    chatModel: "chat_model",
+    briefModel: "brief_model",
+    translationModel: "translation_model",
+    longContextModel: "long_context_model",
+    searchModel: "search_model"
   };
 
   const patch: Partial<Record<AiSettingKey, string>> = {};

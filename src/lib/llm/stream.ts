@@ -44,7 +44,9 @@ async function* ollamaStream(messages: ChatMessage[], host: string, model: strin
 }
 
 // OpenRouter streaming (SSE: `data: {json}` lines, terminated by `data: [DONE]`).
-async function* openrouterStream(messages: ChatMessage[], key: string, model: string): AsyncGenerator<string> {
+// Exported so webSearchOrChatStream() can drive it directly for the web-search
+// fallback (which must always use OpenRouter — Ollama has no web-search model).
+export async function* openrouterStream(messages: ChatMessage[], key: string, model: string): AsyncGenerator<string> {
   if (!key) throw new Error("OpenRouter API key not set");
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
@@ -81,9 +83,16 @@ async function* openrouterStream(messages: ChatMessage[], key: string, model: st
 // Streamed generation with automatic failover. Tries PRIMARY first, then the
 // other provider. Reports the serving provider via onProvider. Falls back only
 // if the primary emitted no tokens (avoids duplicating a half-streamed answer).
+//
+// opts.model, when set, overrides the OpenRouter model for this call only (e.g.
+// chat_model for a normal-length answer, or long_context_model when the
+// assembled prompt is large — see src/app/api/agent/route.ts). The Ollama leg
+// is unaffected by opts.model: Ollama always uses the single configured
+// ollama_chat_model, since there is one local model shared across roles.
 export async function* chatStream(
   messages: ChatMessage[],
-  onProvider?: (name: string) => void
+  onProvider?: (name: string) => void,
+  opts?: { model?: string }
 ): AsyncGenerator<string> {
   // Resolve effective provider config (admin settings over env) once per request.
   const cfg = await getAiConfig();
@@ -94,7 +103,7 @@ export async function* chatStream(
       onProvider?.(name);
       const gen = name === "ollama"
         ? ollamaStream(messages, cfg.ollamaHost, cfg.ollamaChatModel)
-        : openrouterStream(messages, cfg.openrouterKey, cfg.openrouterModel);
+        : openrouterStream(messages, cfg.openrouterKey, opts?.model ?? cfg.chatModel);
       for await (const delta of gen) { yielded = true; yield delta; }
       if (!yielded) throw new Error(`${name} produced no content`);
       return; // success
@@ -107,4 +116,34 @@ export async function* chatStream(
     }
   }
   if (!yielded) yield "[error generating response]";
+}
+
+// Web-search fallback: when RAG retrieval found no/low-confidence context, answer
+// via a web-grounded OpenRouter model (search_model, e.g. Perplexity Sonar)
+// instead of the normal chat/long-context model — Ollama has no equivalent, so
+// this always goes straight to OpenRouter rather than following chatStream's
+// ollama<->openrouter order. Degrades to the normal chatStream() (still
+// bilingual, still grounded-or-honest) when OpenRouter has no key configured, or
+// if the search call fails before producing any output. One branch point here,
+// not scattered conditionals in the agent route.
+export async function* webSearchOrChatStream(
+  messages: ChatMessage[],
+  onProvider?: (name: string) => void,
+  searchModel?: string
+): AsyncGenerator<string> {
+  const cfg = await getAiConfig();
+  if (searchModel && cfg.openrouterKey) {
+    let yielded = false;
+    try {
+      onProvider?.("openrouter-search");
+      for await (const delta of openrouterStream(messages, cfg.openrouterKey, searchModel)) {
+        yielded = true;
+        yield delta;
+      }
+      if (yielded) return;
+    } catch (err) {
+      console.warn("[llm] web search fallback failed, falling back to normal chat:", err);
+    }
+  }
+  yield* chatStream(messages, onProvider);
 }

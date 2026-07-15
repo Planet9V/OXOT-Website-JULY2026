@@ -2,6 +2,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Save, Cpu, Cloud, KeyRound, AlertTriangle, CheckCircle2, XCircle, Database, BrainCircuit } from "lucide-react";
+import { ROLE_LABELS, modelsForRole, catalogEntry, type ModelRole } from "@/lib/ai-catalog";
 
 type Model = { id: string; label: string };
 type Masked = {
@@ -9,23 +10,41 @@ type Masked = {
   chatProvider: "ollama" | "openrouter";
   ollamaChatModel: string; openrouterModel: string;
   openrouterKeySet: boolean; openrouterKeyLast4: string | null; openrouterKeyFromEnv: boolean;
+  chatModel: string; briefModel: string; translationModel: string; longContextModel: string; searchModel: string;
 };
 
+// The subset of form fields that hold a per-role OpenRouter model id.
+type RoleModelField = "chatModel" | "briefModel" | "translationModel" | "longContextModel" | "searchModel";
+
 const inp = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm";
+const sel = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60";
 const lbl = "text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground";
+
+// One dropdown per role, in display order. Embeddings is locked (Karpathy rule
+// 2/3 — swapping the embedding model needs a migration + re-ingest, so it isn't
+// offered here at all).
+const ROLE_ORDER: ModelRole[] = ["chat", "brief", "translation", "long-context", "search"];
+
+const ROLE_FIELD: Record<ModelRole, RoleModelField | null> = {
+  chat: "chatModel",
+  brief: "briefModel",
+  translation: "translationModel",
+  "long-context": "longContextModel",
+  search: "searchModel",
+  embeddings: null
+};
 
 export function AiSettings() {
   const [form, setForm] = React.useState({
     ollamaHost: "", embedModel: "", chatProvider: "openrouter" as "ollama" | "openrouter",
-    ollamaChatModel: "", openrouterModel: ""
+    ollamaChatModel: "", openrouterModel: "",
+    chatModel: "", briefModel: "", translationModel: "", longContextModel: "", searchModel: ""
   });
   const [meta, setMeta] = React.useState<Pick<Masked, "embedDim" | "openrouterKeySet" | "openrouterKeyLast4" | "openrouterKeyFromEnv">>({
     embedDim: 0, openrouterKeySet: false, openrouterKeyLast4: null, openrouterKeyFromEnv: false
   });
   const [keyInput, setKeyInput] = React.useState("");
   const [ollamaModels, setOllamaModels] = React.useState<Model[]>([]);
-  const [orModels, setOrModels] = React.useState<Model[]>([]);
-  const [orFilter, setOrFilter] = React.useState("");
   const [status, setStatus] = React.useState<{ kind: "idle" | "ok" | "err"; msg: string }>({ kind: "idle", msg: "" });
   const [busy, setBusy] = React.useState<string | null>(null);
   const [chunks, setChunks] = React.useState<number | null>(null);
@@ -36,7 +55,9 @@ export function AiSettings() {
     const d = (await res.json()) as Masked;
     setForm({
       ollamaHost: d.ollamaHost, embedModel: d.embedModel, chatProvider: d.chatProvider,
-      ollamaChatModel: d.ollamaChatModel, openrouterModel: d.openrouterModel
+      ollamaChatModel: d.ollamaChatModel, openrouterModel: d.openrouterModel,
+      chatModel: d.chatModel, briefModel: d.briefModel, translationModel: d.translationModel,
+      longContextModel: d.longContextModel, searchModel: d.searchModel
     });
     setMeta({ embedDim: d.embedDim, openrouterKeySet: d.openrouterKeySet, openrouterKeyLast4: d.openrouterKeyLast4, openrouterKeyFromEnv: d.openrouterKeyFromEnv });
   }, []);
@@ -52,17 +73,16 @@ export function AiSettings() {
 
   React.useEffect(() => { void load(); void loadStats(); }, [load, loadStats]);
 
-  async function fetchModels(provider: "ollama" | "openrouter") {
-    setBusy(provider); setStatus({ kind: "idle", msg: "" });
+  async function fetchOllamaModels() {
+    setBusy("ollama"); setStatus({ kind: "idle", msg: "" });
     try {
-      const q = provider === "ollama" ? `provider=ollama&host=${encodeURIComponent(form.ollamaHost)}` : "provider=openrouter";
-      const res = await fetch(`/api/admin/ai-settings/models?${q}`);
+      const res = await fetch(`/api/admin/ai-settings/models?provider=ollama&host=${encodeURIComponent(form.ollamaHost)}`);
       const d = (await res.json()) as { ok: boolean; models?: Model[]; error?: string };
-      if (!d.ok) { setStatus({ kind: "err", msg: `${provider}: ${d.error ?? "lookup failed"}` }); return; }
-      if (provider === "ollama") setOllamaModels(d.models ?? []); else setOrModels(d.models ?? []);
-      setStatus({ kind: "ok", msg: `${provider}: found ${d.models?.length ?? 0} model(s).` });
+      if (!d.ok) { setStatus({ kind: "err", msg: `Ollama: ${d.error ?? "lookup failed"}` }); return; }
+      setOllamaModels(d.models ?? []);
+      setStatus({ kind: "ok", msg: `Ollama: found ${d.models?.length ?? 0} model(s).` });
     } catch (e) {
-      setStatus({ kind: "err", msg: `${provider}: ${e instanceof Error ? e.message : "lookup failed"}` });
+      setStatus({ kind: "err", msg: `Ollama: ${e instanceof Error ? e.message : "lookup failed"}` });
     } finally { setBusy(null); }
   }
 
@@ -71,7 +91,9 @@ export function AiSettings() {
     try {
       const body: Record<string, string> = {
         ollamaHost: form.ollamaHost, embedModel: form.embedModel, chatProvider: form.chatProvider,
-        ollamaChatModel: form.ollamaChatModel, openrouterModel: form.openrouterModel
+        ollamaChatModel: form.ollamaChatModel, openrouterModel: form.openrouterModel,
+        chatModel: form.chatModel, briefModel: form.briefModel, translationModel: form.translationModel,
+        longContextModel: form.longContextModel, searchModel: form.searchModel
       };
       if (keyInput.trim()) body.openrouterApiKey = keyInput.trim(); // only send when changed
       const res = await fetch("/api/admin/ai-settings", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
@@ -106,15 +128,15 @@ export function AiSettings() {
     } finally { setBusy(null); }
   }
 
-  const orFiltered = orFilter ? orModels.filter((m) => m.id.toLowerCase().includes(orFilter.toLowerCase())) : orModels;
   const ollamaConfigured = !!form.ollamaHost.trim();
   const openrouterConfigured = meta.openrouterKeySet;
+  const embeddingModel = catalogEntry("qwen/qwen3-embedding-4b");
 
   return (
     <section className="max-w-3xl space-y-8">
       <div>
         <h2 className="text-lg font-semibold">AI &amp; Models</h2>
-        <p className="text-sm text-muted-foreground">Configure the embedding (vector) and generation providers. Settings are stored in the database and override <code>.env</code>; changes apply to new requests within ~10 seconds.</p>
+        <p className="text-sm text-muted-foreground">Configure the assistant&apos;s knowledge index, provider connections, and which model handles each role. Settings are stored in the database and override <code>.env</code>; changes apply to new requests within ~10 seconds.</p>
       </div>
 
       {status.kind !== "idle" && (
@@ -130,7 +152,7 @@ export function AiSettings() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">
-              The assistant answers from your published page content, embedded with the Ollama model below. Rebuild after bulk edits — the rebuild re-embeds every published page.
+              The assistant answers from your published page content, embedded with the locked embedding model below. Rebuild after bulk edits — the rebuild re-embeds every published page.
             </p>
             <div className="pt-1 text-sm">
               <span className="text-muted-foreground">Indexed passages: </span>
@@ -142,7 +164,7 @@ export function AiSettings() {
             {busy === "reindex" ? "Rebuilding…" : "Rebuild now"}
           </Button>
         </div>
-        <p className="mt-3 text-xs text-muted-foreground">Rebuilding calls Ollama to re-embed content. If Ollama isn&apos;t reachable from the server, the rebuild reports the error and leaves the existing index untouched.</p>
+        <p className="mt-3 text-xs text-muted-foreground">Rebuilding calls the configured embedding backend to re-embed content. If it isn&apos;t reachable from the server, the rebuild reports the error and leaves the existing index untouched.</p>
       </div>
 
       {/* 2. Provider connections */}
@@ -151,99 +173,104 @@ export function AiSettings() {
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="flex items-start gap-3 rounded-lg border border-border p-3">
             {ollamaConfigured ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" /> : <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />}
-            <div>
+            <div className="w-full">
               <div className="flex items-center gap-2">
                 <Cpu className="h-4 w-4 text-muted-foreground" />
                 <span className="font-medium">Ollama (local)</span>
                 <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${ollamaConfigured ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{ollamaConfigured ? "Connected" : "Not set"}</span>
               </div>
-              <p className="mt-0.5 text-xs text-muted-foreground">Powers local generation and all embeddings. Configured via the Ollama host below.</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Local generation and embedding fallback. Configured via the Ollama host below.</p>
+              <div className="mt-2 flex gap-2">
+                <input className={inp} list="ollama-models" value={form.ollamaHost} onChange={(e) => setForm({ ...form, ollamaHost: e.target.value })} placeholder="http://host.docker.internal:11434" />
+                <Button type="button" variant="outline" onClick={fetchOllamaModels} disabled={busy === "ollama"} title="Look up installed Ollama models">
+                  <RefreshCw className={`h-4 w-4 ${busy === "ollama" ? "animate-spin" : ""}`} />
+                </Button>
+              </div>
+              <div className="mt-2">
+                <label className={lbl}>Ollama chat model (shared across all roles)</label>
+                <input className={`${inp} mt-1`} list="ollama-models" value={form.ollamaChatModel} onChange={(e) => setForm({ ...form, ollamaChatModel: e.target.value })} placeholder="qwen3.5:9b" />
+              </div>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-lg border border-border p-3">
             {openrouterConfigured ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" /> : <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />}
-            <div>
+            <div className="w-full">
               <div className="flex items-center gap-2">
                 <Cloud className="h-4 w-4 text-muted-foreground" />
                 <span className="font-medium">OpenRouter (cloud)</span>
                 <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${openrouterConfigured ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{openrouterConfigured ? "Connected" : "Not set"}</span>
               </div>
-              <p className="mt-0.5 text-xs text-muted-foreground">Automatic cloud fallback for generation. Set its API key in Model assignments below.</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Automatic cloud fallback for generation, and required for the model catalog below (per-role assignments, embeddings, web search).</p>
+              <div className="mt-2">
+                <label className={lbl}><KeyRound className="mr-1 inline h-3.5 w-3.5" /> OpenRouter API key</label>
+                <input type="password" autoComplete="off" className={`${inp} mt-1`} value={keyInput} onChange={(e) => setKeyInput(e.target.value)}
+                  placeholder={meta.openrouterKeySet ? `Key set ••••${meta.openrouterKeyLast4}${meta.openrouterKeyFromEnv ? " (from .env)" : ""} — leave blank to keep` : "sk-or-… (not set)"} />
+                <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+                  <span>Stored in the database (never shown again).</span>
+                  {meta.openrouterKeySet && !meta.openrouterKeyFromEnv && (
+                    <button type="button" onClick={clearKey} className="text-red-500 hover:underline">Clear stored key</button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div className="mt-4">
+          <label className={lbl}>Primary provider <span className="font-normal normal-case tracking-normal text-muted-foreground">(the other is the automatic fallback for every role)</span></label>
+          <select className={`${sel} mt-1 sm:max-w-xs`} value={form.chatProvider} onChange={(e) => setForm({ ...form, chatProvider: e.target.value as "ollama" | "openrouter" })}>
+            <option value="ollama">Ollama (local) first</option>
+            <option value="openrouter">OpenRouter (cloud) first</option>
+          </select>
+          {!openrouterConfigured && (
+            <p className="mt-2 flex items-start gap-2 text-xs text-muted-foreground">
+              <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
+              No OpenRouter key set — role assignments below still save, but calls that need OpenRouter (web search, and any role while Ollama is unreachable) will fail closed and the agent degrades to a plain no-context answer.
+            </p>
+          )}
+        </div>
+        <datalist id="ollama-models">{ollamaModels.map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
       </div>
 
       {/* 3. Model assignments */}
       <div className="rounded-xl border border-border p-5">
         <div className="mb-4 flex items-center gap-2"><BrainCircuit className="h-4 w-4 text-primary" /><h3 className="font-semibold">Model assignments</h3></div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="sm:col-span-2">
-            <label className={lbl}>Ollama host</label>
-            <input className={`${inp} mt-1`} value={form.ollamaHost} onChange={(e) => setForm({ ...form, ollamaHost: e.target.value })} placeholder="http://host.docker.internal:11434" />
-          </div>
+        <p className="mb-4 text-sm text-muted-foreground">Each role picks the OpenRouter model used when a call resolves to OpenRouter. When Ollama is used instead, the single Ollama chat model above is used for every role — there is one local model, not one per role.</p>
 
-          <div className="sm:col-span-2">
-            <label className={lbl}>Embeddings model</label>
-            <div className="mt-1 flex gap-2">
-              <input className={inp} list="ollama-models" value={form.embedModel} onChange={(e) => setForm({ ...form, embedModel: e.target.value })} placeholder="qwen3-embedding:4b" />
-              <Button type="button" variant="outline" onClick={() => fetchModels("ollama")} disabled={busy === "ollama"}>
-                <RefreshCw className={`h-4 w-4 ${busy === "ollama" ? "animate-spin" : ""}`} /> Lookup
-              </Button>
-            </div>
+        <div className="space-y-4">
+          {ROLE_ORDER.map((role) => {
+            const field = ROLE_FIELD[role]!;
+            const options = modelsForRole(role);
+            const selected = form[field];
+            const selectedEntry = catalogEntry(selected) ?? options[0];
+            return (
+              <div key={role}>
+                <label className={lbl}>{ROLE_LABELS[role]}</label>
+                <select
+                  className={`${sel} mt-1`}
+                  value={selected}
+                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                >
+                  {options.map((m) => (
+                    <option key={m.id} value={m.id}>{m.label} — {m.id}</option>
+                  ))}
+                </select>
+                {selectedEntry && <p className="mt-1 text-xs text-muted-foreground">{selectedEntry.description}</p>}
+              </div>
+            );
+          })}
+
+          {/* Embeddings — locked, informational only */}
+          <div>
+            <label className={lbl}>{ROLE_LABELS.embeddings}</label>
+            <select className={`${sel} mt-1`} value={embeddingModel?.id} disabled>
+              <option value={embeddingModel?.id}>{embeddingModel?.label} · {meta.embedDim} dims</option>
+            </select>
             <div className="mt-2 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 p-3 text-xs text-muted-foreground">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-              <span>Vector dimension <strong className="text-foreground">EMBED_DIM = {meta.embedDim}</strong> is fixed by the database schema. Choosing a model with a different native dimension requires a new migration and a full re-index, so it isn&apos;t editable here.</span>
-            </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label className={lbl}>Primary provider <span className="font-normal normal-case tracking-normal text-muted-foreground">(the other is the automatic fallback)</span></label>
-            <select className={`${inp} mt-1`} value={form.chatProvider} onChange={(e) => setForm({ ...form, chatProvider: e.target.value as "ollama" | "openrouter" })}>
-              <option value="ollama">Ollama (local) first</option>
-              <option value="openrouter">OpenRouter (cloud) first</option>
-            </select>
-          </div>
-
-          <div>
-            <label className={lbl}>Ollama chat model</label>
-            <div className="mt-1 flex gap-2">
-              <input className={inp} list="ollama-models" value={form.ollamaChatModel} onChange={(e) => setForm({ ...form, ollamaChatModel: e.target.value })} placeholder="qwen3.5:9b" />
-              <Button type="button" variant="outline" onClick={() => fetchModels("ollama")} disabled={busy === "ollama"} title="Uses the Ollama host above">
-                <RefreshCw className={`h-4 w-4 ${busy === "ollama" ? "animate-spin" : ""}`} />
-              </Button>
-            </div>
-          </div>
-
-          <div>
-            <label className={lbl}>OpenRouter model</label>
-            <div className="mt-1 flex gap-2">
-              <input className={inp} list="or-models" value={form.openrouterModel} onChange={(e) => setForm({ ...form, openrouterModel: e.target.value })} placeholder="openai/gpt-4o-mini" />
-              <Button type="button" variant="outline" onClick={() => fetchModels("openrouter")} disabled={busy === "openrouter"}>
-                <RefreshCw className={`h-4 w-4 ${busy === "openrouter" ? "animate-spin" : ""}`} />
-              </Button>
-            </div>
-            {orModels.length > 0 && (
-              <input className={`${inp} mt-2`} value={orFilter} onChange={(e) => setOrFilter(e.target.value)} placeholder={`Filter ${orModels.length} models…`} />
-            )}
-          </div>
-
-          <div className="sm:col-span-2">
-            <label className={lbl}><KeyRound className="mr-1 inline h-3.5 w-3.5" /> OpenRouter API key</label>
-            <input type="password" autoComplete="off" className={`${inp} mt-1`} value={keyInput} onChange={(e) => setKeyInput(e.target.value)}
-              placeholder={meta.openrouterKeySet ? `Key set ••••${meta.openrouterKeyLast4}${meta.openrouterKeyFromEnv ? " (from .env)" : ""} — leave blank to keep` : "sk-or-… (not set)"} />
-            <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
-              <span>Stored in the database (never shown again). Secure your DB at rest.</span>
-              {meta.openrouterKeySet && !meta.openrouterKeyFromEnv && (
-                <button type="button" onClick={clearKey} className="text-red-500 hover:underline">Clear stored key</button>
-              )}
+              <span>Locked. Vector dimension <strong className="text-foreground">EMBED_DIM = {meta.embedDim}</strong> is fixed by the database schema. Changing the embedding model requires a new migration and a full re-index, so it isn&apos;t editable here.</span>
             </div>
           </div>
         </div>
-
-        {/* datalists populated by lookups */}
-        <datalist id="ollama-models">{ollamaModels.map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
-        <datalist id="or-models">{orFiltered.slice(0, 200).map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}</datalist>
 
         <div className="mt-6 flex items-center gap-3">
           <Button onClick={save} disabled={busy === "save"}><Save className="h-4 w-4" /> {busy === "save" ? "Saving…" : "Save settings"}</Button>
