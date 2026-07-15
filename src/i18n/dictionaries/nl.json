@@ -193,7 +193,16 @@
     "disclaimer": "OXOT verandert overlappende EU-regelgeving in één levend bewijssysteem — zodat uw teams conforme producten leveren zonder te verdrinken in papierwerk.",
     "privacy": "Privacy",
     "terms": "Voorwaarden",
-    "cookieSettings": "Cookie-instellingen"
+    "cookieSettings": "Cookie-instellingen",
+    "social": {
+      "heading": "Volg mee",
+      "subtitle": "Ontvang de laatste updates rechtstreeks via onze socialekanalen.",
+      "onXSuffix": "op X",
+      "loading": "Berichten laden…",
+      "linkedinTitle": "Volg ons op LinkedIn",
+      "linkedinBlurb": "Blijf op de hoogte van onze nieuwste compliance-inzichten en aankondigingen.",
+      "linkedinCta": "Volgen op LinkedIn"
+    }
   },
   "cookies": {
     "title": "Uw privacykeuzes",

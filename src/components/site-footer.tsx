@@ -5,14 +5,10 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { CookieSettingsButton } from "@/components/cookie-consent";
+import { SOCIALS } from "@/lib/socials";
 
 // Contact address, shared with the legal pages.
 const CONTACT_EMAIL = "hello@oxot.eu";
-// TODO: confirm OXOT social handles
-const SOCIALS = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/oxot" },
-  { label: "X", href: "https://x.com/oxot" }
-] as const;
 
 // Bilingual brand strings (CLAUDE.md: no user-facing string ships in one language).
 const T = {
@@ -84,7 +80,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
           <ul className="mt-4 space-y-2">
             {SOCIALS.map((s) => (
               <li key={s.label}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer"
+                <a href={s.url} target="_blank" rel="noopener noreferrer"
                   className="text-sm text-foreground/70 no-underline transition-colors duration-150 ease-brand hover:text-primary">
                   {s.label}
                 </a>

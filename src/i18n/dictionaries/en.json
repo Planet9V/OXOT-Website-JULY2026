@@ -193,7 +193,16 @@
     "disclaimer": "OXOT turns overlapping EU regulations into a single, living evidence system — so your teams ship compliant products without drowning in paperwork.",
     "privacy": "Privacy",
     "terms": "Terms",
-    "cookieSettings": "Cookie settings"
+    "cookieSettings": "Cookie settings",
+    "social": {
+      "heading": "Follow Along",
+      "subtitle": "Get the latest updates directly from our social channels.",
+      "onXSuffix": "on X",
+      "loading": "Loading posts…",
+      "linkedinTitle": "Follow us on LinkedIn",
+      "linkedinBlurb": "Stay updated with our latest compliance insights and announcements.",
+      "linkedinCta": "Follow on LinkedIn"
+    }
   },
   "cookies": {
     "title": "Your privacy choices",
