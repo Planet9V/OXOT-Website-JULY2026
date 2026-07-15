@@ -2,6 +2,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Save, Send, CheckCircle2, XCircle, Plug, RefreshCw } from "lucide-react";
+import { SetupGuide, HelpTip } from "@/components/admin/setup-guide";
 
 const inp = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm";
 const lbl = "text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground";
@@ -233,6 +234,31 @@ function ActivityFeed({ items, loading, filter, onFilter, onRefresh, refreshing 
     </div>
   );
 }
+
+const EMAIL_SETUP_STEPS: React.ReactNode[] = [
+  <>Choose auth type: &quot;SMTP password&quot; (simplest — smtp.gmail.com, port 465, a Gmail App Password) or &quot;Gmail OAuth2&quot;.</>,
+  <>For OAuth2: in Google Cloud Console create an OAuth 2.0 Client (Web application) and enable Gmail sending (scope <code className="rounded bg-muted px-1">https://mail.google.com/</code>).</>,
+  <>Add the redirect URI shown here to the client&apos;s Authorized redirect URIs.</>,
+  <>Paste the Client ID and Client Secret, Save, then click &quot;Connect Google&quot; to authorize (a refresh token is stored).</>,
+  <>Use &quot;Send a test email&quot; to confirm delivery.</>
+];
+
+const LINKEDIN_SETUP_STEPS: React.ReactNode[] = [
+  <>Create a LinkedIn app at linkedin.com/developers and link it to your company Page.</>,
+  <>Add the products &quot;Sign In with LinkedIn using OpenID Connect&quot; and &quot;Share on LinkedIn&quot; (scopes <code className="rounded bg-muted px-1">openid</code>, <code className="rounded bg-muted px-1">profile</code>, <code className="rounded bg-muted px-1">w_member_social</code>).</>,
+  <>In the app&apos;s Auth tab, add the Redirect URL shown on this card to the authorized redirect URLs.</>,
+  <>Copy the app&apos;s Client ID and Client Secret into the fields here, then Save LinkedIn settings.</>,
+  <>Click &quot;Connect LinkedIn&quot; to authorize — the access token is stored automatically.</>,
+  <>Set &quot;Company / profile URL&quot; to your public LinkedIn page — this feeds the site&apos;s Follow Along section and footer.</>,
+  <>(For posting) set the Author URN of your company or person.</>
+];
+
+const X_SETUP_STEPS: React.ReactNode[] = [
+  <>Create a project and app at developer.x.com with Read and Write permissions.</>,
+  <>Generate API Key &amp; Secret and an Access Token &amp; Secret (OAuth 1.0a).</>,
+  <>Paste all four credentials plus your @username here and Save.</>,
+  <>Click &quot;Test connection&quot; to verify. The username feeds the site&apos;s Follow Along X timeline and footer.</>
+];
 
 export function IntegrationsManager() {
   const [email, setEmail] = React.useState({
@@ -471,6 +497,7 @@ export function IntegrationsManager() {
           <div className="flex items-center gap-2">
             <Mail className="h-4 w-4 text-primary" /><h3 className="font-semibold">Email</h3>
             <HealthBadge state={computeHealthState(health?.email)} />
+            <SetupGuide title="Email setup guide" steps={EMAIL_SETUP_STEPS} />
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{email.emailEnabled ? "On" : "Off"}</span>
@@ -543,7 +570,7 @@ export function IntegrationsManager() {
                 <input type="password" autoComplete="new-password" className={`${inp} mt-1`} value={emailOauthClientSecret} onChange={(e) => setEmailOauthClientSecret(e.target.value)} placeholder={emailOauthClientSecretSet ? SECRET_PLACEHOLDER : "Google OAuth client secret"} />
               </div>
               <div className="sm:col-span-2 rounded-md border border-border p-3 text-xs text-muted-foreground">
-                <p>Whitelist this redirect URI in your Google Cloud OAuth client:</p>
+                <p className="inline-flex items-center gap-1.5">Whitelist this redirect URI in your Google Cloud OAuth client: <HelpTip text="Paste this exact URL into the OAuth client's Authorized redirect URIs list in Google Cloud Console, then Save there before connecting." /></p>
                 <code className="mt-1 block break-all rounded bg-muted px-2 py-1">{gmailRedirectUri}</code>
                 <p className="mt-2">{emailOauthRefreshTokenSet ? "Gmail is connected." : "Save the Client ID/secret above, then click Connect Google."}</p>
               </div>
@@ -585,6 +612,7 @@ export function IntegrationsManager() {
           <div className="flex items-center gap-2">
             <Linkedin className="h-4 w-4 text-primary" /><h3 className="font-semibold">LinkedIn</h3>
             <HealthBadge state={computeHealthState(health?.linkedin)} />
+            <SetupGuide title="LinkedIn setup guide" steps={LINKEDIN_SETUP_STEPS} />
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{linkedin.linkedinEnabled ? "On" : "Off"}</span>
@@ -596,7 +624,7 @@ export function IntegrationsManager() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className={lbl}>Author URN</label>
+            <label className={lbl}>Author URN <HelpTip text="Identifies who a post is published as: urn:li:organization:<id> for your company Page, or urn:li:person:<id> for a personal profile. Required only for posting." /></label>
             <input className={`${inp} mt-1`} value={linkedin.linkedinAuthorUrn} onChange={(e) => setLinkedin({ ...linkedin, linkedinAuthorUrn: e.target.value })} placeholder="urn:li:organization:12345" />
           </div>
           <div>
@@ -621,7 +649,7 @@ export function IntegrationsManager() {
             <Toggle on={linkedin.linkedinAutoPublish} onChange={(v) => setLinkedin({ ...linkedin, linkedinAutoPublish: v })} label="Auto-publish to LinkedIn" />
           </div>
           <div className="sm:col-span-2 rounded-md border border-border p-3 text-xs text-muted-foreground">
-            <p>Whitelist this redirect URI in your LinkedIn OAuth app (Auth &gt; OAuth 2.0 settings):</p>
+            <p className="inline-flex items-center gap-1.5">Whitelist this redirect URI in your LinkedIn OAuth app (Auth &gt; OAuth 2.0 settings): <HelpTip text="Copy this URL into the LinkedIn app's Auth tab under Authorized redirect URLs. It must match exactly, including https:// and no trailing slash." /></p>
             <code className="mt-1 block break-all rounded bg-muted px-2 py-1">{linkedinRedirectUri || "Loading…"}</code>
           </div>
         </div>
@@ -646,6 +674,7 @@ export function IntegrationsManager() {
           <div className="flex items-center gap-2">
             <XIcon className="h-4 w-4 text-primary" /><h3 className="font-semibold">X</h3>
             <HealthBadge state={computeHealthState(health?.x)} />
+            <SetupGuide title="X setup guide" steps={X_SETUP_STEPS} />
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{x.xEnabled ? "On" : "Off"}</span>
@@ -657,7 +686,7 @@ export function IntegrationsManager() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className={lbl}>API key</label>
+            <label className={lbl}>API key <HelpTip text="From your developer.x.com app's Keys and Tokens tab, under Consumer Keys. Requires Read and Write app permissions." /></label>
             <input type="password" autoComplete="new-password" className={`${inp} mt-1`} value={xSecrets.xApiKey} onChange={(e) => setXSecrets({ ...xSecrets, xApiKey: e.target.value })} placeholder={xSet.xApiKeySet ? SECRET_PLACEHOLDER : "API key"} />
           </div>
           <div>

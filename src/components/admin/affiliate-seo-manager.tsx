@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Link2, Search, Plus, Pencil, Trash2, Save, CheckCircle2, XCircle, ExternalLink, Sparkles,
 } from "lucide-react";
+import { SetupGuide, HelpTip } from "@/components/admin/setup-guide";
 
 // Ported from the source Affiliate & SEO admin (Celestial-Agent-Nexus:
 // artifacts/oxot-web/src/pages/admin-seo.tsx). Adapted to this app's plain
@@ -252,6 +253,13 @@ type Suggestion = {
   occurrenceIndex: number;
 };
 
+const AI_INSERT_SETUP_STEPS: React.ReactNode[] = [
+  <>In the &quot;Affiliate Links&quot; tab, click &quot;New link&quot; and add the partner name, destination URL, and one or more keywords (per language).</>,
+  <>Come back to this tab, choose a page, and click &quot;Suggest links&quot; — it finds where those keywords appear in the page.</>,
+  <>Review each suggestion (keyword + surrounding text) and tick the ones to turn into tracked links.</>,
+  <>Click &quot;Apply&quot; — the keywords become tracked <code className="rounded bg-muted px-1">/api/go/&lt;id&gt;</code> links. The page&apos;s previous version is saved to history, so you can restore it anytime.</>
+];
+
 function AiInsertTab() {
   const [pages, setPages] = React.useState<PageOption[]>([]);
   const [pageKey, setPageKey] = React.useState("");
@@ -341,17 +349,20 @@ function AiInsertTab() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
-        Find keyword matches in a page&apos;s body and turn them into tracked partner links
-        (<code className="mx-1 rounded bg-muted px-1">/api/go/&lt;id&gt;</code>). The page&apos;s
-        current content is snapshotted to history before anything changes.
-      </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <p className="text-sm text-muted-foreground">
+          Find keyword matches in a page&apos;s body and turn them into tracked partner links
+          (<code className="mx-1 rounded bg-muted px-1">/api/go/&lt;id&gt;</code>). The page&apos;s
+          current content is snapshotted to history before anything changes.
+        </p>
+        <SetupGuide title="AI Link Insertion setup guide" steps={AI_INSERT_SETUP_STEPS} />
+      </div>
 
       <StatusBar status={status} />
 
       <div className="flex flex-wrap items-end gap-3">
         <div className="min-w-[260px]">
-          <label className={lbl}>Page</label>
+          <label className={lbl}>Page <HelpTip text="Pick the page whose body should be scanned for affiliate keyword matches. Only pages with existing affiliate links/keywords will produce suggestions." /></label>
           <select
             className={`${inp} mt-1`}
             value={pageKey}
@@ -373,6 +384,7 @@ function AiInsertTab() {
         <Button onClick={runSuggest} disabled={!pageKey || busy}>
           <Sparkles className="h-4 w-4" /> {busy && suggestions.length === 0 ? "Analyzing…" : "Suggest links"}
         </Button>
+        <HelpTip text="Scans the selected page's body for any active affiliate keyword and lists each match so you can choose which ones to convert into tracked links." />
       </div>
 
       {suggestions.length > 0 && (
