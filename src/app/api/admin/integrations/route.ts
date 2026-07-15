@@ -5,6 +5,7 @@ import {
   saveIntegrationSettings,
   type IntegrationSettingKey
 } from "@/lib/integration-settings";
+import { recordIntegrationEvent, type IntegrationName } from "@/lib/integration-observability";
 
 export const dynamic = "force-dynamic";
 
@@ -31,8 +32,13 @@ export async function PUT(req: NextRequest) {
     smtpUsername: "smtp_username",
     smtpPassword: "smtp_password",
     smtpAlertEmail: "smtp_alert_email",
+    emailOauthClientId: "email_oauth_client_id",
+    emailOauthClientSecret: "email_oauth_client_secret",
+    emailOauthUser: "email_oauth_user",
     linkedinAccessToken: "linkedin_access_token",
     linkedinAuthorUrn: "linkedin_author_urn",
+    linkedinClientId: "linkedin_client_id",
+    linkedinClientSecret: "linkedin_client_secret",
     xApiKey: "x_api_key",
     xApiSecret: "x_api_secret",
     xAccessToken: "x_access_token",
@@ -55,11 +61,30 @@ export async function PUT(req: NextRequest) {
   for (const [field, key] of Object.entries(boolMap)) {
     if (typeof b[field] === "boolean") patch[key] = b[field] ? "true" : "false";
   }
+  // Enum field: only "password" or "oauth2" are accepted; anything else is ignored.
+  if (b.emailAuthType === "password" || b.emailAuthType === "oauth2") {
+    patch.email_auth_type = b.emailAuthType;
+  }
 
   try {
     await saveIntegrationSettings(patch);
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : "save failed" }, { status: 400 });
   }
+
+  // Best-effort activity note. Section is inferred from which keys were sent —
+  // the admin UI saves one integration's card at a time.
+  const keys = Object.keys(patch);
+  const integration: IntegrationName | null = keys.some((k) => k.startsWith("smtp_") || k.startsWith("email_"))
+    ? "email"
+    : keys.some((k) => k.startsWith("linkedin_"))
+      ? "linkedin"
+      : keys.some((k) => k.startsWith("x_"))
+        ? "x"
+        : null;
+  if (integration) {
+    void recordIntegrationEvent({ integration, kind: "config_saved", success: true, detail: null });
+  }
+
   return NextResponse.json(await getIntegrationsMasked());
 }

@@ -1,5 +1,6 @@
 import nodemailer, { type Transporter } from "nodemailer";
 import { getEmailConfig, type EmailConfig } from "@/lib/integration-settings";
+import { recordIntegrationEvent } from "@/lib/integration-observability";
 
 /**
  * Email-sending seam. Delivery uses SMTP credentials configured by the admin in
@@ -25,9 +26,13 @@ export interface SendEmailResult {
   error?: string;
 }
 
-/** A config is usable only when enabled and the essential SMTP fields are set. */
+/** A config is usable only when enabled and the essential fields for its auth type are set. */
 function isConfigUsable(c: EmailConfig): boolean {
-  return Boolean(c.enabled && c.host && c.username && c.password && c.fromEmail);
+  if (!c.enabled || !c.fromEmail) return false;
+  if (c.authType === "oauth2") {
+    return Boolean(c.oauthClientId && c.oauthClientSecret && c.oauthRefreshToken && c.oauthUser);
+  }
+  return Boolean(c.host && c.username && c.password);
 }
 
 /** Whether email delivery is enabled and fully configured. */
@@ -42,7 +47,26 @@ function formatFrom(c: EmailConfig): string {
   return c.fromName ? `${c.fromName} <${email}>` : email;
 }
 
-function buildTransport(c: EmailConfig): Transporter {
+/**
+ * Gmail OAuth2 sending: nodemailer's built-in "type: OAuth2" auth mints its own
+ * short-lived access token from the stored refresh token on every send — no
+ * extra dependency (no `googleapis`) needed. `service: "gmail"` sets the right
+ * SMTP host/port/secure defaults for Gmail.
+ */
+function buildOAuth2Transport(c: EmailConfig): Transporter {
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: c.oauthUser,
+      clientId: c.oauthClientId,
+      clientSecret: c.oauthClientSecret,
+      refreshToken: c.oauthRefreshToken
+    }
+  });
+}
+
+function buildPasswordTransport(c: EmailConfig): Transporter {
   const port = c.port || 587;
   return nodemailer.createTransport({
     host: c.host,
@@ -51,6 +75,10 @@ function buildTransport(c: EmailConfig): Transporter {
     secure: c.secure ?? port === 465,
     auth: { user: c.username, pass: c.password }
   });
+}
+
+function buildTransport(c: EmailConfig): Transporter {
+  return c.authType === "oauth2" ? buildOAuth2Transport(c) : buildPasswordTransport(c);
 }
 
 /** Send a single email. Returns delivered:false (never throws) on any failure. */
@@ -74,9 +102,11 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
       text: params.text,
       headers: params.headers
     });
+    void recordIntegrationEvent({ integration: "email", kind: "send", success: true, detail: params.subject });
     return { delivered: true };
   } catch (err) {
     const error = (err instanceof Error ? err.message : "send_failed").slice(0, 300);
+    void recordIntegrationEvent({ integration: "email", kind: "send", success: false, detail: error });
     return { delivered: false, error };
   }
 }

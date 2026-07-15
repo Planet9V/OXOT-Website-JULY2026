@@ -40,6 +40,17 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
 export function AdminShell({ email }: { email: string }) {
   const [section, setSection] = React.useState<Section>("overview");
 
+  // OAuth "connect" flows (LinkedIn / Gmail) redirect back to /admin with a
+  // status query param (?linkedin=..., ?email=...) or an explicit
+  // ?section=integrations — open the Integrations tab so the result is visible
+  // without the admin having to navigate there manually.
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("linkedin") || params.has("email") || params.get("section") === "integrations") {
+      setSection("integrations");
+    }
+  }, []);
+
   async function logout() {
     await fetch("/api/admin/logout", { method: "POST" }).catch(() => {});
     window.location.href = "/admin/login";

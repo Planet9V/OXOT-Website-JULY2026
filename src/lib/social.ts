@@ -126,6 +126,81 @@ export async function postLinkedIn(text: string, url?: string): Promise<PostOutc
 }
 
 // ---------------------------------------------------------------------------
+// LinkedIn — OAuth 2.0 "Connect" flow (admin console -> LinkedIn -> callback)
+// ---------------------------------------------------------------------------
+
+const LINKEDIN_OAUTH_SCOPES = "openid profile w_member_social";
+
+/** The exact redirect URI the admin must whitelist in their LinkedIn OAuth app. */
+export function getLinkedinRedirectUri(origin: string): string {
+  return `${origin.replace(/\/+$/, "")}/api/admin/social/linkedin/oauth/callback`;
+}
+
+/** Build the LinkedIn authorization URL the admin browser is redirected to. */
+export function buildLinkedinAuthUrl(origin: string, clientId: string, state: string): string {
+  const params = new URLSearchParams({
+    response_type: "code",
+    client_id: clientId,
+    redirect_uri: getLinkedinRedirectUri(origin),
+    scope: LINKEDIN_OAUTH_SCOPES,
+    state
+  });
+  return `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`;
+}
+
+export interface LinkedinTokenResult {
+  accessToken: string;
+  expiresAt: number | null; // epoch ms
+}
+
+/** Exchange an authorization code for an access token. Throws on failure. */
+export async function exchangeLinkedinCode(
+  origin: string,
+  code: string,
+  clientId: string,
+  clientSecret: string
+): Promise<LinkedinTokenResult> {
+  const body = new URLSearchParams({
+    grant_type: "authorization_code",
+    code,
+    redirect_uri: getLinkedinRedirectUri(origin),
+    client_id: clientId,
+    client_secret: clientSecret
+  });
+  const res = await fetch("https://www.linkedin.com/oauth/v2/accessToken", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString()
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => "");
+    throw new Error(`LinkedIn token exchange ${res.status}: ${detail}`);
+  }
+  const json = (await res.json()) as { access_token?: string; expires_in?: number };
+  if (!json.access_token) {
+    throw new Error("LinkedIn token response missing access_token");
+  }
+  const expiresAt = typeof json.expires_in === "number" ? Date.now() + json.expires_in * 1000 : null;
+  return { accessToken: json.access_token, expiresAt };
+}
+
+/** Verify a stored LinkedIn access token is still valid (used by the test/health check). */
+export async function verifyLinkedInToken(accessToken: string): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch("https://api.linkedin.com/v2/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      return { ok: false, error: `LinkedIn API ${res.status}: ${detail}` };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : "Unknown error" };
+  }
+}
+
+// ---------------------------------------------------------------------------
 // X / Twitter — OAuth 1.0a
 // ---------------------------------------------------------------------------
 
@@ -183,6 +258,27 @@ export function buildXAuthHeader(
       .map((k) => `${percentEncode(k)}="${percentEncode(oauthParams[k])}"`)
       .join(", ")
   );
+}
+
+/** Verify stored X OAuth 1.0a credentials are still valid (used by the test/health check). */
+export async function verifyXCredentials(
+  apiKey: string,
+  apiSecret: string,
+  accessToken: string,
+  accessSecret: string
+): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const url = "https://api.twitter.com/2/users/me";
+    const authHeader = buildXAuthHeader("GET", url, apiKey, apiSecret, accessToken, accessSecret);
+    const res = await fetch(url, { headers: { Authorization: authHeader } });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      return { ok: false, error: `X API ${res.status}: ${detail}` };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : "Unknown error" };
+  }
 }
 
 export async function postX(text: string, pageUrl?: string): Promise<PostOutcome> {

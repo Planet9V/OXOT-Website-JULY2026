@@ -553,3 +553,40 @@ async function processSend(newsletter: NewsletterRow, baseUrl: string): Promise<
 export async function getMailStatus(): Promise<{ configured: boolean }> {
   return { configured: await isMailConfigured() };
 }
+
+// --- scheduled sends (cron) --------------------------------------------------
+
+let scheduledSendsRunning = false;
+
+/**
+ * Find every newsletter with status='scheduled' AND scheduled_at <= now(), and
+ * send each one via the same sendNewsletterNow() pipeline (which itself
+ * atomically claims the row via the status guard, so this is safe to call
+ * concurrently with a manual "Send now" click). Single-flight guarded in
+ * process — a cron hit that arrives while a previous run is still sending is a
+ * no-op rather than a second overlapping pass. Intended to be invoked by
+ * GET/POST /api/cron on a schedule (e.g. Railway Cron every 5 minutes).
+ */
+export async function runDueScheduledSends(baseUrl: string): Promise<{ attempted: number; ids: number[] }> {
+  if (scheduledSendsRunning) return { attempted: 0, ids: [] };
+  scheduledSendsRunning = true;
+  try {
+    const { rows } = await pool.query<{ id: number }>(
+      `SELECT id FROM newsletters WHERE status = 'scheduled' AND scheduled_at <= now() ORDER BY scheduled_at ASC`
+    );
+    const ids: number[] = [];
+    for (const row of rows) {
+      try {
+        await sendNewsletterNow(row.id, baseUrl);
+        ids.push(row.id);
+      } catch (err) {
+        // A single newsletter's state-guard/send failure must not stop the
+        // rest of the due batch from being attempted.
+        console.error(`[newsletter] scheduled send failed for id=${row.id}:`, err);
+      }
+    }
+    return { attempted: rows.length, ids };
+  } finally {
+    scheduledSendsRunning = false;
+  }
+}

@@ -40,7 +40,7 @@ function decryptSecret(stored: string): string {
 
 /** All keys this module owns in app_settings. */
 export const INTEGRATION_SETTING_KEYS = [
-  // Email (SMTP)
+  // Email (SMTP / Gmail OAuth2)
   "email_enabled",
   "smtp_from_name",
   "smtp_from_email",
@@ -50,11 +50,19 @@ export const INTEGRATION_SETTING_KEYS = [
   "smtp_password",
   "smtp_alert_email",
   "smtp_secure",
+  "email_auth_type", // "password" | "oauth2"
+  "email_oauth_client_id",
+  "email_oauth_client_secret",
+  "email_oauth_refresh_token",
+  "email_oauth_user",
   // LinkedIn
   "linkedin_enabled",
   "linkedin_access_token",
+  "linkedin_token_expires_at", // epoch ms, stringified; set by the OAuth callback
   "linkedin_author_urn",
   "linkedin_auto_publish",
+  "linkedin_client_id",
+  "linkedin_client_secret",
   // X
   "x_enabled",
   "x_api_key",
@@ -69,7 +77,10 @@ export type IntegrationSettingKey = (typeof INTEGRATION_SETTING_KEYS)[number];
 /** Keys whose values are secrets (encrypted at rest, never returned to the client). */
 const SECRET_KEYS: ReadonlySet<IntegrationSettingKey> = new Set([
   "smtp_password",
+  "email_oauth_client_secret",
+  "email_oauth_refresh_token",
   "linkedin_access_token",
+  "linkedin_client_secret",
   "x_api_key",
   "x_api_secret",
   "x_access_token",
@@ -86,13 +97,21 @@ export interface EmailConfig {
   password: string; // decrypted; "" if unset
   alertEmail: string;
   secure: boolean;
+  authType: "password" | "oauth2";
+  oauthClientId: string;
+  oauthClientSecret: string; // decrypted; "" if unset
+  oauthRefreshToken: string; // decrypted; "" if unset
+  oauthUser: string;
 }
 
 export interface LinkedInConfig {
   enabled: boolean;
   accessToken: string; // decrypted; "" if unset
+  tokenExpiresAt: number | null; // epoch ms
   authorUrn: string;
   autoPublish: boolean;
+  clientId: string;
+  clientSecret: string; // decrypted; "" if unset
 }
 
 export interface XConfig {
@@ -130,7 +149,7 @@ function decryptOrEmpty(v: string | undefined): string {
   return v ? decryptSecret(v) : "";
 }
 
-/** Effective email config with the SMTP password decrypted. */
+/** Effective email config with the SMTP password / OAuth2 secrets decrypted. */
 export async function getEmailConfig(): Promise<EmailConfig> {
   const s = await readSettings();
   const port = Number(s.smtp_port);
@@ -143,18 +162,27 @@ export async function getEmailConfig(): Promise<EmailConfig> {
     username: s.smtp_username ?? "",
     password: decryptOrEmpty(s.smtp_password),
     alertEmail: s.smtp_alert_email ?? "",
-    secure: bool(s.smtp_secure)
+    secure: bool(s.smtp_secure),
+    authType: s.email_auth_type === "oauth2" ? "oauth2" : "password",
+    oauthClientId: s.email_oauth_client_id ?? "",
+    oauthClientSecret: decryptOrEmpty(s.email_oauth_client_secret),
+    oauthRefreshToken: decryptOrEmpty(s.email_oauth_refresh_token),
+    oauthUser: s.email_oauth_user ?? ""
   };
 }
 
-/** Effective LinkedIn config with the access token decrypted. */
+/** Effective LinkedIn config with the access token / client secret decrypted. */
 export async function getLinkedInConfig(): Promise<LinkedInConfig> {
   const s = await readSettings();
+  const expiresAt = Number(s.linkedin_token_expires_at);
   return {
     enabled: bool(s.linkedin_enabled),
     accessToken: decryptOrEmpty(s.linkedin_access_token),
+    tokenExpiresAt: Number.isFinite(expiresAt) && expiresAt > 0 ? expiresAt : null,
     authorUrn: s.linkedin_author_urn ?? "",
-    autoPublish: bool(s.linkedin_auto_publish)
+    autoPublish: bool(s.linkedin_auto_publish),
+    clientId: s.linkedin_client_id ?? "",
+    clientSecret: decryptOrEmpty(s.linkedin_client_secret)
   };
 }
 
@@ -178,6 +206,7 @@ export async function getXConfig(): Promise<XConfig> {
  */
 export async function getIntegrationsMasked() {
   const s = await readSettings();
+  const expiresAt = Number(s.linkedin_token_expires_at);
   return {
     // Email
     emailEnabled: bool(s.email_enabled),
@@ -189,11 +218,19 @@ export async function getIntegrationsMasked() {
     smtpPasswordSet: !!s.smtp_password,
     smtpAlertEmail: s.smtp_alert_email ?? "",
     smtpSecure: bool(s.smtp_secure),
+    emailAuthType: s.email_auth_type === "oauth2" ? "oauth2" : "password",
+    emailOauthClientId: s.email_oauth_client_id ?? "",
+    emailOauthClientSecretSet: !!s.email_oauth_client_secret,
+    emailOauthRefreshTokenSet: !!s.email_oauth_refresh_token,
+    emailOauthUser: s.email_oauth_user ?? "",
     // LinkedIn
     linkedinEnabled: bool(s.linkedin_enabled),
     linkedinAccessTokenSet: !!s.linkedin_access_token,
+    linkedinTokenExpiresAt: Number.isFinite(expiresAt) && expiresAt > 0 ? expiresAt : null,
     linkedinAuthorUrn: s.linkedin_author_urn ?? "",
     linkedinAutoPublish: bool(s.linkedin_auto_publish),
+    linkedinClientId: s.linkedin_client_id ?? "",
+    linkedinClientSecretSet: !!s.linkedin_client_secret,
     // X
     xEnabled: bool(s.x_enabled),
     xApiKeySet: !!s.x_api_key,
@@ -206,6 +243,12 @@ export async function getIntegrationsMasked() {
 }
 
 export type IntegrationsMasked = Awaited<ReturnType<typeof getIntegrationsMasked>>;
+
+/** Recipient for operational alert emails (expiring tokens): alertEmail, else fromEmail, else null. */
+export async function getAlertRecipient(): Promise<string | null> {
+  const c = await getEmailConfig();
+  return c.alertEmail?.trim() || c.fromEmail?.trim() || null;
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
