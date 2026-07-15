@@ -7,6 +7,7 @@ import { ROLE_LABELS, modelsForRole, catalogEntry, type ModelRole } from "@/lib/
 type Model = { id: string; label: string };
 type Masked = {
   ollamaHost: string; embedModel: string; embedDim: number;
+  embedProvider: "ollama" | "openrouter"; openrouterEmbedModel: string;
   chatProvider: "ollama" | "openrouter";
   ollamaChatModel: string; openrouterModel: string;
   openrouterKeySet: boolean; openrouterKeyLast4: string | null; openrouterKeyFromEnv: boolean;
@@ -37,6 +38,7 @@ const ROLE_FIELD: Record<ModelRole, RoleModelField | null> = {
 export function AiSettings() {
   const [form, setForm] = React.useState({
     ollamaHost: "", embedModel: "", chatProvider: "openrouter" as "ollama" | "openrouter",
+    embedProvider: "openrouter" as "ollama" | "openrouter", openrouterEmbedModel: "",
     ollamaChatModel: "", openrouterModel: "",
     chatModel: "", briefModel: "", translationModel: "", longContextModel: "", searchModel: ""
   });
@@ -55,6 +57,7 @@ export function AiSettings() {
     const d = (await res.json()) as Masked;
     setForm({
       ollamaHost: d.ollamaHost, embedModel: d.embedModel, chatProvider: d.chatProvider,
+      embedProvider: d.embedProvider ?? "openrouter", openrouterEmbedModel: d.openrouterEmbedModel ?? "",
       ollamaChatModel: d.ollamaChatModel, openrouterModel: d.openrouterModel,
       chatModel: d.chatModel, briefModel: d.briefModel, translationModel: d.translationModel,
       longContextModel: d.longContextModel, searchModel: d.searchModel
@@ -91,6 +94,7 @@ export function AiSettings() {
     try {
       const body: Record<string, string> = {
         ollamaHost: form.ollamaHost, embedModel: form.embedModel, chatProvider: form.chatProvider,
+        embedProvider: form.embedProvider, openrouterEmbedModel: form.openrouterEmbedModel,
         ollamaChatModel: form.ollamaChatModel, openrouterModel: form.openrouterModel,
         chatModel: form.chatModel, briefModel: form.briefModel, translationModel: form.translationModel,
         longContextModel: form.longContextModel, searchModel: form.searchModel
@@ -130,7 +134,6 @@ export function AiSettings() {
 
   const ollamaConfigured = !!form.ollamaHost.trim();
   const openrouterConfigured = meta.openrouterKeySet;
-  const embeddingModel = catalogEntry("qwen/qwen3-embedding-4b");
 
   return (
     <section className="max-w-3xl space-y-8">
@@ -203,10 +206,21 @@ export function AiSettings() {
               <p className="mt-0.5 text-xs text-muted-foreground">Automatic cloud fallback for generation, and required for the model catalog below (per-role assignments, embeddings, web search).</p>
               <div className="mt-2">
                 <label className={lbl}><KeyRound className="mr-1 inline h-3.5 w-3.5" /> OpenRouter API key</label>
-                <input type="password" autoComplete="off" className={`${inp} mt-1`} value={keyInput} onChange={(e) => setKeyInput(e.target.value)}
-                  placeholder={meta.openrouterKeySet ? `Key set ••••${meta.openrouterKeyLast4}${meta.openrouterKeyFromEnv ? " (from .env)" : ""} — leave blank to keep` : "sk-or-… (not set)"} />
+                {meta.openrouterKeySet ? (
+                  <div className="mt-1 flex items-center gap-2 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 text-sm text-foreground">
+                    <CheckCircle2 className="h-4 w-4 text-primary" />
+                    <span>Key saved — ••••{meta.openrouterKeyLast4}{meta.openrouterKeyFromEnv ? " (from .env)" : ""}</span>
+                  </div>
+                ) : (
+                  <div className="mt-1 flex items-center gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-sm text-foreground">
+                    <AlertTriangle className="h-4 w-4 text-amber-500" />
+                    <span>No key set — the assistant, translation, and embeddings can&apos;t reach OpenRouter until you save one.</span>
+                  </div>
+                )}
+                <input type="password" autoComplete="off" className={`${inp} mt-2`} value={keyInput} onChange={(e) => setKeyInput(e.target.value)}
+                  placeholder={meta.openrouterKeySet ? "Enter a new key to replace it, or leave blank to keep" : "sk-or-… paste your OpenRouter key"} />
                 <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
-                  <span>Stored in the database (never shown again).</span>
+                  <span>Stored encrypted in the database (never shown again). Click <strong className="text-foreground">Save settings</strong> below to persist.</span>
                   {meta.openrouterKeySet && !meta.openrouterKeyFromEnv && (
                     <button type="button" onClick={clearKey} className="text-red-500 hover:underline">Clear stored key</button>
                   )}
@@ -259,15 +273,33 @@ export function AiSettings() {
             );
           })}
 
-          {/* Embeddings — locked, informational only */}
-          <div>
+          {/* Embeddings — model + provider editable; dimension fixed at EMBED_DIM */}
+          <div className="rounded-lg border border-border p-3">
             <label className={lbl}>{ROLE_LABELS.embeddings}</label>
-            <select className={`${sel} mt-1`} value={embeddingModel?.id} disabled>
-              <option value={embeddingModel?.id}>{embeddingModel?.label} · {meta.embedDim} dims</option>
-            </select>
+            <div className="mt-2 grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="text-xs text-muted-foreground">Embedding provider</label>
+                <select className={`${sel} mt-1`} value={form.embedProvider} onChange={(e) => setForm({ ...form, embedProvider: e.target.value as "ollama" | "openrouter" })}>
+                  <option value="openrouter">OpenRouter (cloud)</option>
+                  <option value="ollama">Ollama (local)</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground">Vector dimension (fixed)</label>
+                <input className={`${inp} mt-1`} value={`${meta.embedDim || 1536} dims`} disabled />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground">OpenRouter embedding model</label>
+                <input className={`${inp} mt-1`} value={form.openrouterEmbedModel} onChange={(e) => setForm({ ...form, openrouterEmbedModel: e.target.value })} placeholder="qwen/qwen3-embedding-4b" />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground">Ollama embedding model (fallback)</label>
+                <input className={`${inp} mt-1`} list="ollama-models" value={form.embedModel} onChange={(e) => setForm({ ...form, embedModel: e.target.value })} placeholder="qwen3-embedding:4b" />
+              </div>
+            </div>
             <div className="mt-2 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 p-3 text-xs text-muted-foreground">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-              <span>Locked. Vector dimension <strong className="text-foreground">EMBED_DIM = {meta.embedDim}</strong> is fixed by the database schema. Changing the embedding model requires a new migration and a full re-index, so it isn&apos;t editable here.</span>
+              <span>You can change the embedding model, but the vector dimension <strong className="text-foreground">EMBED_DIM = {meta.embedDim || 1536}</strong> is fixed by the database schema — models that emit more dimensions are truncated to it (qwen3-embedding-4b emits 2560 → truncated to {meta.embedDim || 1536}). Pick a model that emits at least {meta.embedDim || 1536} dims. After changing the model, click <strong className="text-foreground">Rebuild now</strong> above to re-embed all content.</span>
             </div>
           </div>
         </div>

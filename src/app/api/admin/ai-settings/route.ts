@@ -19,6 +19,8 @@ export async function PUT(req: NextRequest) {
   const map: Record<string, AiSettingKey> = {
     ollamaHost: "ollama_host",
     embedModel: "embed_model",
+    embedProvider: "embed_provider",
+    openrouterEmbedModel: "openrouter_embed_model",
     chatProvider: "chat_provider",
     ollamaChatModel: "ollama_chat_model",
     openrouterModel: "openrouter_model",
@@ -29,6 +31,10 @@ export async function PUT(req: NextRequest) {
     longContextModel: "long_context_model",
     searchModel: "search_model"
   };
+  // Guard the embedding provider enum too.
+  if (typeof b.embedProvider === "string" && b.embedProvider !== "ollama" && b.embedProvider !== "openrouter") {
+    return NextResponse.json({ error: "embedProvider must be 'ollama' or 'openrouter'" }, { status: 400 });
+  }
 
   const patch: Partial<Record<AiSettingKey, string>> = {};
   for (const [field, key] of Object.entries(map)) {
