@@ -39,6 +39,7 @@ export async function PUT(req: NextRequest) {
     linkedinAuthorUrn: "linkedin_author_urn",
     linkedinClientId: "linkedin_client_id",
     linkedinClientSecret: "linkedin_client_secret",
+    linkedinProfileUrl: "linkedin_profile_url",
     xApiKey: "x_api_key",
     xApiSecret: "x_api_secret",
     xAccessToken: "x_access_token",

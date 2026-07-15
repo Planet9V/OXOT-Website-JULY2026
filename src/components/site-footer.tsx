@@ -5,7 +5,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { CookieSettingsButton } from "@/components/cookie-consent";
-import { SOCIALS } from "@/lib/socials";
+import type { SocialLink } from "@/lib/socials";
 
 // Contact address, shared with the legal pages.
 const CONTACT_EMAIL = "hello@oxot.eu";
@@ -28,7 +28,7 @@ const T = {
   }
 } as const;
 
-export async function SiteFooter({ locale }: { locale: Locale }) {
+export async function SiteFooter({ locale, socials }: { locale: Locale; socials: readonly SocialLink[] }) {
   const t = T[locale as "en" | "nl"] ?? T.en;
   const f = getDictionary(locale).footer;
   let items: { label: string; href: string }[] = [];
@@ -75,19 +75,21 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
         </nav>
 
         {/* Connect */}
-        <nav aria-label={f.connect}>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">{f.connect}</p>
-          <ul className="mt-4 space-y-2">
-            {SOCIALS.map((s) => (
-              <li key={s.label}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer"
-                  className="text-sm text-foreground/70 no-underline transition-colors duration-150 ease-brand hover:text-primary">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {socials.length > 0 && (
+          <nav aria-label={f.connect}>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">{f.connect}</p>
+            <ul className="mt-4 space-y-2">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer"
+                    className="text-sm text-foreground/70 no-underline transition-colors duration-150 ease-brand hover:text-primary">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         {/* Language */}
         <div>

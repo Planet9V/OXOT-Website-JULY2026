@@ -63,6 +63,7 @@ export const INTEGRATION_SETTING_KEYS = [
   "linkedin_auto_publish",
   "linkedin_client_id",
   "linkedin_client_secret",
+  "linkedin_profile_url", // public, non-secret: company/profile URL shown in footer + social feed
   // X
   "x_enabled",
   "x_api_key",
@@ -112,6 +113,7 @@ export interface LinkedInConfig {
   autoPublish: boolean;
   clientId: string;
   clientSecret: string; // decrypted; "" if unset
+  profileUrl: string; // public, non-secret company/profile URL
 }
 
 export interface XConfig {
@@ -182,7 +184,8 @@ export async function getLinkedInConfig(): Promise<LinkedInConfig> {
     authorUrn: s.linkedin_author_urn ?? "",
     autoPublish: bool(s.linkedin_auto_publish),
     clientId: s.linkedin_client_id ?? "",
-    clientSecret: decryptOrEmpty(s.linkedin_client_secret)
+    clientSecret: decryptOrEmpty(s.linkedin_client_secret),
+    profileUrl: s.linkedin_profile_url ?? ""
   };
 }
 
@@ -231,6 +234,7 @@ export async function getIntegrationsMasked() {
     linkedinAutoPublish: bool(s.linkedin_auto_publish),
     linkedinClientId: s.linkedin_client_id ?? "",
     linkedinClientSecretSet: !!s.linkedin_client_secret,
+    linkedinProfileUrl: s.linkedin_profile_url ?? "",
     // X
     xEnabled: bool(s.x_enabled),
     xApiKeySet: !!s.x_api_key,

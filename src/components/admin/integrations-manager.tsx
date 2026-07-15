@@ -28,6 +28,7 @@ type Masked = {
   linkedinAutoPublish: boolean;
   linkedinClientId: string;
   linkedinClientSecretSet: boolean;
+  linkedinProfileUrl: string;
   xEnabled: boolean;
   xApiKeySet: boolean;
   xApiSecretSet: boolean;
@@ -247,7 +248,8 @@ export function IntegrationsManager() {
   const [testTo, setTestTo] = React.useState("");
 
   const [linkedin, setLinkedin] = React.useState({
-    linkedinEnabled: false, linkedinAuthorUrn: "", linkedinAutoPublish: false, linkedinClientId: "", linkedinTokenExpiresAt: null as number | null
+    linkedinEnabled: false, linkedinAuthorUrn: "", linkedinAutoPublish: false, linkedinClientId: "",
+    linkedinTokenExpiresAt: null as number | null, linkedinProfileUrl: ""
   });
   const [linkedinToken, setLinkedinToken] = React.useState("");
   const [linkedinTokenSet, setLinkedinTokenSet] = React.useState(false);
@@ -282,7 +284,7 @@ export function IntegrationsManager() {
     setEmailOauthRefreshTokenSet(d.emailOauthRefreshTokenSet);
     setLinkedin({
       linkedinEnabled: d.linkedinEnabled, linkedinAuthorUrn: d.linkedinAuthorUrn, linkedinAutoPublish: d.linkedinAutoPublish,
-      linkedinClientId: d.linkedinClientId, linkedinTokenExpiresAt: d.linkedinTokenExpiresAt
+      linkedinClientId: d.linkedinClientId, linkedinTokenExpiresAt: d.linkedinTokenExpiresAt, linkedinProfileUrl: d.linkedinProfileUrl
     });
     setLinkedinTokenSet(d.linkedinAccessTokenSet);
     setLinkedinClientSecretSet(d.linkedinClientSecretSet);
@@ -392,7 +394,8 @@ export function IntegrationsManager() {
   function saveLinkedin() {
     const body: Record<string, unknown> = {
       linkedinEnabled: linkedin.linkedinEnabled, linkedinAuthorUrn: linkedin.linkedinAuthorUrn,
-      linkedinAutoPublish: linkedin.linkedinAutoPublish, linkedinClientId: linkedin.linkedinClientId
+      linkedinAutoPublish: linkedin.linkedinAutoPublish, linkedinClientId: linkedin.linkedinClientId,
+      linkedinProfileUrl: linkedin.linkedinProfileUrl
     };
     if (linkedinToken.trim()) body.linkedinAccessToken = linkedinToken.trim();
     if (linkedinClientSecret.trim()) body.linkedinClientSecret = linkedinClientSecret.trim();
@@ -595,6 +598,11 @@ export function IntegrationsManager() {
           <div>
             <label className={lbl}>Author URN</label>
             <input className={`${inp} mt-1`} value={linkedin.linkedinAuthorUrn} onChange={(e) => setLinkedin({ ...linkedin, linkedinAuthorUrn: e.target.value })} placeholder="urn:li:organization:12345" />
+          </div>
+          <div>
+            <label className={lbl}>Company / profile URL</label>
+            <input className={`${inp} mt-1`} value={linkedin.linkedinProfileUrl} onChange={(e) => setLinkedin({ ...linkedin, linkedinProfileUrl: e.target.value })} placeholder="https://www.linkedin.com/company/oxot" />
+            <p className="mt-1 text-xs text-muted-foreground">Public — shown on the site's Follow Along card and footer link.</p>
           </div>
           <div>
             <label className={lbl}>Access token</label>

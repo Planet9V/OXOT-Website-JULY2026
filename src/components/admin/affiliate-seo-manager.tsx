@@ -4,15 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
-  Link2, Search, Plus, Pencil, Trash2, Save, CheckCircle2, XCircle, ExternalLink,
+  Link2, Search, Plus, Pencil, Trash2, Save, CheckCircle2, XCircle, ExternalLink, Sparkles,
 } from "lucide-react";
 
 // Ported from the source Affiliate & SEO admin (Celestial-Agent-Nexus:
 // artifacts/oxot-web/src/pages/admin-seo.tsx). Adapted to this app's plain
 // admin styling (matches integrations-manager.tsx) and raw-pg backed routes.
-// The source's "AI Link Insertion" tab is intentionally omitted: it depends on
-// the source's page-section / draft-versioning CMS which does not exist in this
-// app (pages store a single markdown body).
+// The "AI Link Insertion" tab (source: admin-seo.tsx AiInsertionTab, backed by
+// suggestAffiliateLinks/applyAffiliateLinks) is adapted to this app's
+// single-body page model: instead of scanning page-section JSON, it scans a
+// page's markdown `body` directly (see src/lib/affiliate.ts).
 
 const inp = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm";
 const lbl = "text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground";
@@ -239,6 +240,171 @@ function AffiliateTab() {
   );
 }
 
+// --- AI Link Insertion tab ------------------------------------------------
+
+type PageOption = { slug: string; locale: string; title: string; published: boolean };
+
+type Suggestion = {
+  affiliateLinkId: number;
+  linkName: string;
+  keyword: string;
+  snippet: string;
+  occurrenceIndex: number;
+};
+
+function AiInsertTab() {
+  const [pages, setPages] = React.useState<PageOption[]>([]);
+  const [pageKey, setPageKey] = React.useState("");
+  const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
+  const [selected, setSelected] = React.useState<Set<number>>(new Set());
+  const [status, setStatus] = React.useState<Status>({ kind: "idle", msg: "" });
+  const [busy, setBusy] = React.useState(false);
+
+  React.useEffect(() => {
+    (async () => {
+      const res = await fetch("/api/admin/pages");
+      if (res.ok) setPages(((await res.json()) as { pages: PageOption[] }).pages);
+    })();
+  }, []);
+
+  const [slug, locale] = pageKey ? pageKey.split("::") : ["", ""];
+
+  async function runSuggest() {
+    if (!slug || !locale) return;
+    setBusy(true);
+    setStatus({ kind: "idle", msg: "" });
+    setSuggestions([]);
+    setSelected(new Set());
+    try {
+      const res = await fetch("/api/admin/affiliate/suggest", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ slug, locale }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { suggestions?: Suggestion[]; error?: string };
+      if (!res.ok) {
+        setStatus({ kind: "err", msg: data.error ?? "Could not generate suggestions." });
+        return;
+      }
+      const found = data.suggestions ?? [];
+      setSuggestions(found);
+      setSelected(new Set(found.map((_, i) => i)));
+      if (found.length === 0) setStatus({ kind: "ok", msg: "No keyword matches found for this page." });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function runApply() {
+    const chosen = suggestions.filter((_, i) => selected.has(i));
+    if (chosen.length === 0) return;
+    setBusy(true);
+    setStatus({ kind: "idle", msg: "" });
+    try {
+      const res = await fetch("/api/admin/affiliate/apply", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          slug,
+          locale,
+          selections: chosen.map((s) => ({
+            affiliateLinkId: s.affiliateLinkId,
+            keyword: s.keyword,
+            occurrenceIndex: s.occurrenceIndex,
+          })),
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { inserted?: number; error?: string };
+      if (!res.ok) {
+        setStatus({ kind: "err", msg: data.error ?? "Could not apply links." });
+        return;
+      }
+      setStatus({
+        kind: "ok",
+        msg: `Inserted ${data.inserted ?? 0} link(s) into the page. The prior version is saved in page history.`,
+      });
+      setSuggestions([]);
+      setSelected(new Set());
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function toggle(i: number) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  }
+
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-muted-foreground">
+        Find keyword matches in a page&apos;s body and turn them into tracked partner links
+        (<code className="mx-1 rounded bg-muted px-1">/api/go/&lt;id&gt;</code>). The page&apos;s
+        current content is snapshotted to history before anything changes.
+      </p>
+
+      <StatusBar status={status} />
+
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="min-w-[260px]">
+          <label className={lbl}>Page</label>
+          <select
+            className={`${inp} mt-1`}
+            value={pageKey}
+            onChange={(e) => {
+              setPageKey(e.target.value);
+              setSuggestions([]);
+              setSelected(new Set());
+              setStatus({ kind: "idle", msg: "" });
+            }}
+          >
+            <option value="">Choose a page…</option>
+            {pages.map((p) => (
+              <option key={`${p.slug}::${p.locale}`} value={`${p.slug}::${p.locale}`}>
+                {p.title} · /{p.slug} ({p.locale})
+              </option>
+            ))}
+          </select>
+        </div>
+        <Button onClick={runSuggest} disabled={!pageKey || busy}>
+          <Sparkles className="h-4 w-4" /> {busy && suggestions.length === 0 ? "Analyzing…" : "Suggest links"}
+        </Button>
+      </div>
+
+      {suggestions.length > 0 && (
+        <div className="divide-y divide-border overflow-hidden rounded-xl border border-border">
+          {suggestions.map((s, i) => (
+            <label key={i} className="flex cursor-pointer items-start gap-3 p-4 hover:bg-muted/30">
+              <input
+                type="checkbox"
+                className="mt-1 h-4 w-4"
+                checked={selected.has(i)}
+                onChange={() => toggle(i)}
+              />
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="secondary">{s.linkName}</Badge>
+                  <span className="text-sm font-medium">&quot;{s.keyword}&quot;</span>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">{s.snippet}</p>
+              </div>
+            </label>
+          ))}
+          <div className="flex justify-end p-4">
+            <Button onClick={runApply} disabled={busy || selected.size === 0}>
+              {busy ? "Applying…" : `Apply ${selected.size} to page`}
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // --- SEO tab -------------------------------------------------------------
 
 type SeoPage = {
@@ -415,9 +581,11 @@ export function AffiliateSeoManager() {
       <Tabs defaultValue="affiliate">
         <TabsList>
           <TabsTrigger value="affiliate"><Link2 className="mr-2 h-4 w-4" /> Affiliate Links</TabsTrigger>
+          <TabsTrigger value="ai-insert"><Sparkles className="mr-2 h-4 w-4" /> AI Link Insertion</TabsTrigger>
           <TabsTrigger value="seo"><Search className="mr-2 h-4 w-4" /> SEO Metadata</TabsTrigger>
         </TabsList>
         <TabsContent value="affiliate"><AffiliateTab /></TabsContent>
+        <TabsContent value="ai-insert"><AiInsertTab /></TabsContent>
         <TabsContent value="seo"><SeoTab /></TabsContent>
       </Tabs>
     </section>

@@ -6,7 +6,7 @@ import { ChatWidget } from "@/components/agent/chat-widget";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { SocialFeed } from "@/components/social-feed";
-import { SOCIALS } from "@/lib/socials";
+import { getPublicSocials } from "@/lib/socials";
 import { CookieConsent } from "@/components/cookie-consent";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
 
@@ -26,13 +26,14 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
+  const socials = await getPublicSocials();
   return (
     <div lang={locale}>
       <SiteNav locale={locale} />
       {children}
       {/* Standard on every page: "Follow Along" social feed, then the footer. */}
-      <SocialFeed socialLinks={SOCIALS} strings={t.footer.social} />
-      <SiteFooter locale={locale} />
+      <SocialFeed socialLinks={socials} strings={t.footer.social} />
+      <SiteFooter locale={locale} socials={socials} />
       <CookieConsent locale={locale} strings={t.cookies} />
       <ChatWidget locale={locale} strings={t.agent} />
       <AnalyticsTracker />
