@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { FileText, Trash2, Pencil, Wand2, Braces, History, RotateCcw } from "lucide-react";
+import { FileText, Trash2, Pencil, Wand2, Braces, History, RotateCcw, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -39,6 +39,7 @@ export function PagesManager() {
   const [versions, setVersions] = useState<VersionSummary[]>([]);
   const [preview, setPreview] = useState<VersionFull | null>(null);
   const [historyMsg, setHistoryMsg] = useState("");
+  const [translating, setTranslating] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const res = await fetch("/api/admin/pages");
@@ -92,6 +93,28 @@ export function PagesManager() {
 
   async function del(slug: string, locale: string) {
     await fetch(`/api/admin/pages?slug=${slug}&locale=${locale}`, { method: "DELETE" });
+    void load();
+  }
+
+  async function translate(slug: string, locale: string) {
+    const target = locale === "en" ? "nl" : "en";
+    if (
+      !window.confirm(
+        `Translate "${slug}" (${locale}) into ${target}? This will overwrite the current ${target} version. ` +
+          `Its prior content is saved to version history first and can be restored from there.`
+      )
+    )
+      return;
+    setTranslating(`${slug}-${locale}`);
+    setMsg("");
+    const res = await fetch("/api/admin/pages/translate", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ slug, sourceLocale: locale }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setTranslating(null);
+    if (!res.ok) { setMsg(data.error ?? "Translation failed."); return; }
+    setMsg(`Translated ${slug} · ${data.targetLocale}. Review it in the editor — the prior version is in history and can be restored if the translation needs work.`);
     void load();
   }
 
@@ -163,6 +186,12 @@ export function PagesManager() {
                         <Button variant="ghost" size="icon" title="Version history"
                           onClick={() => openHistory(r.slug, r.locale)}>
                           <History className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon"
+                          title={`Translate → ${r.locale === "en" ? "NL" : "EN"}`}
+                          disabled={translating === `${r.slug}-${r.locale}`}
+                          onClick={() => translate(r.slug, r.locale)}>
+                          <Languages className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon" title="Delete" onClick={() => del(r.slug, r.locale)}>
                           <Trash2 className="h-4 w-4 text-destructive" />
