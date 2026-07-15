@@ -9,7 +9,7 @@ import { HomeApproach } from "@/components/home/home-approach";
 import { HomeTwin } from "@/components/home/home-twin";
 import { HomeFrameworks } from "@/components/home/home-frameworks";
 import { HomeCta } from "@/components/home/home-cta";
-import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
+import { alternates } from "@/lib/seo";
 
 // Read the CMS content fresh on every request so admin edits appear immediately.
 export const dynamic = "force-dynamic";
@@ -42,7 +42,6 @@ export default async function IndustrialOperations({
 
   return (
     <main className="editorial">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd()) }} />
       <div className="ed-toggle"><ThemeToggle label={t.theme.toggle} /></div>
       <div className="ed-wrap">
         <HomeHero hero={hero} locale={locale} />

@@ -4,7 +4,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getSummary, type ConformitySummary } from "@/lib/conformity";
 import { getConformityHome } from "@/lib/conformity-home";
-import { alternates, organizationJsonLd, jsonLdScript } from "@/lib/seo";
+import { alternates } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Reveal } from "@/components/motion/fx";
 import { ConsultingCarousel } from "@/components/conformity-home/consulting-carousel";
@@ -70,10 +70,6 @@ export default async function Home({
       data-themes={summary.themeCount}
       data-mappings={summary.mappingCount}
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd()) }}
-      />
       <div className="mx-auto flex max-w-6xl justify-end px-4 pt-4">
         <ThemeToggle label={t.theme.toggle} />
       </div>

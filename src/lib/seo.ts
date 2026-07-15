@@ -33,7 +33,7 @@ export function ogImageUrl(image?: string | null): string {
   return img.startsWith("http") ? img : `${SITE_URL}${img}`;
 }
 
-export function organizationJsonLd() {
+export function organizationJsonLd(opts?: { sameAs?: string[] }) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -41,7 +41,17 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
     description:
-      "OXOT — operational-technology (OT) cybersecurity consultancy. IEC 62443, NIS2, the EU Cyber Resilience Act and the AI Act, applied to industrial and critical-infrastructure environments."
+      "OXOT — operational-technology (OT) cybersecurity consultancy. IEC 62443, NIS2, the EU Cyber Resilience Act and the AI Act, applied to industrial and critical-infrastructure environments.",
+    ...(opts?.sameAs && opts.sameAs.length > 0 ? { sameAs: opts.sameAs } : {})
+  };
+}
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: SITE_URL
   };
 }
 

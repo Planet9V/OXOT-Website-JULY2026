@@ -164,6 +164,24 @@
   "theme": {
     "toggle": "Thema wisselen"
   },
+  "a11y": {
+    "skipToContent": "Ga naar hoofdinhoud"
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "body": "De pagina die u zoekt bestaat niet (meer) of is verplaatst. We helpen u graag verder.",
+    "backHome": "Terug naar home",
+    "contact": "Neem contact op"
+  },
+  "newsletterResult": {
+    "confirmedTitle": "Aanmelding bevestigd",
+    "confirmedBody": "Bedankt — uw aanmelding is bevestigd. U ontvangt voortaan OXOT-compliance-updates.",
+    "unsubscribedTitle": "U bent afgemeld",
+    "unsubscribedBody": "U bent afgemeld voor OXOT-updates. Jammer dat u vertrekt.",
+    "invalidTitle": "Link ongeldig of verlopen",
+    "invalidBody": "Deze link is ongeldig of is al gebruikt.",
+    "backHome": "Terug naar OXOT"
+  },
   "agent": {
     "title": "Vraag het OXOT",
     "greeting": "Hallo — stel me gerust een vraag over deze pagina.",

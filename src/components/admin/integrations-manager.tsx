@@ -3,6 +3,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Save, Send, CheckCircle2, XCircle, Plug, RefreshCw } from "lucide-react";
 import { SetupGuide, HelpTip } from "@/components/admin/setup-guide";
+import { ClipboardButton } from "@/components/admin/clipboard-button";
 
 const inp = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm";
 const lbl = "text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground";
@@ -205,7 +206,7 @@ function ActivityFeed({ items, loading, filter, onFilter, onRefresh, refreshing 
               </button>
             ))}
           </div>
-          <button type="button" onClick={onRefresh} title="Refresh" className="rounded-md p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground">
+          <button type="button" onClick={onRefresh} title="Refresh" aria-label="Refresh activity" className="rounded-md p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground">
             <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
           </button>
         </div>
@@ -571,7 +572,10 @@ export function IntegrationsManager() {
               </div>
               <div className="sm:col-span-2 rounded-md border border-border p-3 text-xs text-muted-foreground">
                 <p className="inline-flex items-center gap-1.5">Whitelist this redirect URI in your Google Cloud OAuth client: <HelpTip text="Paste this exact URL into the OAuth client's Authorized redirect URIs list in Google Cloud Console, then Save there before connecting." /></p>
-                <code className="mt-1 block break-all rounded bg-muted px-2 py-1">{gmailRedirectUri}</code>
+                <div className="mt-1 flex items-center gap-2">
+                  <code className="block break-all rounded bg-muted px-2 py-1">{gmailRedirectUri}</code>
+                  <ClipboardButton value={gmailRedirectUri} label="Gmail redirect URI" />
+                </div>
                 <p className="mt-2">{emailOauthRefreshTokenSet ? "Gmail is connected." : "Save the Client ID/secret above, then click Connect Google."}</p>
               </div>
             </>
@@ -650,7 +654,10 @@ export function IntegrationsManager() {
           </div>
           <div className="sm:col-span-2 rounded-md border border-border p-3 text-xs text-muted-foreground">
             <p className="inline-flex items-center gap-1.5">Whitelist this redirect URI in your LinkedIn OAuth app (Auth &gt; OAuth 2.0 settings): <HelpTip text="Copy this URL into the LinkedIn app's Auth tab under Authorized redirect URLs. It must match exactly, including https:// and no trailing slash." /></p>
-            <code className="mt-1 block break-all rounded bg-muted px-2 py-1">{linkedinRedirectUri || "Loading…"}</code>
+            <div className="mt-1 flex items-center gap-2">
+              <code className="block break-all rounded bg-muted px-2 py-1">{linkedinRedirectUri || "Loading…"}</code>
+              {linkedinRedirectUri && <ClipboardButton value={linkedinRedirectUri} label="LinkedIn redirect URI" />}
+            </div>
           </div>
         </div>
 

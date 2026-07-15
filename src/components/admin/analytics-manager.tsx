@@ -5,6 +5,7 @@ import {
 } from "recharts";
 import { Eye, Users, MousePointerClick } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton, SkeletonBlock } from "@/components/admin/skeleton";
 
 // Ported from the source admin analytics page (artifacts/oxot-web/src/pages/
 // admin-analytics.tsx). First-party traffic + engagement. Fetches from
@@ -30,8 +31,8 @@ const RANGES = [
   { label: "90 days", value: 90 },
 ];
 
-function Kpi({ icon: Icon, label, value }: {
-  icon: React.ElementType; label: string; value: number;
+function Kpi({ icon: Icon, label, value, loading }: {
+  icon: React.ElementType; label: string; value: number; loading: boolean;
 }) {
   return (
     <Card className="transition-shadow hover:shadow-md">
@@ -39,11 +40,28 @@ function Kpi({ icon: Icon, label, value }: {
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Icon className="h-4 w-4" /> {label}
         </div>
-        <div className="mt-2 text-3xl font-semibold tracking-tight tabular-nums">
-          {value.toLocaleString()}
-        </div>
+        {loading ? (
+          <Skeleton className="mt-2 h-8 w-20" />
+        ) : (
+          <div className="mt-2 text-3xl font-semibold tracking-tight tabular-nums">
+            {value.toLocaleString()}
+          </div>
+        )}
       </CardContent>
     </Card>
+  );
+}
+
+function ListSkeleton({ rows = 4 }: { rows?: number }) {
+  return (
+    <ul className="space-y-2">
+      {Array.from({ length: rows }).map((_, i) => (
+        <li key={i} className="flex justify-between gap-2">
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="h-4 w-8" />
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -87,9 +105,9 @@ export function AnalyticsManager() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Kpi icon={Eye} label="Page views" value={data?.totalViews ?? 0} />
-        <Kpi icon={Users} label="Unique visitors" value={data?.uniqueVisitors ?? 0} />
-        <Kpi icon={MousePointerClick} label="Outbound clicks" value={data?.totalClicks ?? 0} />
+        <Kpi icon={Eye} label="Page views" value={data?.totalViews ?? 0} loading={loading} />
+        <Kpi icon={Users} label="Unique visitors" value={data?.uniqueVisitors ?? 0} loading={loading} />
+        <Kpi icon={MousePointerClick} label="Outbound clicks" value={data?.totalClicks ?? 0} loading={loading} />
       </div>
 
       <Card>
@@ -97,7 +115,9 @@ export function AnalyticsManager() {
           <CardTitle className="text-base">Views over time</CardTitle>
         </CardHeader>
         <CardContent>
-          {!loading && data && data.viewsByDay.length === 0 ? (
+          {loading ? (
+            <SkeletonBlock className="h-64" />
+          ) : data && data.viewsByDay.length === 0 ? (
             <p className="py-12 text-center text-sm text-muted-foreground">
               No visits recorded in this range yet.
             </p>
@@ -127,7 +147,7 @@ export function AnalyticsManager() {
         <Card>
           <CardHeader><CardTitle className="text-base">Top pages</CardTitle></CardHeader>
           <CardContent>
-            {data && data.topPages.length > 0 ? (
+            {loading ? <ListSkeleton /> : data && data.topPages.length > 0 ? (
               <ul className="space-y-2">
                 {data.topPages.map((p) => (
                   <li key={p.path} className="flex justify-between text-sm">
@@ -145,7 +165,7 @@ export function AnalyticsManager() {
         <Card>
           <CardHeader><CardTitle className="text-base">Top referrers</CardTitle></CardHeader>
           <CardContent>
-            {data && data.topReferrers.length > 0 ? (
+            {loading ? <ListSkeleton /> : data && data.topReferrers.length > 0 ? (
               <ul className="space-y-2">
                 {data.topReferrers.map((r) => (
                   <li key={r.referrer} className="flex justify-between text-sm">
@@ -163,7 +183,7 @@ export function AnalyticsManager() {
         <Card>
           <CardHeader><CardTitle className="text-base">Devices</CardTitle></CardHeader>
           <CardContent>
-            {data && data.deviceBreakdown.length > 0 ? (
+            {loading ? <ListSkeleton /> : data && data.deviceBreakdown.length > 0 ? (
               <ul className="space-y-2">
                 {data.deviceBreakdown.map((d) => (
                   <li key={d.device} className="flex justify-between text-sm">
@@ -182,7 +202,7 @@ export function AnalyticsManager() {
       <Card>
         <CardHeader><CardTitle className="text-base">Top outbound links</CardTitle></CardHeader>
         <CardContent>
-          {data && data.topOutbound.length > 0 ? (
+          {loading ? <ListSkeleton /> : data && data.topOutbound.length > 0 ? (
             <ul className="space-y-2">
               {data.topOutbound.map((l) => (
                 <li key={l.href} className="flex justify-between gap-2 text-sm">

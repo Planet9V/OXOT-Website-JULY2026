@@ -12,6 +12,11 @@ export interface Page {
   ogImage: string | null;
   contentType: string;
   publishedAt: Date | null;
+  ogTitle: string | null;
+  ogDescription: string | null;
+  canonicalUrl: string | null;
+  metaKeywords: string | null;
+  noindex: boolean;
 }
 export interface MenuItem { label: string; href: string; }
 export interface ArticleSummary { slug: string; title: string; excerpt: string | null }
@@ -27,7 +32,12 @@ export async function getPublishedPage(
             excerpt,
             og_image         AS "ogImage",
             content_type     AS "contentType",
-            published_at     AS "publishedAt"
+            published_at     AS "publishedAt",
+            og_title         AS "ogTitle",
+            og_description   AS "ogDescription",
+            canonical_url    AS "canonicalUrl",
+            meta_keywords    AS "metaKeywords",
+            noindex
        FROM pages
       WHERE slug=$1 AND locale=$2 AND published=true LIMIT 1`,
     [slug, locale]

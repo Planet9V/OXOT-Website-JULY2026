@@ -72,6 +72,17 @@
   }
   * { border-color: hsl(var(--border)); }
   html { scroll-behavior: smooth; }
+  /* Global focus-visible ring — keyboard-navigation visibility on interactive
+     elements, on top of any component-specific focus ring (e.g. Button's). */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
   /* Global reduced-motion guard — belt-and-suspenders across all components. */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -95,6 +106,26 @@
   /* Signature uppercase, letter-spaced orange kicker label. */
   .oxot-kicker {
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary;
+  }
+
+  /* Skip-to-content link — visually hidden until focused (keyboard nav), then
+     pinned top-left above everything so it's the first thing a keyboard user
+     can act on. */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: hsl(var(--primary));
+    color: hsl(var(--on-accent));
+    padding: 0.75rem 1.25rem;
+    border-radius: 0 0 var(--radius) 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 0;
   }
 
   /* Diagram panel — the inline ```svg figures draw light strokes/text

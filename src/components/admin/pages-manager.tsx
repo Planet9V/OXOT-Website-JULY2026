@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { FileText, Trash2, Pencil, Wand2, Braces, History, RotateCcw, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { RichEditor } from "@/components/admin/editor/rich-editor";
+import { SkeletonRows } from "@/components/admin/skeleton";
 
 type Row = { slug: string; locale: string; title: string; contentType: string; published: boolean };
 type Form = {
@@ -40,6 +41,12 @@ export function PagesManager() {
   const [preview, setPreview] = useState<VersionFull | null>(null);
   const [historyMsg, setHistoryMsg] = useState("");
   const [translating, setTranslating] = useState<string | null>(null);
+  const [initialLoading, setInitialLoading] = useState(true);
+
+  // Unsaved-changes tracking: `loadedFormRef` is the last saved/loaded snapshot of
+  // the editor form. `dirty` is derived by comparing the live `form` against it.
+  const loadedFormRef = useRef<Form>(EMPTY);
+  const [dirty, setDirty] = useState(false);
 
   const load = useCallback(async () => {
     const res = await fetch("/api/admin/pages");
@@ -49,7 +56,27 @@ export function PagesManager() {
     const res = await fetch("/api/admin/menu-items?menu=main");
     if (res.ok) setMenuTops((await res.json()).items);
   }, []);
-  useEffect(() => { void load(); void loadMenu(); }, [load, loadMenu]);
+  useEffect(() => { void load().finally(() => setInitialLoading(false)); void loadMenu(); }, [load, loadMenu]);
+
+  useEffect(() => {
+    setDirty(JSON.stringify(form) !== JSON.stringify(loadedFormRef.current));
+  }, [form]);
+
+  // Warn on tab close/refresh only while there are unsaved edits.
+  useEffect(() => {
+    if (!dirty) return;
+    function handler(e: BeforeUnloadEvent) {
+      e.preventDefault();
+      e.returnValue = "";
+    }
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
+
+  function confirmDiscardIfDirty(): boolean {
+    if (!dirty) return true;
+    return window.confirm("You have unsaved changes — discard them?");
+  }
 
   // Add the page currently in the editor to the main menu (optionally under a parent).
   async function addToMenu() {
@@ -65,17 +92,26 @@ export function PagesManager() {
   }
 
   function set<K extends keyof Form>(k: K, v: Form[K]) { setForm((f) => ({ ...f, [k]: v })); }
-  function reset() { setForm(EMPTY); setEditorKey((k) => k + 1); setMsg(""); }
+  function reset() {
+    if (!confirmDiscardIfDirty()) return;
+    setForm(EMPTY);
+    loadedFormRef.current = EMPTY;
+    setEditorKey((k) => k + 1);
+    setMsg("");
+  }
 
   async function loadPage(slug: string, locale: string) {
+    if (!confirmDiscardIfDirty()) return;
     const res = await fetch(`/api/admin/pages?slug=${encodeURIComponent(slug)}&locale=${locale}`);
     if (!res.ok) { setMsg("Could not load page."); return; }
     const { page } = await res.json();
-    setForm({
+    const next: Form = {
       slug: page.slug, locale: page.locale, title: page.title ?? "", body: page.body ?? "",
       published: !!page.published, metaTitle: page.metaTitle ?? "", metaDescription: page.metaDescription ?? "",
       excerpt: page.excerpt ?? "", ogImage: page.ogImage ?? "", contentType: page.contentType ?? "page"
-    });
+    };
+    setForm(next);
+    loadedFormRef.current = next;
     setEditorKey((k) => k + 1);
     setMsg(`Loaded ${slug} · ${locale} — edit and Save.`);
   }
@@ -88,7 +124,7 @@ export function PagesManager() {
     });
     setMsg(res.ok ? "Saved." : ((await res.json()).error ?? "error"));
     setBusy(false);
-    if (res.ok) void load();
+    if (res.ok) { loadedFormRef.current = form; void load(); }
   }
 
   async function del(slug: string, locale: string) {
@@ -97,6 +133,7 @@ export function PagesManager() {
   }
 
   async function translate(slug: string, locale: string) {
+    if (!confirmDiscardIfDirty()) return;
     const target = locale === "en" ? "nl" : "en";
     if (
       !window.confirm(
@@ -170,7 +207,8 @@ export function PagesManager() {
                 <tr><th className="px-4 py-2">Slug</th><th className="px-4 py-2">Locale</th><th className="px-4 py-2">Title</th><th className="px-4 py-2">Type</th><th className="px-4 py-2">Status</th><th className="px-4 py-2 text-right">Actions</th></tr>
               </thead>
               <tbody>
-                {rows.map((r) => (
+                {initialLoading && <SkeletonRows cols={6} />}
+                {!initialLoading && rows.map((r) => (
                   <tr key={`${r.slug}-${r.locale}`} className="border-b border-border/60 last:border-0 hover:bg-muted/30">
                     <td className="px-4 py-2 font-mono text-xs">{r.slug}</td>
                     <td className="px-4 py-2 uppercase">{r.locale}</td>
@@ -179,28 +217,29 @@ export function PagesManager() {
                     <td className="px-4 py-2">{r.published ? <Badge variant="success">Published</Badge> : <Badge variant="secondary">Draft</Badge>}</td>
                     <td className="px-4 py-2">
                       <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="icon" title="Load into editor"
+                        <Button variant="ghost" size="icon" title="Load into editor" aria-label={`Load ${r.slug} (${r.locale}) into editor`}
                           onClick={() => loadPage(r.slug, r.locale)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" title="Version history"
+                        <Button variant="ghost" size="icon" title="Version history" aria-label={`Version history for ${r.slug} (${r.locale})`}
                           onClick={() => openHistory(r.slug, r.locale)}>
                           <History className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon"
                           title={`Translate → ${r.locale === "en" ? "NL" : "EN"}`}
+                          aria-label={`Translate ${r.slug} to ${r.locale === "en" ? "NL" : "EN"}`}
                           disabled={translating === `${r.slug}-${r.locale}`}
                           onClick={() => translate(r.slug, r.locale)}>
                           <Languages className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" title="Delete" onClick={() => del(r.slug, r.locale)}>
+                        <Button variant="ghost" size="icon" title="Delete" aria-label={`Delete ${r.slug} (${r.locale})`} onClick={() => del(r.slug, r.locale)}>
                           <Trash2 className="h-4 w-4 text-destructive" />
                         </Button>
                       </div>
                     </td>
                   </tr>
                 ))}
-                {!rows.length && <tr><td colSpan={6} className="px-4 py-6 text-center text-muted-foreground">No pages yet.</td></tr>}
+                {!initialLoading && !rows.length && <tr><td colSpan={6} className="px-4 py-6 text-center text-muted-foreground">No pages yet.</td></tr>}
               </tbody>
             </table>
           </div>

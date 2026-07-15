@@ -7,6 +7,8 @@ import {
   Link2, Search, Plus, Pencil, Trash2, Save, CheckCircle2, XCircle, ExternalLink, Sparkles,
 } from "lucide-react";
 import { SetupGuide, HelpTip } from "@/components/admin/setup-guide";
+import { ClipboardButton } from "@/components/admin/clipboard-button";
+import { SkeletonRows } from "@/components/admin/skeleton";
 
 // Ported from the source Affiliate & SEO admin (Celestial-Agent-Nexus:
 // artifacts/oxot-web/src/pages/admin-seo.tsx). Adapted to this app's plain
@@ -75,12 +77,13 @@ function AffiliateTab() {
   const [form, setForm] = React.useState<LinkForm>(EMPTY_LINK);
   const [status, setStatus] = React.useState<Status>({ kind: "idle", msg: "" });
   const [busy, setBusy] = React.useState(false);
+  const [initialLoading, setInitialLoading] = React.useState(true);
 
   const load = React.useCallback(async () => {
     const res = await fetch("/api/admin/affiliate");
     if (res.ok) setLinks(((await res.json()) as { links: AffiliateLink[] }).links);
   }, []);
-  React.useEffect(() => { void load(); }, [load]);
+  React.useEffect(() => { void load().finally(() => setInitialLoading(false)); }, [load]);
 
   function openNew() {
     setEditing(null);
@@ -202,13 +205,18 @@ function AffiliateTab() {
             </tr>
           </thead>
           <tbody>
-            {links.map((link) => (
+            {initialLoading && <SkeletonRows cols={5} />}
+            {!initialLoading && links.map((link) => (
               <tr key={link.id} className="border-b border-border/60 last:border-0 hover:bg-muted/30">
                 <td className="px-4 py-2">
                   <div className="font-medium">{link.name}</div>
                   <a href={link.targetUrl} target="_blank" rel="noopener noreferrer" className="flex max-w-[220px] items-center gap-1 truncate text-xs text-muted-foreground hover:text-primary">
                     <ExternalLink className="h-3 w-3 shrink-0" /> <span className="truncate">{link.targetUrl}</span>
                   </a>
+                  <div className="mt-1 flex items-center gap-1">
+                    <code className="truncate rounded bg-muted px-1 text-xs text-muted-foreground">/api/go/{link.id}</code>
+                    <ClipboardButton value={`${typeof window !== "undefined" ? window.location.origin : ""}/api/go/${link.id}`} label="tracked link" />
+                  </div>
                 </td>
                 <td className="px-4 py-2">
                   <div className="flex max-w-[260px] flex-wrap gap-1">
@@ -227,13 +235,13 @@ function AffiliateTab() {
                 </td>
                 <td className="px-4 py-2">
                   <div className="flex justify-end gap-1">
-                    <Button variant="ghost" size="icon" title="Edit" onClick={() => openEdit(link)}><Pencil className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" title="Delete" onClick={() => remove(link.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    <Button variant="ghost" size="icon" title="Edit" aria-label={`Edit ${link.name}`} onClick={() => openEdit(link)}><Pencil className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" title="Delete" aria-label={`Delete ${link.name}`} onClick={() => remove(link.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                   </div>
                 </td>
               </tr>
             ))}
-            {!links.length && <tr><td colSpan={5} className="px-4 py-6 text-center text-muted-foreground">No affiliate links yet. Create one to start tracking partner clicks.</td></tr>}
+            {!initialLoading && !links.length && <tr><td colSpan={5} className="px-4 py-6 text-center text-muted-foreground">No affiliate links yet. Create one to start tracking partner clicks.</td></tr>}
           </tbody>
         </table>
       </div>
@@ -568,7 +576,7 @@ function SeoTab() {
                 <td className="px-4 py-2">{p.noindex ? <Badge variant="outline">noindex</Badge> : <Badge variant="secondary">indexed</Badge>}</td>
                 <td className="px-4 py-2">
                   <div className="flex justify-end">
-                    <Button variant="ghost" size="icon" title="Edit SEO" onClick={() => openEdit(p)}><Pencil className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" title="Edit SEO" aria-label={`Edit SEO for ${p.title}`} onClick={() => openEdit(p)}><Pencil className="h-4 w-4" /></Button>
                   </div>
                 </td>
               </tr>

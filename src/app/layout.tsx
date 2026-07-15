@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, organizationJsonLd, websiteJsonLd, jsonLdScript } from "@/lib/seo";
+import { getPublicSocials } from "@/lib/socials";
 
 const DESCRIPTION =
   "OXOT is an operational-technology (OT) cybersecurity consultancy. We turn IEC 62443, NIS2, the EU Cyber Resilience Act, the AI Act and the Machinery Regulation into defensible security for industrial and critical-infrastructure systems.";
@@ -36,7 +37,10 @@ export const viewport: Viewport = {
   ]
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const socials = await getPublicSocials();
+  const orgJsonLd = organizationJsonLd({ sameAs: socials.map((s) => s.url) });
+  const siteJsonLd = websiteJsonLd();
   return (
     <html suppressHydrationWarning>
       <head>
@@ -47,6 +51,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap"
           rel="stylesheet"
         />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(orgJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(siteJsonLd) }} />
       </head>
       <body>
         <ThemeProvider>{children}</ThemeProvider>

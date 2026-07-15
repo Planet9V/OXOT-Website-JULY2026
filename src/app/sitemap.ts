@@ -6,7 +6,18 @@ import { SITE_URL } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 // Static routes that exist for every locale (not CMS-driven).
-const STATIC_PATHS = ["", "/blog", "/contact"];
+const STATIC_PATHS = [
+  "",
+  "/blog",
+  "/contact",
+  "/conformity-platform",
+  "/industrial-operations",
+  "/conformity-platform/regulations",
+  "/conformity-platform/requirements",
+  "/conformity-platform/themes",
+  "/conformity-platform/sources",
+  "/conformity-platform/matrix"
+];
 
 function languageAlternates(path: string): Record<string, string> {
   const langs: Record<string, string> = {};

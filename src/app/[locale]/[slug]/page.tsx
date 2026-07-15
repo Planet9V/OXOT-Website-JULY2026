@@ -41,17 +41,37 @@ export async function generateMetadata({
   if (!page) return {};
   const title = page.metaTitle ?? page.title;
   const description = page.metaDescription ?? page.excerpt ?? undefined;
+  const ogTitle = page.ogTitle ?? title;
+  const ogDescription = page.ogDescription ?? description;
+  const ogImage = ogImageUrl(page.ogImage);
+  const baseAlternates = alternates(locale, `/${slug}`);
+  const hasCanonicalOverride = typeof page.canonicalUrl === "string" && page.canonicalUrl.trim().length > 0;
+  const keywords = page.metaKeywords
+    ? page.metaKeywords.split(",").map((k) => k.trim()).filter(Boolean)
+    : undefined;
+  const noindex = Boolean(page.noindex);
   return {
     title,
     description,
-    alternates: alternates(locale, `/${slug}`),
+    ...(keywords && keywords.length > 0 ? { keywords } : {}),
+    alternates: {
+      ...baseAlternates,
+      ...(hasCanonicalOverride ? { canonical: page.canonicalUrl! } : {})
+    },
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: ogDescription,
       type: page.contentType === "article" ? "article" : "website",
       locale,
-      images: [{ url: ogImageUrl(page.ogImage) }]
-    }
+      images: [{ url: ogImage }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: ogDescription,
+      images: [ogImage]
+    },
+    robots: { index: !noindex, follow: !noindex }
   };
 }
 

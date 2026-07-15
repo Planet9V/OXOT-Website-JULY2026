@@ -164,6 +164,24 @@
   "theme": {
     "toggle": "Toggle theme"
   },
+  "a11y": {
+    "skipToContent": "Skip to main content"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or may have moved. Let's get you back on track.",
+    "backHome": "Back to home",
+    "contact": "Contact us"
+  },
+  "newsletterResult": {
+    "confirmedTitle": "Subscription confirmed",
+    "confirmedBody": "Thank you — your subscription is confirmed. You'll now receive OXOT compliance updates.",
+    "unsubscribedTitle": "You're unsubscribed",
+    "unsubscribedBody": "You have been unsubscribed from OXOT updates. Sorry to see you go.",
+    "invalidTitle": "Link invalid or expired",
+    "invalidBody": "This link is invalid or has already been used.",
+    "backHome": "Back to OXOT"
+  },
   "agent": {
     "title": "Ask OXOT",
     "greeting": "Hi — ask me anything about this page.",

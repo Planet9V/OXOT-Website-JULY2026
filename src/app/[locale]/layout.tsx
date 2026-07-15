@@ -29,8 +29,13 @@ export default async function LocaleLayout({
   const socials = await getPublicSocials();
   return (
     <div lang={locale}>
+      <a href="#main-content" className="skip-link">
+        {t.a11y.skipToContent}
+      </a>
       <SiteNav locale={locale} />
-      {children}
+      {/* Each page already renders its own <main>; this div just gives the
+          skip-link a stable landmark to jump to without nesting <main> tags. */}
+      <div id="main-content">{children}</div>
       {/* Standard on every page: "Follow Along" social feed, then the footer. */}
       <SocialFeed socialLinks={socials} strings={t.footer.social} />
       <SiteFooter locale={locale} socials={socials} />
