@@ -6,10 +6,10 @@
  * they depend on what's actually installed on the configured host, and there is
  * a single Ollama chat model shared across all generation roles (ollama_chat_model).
  *
- * Embeddings are LOCKED: qwen/qwen3-embedding-4b is the only entry for the
- * "embeddings" role, and the admin UI must render it disabled. EMBED_DIM (1536)
- * is fixed by the pgvector schema (migration 001/035) — changing the embedding
- * model to one with a different native dimension requires a migration and a
+ * Embeddings: the embedding MODEL is settable in the admin AI page (default
+ * qwen/qwen3-embedding-4b), but the vector DIMENSION EMBED_DIM (1536) is fixed by
+ * the pgvector schema (migration 001/035) — outputs are Matryoshka-truncated to it,
+ * so a model must emit >= 1536 dims. Changing the dimension itself requires a
  * full re-ingest, so it is intentionally not swappable here.
  */
 

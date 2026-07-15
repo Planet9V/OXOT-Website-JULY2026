@@ -98,9 +98,10 @@ export async function POST(req: NextRequest) {
     );
 
     await client.query("COMMIT");
-    // Keep the AI agent's grounding current: re-embed this page's content when
-    // it's published. Fire-and-forget — never blocks or fails the save.
-    if (b.published) queueReindex(b.slug, b.locale);
+    // Keep the AI agent's grounding current. Fire-and-forget — never blocks or
+    // fails the save. Called unconditionally: reindexPage re-embeds a published
+    // page and PURGES a now-unpublished one, so unpublishing drops its grounding.
+    queueReindex(b.slug, b.locale);
     return NextResponse.json({ ok: true });
   } catch (err) {
     await client.query("ROLLBACK").catch(() => {});
@@ -144,6 +145,10 @@ export async function DELETE(req: NextRequest) {
     await client.query(`DELETE FROM pages WHERE slug=$1 AND locale=$2`, [slug, locale]);
 
     await client.query("COMMIT");
+    // Purge stale embeddings for the deleted page AND the just-unpublished sibling
+    // so the agent can never retrieve/cite removed or hidden content.
+    queueReindex(slug, locale);
+    queueReindex(slug, other);
     return NextResponse.json({ ok: true });
   } catch (err) {
     await client.query("ROLLBACK").catch(() => {});

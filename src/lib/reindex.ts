@@ -9,11 +9,17 @@ function stripFences(md: string): string {
   return md.replace(/```[\s\S]*?```/g, "").replace(/\n{3,}/g, "\n\n");
 }
 
+/** Remove all embeddings for one page/locale so the agent can't retrieve it. */
+export async function purgePage(slug: string, locale: string): Promise<void> {
+  await pool.query(`DELETE FROM content_chunks WHERE page_id=$1 AND locale=$2`, [slug, locale]);
+}
+
 /**
  * Re-embed a single page's content into content_chunks, reusing the same
  * chunk+embed+insert path as the manual "Rebuild now" admin action
- * (src/lib/ingest.ts). No-ops (returns 0) if the page doesn't exist or isn't
- * published — unpublished drafts aren't part of the assistant's grounding.
+ * (src/lib/ingest.ts). If the page no longer exists or is unpublished, its stale
+ * embeddings are PURGED (so the assistant can never retrieve/cite removed or
+ * hidden content) and it returns 0.
  */
 export async function reindexPage(slug: string, locale: string): Promise<number> {
   if (!isLocale(locale)) return 0;
@@ -22,7 +28,10 @@ export async function reindexPage(slug: string, locale: string): Promise<number>
     [slug, locale]
   );
   const page = rows[0];
-  if (!page || !page.published) return 0;
+  if (!page || !page.published) {
+    await purgePage(slug, locale); // gone or unpublished -> drop stale grounding
+    return 0;
+  }
 
   const body = stripFences(page.body ?? "");
   return ingestPage(slug, locale, body, `pages/${locale}/${slug}`);

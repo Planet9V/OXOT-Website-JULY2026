@@ -21,9 +21,9 @@ const inp = "w-full rounded-md border border-border bg-background px-3 py-2 text
 const sel = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60";
 const lbl = "text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground";
 
-// One dropdown per role, in display order. Embeddings is locked (Karpathy rule
-// 2/3 — swapping the embedding model needs a migration + re-ingest, so it isn't
-// offered here at all).
+// One dropdown per role, in display order. Embeddings is NOT in this list — it has
+// its own editable card below (model + provider settable; vector dimension fixed at
+// EMBED_DIM, with a Rebuild-now reminder after a model change).
 const ROLE_ORDER: ModelRole[] = ["chat", "brief", "translation", "long-context", "search"];
 
 const ROLE_FIELD: Record<ModelRole, RoleModelField | null> = {
