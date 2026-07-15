@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 import { isLocale } from "@/i18n/config";
+import { snapshotCurrent } from "@/lib/page-versions";
 
 export async function GET(req: NextRequest) {
   if (!(await getAdminSession()))
@@ -56,26 +57,54 @@ export async function POST(req: NextRequest) {
       );
     }
   }
-  await pool.query(
-    `INSERT INTO pages
-       (slug, locale, title, body, published,
-        meta_title, meta_description, excerpt, og_image, content_type,
-        published_at, updated_at)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
-        CASE WHEN $5 THEN now() ELSE NULL END, now())
-     ON CONFLICT (slug, locale) DO UPDATE
-       SET title=EXCLUDED.title, body=EXCLUDED.body, published=EXCLUDED.published,
-           meta_title=EXCLUDED.meta_title, meta_description=EXCLUDED.meta_description,
-           excerpt=EXCLUDED.excerpt, og_image=EXCLUDED.og_image, content_type=EXCLUDED.content_type,
-           published_at=COALESCE(pages.published_at, EXCLUDED.published_at),
-           updated_at=now()`,
-    [
-      b.slug, b.locale, b.title, b.body ?? "", b.published === true,
-      b.metaTitle ?? null, b.metaDescription ?? null, b.excerpt ?? null,
-      b.ogImage ?? null, contentType
-    ]
-  );
-  return NextResponse.json({ ok: true });
+  // Zero-loss: snapshot whatever currently lives in `pages` (if anything)
+  // before the upsert overwrites it, all in one transaction.
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+
+    const { rows: existingRows } = await client.query(
+      `SELECT published FROM pages WHERE slug=$1 AND locale=$2 LIMIT 1`,
+      [b.slug, b.locale]
+    );
+    if (existingRows.length) {
+      await snapshotCurrent(
+        b.slug, b.locale,
+        existingRows[0].published ? "published" : "draft",
+        "Auto-snapshot before edit",
+        client
+      );
+    }
+
+    await client.query(
+      `INSERT INTO pages
+         (slug, locale, title, body, published,
+          meta_title, meta_description, excerpt, og_image, content_type,
+          published_at, updated_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
+          CASE WHEN $5 THEN now() ELSE NULL END, now())
+       ON CONFLICT (slug, locale) DO UPDATE
+         SET title=EXCLUDED.title, body=EXCLUDED.body, published=EXCLUDED.published,
+             meta_title=EXCLUDED.meta_title, meta_description=EXCLUDED.meta_description,
+             excerpt=EXCLUDED.excerpt, og_image=EXCLUDED.og_image, content_type=EXCLUDED.content_type,
+             published_at=COALESCE(pages.published_at, EXCLUDED.published_at),
+             updated_at=now()`,
+      [
+        b.slug, b.locale, b.title, b.body ?? "", b.published === true,
+        b.metaTitle ?? null, b.metaDescription ?? null, b.excerpt ?? null,
+        b.ogImage ?? null, contentType
+      ]
+    );
+
+    await client.query("COMMIT");
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    await client.query("ROLLBACK").catch(() => {});
+    console.error("[admin/pages] save failed:", err);
+    return NextResponse.json({ error: "Could not save page" }, { status: 500 });
+  } finally {
+    client.release();
+  }
 }
 
 export async function DELETE(req: NextRequest) {
@@ -85,9 +114,38 @@ export async function DELETE(req: NextRequest) {
   const slug = searchParams.get("slug"), locale = searchParams.get("locale");
   if (!slug || !locale) return NextResponse.json({ error: "slug & locale required" }, { status: 400 });
   const other = locale === "nl" ? "en" : "nl";
-  // Bilingual integrity: never leave a lone published sibling. If the other locale
-  // is published, unpublish it as part of the delete (mirrors the publish guard).
-  await pool.query(`UPDATE pages SET published=false, updated_at=now() WHERE slug=$1 AND locale=$2 AND published=true`, [slug, other]);
-  await pool.query(`DELETE FROM pages WHERE slug=$1 AND locale=$2`, [slug, locale]);
-  return NextResponse.json({ ok: true });
+
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+
+    const { rows: existingRows } = await client.query(
+      `SELECT published FROM pages WHERE slug=$1 AND locale=$2 LIMIT 1`,
+      [slug, locale]
+    );
+    if (existingRows.length) {
+      // Zero-loss: snapshot the live content before it's deleted so it stays
+      // recoverable in page_versions.
+      await snapshotCurrent(
+        slug, locale,
+        existingRows[0].published ? "published" : "draft",
+        "Snapshot before delete",
+        client
+      );
+    }
+
+    // Bilingual integrity: never leave a lone published sibling. If the other locale
+    // is published, unpublish it as part of the delete (mirrors the publish guard).
+    await client.query(`UPDATE pages SET published=false, updated_at=now() WHERE slug=$1 AND locale=$2 AND published=true`, [slug, other]);
+    await client.query(`DELETE FROM pages WHERE slug=$1 AND locale=$2`, [slug, locale]);
+
+    await client.query("COMMIT");
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    await client.query("ROLLBACK").catch(() => {});
+    console.error("[admin/pages] delete failed:", err);
+    return NextResponse.json({ error: "Could not delete page" }, { status: 500 });
+  } finally {
+    client.release();
+  }
 }

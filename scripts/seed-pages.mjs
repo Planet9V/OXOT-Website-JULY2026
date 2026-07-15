@@ -32,11 +32,7 @@ try {
             published_at, updated_at)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
             CASE WHEN $5 THEN now() ELSE NULL END, now())
-         ON CONFLICT (slug, locale) DO UPDATE SET
-           title=EXCLUDED.title, body=EXCLUDED.body, published=EXCLUDED.published,
-           meta_title=EXCLUDED.meta_title, meta_description=EXCLUDED.meta_description,
-           excerpt=EXCLUDED.excerpt, og_image=EXCLUDED.og_image, content_type=EXCLUDED.content_type,
-           published_at=COALESCE(pages.published_at, EXCLUDED.published_at), updated_at=now()`,
+         ON CONFLICT (slug, locale) DO NOTHING`,
         [slug, locale, title, body, published,
          meta.meta_title || null, meta.meta_description || null, meta.excerpt || null,
          meta.og_image || null, ct]

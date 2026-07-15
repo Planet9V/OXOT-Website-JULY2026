@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { FileText, Trash2, Pencil, Wand2, Braces } from "lucide-react";
+import { FileText, Trash2, Pencil, Wand2, Braces, History, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,10 @@ type Form = {
   slug: string; locale: string; title: string; body: string; published: boolean;
   metaTitle: string; metaDescription: string; excerpt: string; ogImage: string; contentType: string;
 };
+type VersionSummary = {
+  id: number; versionNumber: number; state: string; note: string | null; createdAt: string; title: string;
+};
+type VersionFull = VersionSummary & { body: string };
 const EMPTY: Form = {
   slug: "", locale: "en", title: "", body: "", published: false,
   metaTitle: "", metaDescription: "", excerpt: "", ogImage: "", contentType: "page"
@@ -30,6 +34,11 @@ export function PagesManager() {
   const [menuTops, setMenuTops] = useState<{ id: number; label: string; locale: string; parentId: number | null }[]>([]);
   const [menuParent, setMenuParent] = useState("");
   const [menuMsg, setMenuMsg] = useState("");
+
+  const [historyFor, setHistoryFor] = useState<{ slug: string; locale: string } | null>(null);
+  const [versions, setVersions] = useState<VersionSummary[]>([]);
+  const [preview, setPreview] = useState<VersionFull | null>(null);
+  const [historyMsg, setHistoryMsg] = useState("");
 
   const load = useCallback(async () => {
     const res = await fetch("/api/admin/pages");
@@ -86,6 +95,42 @@ export function PagesManager() {
     void load();
   }
 
+  async function openHistory(slug: string, locale: string) {
+    setHistoryFor({ slug, locale });
+    setPreview(null);
+    setHistoryMsg("Loading…");
+    const res = await fetch(`/api/admin/pages/versions?slug=${encodeURIComponent(slug)}&locale=${locale}`);
+    if (!res.ok) { setHistoryMsg("Could not load history."); return; }
+    const { versions } = await res.json();
+    setVersions(versions);
+    setHistoryMsg("");
+  }
+  function closeHistory() { setHistoryFor(null); setVersions([]); setPreview(null); setHistoryMsg(""); }
+
+  async function previewVersion(id: number) {
+    const res = await fetch(`/api/admin/pages/versions/${id}`);
+    if (!res.ok) { setHistoryMsg("Could not load version."); return; }
+    const { version } = await res.json();
+    setPreview(version);
+  }
+
+  async function restoreVersion(id: number) {
+    if (!historyFor) return;
+    if (!window.confirm("Restore this version? The current content will be snapshotted first, so nothing is lost.")) return;
+    setHistoryMsg("Restoring…");
+    const res = await fetch("/api/admin/pages/restore", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ slug: historyFor.slug, locale: historyFor.locale, versionId: id })
+    });
+    if (!res.ok) { setHistoryMsg((await res.json()).error ?? "Restore failed."); return; }
+    setHistoryMsg("Restored.");
+    void load();
+    void openHistory(historyFor.slug, historyFor.locale);
+    if (form.slug === historyFor.slug && form.locale === historyFor.locale) {
+      void loadPage(historyFor.slug, historyFor.locale);
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -115,6 +160,10 @@ export function PagesManager() {
                           onClick={() => loadPage(r.slug, r.locale)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
+                        <Button variant="ghost" size="icon" title="Version history"
+                          onClick={() => openHistory(r.slug, r.locale)}>
+                          <History className="h-4 w-4" />
+                        </Button>
                         <Button variant="ghost" size="icon" title="Delete" onClick={() => del(r.slug, r.locale)}>
                           <Trash2 className="h-4 w-4 text-destructive" />
                         </Button>
@@ -128,6 +177,61 @@ export function PagesManager() {
           </div>
         </CardContent>
       </Card>
+
+      {historyFor && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center justify-between text-base">
+              <span className="flex items-center gap-2"><History className="h-4 w-4" /> History — {historyFor.slug} · {historyFor.locale}</span>
+              <Button variant="outline" size="sm" onClick={closeHistory}>Close</Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {historyMsg && <p className="mb-3 text-sm text-muted-foreground">{historyMsg}</p>}
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="border-y border-border bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                    <tr><th className="px-3 py-2">#</th><th className="px-3 py-2">State</th><th className="px-3 py-2">Note</th><th className="px-3 py-2">Date</th><th className="px-3 py-2 text-right">Actions</th></tr>
+                  </thead>
+                  <tbody>
+                    {versions.map((v) => (
+                      <tr key={v.id} className="border-b border-border/60 last:border-0 hover:bg-muted/30">
+                        <td className="px-3 py-2">{v.versionNumber}</td>
+                        <td className="px-3 py-2 capitalize">{v.state}</td>
+                        <td className="px-3 py-2 text-muted-foreground">{v.note ?? "—"}</td>
+                        <td className="px-3 py-2 text-muted-foreground">{new Date(v.createdAt).toLocaleString()}</td>
+                        <td className="px-3 py-2">
+                          <div className="flex justify-end gap-1">
+                            <Button variant="ghost" size="sm" onClick={() => previewVersion(v.id)}>Preview</Button>
+                            <Button variant="outline" size="sm" onClick={() => restoreVersion(v.id)}>
+                              <RotateCcw className="mr-1 h-3.5 w-3.5" /> Restore
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {!versions.length && !historyMsg && (
+                      <tr><td colSpan={5} className="px-3 py-6 text-center text-muted-foreground">No versions yet.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="rounded-lg border border-border/60 bg-muted/20 p-4">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Preview</p>
+                {preview ? (
+                  <div>
+                    <p className="mb-1 text-sm font-medium">{preview.title}</p>
+                    <pre className="max-h-72 overflow-auto whitespace-pre-wrap text-xs text-muted-foreground">{preview.body}</pre>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Select a version to preview its content.</p>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-base"><FileText className="h-4 w-4" /> Add / edit page</CardTitle></CardHeader>
