@@ -19,6 +19,19 @@ const nextConfig = {
   webpack: (config) => {
     config.resolve.alias = { ...(config.resolve.alias || {}), "@": path.resolve(__dirname, "src") };
     return config;
+  },
+  // Conformity Platform nav consolidation (see db/migrations/038_*): the CP
+  // overview is now folded into /frameworks. Only the bare overview path
+  // redirects — the `(en|nl)` group without a trailing wildcard means
+  // sub-routes like /en/conformity-platform/matrix do NOT match this rule.
+  async redirects() {
+    return [
+      {
+        source: "/:locale(en|nl)/conformity-platform",
+        destination: "/:locale/frameworks",
+        permanent: true
+      }
+    ];
   }
 };
 export default nextConfig;
