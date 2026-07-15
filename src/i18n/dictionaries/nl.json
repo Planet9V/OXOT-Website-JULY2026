@@ -167,6 +167,7 @@
   "agent": {
     "title": "Vraag het OXOT",
     "greeting": "Hallo — stel me gerust een vraag over deze pagina.",
+    "proactiveGreeting": "Hoi 👋 Ik ben de OXOT-assistent. Vraag me alles over de Cyber Resilience Act, NIS2, IEC 62443, of hoe OXOT kan helpen.",
     "placeholder": "Typ uw vraag…",
     "send": "Verstuur",
     "open": "Chat met ons",

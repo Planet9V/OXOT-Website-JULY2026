@@ -3,6 +3,7 @@ import { pool } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 import { isLocale } from "@/i18n/config";
 import { snapshotCurrent } from "@/lib/page-versions";
+import { queueReindex } from "@/lib/reindex";
 
 export async function GET(req: NextRequest) {
   if (!(await getAdminSession()))
@@ -97,6 +98,9 @@ export async function POST(req: NextRequest) {
     );
 
     await client.query("COMMIT");
+    // Keep the AI agent's grounding current: re-embed this page's content when
+    // it's published. Fire-and-forget — never blocks or fails the save.
+    if (b.published) queueReindex(b.slug, b.locale);
     return NextResponse.json({ ok: true });
   } catch (err) {
     await client.query("ROLLBACK").catch(() => {});

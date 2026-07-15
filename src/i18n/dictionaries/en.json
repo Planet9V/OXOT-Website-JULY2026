@@ -167,6 +167,7 @@
   "agent": {
     "title": "Ask OXOT",
     "greeting": "Hi — ask me anything about this page.",
+    "proactiveGreeting": "Hi 👋 I'm the OXOT assistant. Ask me anything about the Cyber Resilience Act, NIS2, IEC 62443, or how OXOT can help.",
     "placeholder": "Type your question…",
     "send": "Send",
     "open": "Chat with us",

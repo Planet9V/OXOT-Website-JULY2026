@@ -14,9 +14,13 @@ function pageIdFromPath(pathname: string): string {
 
 type Msg = { role: "user" | "assistant"; text: string };
 
+// localStorage flag: proactive greeting has already been shown to this browser.
+const GREETED_KEY = "oxot_greeted";
+
 export interface AgentStrings {
   title: string;
   greeting: string;
+  proactiveGreeting: string;
   placeholder: string;
   send: string;
   open: string;
@@ -40,11 +44,24 @@ export function ChatWidget({
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [firstVisit, setFirstVisit] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // First-time visitor: pop the widget open (still consent-gated — no greeting
+  // text renders until consent is accepted, see the `consent !== true` branch below).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (!window.localStorage.getItem(GREETED_KEY)) {
+        setFirstVisit(true);
+        setOpen(true);
+      }
+    } catch { /* ignore */ }
+  }, []);
 
   // Consent-gated: create session, record a page-view, wire click beacons.
   async function accept() {
@@ -58,6 +75,13 @@ export function ChatWidget({
     setConsent(true);
     // Expose the session id so a later contact form can link the enquiry to this chat.
     try { window.localStorage.setItem("oxot_session", sid); } catch { /* ignore */ }
+    // First-time visitor: show the proactive welcome as the first transcript
+    // message now that consent has just been granted, once per browser.
+    if (firstVisit) {
+      setMessages([{ role: "assistant", text: strings.proactiveGreeting }]);
+      try { window.localStorage.setItem(GREETED_KEY, "1"); } catch { /* ignore */ }
+      setFirstVisit(false);
+    }
     void beacon(sid, "page", pageId);
   }
 

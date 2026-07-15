@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import { restoreVersion } from "@/lib/page-versions";
+import { queueReindex } from "@/lib/reindex";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,5 +21,8 @@ export async function POST(req: NextRequest) {
 
   const result = await restoreVersion(b.slug, b.locale, versionId);
   if (!result.ok) return NextResponse.json({ error: result.error }, { status: 400 });
+  // Keep the AI agent's grounding current: re-embed the restored content.
+  // queueReindex/reindexPage no-op if the page isn't published. Fire-and-forget.
+  queueReindex(b.slug, b.locale);
   return NextResponse.json({ ok: true });
 }

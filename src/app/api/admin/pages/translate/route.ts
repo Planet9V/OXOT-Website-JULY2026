@@ -4,6 +4,7 @@ import { getAdminSession } from "@/lib/auth";
 import { isLocale } from "@/i18n/config";
 import { snapshotCurrent } from "@/lib/page-versions";
 import { translatePage } from "@/lib/translate";
+import { queueReindex } from "@/lib/reindex";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -102,6 +103,9 @@ export async function POST(req: NextRequest) {
     );
 
     await client.query("COMMIT");
+    // Keep the AI agent's grounding current: re-embed the translated
+    // counterpart when published. Fire-and-forget — never blocks the response.
+    if (publishedValue) queueReindex(slug, targetLocale);
     return NextResponse.json({ ok: true, targetLocale });
   } catch (err) {
     await client.query("ROLLBACK").catch(() => {});
