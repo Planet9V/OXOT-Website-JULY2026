@@ -26,12 +26,15 @@ export function ConformitySubnav({ locale, labels }: {
 }) {
   const base = `/${locale}/conformity-platform`;
   const pathname = usePathname() || base;
+  // Aligned to the consolidated "Frameworks" mega-menu: only the four folded-in
+  // views appear here, in the same order/labels as the dropdown. The old
+  // Overview tab was dropped (its /conformity-platform URL now redirects to
+  // /frameworks, so a tab pointing at it would bounce the user out), and
+  // Regulations was dropped to match the mega-menu (its route stays live).
   const tabs: Tab[] = [
-    { key: "overview", label: labels.overview, href: base },
-    { key: "regulations", label: labels.regulations, href: `${base}/regulations` },
+    { key: "matrix", label: labels.matrix, href: `${base}/matrix` },
     { key: "requirements", label: labels.requirements, href: `${base}/requirements` },
     { key: "themes", label: labels.themes, href: `${base}/themes` },
-    { key: "matrix", label: labels.matrix, href: `${base}/matrix` },
     { key: "sources", label: labels.sources, href: `${base}/sources` }
   ];
 
