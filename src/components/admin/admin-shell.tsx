@@ -21,20 +21,27 @@ import { AffiliateSeoManager } from "@/components/admin/affiliate-seo-manager";
 import { CarouselManager } from "@/components/admin/carousel-manager";
 
 type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
+// Order is display-only (each item's key→component wiring is unchanged). Grouped for
+// admin UX: Overview → Content authoring → Audience & growth → Configuration, roughly
+// by how often a small content team touches each, with set-and-forget config last.
 const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
+  // Overview
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
+  // Content authoring — flagship pages first, then supporting assets, then site structure
   { key: "home", label: "Home page", icon: Home },
   { key: "homepage", label: "Approach page", icon: LayoutTemplate },
   { key: "pages", label: "Pages", icon: FileText },
-  { key: "menus", label: "Menus", icon: MenuIcon },
   { key: "media", label: "Media", icon: Images },
   { key: "carousel", label: "Carousel", icon: GalleryHorizontal },
+  { key: "menus", label: "Menus", icon: MenuIcon },
+  // Audience & growth — inbound leads → outbound marketing → measurement → optimization
   { key: "enquiries", label: "Enquiries", icon: Inbox },
-  { key: "ai", label: "AI & Models", icon: Bot },
-  { key: "integrations", label: "Integrations", icon: Plug },
   { key: "newsletter", label: "Newsletter & Social", icon: Send },
   { key: "analytics", label: "Analytics", icon: BarChart3 },
-  { key: "affiliate-seo", label: "Affiliate & SEO", icon: LineChart }
+  { key: "affiliate-seo", label: "Affiliate & SEO", icon: LineChart },
+  // Configuration — set-and-forget, kept at the bottom
+  { key: "ai", label: "AI & Models", icon: Bot },
+  { key: "integrations", label: "Integrations", icon: Plug }
 ];
 
 export function AdminShell({ email }: { email: string }) {
