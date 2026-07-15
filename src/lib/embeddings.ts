@@ -21,16 +21,24 @@ export function fitDim(v: number[], dim = EMBED_DIM): number[] {
 // hosts qwen3-embedding; we pass `dimensions` so MRL-capable models can return the
 // target size directly, and fitDim guarantees EMBED_DIM regardless.
 async function embedOpenRouter(text: string, key: string, model: string): Promise<number[]> {
+  // NOTE: do NOT send the OpenAI `dimensions` param. It is only honored by
+  // OpenAI's text-embedding-3-* models; for qwen3-embedding-4b (and most other
+  // providers) OpenRouter returns a 200 whose `data[0].embedding` is absent when
+  // that param is present, which surfaced as "embedding too small: got undefined".
+  // qwen3-embedding-4b returns its native 2560-dim vector; fitDim truncates it to
+  // EMBED_DIM (Matryoshka), identical to the index-side path in scripts/ingest.mjs.
   const res = await fetch("https://openrouter.ai/api/v1/embeddings", {
     method: "POST",
     headers: { "content-type": "application/json", authorization: `Bearer ${key}` },
-    body: JSON.stringify({ model, input: text, dimensions: EMBED_DIM })
+    body: JSON.stringify({ model, input: text })
   });
   if (!res.ok) throw new Error(`OpenRouter embeddings failed: ${res.status} ${await res.text().catch(() => "")}`.slice(0, 200));
   const json = (await res.json()) as { data?: { embedding: number[] }[] };
   const raw = json.data?.[0]?.embedding;
   if (!Array.isArray(raw) || raw.length < EMBED_DIM) {
-    throw new Error(`OpenRouter embedding too small: got ${raw?.length}, need >= ${EMBED_DIM} (${model}).`);
+    // Include a snippet of the actual response so a failed rebuild is self-diagnosing.
+    const detail = JSON.stringify(json).slice(0, 180);
+    throw new Error(`OpenRouter embedding invalid for ${model}: got len=${raw?.length}, need >= ${EMBED_DIM}. Response: ${detail}`);
   }
   return fitDim(raw, EMBED_DIM);
 }
