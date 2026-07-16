@@ -1,0 +1,177 @@
+{
+  "hero": {
+    "eyebrow": "Cyber Resilience Act · Verordening (EU) 2024/2847",
+    "title": "Vanaf 11 december 2027 heeft elk product met digitale elementen een security case nodig.",
+    "titleAccent": "Wees er klaar voor. Sta vooraan.",
+    "subtitle": "OXOT is specialist in operationele technologie. Wij classificeren uw producten, bouwen verdedigbare technische dossiers op IEC 62443, en houden gereserveerde beoordelingsslots aan bij onze Conformiteitsinstantie-partners — zodat u voorbereid bent, niet in de wachtrij staat.",
+    "badges": [
+      "OT-specialisten",
+      "IEC 62443 als tweede natuur",
+      "Partnerschappen met Conformiteitsinstanties",
+      "Digital-twin-bewijs"
+    ],
+    "realityCallout": "DE REALITEIT VAN 2026 — nul aangewezen Conformiteitsinstanties · zelfbeoordeling Klasse I gesloten totdat geharmoniseerde normen zijn aangewezen (~Q2 2027) · aanwijzing duurt 12–18 maanden. De wachtrij vormt zich vóór de deuren opengaan.",
+    "formHeading": "Waar zit u in de keten?",
+    "formSub": "45 minuten, gratis, met een OT-compliancespecialist. Wij komen voorbereid voor uw positie.",
+    "leaveWith": "U verlaat het gesprek met: uw waarschijnlijke classificatie, uw route naar de CE-markering, en een inschatting van de benodigde inspanning. Uitgewerkt retainervoorstel — met NDA & MSA — binnen 2 werkdagen."
+  },
+  "departureBoard": {
+    "title": "Het vertrekbord",
+    "intro": "Drie routes bereiken de CE-markering vóór 11 december 2027 — maar hun vertrekvensters sluiten op verschillende momenten. Waar de balk rood kleurt, komt die route niet meer op tijd aan.",
+    "axisLabels": ["JUL '26", "JAN '27", "JUL '27", "DEC '27"],
+    "milestones": [
+      { "pct": 1.5, "dateLabel": "Vandaag", "note": "U BENT HIER", "tone": "start" },
+      { "pct": 11.5, "dateLabel": "11 sep 2026", "note": "24u / 72u / 14d-meldplicht live", "tone": "info" },
+      { "pct": 27, "dateLabel": "Eind 2026", "note": "eerste CI-aanwijzingen verwacht", "tone": "info" },
+      { "pct": 44, "dateLabel": "Eind Q1 2027", "note": "laatste veilige instap in de CI-wachtrij", "tone": "warning" },
+      { "pct": 57, "dateLabel": "~Q2 2027", "note": "geharmoniseerde normen verwacht (Klasse I heropent)", "tone": "info" },
+      { "pct": 97, "dateLabel": "11 dec 2027", "note": "DE MUUR", "tone": "end" }
+    ],
+    "roads": [
+      {
+        "id": "h",
+        "label": "Route H · volledige kwaliteitsborging",
+        "sub": "opbouw QMS 8–14 mnd",
+        "segments": [
+          { "startPct": 0, "widthPct": 17, "tone": "safe", "caption": "VERTREK NU" },
+          { "startPct": 17, "widthPct": 10, "tone": "tight", "caption": "" },
+          { "startPct": 27, "widthPct": 73, "tone": "late", "caption": "vertrekt na Q1 '27 → komt aan na de muur" }
+        ]
+      },
+      {
+        "id": "bc",
+        "label": "Route B+C · typeonderzoek",
+        "sub": "4–8 mnd + wachtrij",
+        "segments": [
+          { "startPct": 0, "widthPct": 33, "tone": "safe", "caption": "VERTREKVENSTER OPEN — gereserveerde slots via OXOT" },
+          { "startPct": 33, "widthPct": 11, "tone": "tight", "caption": "" },
+          { "startPct": 44, "widthPct": 56, "tone": "late", "caption": "wachtrij + herstelrondes → te laat" }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Route A · zelfbeoordeling, Klasse I",
+        "sub": "17–32 wkn zodra open",
+        "segments": [
+          { "startPct": 0, "widthPct": 57, "tone": "closed", "caption": "ROUTE GESLOTEN — wacht op geharmoniseerde normen" },
+          { "startPct": 57, "widthPct": 26, "tone": "tight", "caption": "de gok: krap venster als normen uitlopen" },
+          { "startPct": 83, "widthPct": 17, "tone": "late", "caption": "" }
+        ]
+      }
+    ],
+    "legend": [
+      { "tone": "safe", "label": "veilig vertrek" },
+      { "tone": "tight", "label": "krap — geen ruimte voor bevindingen" },
+      { "tone": "late", "label": "komt aan na de muur" },
+      { "tone": "closed", "label": "route gesloten" }
+    ]
+  },
+  "roadsSplit": {
+    "title": "Eén start. Drie routes. Dezelfde bestemming.",
+    "intro": "Elk traject begint met dezelfde Fase 1 — intake en classificatie. De klasse van elk product bepaalt welke route het neemt naar de CE-markering. OXOT rijdt op alle drie.",
+    "startBadge": "START · FASE 1 — Intake & classificatie, altijd OXOT",
+    "roads": [
+      {
+        "id": "a",
+        "title": "Route A · Module A",
+        "segment": "Standaardproducten · Klasse I zodra open",
+        "body": "OXOT voert alle drie de fasen uit op onze bench; u ondertekent uw eigen conformiteitsverklaring. Route gesloten voor Klasse I totdat geharmoniseerde normen zijn aangewezen (~Q2 2027).",
+        "ceMarkNote": "Bestemming: uw eigen conformiteitsverklaring. Geen Notified Body."
+      },
+      {
+        "id": "bc",
+        "title": "Route B+C · Typeonderzoek",
+        "segment": "Klasse I vandaag · alle Klasse II · Kritiek (tot EUCC)",
+        "body": "OXOT bereidt het dossier voor in het format dat de Conformiteitsinstantie verwacht en draagt het persoonlijk over in een gereserveerd slot; de CI onderzoekt type en processen. Vertrek vóór Q1 2027.",
+        "ceMarkNote": "Bestemming: EU-typeonderzoekscertificaat → conformiteitsverklaring + CE-markering, met het nummer van de CI."
+      },
+      {
+        "id": "h",
+        "title": "Route H · Volledige kwaliteitsborging",
+        "segment": "Portfolio's met meerdere producten — één geaudit QMS",
+        "body": "De CI audit uw volledige QMS — ontwerp, testen, productie, kwetsbaarhedenbeheer. OXOT bouwt het QMS en het SDL-bewijs, en doet een proefaudit. Nieuwe producten sluiten aan in 4–8 weken.",
+        "ceMarkNote": "Bestemming: één QMS-goedkeuring voor meerdere lijnen → CE-markering per product."
+      }
+    ],
+    "wrongTurns": "Fouten die iedereen maakt: testen vóór classificeren · een verouderde SBOM · een niet-standaard dossier dat een bevindingenronde start · de conformiteitsverklaring te vroeg ondertekenen.",
+    "footnote": "Niet zeker welke route? Precies dat beantwoordt de intake van 45 minuten."
+  },
+  "personas": {
+    "title": "De CRA ziet er anders uit, afhankelijk van waar u zit.",
+    "intro": "Vijf posities in de keten, vijf verschillende risico's. Kies de uwe — de intake en het papierwerk komen daarop voorbereid.",
+    "cards": [
+      {
+        "segment": "manufacturer",
+        "title": "Productfabrikanten",
+        "quote": "Elke lijn heeft een eigen SBOM, CVD-proces, risicobeoordeling en technisch dossier nodig — en niemand in dit bedrijf kan me vertellen in welke klasse elk product eigenlijk valt.",
+        "cta": "Classificeer mijn portfolio"
+      },
+      {
+        "segment": "oem",
+        "title": "OEM's",
+        "quote": "40 productfamilies, 3 mensen voor productbeveiliging. En alles wat we white-labelen maakt ons de fabrikant — of we het nu gebouwd hebben of niet.",
+        "cta": "Sequentieer mijn portfolio"
+      },
+      {
+        "segment": "integrator",
+        "title": "Integrators",
+        "quote": "62443-2-4 staat nu in elk aanbestedingscontract — en als we een product van een leverancier aanpassen voor een project, kan niemand me vertellen of we er zojuist de fabrikant van zijn geworden.",
+        "cta": "Bepaal mijn grens"
+      },
+      {
+        "segment": "reseller",
+        "title": "Resellers & distributeurs",
+        "quote": "We verplaatsen duizenden SKU's van tientallen leveranciers. Welke mogen we na december 2027 nog legaal verkopen — en welke eigen-merklijnen maakten ons stilletjes fabrikant?",
+        "cta": "Beoordeel mijn assortiment"
+      },
+      {
+        "segment": "operator",
+        "title": "Eigenaren/exploitanten",
+        "quote": "Van een groot deel van ons leveranciersportfolio is de CRA-status onbekend — en het bestuur wil door derden gevalideerd bewijs, geen leveranciersbeloftes.",
+        "cta": "Scan mijn leveranciers"
+      }
+    ]
+  },
+  "retainer": {
+    "title": "Eén retainer. Drie fasen. Een gereserveerde plek.",
+    "intro": "Een bundel specialistische uren tegen een transparante rate card, bepaald door de intake — typische trajecten starten rond €20K. Uren worden afgeboekt op de fasen; retainer-klanten hebben voorrang op onze bench en onze Conformiteitsinstantie-slots.",
+    "phases": [
+      {
+        "tag": "FASE 1 · ALTIJD OXOT",
+        "title": "Classificeren & scopen",
+        "body": "Classificatie met schriftelijke onderbouwing, gap-assessment, IRA · ZCR · SL-T, testscope — en uw route."
+      },
+      {
+        "tag": "FASE 2",
+        "title": "Testen & bewijsvoering",
+        "body": "De 13 eigenschappen en 8 processen, met bewijs — op onze bench, of een dossier dat de CI doorwuift in plaats van terugstuurt."
+      },
+      {
+        "tag": "FASE 3",
+        "title": "Dossier & levenscyclus",
+        "body": "Annex VII technisch dossier, conformiteitsverklaring, PSIRT, 5 jaar updates, 10 jaar bewaarplicht."
+      }
+    ],
+    "reservedSeat": {
+      "tag": "DE GERESERVEERDE PLEK",
+      "title": "CI-slots, voor u gereserveerd",
+      "body": "Onze Fase-1-output komt aan in het format dat de bench verwacht — minder frictie, minder rondes, kortere wachttijd."
+    },
+    "digitalTwin": "Overal versneld door de digital twin van OXOT — uw product één keer gemodelleerd, SBOM's en bewijs geregenereerd over de hele levenscyclus."
+  },
+  "process": {
+    "title": "Wat er gebeurt als u op de knop drukt",
+    "steps": [
+      { "number": "1", "title": "U dient het formulier in", "body": "U staat in de wachtrij, met tijdstempel." },
+      { "number": "2", "title": "Vincent neemt contact op", "body": "Binnen 2 werkdagen, met het intake-voorbereidingsformulier." },
+      { "number": "3", "title": "De intake van 45 minuten", "body": "Product, markten, classificatie, route, benodigde inspanning. Gratis." },
+      { "number": "4", "title": "Uitgewerkt voorstel", "body": "Binnen 2 werkdagen — een retainervoorstel, met NDA & MSA." },
+      { "number": "5", "title": "Fase 1 start", "body": "En uw CI-slot is gereserveerd als uw route er een nodig heeft." }
+    ]
+  },
+  "finalCta": {
+    "title": "Wees er klaar voor — sta vooraan.",
+    "line": "De muur staat vast. De wachtrij niet. Plan de gratis intake van 45 minuten.",
+    "ctaLabel": "Plan de intake"
+  }
+}

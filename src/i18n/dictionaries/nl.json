@@ -189,6 +189,8 @@
     "placeholder": "Typ uw vraag…",
     "send": "Verstuur",
     "open": "Chat met ons",
+    "assistCtaLabel": "Vraag het de assistent",
+    "seedTemplate": "Ik ben een {segment} — help me de CRA-route te begrijpen die voor ons geldt.",
     "consent": {
       "title": "Mogen we deze chat afstemmen op uw bezoek?",
       "body": "We gebruiken first-party signalen (bekeken pagina's, klikken) alleen om de assistent behulpzamer te maken. Er wordt niets opgeslagen totdat u akkoord gaat.",
@@ -537,5 +539,43 @@
       "ctaPrimary": "Ontdek het platform",
       "ctaSecondary": "Neem contact op"
     }
+  },
+  "craHome": {
+    "meta": {
+      "title": "De Cyber Resilience Act. Wees er klaar voor. Sta vooraan.",
+      "description": "OXOT classificeert uw producten, bouwt verdedigbare technische dossiers op IEC 62443, en houdt gereserveerde beoordelingsslots aan bij onze Conformiteitsinstantie-partners. Plan een gratis intake van 45 minuten."
+    }
+  },
+  "intakeForm": {
+    "nameLabel": "Naam",
+    "namePlaceholder": "Uw naam",
+    "orgLabel": "Organisatie",
+    "orgPlaceholder": "Bedrijfsnaam",
+    "emailLabel": "Zakelijk e-mailadres",
+    "emailPlaceholder": "u@bedrijf.nl",
+    "segmentLabel": "Ik ben een…",
+    "segmentOptions": {
+      "manufacturer": "Productfabrikant",
+      "oem": "OEM — meerdere productgroepen",
+      "integrator": "Integrator",
+      "reseller": "Distributeur / reseller",
+      "operator": "Eigenaar/exploitant — inkoop"
+    },
+    "roleLabel": "Uw functie (optioneel)",
+    "submit": "Plan mijn gratis intake van 45 minuten",
+    "submitting": "Bezig met verzenden…",
+    "leaveWith": "U verlaat het gesprek met uw waarschijnlijke classificatie, uw route naar de CE-markering, en een inschatting van de benodigde inspanning.",
+    "errName": "Vul uw naam in.",
+    "errEmail": "Vul een geldig e-mailadres in.",
+    "errSegment": "Geef aan waar u in de keten zit.",
+    "errorGeneric": "Er ging iets mis. Probeer het opnieuw, of mail rechtstreeks naar vincent@oxot.nl.",
+    "errorRate": "Te veel verzoeken vanaf deze verbinding. Wacht een paar minuten en probeer het opnieuw."
+  },
+  "intakeSuccess": {
+    "heading": "U staat in de rij.",
+    "body": "Dank u — we hebben uw gegevens ontvangen. Vincent neemt binnen 2 werkdagen contact op met uw intake-voorbereidingsformulier.",
+    "scheduleHeading": "Kies een moment dat u uitkomt",
+    "scheduleFallback": "Vincent neemt binnen 2 werkdagen contact op om uw gratis intake van 45 minuten in te plannen.",
+    "bookCta": "Open de planning in een nieuw tabblad"
   }
 }

@@ -2,27 +2,22 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getSummary, type ConformitySummary } from "@/lib/conformity";
-import { getConformityHome } from "@/lib/conformity-home";
+import { getCraHome } from "@/lib/cra-home";
 import { alternates } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Reveal } from "@/components/motion/fx";
-import { ConsultingCarousel } from "@/components/conformity-home/consulting-carousel";
-import { Faq } from "@/components/conformity-home/faq";
 import {
   Hero,
-  RegulationBand,
-  Stats,
-  Platform,
-  Problem,
-  Shift,
-  Comparison,
-  HowItWorks,
-  Testimonial,
+  DepartureBoard,
+  RoadsSplit,
+  Personas,
+  Retainer,
+  ProcessStrip,
   FinalCta
-} from "@/components/conformity-home/sections";
+} from "@/components/cra-home/sections";
 
-// Fresh on every request; keeps admin/CMS edits and DB-backed data current.
+// PHASE C: the CRA-readiness intake landing page is now the front door at
+// /[locale]. The previous conformity-platform home is fully preserved and
+// still live at /[locale]/conformity (src/app/[locale]/conformity/page.tsx).
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
@@ -32,7 +27,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).conformityHome;
+  const t = getDictionary(locale).craHome;
   return {
     title: t.meta.title,
     description: t.meta.description,
@@ -48,75 +43,31 @@ export default async function Home({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
-  const c = t.conformityHome;
 
-  // Admin-editable home content (DB-backed, JSON defaults). The lib wraps its DB
-  // read in try/catch, so the front door never 500s if the DB is down.
-  const home = await getConformityHome(locale);
-
-  // Resilient data fetch: the front door must never 500 if the DB is down.
-  let summary: ConformitySummary;
-  try {
-    summary = await getSummary();
-  } catch {
-    summary = { regulationCount: 5, requirementCount: 78, themeCount: 15, mappingCount: 61 };
-  }
+  // Admin-editable CRA home content (DB-backed, JSON defaults). getCraHome
+  // wraps its DB read in try/catch, so the front door never 500s if the DB
+  // is down — it degrades to the shipped JSON defaults.
+  const home = await getCraHome(locale);
 
   return (
-    <main
-      className="bg-background text-foreground"
-      data-regulations={summary.regulationCount}
-      data-requirements={summary.requirementCount}
-      data-themes={summary.themeCount}
-      data-mappings={summary.mappingCount}
-    >
+    <main className="bg-background text-foreground">
       <div className="mx-auto flex max-w-6xl justify-end px-4 pt-4">
         <ThemeToggle label={t.theme.toggle} />
       </div>
 
-      <Hero hero={home.hero} locale={locale} />
-
-      {/* 2 — Consultancy carousel (dictionary-driven, unchanged) */}
-      <section className="border-b border-border py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <Reveal>
-            <ConsultingCarousel slides={c.carousel.slides} locale={locale} labels={c.carousel.labels} />
-          </Reveal>
-        </div>
-      </section>
-
-      <RegulationBand logoWall={home.logoWall} />
-      <Stats stats={home.stats} />
-      <Platform featureGrid={home.featureGrid} />
-      <Problem problem={home.problem} />
-      <Shift shift={home.shift} locale={locale} />
-      <Comparison comparison={home.comparison} />
-      <HowItWorks steps={home.steps} />
-      <Testimonial quote={home.quote} />
-
-      {/* 11 — FAQ */}
-      <section className="border-b border-border py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              {home.faq.eyebrow}
-            </p>
-            <h2
-              className="mt-3 text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {home.faq.title}
-            </h2>
-          </Reveal>
-          <Reveal>
-            <div className="mt-8">
-              <Faq items={home.faq.items} />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <FinalCta cta={home.cta} locale={locale} />
+      <Hero
+        hero={home.hero}
+        locale={locale}
+        intake={{ form: t.intakeForm, success: t.intakeSuccess }}
+        assistLabel={t.agent.assistCtaLabel}
+        seedTemplate={t.agent.seedTemplate}
+      />
+      <DepartureBoard board={home.departureBoard} />
+      <RoadsSplit split={home.roadsSplit} assistLabel={t.agent.assistCtaLabel} seedTemplate={t.agent.seedTemplate} />
+      <Personas personas={home.personas} />
+      <Retainer retainer={home.retainer} />
+      <ProcessStrip process={home.process} />
+      <FinalCta cta={home.finalCta} />
     </main>
   );
 }

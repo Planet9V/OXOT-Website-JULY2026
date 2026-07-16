@@ -189,6 +189,8 @@
     "placeholder": "Type your question…",
     "send": "Send",
     "open": "Chat with us",
+    "assistCtaLabel": "Ask the assistant",
+    "seedTemplate": "I'm a {segment} — help me understand the CRA path that applies to us.",
     "consent": {
       "title": "Can we tailor this chat to your visit?",
       "body": "We use first-party signals (pages viewed, clicks) only to make the assistant more helpful. Nothing is stored until you agree.",
@@ -537,5 +539,43 @@
       "ctaPrimary": "Explore the platform",
       "ctaSecondary": "Talk to us"
     }
+  },
+  "craHome": {
+    "meta": {
+      "title": "The Cyber Resilience Act. Get ready. Get in line.",
+      "description": "OXOT classifies your products, builds defensible technical files on IEC 62443, and holds reserved assessment slots with our Conformity Body partners. Book a free 45-minute intake."
+    }
+  },
+  "intakeForm": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "orgLabel": "Organisation",
+    "orgPlaceholder": "Company name",
+    "emailLabel": "Work email",
+    "emailPlaceholder": "you@company.com",
+    "segmentLabel": "I am a…",
+    "segmentOptions": {
+      "manufacturer": "Product manufacturer",
+      "oem": "OEM — multiple product groups",
+      "integrator": "Integrator",
+      "reseller": "Distributor / reseller",
+      "operator": "Owner/operator — procurement"
+    },
+    "roleLabel": "Your role (optional)",
+    "submit": "Book my free 45-minute intake",
+    "submitting": "Submitting…",
+    "leaveWith": "You leave the call with your likely classification, your road to the CE mark, and a level-of-effort estimate.",
+    "errName": "Please enter your name.",
+    "errEmail": "Please enter a valid email address.",
+    "errSegment": "Please tell us where you sit in the chain.",
+    "errorGeneric": "Something went wrong. Please try again, or email vincent@oxot.nl directly.",
+    "errorRate": "Too many submissions from this connection. Please wait a few minutes and try again."
+  },
+  "intakeSuccess": {
+    "heading": "You're in the queue.",
+    "body": "Thank you — we've received your details. Vincent will be in touch within 2 business days with your intake preparation sheet.",
+    "scheduleHeading": "Pick a time that works for you",
+    "scheduleFallback": "Vincent contacts you within 2 business days to schedule your free 45-minute intake.",
+    "bookCta": "Open scheduling in a new tab"
   }
 }

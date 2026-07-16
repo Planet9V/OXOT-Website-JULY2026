@@ -1,0 +1,177 @@
+{
+  "hero": {
+    "eyebrow": "Cyber Resilience Act · Reg (EU) 2024/2847",
+    "title": "By 11 December 2027, every product with digital elements needs a security case.",
+    "titleAccent": "Get ready. Get in line.",
+    "subtitle": "OXOT is an operational-technology specialist. We classify your products, build defensible technical files on IEC 62443, and hold reserved assessment slots with our Conformity Body partners — so you're prepared, not queued.",
+    "badges": [
+      "OT specialists",
+      "IEC 62443 native",
+      "Conformity Body partnerships",
+      "Digital-twin evidence"
+    ],
+    "realityCallout": "THE 2026 REALITY — zero Notified Bodies designated · Class I self-assessment closed until harmonised standards are cited (~Q2 2027) · designation takes 12–18 months. The queue forms before the doors open.",
+    "formHeading": "Where do you sit in the chain?",
+    "formSub": "45 minutes, free, with an OT compliance specialist. We come prepared for your position.",
+    "leaveWith": "You leave the call with: your likely classification, your road to the CE mark, and a level-of-effort estimate. Scoped retainer proposal — with NDA & MSA — within 2 business days."
+  },
+  "departureBoard": {
+    "title": "The departure board",
+    "intro": "Three roads reach the CE mark before 11 December 2027 — but their departure windows close at different times. Where the bar turns red, that road no longer arrives on time.",
+    "axisLabels": ["JUL '26", "JAN '27", "JUL '27", "DEC '27"],
+    "milestones": [
+      { "pct": 1.5, "dateLabel": "Today", "note": "YOU ARE HERE", "tone": "start" },
+      { "pct": 11.5, "dateLabel": "11 Sep 2026", "note": "24 h / 72 h / 14 d reporting live", "tone": "info" },
+      { "pct": 27, "dateLabel": "Late 2026", "note": "first CB designations expected", "tone": "info" },
+      { "pct": 44, "dateLabel": "End Q1 2027", "note": "last safe entry to the CB queue", "tone": "warning" },
+      { "pct": 57, "dateLabel": "~Q2 2027", "note": "harmonised standards expected (Class I reopens)", "tone": "info" },
+      { "pct": 97, "dateLabel": "11 Dec 2027", "note": "THE WALL", "tone": "end" }
+    ],
+    "roads": [
+      {
+        "id": "h",
+        "label": "Road H · full quality assurance",
+        "sub": "QMS build 8–14 mo",
+        "segments": [
+          { "startPct": 0, "widthPct": 17, "tone": "safe", "caption": "DEPART NOW" },
+          { "startPct": 17, "widthPct": 10, "tone": "tight", "caption": "" },
+          { "startPct": 27, "widthPct": 73, "tone": "late", "caption": "departs after Q1 '27 → arrives after the wall" }
+        ]
+      },
+      {
+        "id": "bc",
+        "label": "Road B+C · type examination",
+        "sub": "4–8 mo + queue",
+        "segments": [
+          { "startPct": 0, "widthPct": 33, "tone": "safe", "caption": "DEPARTURE WINDOW OPEN — reserved slots via OXOT" },
+          { "startPct": 33, "widthPct": 11, "tone": "tight", "caption": "" },
+          { "startPct": 44, "widthPct": 56, "tone": "late", "caption": "queue + remediation loops → too late" }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Road A · self-assessment, Class I",
+        "sub": "17–32 wks once open",
+        "segments": [
+          { "startPct": 0, "widthPct": 57, "tone": "closed", "caption": "ROAD CLOSED — waiting on harmonised standards" },
+          { "startPct": 57, "widthPct": 26, "tone": "tight", "caption": "the gamble: tight window if standards slip" },
+          { "startPct": 83, "widthPct": 17, "tone": "late", "caption": "" }
+        ]
+      }
+    ],
+    "legend": [
+      { "tone": "safe", "label": "safe departure" },
+      { "tone": "tight", "label": "tight — no slack for findings" },
+      { "tone": "late", "label": "arrives after the wall" },
+      { "tone": "closed", "label": "road closed" }
+    ]
+  },
+  "roadsSplit": {
+    "title": "One start. Three roads. Same destination.",
+    "intro": "Every engagement starts with the same Phase 1 — intake and classification. The class of each product decides which road it takes to the CE mark. OXOT drives on all three.",
+    "startBadge": "START · PHASE 1 — Intake & classification, always OXOT",
+    "roads": [
+      {
+        "id": "a",
+        "title": "Road A · Module A",
+        "segment": "Default products · Class I once open",
+        "body": "OXOT runs all three phases on our bench; you sign your own Declaration of Conformity. Road closed for Class I until harmonised standards are cited (~Q2 2027).",
+        "ceMarkNote": "Destination: your own Declaration of Conformity. No Notified Body."
+      },
+      {
+        "id": "bc",
+        "title": "Road B+C · Type examination",
+        "segment": "Class I today · all Class II · Critical (until EUCC)",
+        "body": "OXOT prepares the dossier in the Conformity Body's expected format and hands it over personally into a reserved slot; the CB examines type and processes. Depart by Q1 2027.",
+        "ceMarkNote": "Destination: EU-type examination certificate → Declaration of Conformity + CE mark, with the CB's number beside it."
+      },
+      {
+        "id": "h",
+        "title": "Road H · Full quality assurance",
+        "segment": "Multi-product portfolios — one audited QMS",
+        "body": "The CB audits your full QMS — design, testing, production, vulnerability handling. OXOT builds the QMS and the SDL evidence, then dry-runs the audit. New products join in 4–8 weeks.",
+        "ceMarkNote": "Destination: one QMS approval covering many lines → CE mark per product."
+      }
+    ],
+    "wrongTurns": "Wrong turns everyone makes: testing before classifying · a stale SBOM · a non-standard dossier that starts a findings loop · signing the Declaration of Conformity too early.",
+    "footnote": "Not sure which road? That's precisely what the 45-minute intake answers."
+  },
+  "personas": {
+    "title": "The CRA looks different from where you sit.",
+    "intro": "Five positions in the chain, five different exposures. Pick yours — the intake and the paperwork come prepared for it.",
+    "cards": [
+      {
+        "segment": "manufacturer",
+        "title": "Product manufacturers",
+        "quote": "Every line needs its own SBOM, CVD process, risk assessment and technical file — and nobody in this building can tell me which class each product is even in.",
+        "cta": "Classify my portfolio"
+      },
+      {
+        "segment": "oem",
+        "title": "OEMs",
+        "quote": "40 product families, 3 product-security people. And anything we white-label makes us the manufacturer — whether we built it or not.",
+        "cta": "Sequence my estate"
+      },
+      {
+        "segment": "integrator",
+        "title": "Integrators",
+        "quote": "62443-2-4 shows up in every procurement contract now — and when we customise a vendor's product for a project, nobody can tell me whether we just became its manufacturer.",
+        "cta": "Find my boundary"
+      },
+      {
+        "segment": "reseller",
+        "title": "Resellers & distributors",
+        "quote": "We move thousands of SKUs from dozens of suppliers. Which can we legally sell after December 2027 — and which own-brand lines quietly made us a manufacturer?",
+        "cta": "Rate my line-card"
+      },
+      {
+        "segment": "operator",
+        "title": "Owner/operators",
+        "quote": "Much of our supplier portfolio has an unknown CRA posture, our OT contracts run for decades — and the board wants third-party-validated evidence, not vendor promises.",
+        "cta": "Scan my suppliers"
+      }
+    ]
+  },
+  "retainer": {
+    "title": "One retainer. Three phases. A reserved seat.",
+    "intro": "A bucket of specialist hours against a transparent rate card, sized by the intake — typical engagements start around €20K. Hours draw down against the phases; retainer clients hold priority on our bench and our Conformity Body slots.",
+    "phases": [
+      {
+        "tag": "PHASE 1 · ALWAYS OXOT",
+        "title": "Classify & scope",
+        "body": "Classification with written rationale, gap assessment, IRA · ZCR · SL-T, testing scope — and your road."
+      },
+      {
+        "tag": "PHASE 2",
+        "title": "Test & evidence",
+        "body": "The 13 properties and 8 processes, evidenced — on our bench, or a dossier the CB waves through, not sends back."
+      },
+      {
+        "tag": "PHASE 3",
+        "title": "File & lifecycle",
+        "body": "Annex VII technical file, Declaration of Conformity, PSIRT, 5-year updates, 10-year retention."
+      }
+    ],
+    "reservedSeat": {
+      "tag": "THE RESERVED SEAT",
+      "title": "CB slots, held for you",
+      "body": "Our Phase-1 output arrives in the format the bench expects — less churn, fewer loops, shorter queue."
+    },
+    "digitalTwin": "Accelerated throughout by OXOT's digital twin — your product modelled once, SBOMs and evidence regenerated across the lifecycle."
+  },
+  "process": {
+    "title": "What happens when you press the button",
+    "steps": [
+      { "number": "1", "title": "You submit the form", "body": "You're in the queue, timestamped." },
+      { "number": "2", "title": "Vincent contacts you", "body": "Within 2 business days, with the intake preparation sheet." },
+      { "number": "3", "title": "The 45-minute intake", "body": "Product, markets, classification, road, level of effort. Free." },
+      { "number": "4", "title": "Scoped proposal", "body": "Within 2 business days — a retainer proposal, with NDA & MSA." },
+      { "number": "5", "title": "Phase 1 begins", "body": "And your CB slot is reserved if your road needs one." }
+    ]
+  },
+  "finalCta": {
+    "title": "Get ready — get in line.",
+    "line": "The wall is fixed. The queue is not. Book the free 45-minute intake.",
+    "ctaLabel": "Book the intake"
+  }
+}

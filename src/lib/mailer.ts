@@ -19,6 +19,9 @@ export interface SendEmailParams {
   html: string;
   text?: string;
   headers?: Record<string, string>;
+  // Optional file attachments (e.g. segment PDF for the CRA intake follow-up),
+  // passed straight through to nodemailer's transport.sendMail.
+  attachments?: { filename: string; path?: string; content?: Buffer }[];
 }
 
 export interface SendEmailResult {
@@ -100,7 +103,8 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
       subject: params.subject,
       html: params.html,
       text: params.text,
-      headers: params.headers
+      headers: params.headers,
+      attachments: params.attachments
     });
     void recordIntegrationEvent({ integration: "email", kind: "send", success: true, detail: params.subject });
     return { delivered: true };

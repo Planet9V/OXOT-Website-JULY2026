@@ -1,14 +1,16 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart
+  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart, Layers, ClipboardList
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DashboardOverview } from "@/components/admin/dashboard-overview";
+import { CraHomeEditor } from "@/components/admin/cra-home-editor";
 import { ConformityHomeEditor } from "@/components/admin/conformity-home-editor";
 import { HomeContentEditor } from "@/components/admin/home-content-editor";
+import { IntakeLeadsManager } from "@/components/admin/intake-leads-manager";
 import { PagesManager } from "@/components/admin/pages-manager";
 import { MenuManager } from "@/components/admin/menu-manager";
 import { InquiriesManager } from "@/components/admin/inquiries-manager";
@@ -20,7 +22,7 @@ import { AnalyticsManager } from "@/components/admin/analytics-manager";
 import { AffiliateSeoManager } from "@/components/admin/affiliate-seo-manager";
 import { CarouselManager } from "@/components/admin/carousel-manager";
 
-type Section = "overview" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
+type Section = "overview" | "cra-home" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
 // Order is display-only (each item's key→component wiring is unchanged). Grouped for
 // admin UX: Overview → Content authoring → Audience & growth → Configuration, roughly
 // by how often a small content team touches each, with set-and-forget config last.
@@ -28,7 +30,8 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   // Overview
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   // Content authoring — flagship pages first, then supporting assets, then site structure
-  { key: "home", label: "Home page", icon: Home },
+  { key: "cra-home", label: "Home page", icon: Home },
+  { key: "home", label: "Conformity page", icon: Layers },
   { key: "homepage", label: "Approach page", icon: LayoutTemplate },
   { key: "pages", label: "Pages", icon: FileText },
   { key: "media", label: "Media", icon: Images },
@@ -36,6 +39,7 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "menus", label: "Menus", icon: MenuIcon },
   // Audience & growth — inbound leads → outbound marketing → measurement → optimization
   { key: "enquiries", label: "Enquiries", icon: Inbox },
+  { key: "leads", label: "CRA Leads", icon: ClipboardList },
   { key: "newsletter", label: "Newsletter & Social", icon: Send },
   { key: "analytics", label: "Analytics", icon: BarChart3 },
   { key: "affiliate-seo", label: "Affiliate & SEO", icon: LineChart },
@@ -132,6 +136,7 @@ export function AdminShell({ email }: { email: string }) {
 
         <main className="mx-auto w-full max-w-6xl flex-1 p-4 lg:p-8">
           {section === "overview" && <DashboardOverview />}
+          {section === "cra-home" && <CraHomeEditor />}
           {section === "home" && <ConformityHomeEditor />}
           {section === "homepage" && <HomeContentEditor />}
           {section === "pages" && <PagesManager />}
@@ -139,6 +144,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "media" && <MediaManager />}
           {section === "carousel" && <CarouselManager />}
           {section === "enquiries" && <InquiriesManager />}
+          {section === "leads" && <IntakeLeadsManager />}
           {section === "ai" && <AiSettings />}
           {section === "integrations" && <IntegrationsManager />}
           {section === "newsletter" && <NewsletterSocialManager />}

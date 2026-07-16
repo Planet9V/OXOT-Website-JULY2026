@@ -46,6 +46,9 @@ export function ChatWidget({
   const [busy, setBusy] = useState(false);
   const [firstVisit, setFirstVisit] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  // A seed message queued by "oxot:chat-open" while the visitor hasn't
+  // consented yet; replayed once accept() resolves (see below).
+  const pendingSeedRef = useRef<string | null>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -83,6 +86,12 @@ export function ChatWidget({
       setFirstVisit(false);
     }
     void beacon(sid, "page", pageId);
+    // Replay a seed message queued by "oxot:chat-open" before consent existed.
+    if (pendingSeedRef.current) {
+      const seed = pendingSeedRef.current;
+      pendingSeedRef.current = null;
+      void send(seed, sid);
+    }
   }
 
   function beacon(sid: string, type: string, page?: string, element?: string) {
@@ -105,17 +114,43 @@ export function ChatWidget({
     return () => document.removeEventListener("click", onClick);
   }, [consent, sessionId, pageId]);
 
-  async function send() {
-    const q = input.trim();
-    if (!q || !sessionId || busy) return;
-    setInput("");
+  // Other components (e.g. src/components/cra-home/ask-assistant-button.tsx)
+  // open the widget by dispatching window.dispatchEvent(new CustomEvent(
+  // "oxot:chat-open", { detail: { seed, segment } })). Fully backward
+  // compatible: no new required props, existing callers are unaffected.
+  useEffect(() => {
+    function onChatOpen(e: Event) {
+      const detail = (e as CustomEvent<{ seed?: string; segment?: string }>).detail ?? {};
+      setOpen(true);
+      if (!detail.seed) return;
+      if (consent === true && sessionId) {
+        void send(detail.seed);
+      } else {
+        // Not consented yet (or consent still pending) — stash it; accept()
+        // replays it once a session exists.
+        pendingSeedRef.current = detail.seed;
+      }
+    }
+    window.addEventListener("oxot:chat-open", onChatOpen as EventListener);
+    return () => window.removeEventListener("oxot:chat-open", onChatOpen as EventListener);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [consent, sessionId]);
+
+  // `overrideText`/`overrideSessionId` let a seed from "oxot:chat-open" (or the
+  // just-created session in accept(), before the sessionId state re-renders)
+  // send immediately instead of going through the input box.
+  async function send(overrideText?: string, overrideSessionId?: string) {
+    const q = (overrideText ?? input).trim();
+    const sid = overrideSessionId ?? sessionId;
+    if (!q || !sid || busy) return;
+    if (!overrideText) setInput("");
     setMessages((m) => [...m, { role: "user", text: q }, { role: "assistant", text: "" }]);
     setBusy(true);
     try {
       const res = await fetch("/api/agent", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ sessionId, message: q, locale, pageId })
+        body: JSON.stringify({ sessionId: sid, message: q, locale, pageId })
       });
       if (!res.body) throw new Error("no stream");
       const reader = res.body.getReader();
