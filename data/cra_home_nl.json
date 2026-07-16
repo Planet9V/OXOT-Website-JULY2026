@@ -11,9 +11,15 @@
       "Digital-twin-bewijs"
     ],
     "realityCallout": "DE REALITEIT VAN 2026 — nul aangewezen Conformiteitsinstanties · zelfbeoordeling Klasse I gesloten totdat geharmoniseerde normen zijn aangewezen (~Q2 2027) · aanwijzing duurt 12–18 maanden. De wachtrij vormt zich vóór de deuren opengaan.",
-    "formHeading": "Waar zit u in de keten?",
-    "formSub": "45 minuten, gratis, met een OT-compliancespecialist. Wij komen voorbereid voor uw positie.",
-    "leaveWith": "U verlaat het gesprek met: uw waarschijnlijke classificatie, uw route naar de CE-markering, en een inschatting van de benodigde inspanning. Uitgewerkt retainervoorstel — met NDA & MSA — binnen 2 werkdagen."
+    "ctaLabel": "Plan de intake"
+  },
+  "statBand": {
+    "items": [
+      { "value": "11 dec 2027", "label": "conformiteit verplicht", "sub": "geen CE-markering, geen EU-markt" },
+      { "value": "16–24 wkn", "label": "per beoordeling door derden", "sub": "capaciteit is het knelpunt" },
+      { "value": "€15M / 2,5%", "label": "maximale boete", "sub": "van de wereldwijde omzet" },
+      { "value": "5 segmenten", "label": "één engine", "sub": "fabrikanten · OEM's · integrators · resellers · exploitanten" }
+    ]
   },
   "departureBoard": {
     "title": "Het vertrekbord",
@@ -73,64 +79,120 @@
     "roads": [
       {
         "id": "a",
-        "title": "Route A · Module A",
-        "segment": "Standaardproducten · Klasse I zodra open",
-        "body": "OXOT voert alle drie de fasen uit op onze bench; u ondertekent uw eigen conformiteitsverklaring. Route gesloten voor Klasse I totdat geharmoniseerde normen zijn aangewezen (~Q2 2027).",
-        "ceMarkNote": "Bestemming: uw eigen conformiteitsverklaring. Geen Notified Body."
+        "laneLabel": "ROUTE A · MODULE A",
+        "title": "Zelfverklaring",
+        "segment": "Standaardproducten · Klasse I met een geharmoniseerde norm · 17–32 wkn",
+        "status": "⚠ GESLOTEN VOOR KLASSE I — tot normen zijn aangewezen (~Q2 2027)",
+        "statusTone": "closed",
+        "body": "OXOT voert alle drie de fasen uit op onze bench; u ondertekent uw eigen conformiteitsverklaring.",
+        "oxotDoes": "OXOT voert alle drie de fasen uit op onze bench; u ondertekent uw eigen conformiteitsverklaring.",
+        "ceMarkNote": "CE-MARKERING · eigen conformiteitsverklaring"
       },
       {
         "id": "bc",
-        "title": "Route B+C · Typeonderzoek",
-        "segment": "Klasse I vandaag · alle Klasse II · Kritiek (tot EUCC)",
-        "body": "OXOT bereidt het dossier voor in het format dat de Conformiteitsinstantie verwacht en draagt het persoonlijk over in een gereserveerd slot; de CI onderzoekt type en processen. Vertrek vóór Q1 2027.",
-        "ceMarkNote": "Bestemming: EU-typeonderzoekscertificaat → conformiteitsverklaring + CE-markering, met het nummer van de CI."
+        "laneLabel": "ROUTE B+C · TYPEONDERZOEK",
+        "title": "Typeonderzoek",
+        "segment": "Klasse I vandaag · alle Klasse II · Kritiek (tot EUCC) · 4–8 mnd",
+        "status": "⛟ GERESERVEERD SLOT — OXOT-CB-partnerschappen slaan de publieke wachtrij over; formele overdracht, schoon dossier",
+        "statusTone": "reserved",
+        "body": "De Conformiteitsinstantie onderzoekt type en processen; OXOT draagt een schoon dossier over in het verwachte format.",
+        "oxotDoes": "OXOT bereidt het dossier voor in het format van de CI en draagt het over in een gereserveerd slot.",
+        "ceMarkNote": "CE-MARKERING · EU-typecertificaat + CI-nummer"
       },
       {
         "id": "h",
-        "title": "Route H · Volledige kwaliteitsborging",
-        "segment": "Portfolio's met meerdere producten — één geaudit QMS",
-        "body": "De CI audit uw volledige QMS — ontwerp, testen, productie, kwetsbaarhedenbeheer. OXOT bouwt het QMS en het SDL-bewijs, en doet een proefaudit. Nieuwe producten sluiten aan in 4–8 weken.",
-        "ceMarkNote": "Bestemming: één QMS-goedkeuring voor meerdere lijnen → CE-markering per product."
+        "laneLabel": "ROUTE H · VOLLEDIGE KB",
+        "title": "Volledige kwaliteitsborging",
+        "segment": "Portfolio's met meerdere producten — één geaudit QMS · 8–14 mnd",
+        "status": "⟳ SCHAALT — nieuwe producten sluiten in 4–8 weken aan op het goedgekeurde QMS",
+        "statusTone": "scales",
+        "body": "De CI audit uw volledige QMS — ontwerp, testen, productie, kwetsbaarhedenbeheer — één keer, voor het hele portfolio.",
+        "oxotDoes": "OXOT bouwt het QMS + SDL-bewijs en doet een proefaudit; nieuwe producten sluiten aan in 4–8 weken.",
+        "ceMarkNote": "CE-MARKERING · QMS-goedkeuring, portfoliobreed"
       }
     ],
-    "wrongTurns": "Fouten die iedereen maakt: testen vóór classificeren · een verouderde SBOM · een niet-standaard dossier dat een bevindingenronde start · de conformiteitsverklaring te vroeg ondertekenen.",
-    "footnote": "Niet zeker welke route? Precies dat beantwoordt de intake van 45 minuten."
+    "destinationLabel": "BESTEMMING",
+    "wrongTurnsTitle": "VERKEERDE AFSLAGEN",
+    "wrongTurns": "Testen vóór classificeren · een verouderde SBOM · een niet-standaard dossier = bevindingenrondes (elk 4–8 wkn) · de conformiteitsverklaring te vroeg ondertekend · een rebranding of aanpassing die onopgemerkt blijft.",
+    "footnote": "Niet zeker welke route? Precies dat beantwoordt de intake van 45 minuten.",
+    "statBar": [
+      { "value": "Annex I·I", "label": "13 productbeveiligingseigenschappen" },
+      { "value": "Annex I·II", "label": "8 processen voor kwetsbaarhedenbeheer" },
+      { "value": "Annex VII", "label": "technisch dossier per product" },
+      { "value": "24u / 72u / 14d", "label": "ENISA-melding, vanaf 11 sep 2026" },
+      { "value": "≥5 jr / 10 jr", "label": "ondersteuning · bewaarplicht" },
+      { "value": "€15M / 2,5%", "label": "maximale boetes" }
+    ]
   },
   "personas": {
-    "title": "De CRA ziet er anders uit, afhankelijk van waar u zit.",
-    "intro": "Vijf posities in de keten, vijf verschillende risico's. Kies de uwe — de intake en het papierwerk komen daarop voorbereid.",
+    "title": "Eén verordening. Vijf kopers. Dezelfde engine.",
+    "intro": "Elke positie in de OT-waardeketen erft een ander CRA-risico — en koopt hetzelfde driefasenprogramma, via een segment-specifieke deur. Kies de uwe; de intake komt daarop voorbereid.",
     "cards": [
       {
         "segment": "manufacturer",
         "title": "Productfabrikanten",
         "quote": "Elke lijn heeft een eigen SBOM, CVD-proces, risicobeoordeling en technisch dossier nodig — en niemand in dit bedrijf kan me vertellen in welke klasse elk product eigenlijk valt.",
+        "buys": "CLASSIFICATION & FULL PROGRAMME",
         "cta": "Classificeer mijn portfolio"
       },
       {
         "segment": "oem",
         "title": "OEM's",
         "quote": "40 productfamilies, 3 mensen voor productbeveiliging. En alles wat we white-labelen maakt ons de fabrikant — of we het nu gebouwd hebben of niet.",
+        "buys": "PORTFOLIO TRIAGE & MODULE H",
         "cta": "Sequentieer mijn portfolio"
       },
       {
         "segment": "integrator",
         "title": "Integrators",
         "quote": "62443-2-4 staat nu in elk aanbestedingscontract — en als we een product van een leverancier aanpassen voor een project, kan niemand me vertellen of we er zojuist de fabrikant van zijn geworden.",
+        "buys": "BOUNDARY ANALYSIS & EVIDENCE PACK",
         "cta": "Bepaal mijn grens"
       },
       {
         "segment": "reseller",
         "title": "Resellers & distributeurs",
         "quote": "We verplaatsen duizenden SKU's van tientallen leveranciers. Welke mogen we na december 2027 nog legaal verkopen — en welke eigen-merklijnen maakten ons stilletjes fabrikant?",
+        "buys": "LINE-CARD REVIEW & EXPOSURE REGISTER",
         "cta": "Beoordeel mijn assortiment"
       },
       {
         "segment": "operator",
         "title": "Eigenaren/exploitanten",
         "quote": "Van een groot deel van ons leveranciersportfolio is de CRA-status onbekend — en het bestuur wil door derden gevalideerd bewijs, geen leveranciersbeloftes.",
+        "buys": "SUPPLIER SCAN & PROCUREMENT GATES",
         "cta": "Scan mijn leveranciers"
       }
     ]
+  },
+  "engine": {
+    "eyebrow": "The engine · Phase 1",
+    "title": "Evidence as data, not documents.",
+    "intro": "Your product is modelled once on OXOT's cyber digital twin. Every bill of materials is standardised and machine-readable; every risk decision carries a written rationale; every output ships twice — a human-readable report per stakeholder, and a machine-readable file on a DEXPI-extended schema. That one model feeds Phases 2 and 3 without re-work.",
+    "bomsTitle": "Standardised bills of materials",
+    "boms": [
+      { "code": "SBOM", "label": "Software components & dependencies, CVE-watched" },
+      { "code": "HBOM", "label": "Hardware: chips, modules, boards, provenance" },
+      { "code": "CBOM", "label": "Cryptography: algorithms, keys, certificates, PQC posture" },
+      { "code": "SaaS-BOM", "label": "Cloud services, APIs and remote data processing in scope" },
+      { "code": "Operations BOM", "label": "Deployment context: services, interfaces, update & support paths" }
+    ],
+    "bomsNote": "Plus supplier SBOM ingestion — upstream value-stream issues surface in your portfolio view, not in a CB finding.",
+    "riskTitle": "The risk process — IEC 62443, harmonised for OT",
+    "riskSteps": [
+      { "number": "1", "title": "IRA", "body": "Initial risk assessment." },
+      { "number": "2", "title": "TVA", "body": "Threat & vulnerability assessment." },
+      { "number": "3", "title": "Worst case", "body": "Worst-case consequence analysis." },
+      { "number": "4", "title": "ZCR + SL-T", "body": "Zones & conduits, target security levels." },
+      { "number": "5", "title": "ALARP → SL-C", "body": "Capability levels set by ALARP, with written rationale." },
+      { "number": "6", "title": "SL-A", "body": "Achieved levels verified on the bench (Phase 2)." },
+      { "number": "7", "title": "Portfolio view", "body": "Dependencies, shared platforms, upstream supplier issues." }
+    ],
+    "riskNote": "One size does not fit all. Security levels are engineered per zone and justified — ALARP closes the gap between target and capability with rationale a Conformity Body accepts, not a checklist.",
+    "outputsTitle": "Every output, twice",
+    "outputsHuman": "Human-readable — one report, cut per audience: business · engineering · compliance · procurement · programme management · deployment · legal · leadership.",
+    "outputsMachine": "Machine-readable — a DEXPI engineering schema, extended by OXOT: classifications, BOMs, risk artifacts, SL rationale — versioned, diffable, consumed directly by Phase 2 and by Conformity Bodies.",
+    "outputsNote": "A document-based programme rots between releases. A model-based one regenerates: change a component, and the SBOM, risk deltas and technical-file sections update as differentials — not a re-engagement."
   },
   "retainer": {
     "title": "Eén retainer. Drie fasen. Een gereserveerde plek.",
@@ -158,6 +220,37 @@
       "body": "Onze Fase-1-output komt aan in het format dat de bench verwacht — minder frictie, minder rondes, kortere wachttijd."
     },
     "digitalTwin": "Overal versneld door de digital twin van OXOT — uw product één keer gemodelleerd, SBOM's en bewijs geregenereerd over de hele levenscyclus."
+  },
+  "whyOxot": {
+    "eyebrow": "The model",
+    "title": "Why OXOT wins.",
+    "intro": "Four reasons the same programme costs less, scales further, and holds capacity when the market can't.",
+    "pillars": [
+      {
+        "title": "OT-native, not IT-adapted",
+        "body": "IEC 62443 is our home standard — the clearest route to presumption of conformity for OT products. Every artifact serves 62443 and CRA at once."
+      },
+      {
+        "title": "Model-based economics",
+        "body": "The digital twin turns compliance from a per-document cost into a per-model asset: releases are differentials, portfolios batch shared evidence, marginal cost falls per product."
+      },
+      {
+        "title": "Capacity when it's scarce",
+        "body": "Reserved CB slots and CB-format handovers — the constraint in 2027 is bench time, and retainer clients hold it."
+      },
+      {
+        "title": "Recurring by design",
+        "body": "CRA obligations run for the product lifecycle — 5-year updates, PSIRT, surveillance. The retainer is the delivery vehicle, from ~€20K, scoped at intake."
+      }
+    ]
+  },
+  "intake": {
+    "eyebrow": "De intake — zo begint elk traject",
+    "title": "De muur staat vast. De wachtrij niet.",
+    "intro": "45 minuten, gratis, met een OT-compliancespecialist. U verlaat het gesprek met een live classificatie-inschatting, uw waarschijnlijke route (A / B+C / H), en een inschatting van de benodigde inspanning — een uitgewerkt retainervoorstel met NDA & MSA binnen 2 werkdagen. U houdt alle drie de antwoorden hoe dan ook.",
+    "formHeading": "Waar zit u in de keten?",
+    "formSub": "45 minuten, gratis, met een OT-compliancespecialist. Wij komen voorbereid voor uw positie.",
+    "promise": "U verlaat het gesprek met: uw waarschijnlijke classificatie, uw route naar de CE-markering, en een inschatting van de benodigde inspanning. Uitgewerkt retainervoorstel — met NDA & MSA — binnen 2 werkdagen."
   },
   "process": {
     "title": "Wat er gebeurt als u op de knop drukt",

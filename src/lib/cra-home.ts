@@ -53,13 +53,29 @@ export interface CraHomeDepartureBoard {
   legend: DepartureBoardLegendItem[];
 }
 
+/** Status tone for a road's headline callout on the pathway map:
+ *  closed (red) · reserved (primary/orange) · scales (emerald). */
+export type RoadStatusTone = "closed" | "reserved" | "scales";
+
 export interface RoadsSplitRoad {
   id: string;
+  /** Road-sign lane label, e.g. "ROAD A · MODULE A". */
+  laneLabel: string;
   title: string;
   body: string;
   ceMarkNote: string;
-  /** Segment/eligibility tag shown on the card, e.g. "Default products · Class I once open". */
+  /** Eligibility tag shown on the sign, e.g. "Default products · Class I with a harmonised standard · 17–32 wks". */
   segment: string;
+  /** The ⚠/⛟/⟳ status callout, e.g. "CLOSED FOR CLASS I — until standards are cited (~Q2 2027)". */
+  status: string;
+  statusTone: RoadStatusTone;
+  /** Per-road OXOT service alignment line (sign detail / expandable). */
+  oxotDoes: string;
+}
+
+export interface RoadStatItem {
+  label: string;
+  value: string;
 }
 
 export interface CraHomeRoadsSplit {
@@ -67,8 +83,12 @@ export interface CraHomeRoadsSplit {
   intro: string;
   startBadge: string;
   roads: RoadsSplitRoad[];
+  destinationLabel: string;
+  wrongTurnsTitle: string;
   wrongTurns: string;
   footnote: string;
+  /** 6-item stat bar shown beneath the pathway map. */
+  statBar: RoadStatItem[];
 }
 
 export interface PersonaCard {
@@ -76,6 +96,8 @@ export interface PersonaCard {
   segment: string;
   title: string;
   quote: string;
+  /** "One regulation. Five buyers." — what this segment BUYS. */
+  buys: string;
   cta: string;
 }
 
@@ -129,17 +151,79 @@ export interface CraHomeHero {
   subtitle: string;
   badges: string[];
   realityCallout: string;
+  /** Primary CTA on the hero — scrolls to the #intake section. */
+  ctaLabel: string;
+}
+
+export interface StatBandItem {
+  value: string;
+  label: string;
+  sub?: string;
+}
+
+export interface CraHomeStatBand {
+  items: StatBandItem[];
+}
+
+export interface EngineBom {
+  code: string;
+  label: string;
+}
+
+export interface EngineRiskStep {
+  number: string;
+  title: string;
+  body: string;
+}
+
+export interface CraHomeEngine {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  bomsTitle: string;
+  boms: EngineBom[];
+  bomsNote: string;
+  riskTitle: string;
+  riskSteps: EngineRiskStep[];
+  riskNote: string;
+  outputsTitle: string;
+  outputsHuman: string;
+  outputsMachine: string;
+  outputsNote: string;
+}
+
+export interface WhyOxotPillar {
+  title: string;
+  body: string;
+}
+
+export interface CraHomeWhyOxot {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  pillars: WhyOxotPillar[];
+}
+
+export interface CraHomeIntake {
+  eyebrow: string;
+  title: string;
+  intro: string;
   formHeading: string;
   formSub: string;
-  leaveWith: string;
+  /** "You leave the call with…" promise; also passed to the intake form. */
+  promise: string;
 }
 
 export interface CraHome {
   hero: CraHomeHero;
+  statBand: CraHomeStatBand;
   departureBoard: CraHomeDepartureBoard;
   roadsSplit: CraHomeRoadsSplit;
   personas: CraHomePersonas;
+  engine: CraHomeEngine;
   retainer: CraHomeRetainer;
+  whyOxot: CraHomeWhyOxot;
+  intake: CraHomeIntake;
   process: CraHomeProcess;
   finalCta: CraHomeFinalCta;
 }

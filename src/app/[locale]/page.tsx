@@ -7,11 +7,14 @@ import { alternates } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Hero,
+  StatBand,
   DepartureBoard,
   RoadsSplit,
   Personas,
+  Engine,
   Retainer,
-  ProcessStrip,
+  WhyOxot,
+  IntakeSection,
   FinalCta
 } from "@/components/cra-home/sections";
 
@@ -58,15 +61,22 @@ export default async function Home({
       <Hero
         hero={home.hero}
         locale={locale}
-        intake={{ form: t.intakeForm, success: t.intakeSuccess }}
         assistLabel={t.agent.assistCtaLabel}
         seedTemplate={t.agent.seedTemplate}
       />
+      <StatBand band={home.statBand} />
       <DepartureBoard board={home.departureBoard} />
       <RoadsSplit split={home.roadsSplit} assistLabel={t.agent.assistCtaLabel} seedTemplate={t.agent.seedTemplate} />
       <Personas personas={home.personas} />
+      <Engine engine={home.engine} />
       <Retainer retainer={home.retainer} />
-      <ProcessStrip process={home.process} />
+      <WhyOxot why={home.whyOxot} />
+      <IntakeSection
+        intake={home.intake}
+        process={home.process}
+        locale={locale}
+        strings={{ form: t.intakeForm, success: t.intakeSuccess }}
+      />
       <FinalCta cta={home.finalCta} />
     </main>
   );

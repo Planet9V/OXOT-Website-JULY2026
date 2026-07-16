@@ -98,9 +98,18 @@ export function CraHomeEditor() {
           <div key={i}><label className={lbl}>Badge {i + 1}</label><input className={field} value={b} onChange={(e) => edit((c) => { c.hero.badges[i] = e.target.value; })} /></div>
         ))}
         <div><label className={lbl}>"2026 reality" callout</label><textarea className={`${field} h-20`} value={c.hero.realityCallout} onChange={(e) => edit((c) => { c.hero.realityCallout = e.target.value; })} /></div>
-        <div><label className={lbl}>Form heading</label><input className={field} value={c.hero.formHeading} onChange={(e) => edit((c) => { c.hero.formHeading = e.target.value; })} /></div>
-        <div><label className={lbl}>Form subtitle</label><input className={field} value={c.hero.formSub} onChange={(e) => edit((c) => { c.hero.formSub = e.target.value; })} /></div>
-        <div><label className={lbl}>"You leave the call with…" promise</label><textarea className={`${field} h-20`} value={c.hero.leaveWith} onChange={(e) => edit((c) => { c.hero.leaveWith = e.target.value; })} /></div>
+        <div><label className={lbl}>Primary CTA label (scrolls to intake)</label><input className={field} value={c.hero.ctaLabel} onChange={(e) => edit((c) => { c.hero.ctaLabel = e.target.value; })} /></div>
+      </div>
+
+      {/* INTAKE SECTION */}
+      <div className={box}>
+        <p className={head}>Intake section (form + walkthrough)</p>
+        <div><label className={lbl}>Eyebrow</label><input className={field} value={c.intake.eyebrow} onChange={(e) => edit((c) => { c.intake.eyebrow = e.target.value; })} /></div>
+        <div><label className={lbl}>Title</label><input className={field} value={c.intake.title} onChange={(e) => edit((c) => { c.intake.title = e.target.value; })} /></div>
+        <div><label className={lbl}>Intro</label><textarea className={`${field} h-20`} value={c.intake.intro} onChange={(e) => edit((c) => { c.intake.intro = e.target.value; })} /></div>
+        <div><label className={lbl}>Form heading</label><input className={field} value={c.intake.formHeading} onChange={(e) => edit((c) => { c.intake.formHeading = e.target.value; })} /></div>
+        <div><label className={lbl}>Form subtitle</label><input className={field} value={c.intake.formSub} onChange={(e) => edit((c) => { c.intake.formSub = e.target.value; })} /></div>
+        <div><label className={lbl}>"You leave the call with…" promise</label><textarea className={`${field} h-20`} value={c.intake.promise} onChange={(e) => edit((c) => { c.intake.promise = e.target.value; })} /></div>
       </div>
 
       {/* DEPARTURE BOARD */}
@@ -157,12 +166,17 @@ export function CraHomeEditor() {
         {c.roadsSplit.roads.map((r, i) => (
           <div key={i} className="space-y-2 rounded-md border border-border/60 p-3">
             <span className="text-xs text-muted-foreground">Road #{i + 1}</span>
+            <input className={field} placeholder="lane label (e.g. ROAD A · MODULE A)" value={r.laneLabel} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].laneLabel = e.target.value; })} />
             <input className={field} placeholder="title" value={r.title} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].title = e.target.value; })} />
             <input className={field} placeholder="segment / eligibility tag" value={r.segment} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].segment = e.target.value; })} />
-            <textarea className={`${field} h-20`} placeholder="body" value={r.body} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].body = e.target.value; })} />
+            <input className={field} placeholder="status callout (⚠ / ⛟ / ⟳ …)" value={r.status} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].status = e.target.value; })} />
+            <input className={field} placeholder="status tone (closed / reserved / scales)" value={r.statusTone} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].statusTone = e.target.value as typeof r.statusTone; })} />
+            <textarea className={`${field} h-16`} placeholder="body" value={r.body} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].body = e.target.value; })} />
+            <textarea className={`${field} h-16`} placeholder="OXOT does…" value={r.oxotDoes} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].oxotDoes = e.target.value; })} />
             <input className={field} placeholder="CE mark note" value={r.ceMarkNote} onChange={(e) => edit((c) => { c.roadsSplit.roads[i].ceMarkNote = e.target.value; })} />
           </div>
         ))}
+        <div><label className={lbl}>Wrong turns title</label><input className={field} value={c.roadsSplit.wrongTurnsTitle} onChange={(e) => edit((c) => { c.roadsSplit.wrongTurnsTitle = e.target.value; })} /></div>
         <div><label className={lbl}>Wrong turns</label><textarea className={`${field} h-20`} value={c.roadsSplit.wrongTurns} onChange={(e) => edit((c) => { c.roadsSplit.wrongTurns = e.target.value; })} /></div>
         <div><label className={lbl}>Footnote</label><input className={field} value={c.roadsSplit.footnote} onChange={(e) => edit((c) => { c.roadsSplit.footnote = e.target.value; })} /></div>
       </div>
@@ -177,6 +191,7 @@ export function CraHomeEditor() {
             <span className="text-xs text-muted-foreground">Segment: {p.segment}</span>
             <input className={field} placeholder="title" value={p.title} onChange={(e) => edit((c) => { c.personas.cards[i].title = e.target.value; })} />
             <textarea className={`${field} h-20`} placeholder="quote (first person, verbatim)" value={p.quote} onChange={(e) => edit((c) => { c.personas.cards[i].quote = e.target.value; })} />
+            <input className={field} placeholder="buys → …" value={p.buys} onChange={(e) => edit((c) => { c.personas.cards[i].buys = e.target.value; })} />
             <input className={field} placeholder="cta" value={p.cta} onChange={(e) => edit((c) => { c.personas.cards[i].cta = e.target.value; })} />
           </div>
         ))}

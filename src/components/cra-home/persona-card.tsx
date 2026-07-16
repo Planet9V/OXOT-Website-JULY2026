@@ -20,6 +20,9 @@ export function PersonaCard({ card }: { card: PersonaCardData }) {
         {card.title}
       </h3>
       <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">&ldquo;{card.quote}&rdquo;</p>
+      <span className="mt-3 block rounded bg-primary/5 px-2 py-1.5 text-[10px] font-bold leading-snug tracking-wide text-primary">
+        BUYS → {card.buys}
+      </span>
       <span className="mt-3 text-[11px] font-bold uppercase tracking-wide text-primary">{card.cta} →</span>
     </button>
   );

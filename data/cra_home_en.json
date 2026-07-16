@@ -3,7 +3,7 @@
     "eyebrow": "Cyber Resilience Act · Reg (EU) 2024/2847",
     "title": "By 11 December 2027, every product with digital elements needs a security case.",
     "titleAccent": "Get ready. Get in line.",
-    "subtitle": "OXOT is an operational-technology specialist. We classify your products, build defensible technical files on IEC 62443, and hold reserved assessment slots with our Conformity Body partners — so you're prepared, not queued.",
+    "subtitle": "OXOT is an operational-technology compliance specialist. We classify your products, build defensible technical files on IEC 62443, and hold reserved assessment slots with our Conformity Body partners — so you're prepared, not queued.",
     "badges": [
       "OT specialists",
       "IEC 62443 native",
@@ -11,9 +11,15 @@
       "Digital-twin evidence"
     ],
     "realityCallout": "THE 2026 REALITY — zero Notified Bodies designated · Class I self-assessment closed until harmonised standards are cited (~Q2 2027) · designation takes 12–18 months. The queue forms before the doors open.",
-    "formHeading": "Where do you sit in the chain?",
-    "formSub": "45 minutes, free, with an OT compliance specialist. We come prepared for your position.",
-    "leaveWith": "You leave the call with: your likely classification, your road to the CE mark, and a level-of-effort estimate. Scoped retainer proposal — with NDA & MSA — within 2 business days."
+    "ctaLabel": "Book the intake"
+  },
+  "statBand": {
+    "items": [
+      { "value": "11 Dec 2027", "label": "conformity mandatory", "sub": "no CE mark, no EU market" },
+      { "value": "16–24 wks", "label": "per third-party assessment", "sub": "capacity is the bottleneck" },
+      { "value": "€15M / 2.5%", "label": "maximum penalty", "sub": "of worldwide turnover" },
+      { "value": "5 segments", "label": "one engine", "sub": "manufacturers · OEMs · integrators · resellers · operators" }
+    ]
   },
   "departureBoard": {
     "title": "The departure board",
@@ -68,69 +74,125 @@
   },
   "roadsSplit": {
     "title": "One start. Three roads. Same destination.",
-    "intro": "Every engagement starts with the same Phase 1 — intake and classification. The class of each product decides which road it takes to the CE mark. OXOT drives on all three.",
+    "intro": "Phase 1 classifies every product and picks its road. Wrong road = the trip restarts, with the queue longer than when you left. OXOT drives on all three.",
     "startBadge": "START · PHASE 1 — Intake & classification, always OXOT",
     "roads": [
       {
         "id": "a",
-        "title": "Road A · Module A",
-        "segment": "Default products · Class I once open",
-        "body": "OXOT runs all three phases on our bench; you sign your own Declaration of Conformity. Road closed for Class I until harmonised standards are cited (~Q2 2027).",
-        "ceMarkNote": "Destination: your own Declaration of Conformity. No Notified Body."
+        "laneLabel": "ROAD A · MODULE A",
+        "title": "Self-declaration",
+        "segment": "Default products · Class I with a harmonised standard · 17–32 wks",
+        "status": "⚠ CLOSED FOR CLASS I — until standards are cited (~Q2 2027)",
+        "statusTone": "closed",
+        "body": "OXOT runs all three phases on our bench; you sign your own Declaration of Conformity.",
+        "oxotDoes": "OXOT runs all three phases on our bench; you sign your own DoC.",
+        "ceMarkNote": "CE MARK · own Declaration of Conformity"
       },
       {
         "id": "bc",
-        "title": "Road B+C · Type examination",
-        "segment": "Class I today · all Class II · Critical (until EUCC)",
-        "body": "OXOT prepares the dossier in the Conformity Body's expected format and hands it over personally into a reserved slot; the CB examines type and processes. Depart by Q1 2027.",
-        "ceMarkNote": "Destination: EU-type examination certificate → Declaration of Conformity + CE mark, with the CB's number beside it."
+        "laneLabel": "ROAD B+C · TYPE EXAM",
+        "title": "Type examination",
+        "segment": "Class I today · all Class II · Critical (until EUCC) · 4–8 mo",
+        "status": "⛟ RESERVED SLOT — OXOT CB partnerships skip the public queue; formal handover, clean dossier",
+        "statusTone": "reserved",
+        "body": "The Conformity Body examines type and processes; OXOT hands over a clean dossier in the format its bench expects.",
+        "oxotDoes": "OXOT prepares the dossier in the CB's expected format and hands it over into a reserved slot.",
+        "ceMarkNote": "CE MARK · EU-type certificate + CB number"
       },
       {
         "id": "h",
-        "title": "Road H · Full quality assurance",
-        "segment": "Multi-product portfolios — one audited QMS",
-        "body": "The CB audits your full QMS — design, testing, production, vulnerability handling. OXOT builds the QMS and the SDL evidence, then dry-runs the audit. New products join in 4–8 weeks.",
-        "ceMarkNote": "Destination: one QMS approval covering many lines → CE mark per product."
+        "laneLabel": "ROAD H · FULL QA",
+        "title": "Full quality assurance",
+        "segment": "Multi-product portfolios — one audited QMS · 8–14 mo build",
+        "status": "⟳ SCALES — new products join the approved QMS in 4–8 weeks",
+        "statusTone": "scales",
+        "body": "The CB audits your full QMS — design, testing, production, vulnerability handling — once, portfolio-wide.",
+        "oxotDoes": "OXOT builds the QMS + SDL evidence and dry-runs the audit; new products join in 4–8 weeks.",
+        "ceMarkNote": "CE MARK · QMS approval, portfolio-wide"
       }
     ],
-    "wrongTurns": "Wrong turns everyone makes: testing before classifying · a stale SBOM · a non-standard dossier that starts a findings loop · signing the Declaration of Conformity too early.",
-    "footnote": "Not sure which road? That's precisely what the 45-minute intake answers."
+    "destinationLabel": "DESTINATION",
+    "wrongTurnsTitle": "WRONG TURNS",
+    "wrongTurns": "Testing before classifying · a stale SBOM · a non-standard dossier = findings loops (4–8 wks each) · the Declaration of Conformity signed too early · a rebrand or modification that goes unnoticed.",
+    "footnote": "Not sure which road? That's precisely what the 45-minute intake answers.",
+    "statBar": [
+      { "value": "Annex I·I", "label": "13 product security properties" },
+      { "value": "Annex I·II", "label": "8 vulnerability-handling processes" },
+      { "value": "Annex VII", "label": "technical file per product" },
+      { "value": "24h / 72h / 14d", "label": "ENISA reporting, from 11 Sep 2026" },
+      { "value": "≥5 yrs / 10 yrs", "label": "support · retention" },
+      { "value": "€15M / 2.5%", "label": "maximum penalties" }
+    ]
   },
   "personas": {
-    "title": "The CRA looks different from where you sit.",
-    "intro": "Five positions in the chain, five different exposures. Pick yours — the intake and the paperwork come prepared for it.",
+    "title": "One regulation. Five buyers. The same engine.",
+    "intro": "Every position in the OT value chain inherits a different CRA exposure — and buys the same three-phase programme, entered through a segment-specific door. Pick yours; the intake comes prepared for it.",
     "cards": [
       {
         "segment": "manufacturer",
         "title": "Product manufacturers",
         "quote": "Every line needs its own SBOM, CVD process, risk assessment and technical file — and nobody in this building can tell me which class each product is even in.",
+        "buys": "CLASSIFICATION & FULL PROGRAMME",
         "cta": "Classify my portfolio"
       },
       {
         "segment": "oem",
         "title": "OEMs",
         "quote": "40 product families, 3 product-security people. And anything we white-label makes us the manufacturer — whether we built it or not.",
+        "buys": "PORTFOLIO TRIAGE & MODULE H",
         "cta": "Sequence my estate"
       },
       {
         "segment": "integrator",
         "title": "Integrators",
         "quote": "62443-2-4 shows up in every procurement contract now — and when we customise a vendor's product for a project, nobody can tell me whether we just became its manufacturer.",
+        "buys": "BOUNDARY ANALYSIS & EVIDENCE PACK",
         "cta": "Find my boundary"
       },
       {
         "segment": "reseller",
         "title": "Resellers & distributors",
         "quote": "We move thousands of SKUs from dozens of suppliers. Which can we legally sell after December 2027 — and which own-brand lines quietly made us a manufacturer?",
+        "buys": "LINE-CARD REVIEW & EXPOSURE REGISTER",
         "cta": "Rate my line-card"
       },
       {
         "segment": "operator",
         "title": "Owner/operators",
         "quote": "Much of our supplier portfolio has an unknown CRA posture, our OT contracts run for decades — and the board wants third-party-validated evidence, not vendor promises.",
+        "buys": "SUPPLIER SCAN & PROCUREMENT GATES",
         "cta": "Scan my suppliers"
       }
     ]
+  },
+  "engine": {
+    "eyebrow": "The engine · Phase 1",
+    "title": "Evidence as data, not documents.",
+    "intro": "Your product is modelled once on OXOT's cyber digital twin. Every bill of materials is standardised and machine-readable; every risk decision carries a written rationale; every output ships twice — a human-readable report per stakeholder, and a machine-readable file on a DEXPI-extended schema. That one model feeds Phases 2 and 3 without re-work.",
+    "bomsTitle": "Standardised bills of materials",
+    "boms": [
+      { "code": "SBOM", "label": "Software components & dependencies, CVE-watched" },
+      { "code": "HBOM", "label": "Hardware: chips, modules, boards, provenance" },
+      { "code": "CBOM", "label": "Cryptography: algorithms, keys, certificates, PQC posture" },
+      { "code": "SaaS-BOM", "label": "Cloud services, APIs and remote data processing in scope" },
+      { "code": "Operations BOM", "label": "Deployment context: services, interfaces, update & support paths" }
+    ],
+    "bomsNote": "Plus supplier SBOM ingestion — upstream value-stream issues surface in your portfolio view, not in a CB finding.",
+    "riskTitle": "The risk process — IEC 62443, harmonised for OT",
+    "riskSteps": [
+      { "number": "1", "title": "IRA", "body": "Initial risk assessment." },
+      { "number": "2", "title": "TVA", "body": "Threat & vulnerability assessment." },
+      { "number": "3", "title": "Worst case", "body": "Worst-case consequence analysis." },
+      { "number": "4", "title": "ZCR + SL-T", "body": "Zones & conduits, target security levels." },
+      { "number": "5", "title": "ALARP → SL-C", "body": "Capability levels set by ALARP, with written rationale." },
+      { "number": "6", "title": "SL-A", "body": "Achieved levels verified on the bench (Phase 2)." },
+      { "number": "7", "title": "Portfolio view", "body": "Dependencies, shared platforms, upstream supplier issues." }
+    ],
+    "riskNote": "One size does not fit all. Security levels are engineered per zone and justified — ALARP closes the gap between target and capability with rationale a Conformity Body accepts, not a checklist.",
+    "outputsTitle": "Every output, twice",
+    "outputsHuman": "Human-readable — one report, cut per audience: business · engineering · compliance · procurement · programme management · deployment · legal · leadership.",
+    "outputsMachine": "Machine-readable — a DEXPI engineering schema, extended by OXOT: classifications, BOMs, risk artifacts, SL rationale — versioned, diffable, consumed directly by Phase 2 and by Conformity Bodies.",
+    "outputsNote": "A document-based programme rots between releases. A model-based one regenerates: change a component, and the SBOM, risk deltas and technical-file sections update as differentials — not a re-engagement."
   },
   "retainer": {
     "title": "One retainer. Three phases. A reserved seat.",
@@ -158,6 +220,37 @@
       "body": "Our Phase-1 output arrives in the format the bench expects — less churn, fewer loops, shorter queue."
     },
     "digitalTwin": "Accelerated throughout by OXOT's digital twin — your product modelled once, SBOMs and evidence regenerated across the lifecycle."
+  },
+  "whyOxot": {
+    "eyebrow": "The model",
+    "title": "Why OXOT wins.",
+    "intro": "Four reasons the same programme costs less, scales further, and holds capacity when the market can't.",
+    "pillars": [
+      {
+        "title": "OT-native, not IT-adapted",
+        "body": "IEC 62443 is our home standard — the clearest route to presumption of conformity for OT products. Every artifact serves 62443 and CRA at once."
+      },
+      {
+        "title": "Model-based economics",
+        "body": "The digital twin turns compliance from a per-document cost into a per-model asset: releases are differentials, portfolios batch shared evidence, marginal cost falls per product."
+      },
+      {
+        "title": "Capacity when it's scarce",
+        "body": "Reserved CB slots and CB-format handovers — the constraint in 2027 is bench time, and retainer clients hold it."
+      },
+      {
+        "title": "Recurring by design",
+        "body": "CRA obligations run for the product lifecycle — 5-year updates, PSIRT, surveillance. The retainer is the delivery vehicle, from ~€20K, scoped at intake."
+      }
+    ]
+  },
+  "intake": {
+    "eyebrow": "The intake — how every engagement starts",
+    "title": "The wall is fixed. The queue is not.",
+    "intro": "45 minutes, free, with an OT compliance specialist. You leave with a live classification read, your likely road (A / B+C / H), and a level-of-effort estimate — a scoped retainer proposal with NDA & MSA within 2 business days. You keep all three answers either way.",
+    "formHeading": "Where do you sit in the chain?",
+    "formSub": "45 minutes, free, with an OT compliance specialist. We come prepared for your position.",
+    "promise": "You leave the call with: your likely classification, your road to the CE mark, and a level-of-effort estimate. Scoped retainer proposal — with NDA & MSA — within 2 business days."
   },
   "process": {
     "title": "What happens when you press the button",
