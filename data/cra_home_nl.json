@@ -74,7 +74,7 @@
   },
   "roadsSplit": {
     "title": "Eén start. Drie routes. Dezelfde bestemming.",
-    "intro": "Elk traject begint met dezelfde Fase 1 — intake en classificatie. De klasse van elk product bepaalt welke route het neemt naar de CE-markering. OXOT rijdt op alle drie.",
+    "intro": "Fase 1 classificeert elk product en kiest zijn route. Verkeerde route = de reis begint opnieuw, met een langere wachtrij dan toen u vertrok. OXOT rijdt op alle drie.",
     "startBadge": "START · FASE 1 — Intake & classificatie, altijd OXOT",
     "roads": [
       {
@@ -132,67 +132,67 @@
         "segment": "manufacturer",
         "title": "Productfabrikanten",
         "quote": "Elke lijn heeft een eigen SBOM, CVD-proces, risicobeoordeling en technisch dossier nodig — en niemand in dit bedrijf kan me vertellen in welke klasse elk product eigenlijk valt.",
-        "buys": "CLASSIFICATION & FULL PROGRAMME",
+        "buys": "CLASSIFICATIE & VOLLEDIG PROGRAMMA",
         "cta": "Classificeer mijn portfolio"
       },
       {
         "segment": "oem",
         "title": "OEM's",
         "quote": "40 productfamilies, 3 mensen voor productbeveiliging. En alles wat we white-labelen maakt ons de fabrikant — of we het nu gebouwd hebben of niet.",
-        "buys": "PORTFOLIO TRIAGE & MODULE H",
+        "buys": "PORTFOLIOTRIAGE & MODULE H",
         "cta": "Sequentieer mijn portfolio"
       },
       {
         "segment": "integrator",
         "title": "Integrators",
         "quote": "62443-2-4 staat nu in elk aanbestedingscontract — en als we een product van een leverancier aanpassen voor een project, kan niemand me vertellen of we er zojuist de fabrikant van zijn geworden.",
-        "buys": "BOUNDARY ANALYSIS & EVIDENCE PACK",
+        "buys": "GRENSANALYSE & BEWIJSPAKKET",
         "cta": "Bepaal mijn grens"
       },
       {
         "segment": "reseller",
         "title": "Resellers & distributeurs",
         "quote": "We verplaatsen duizenden SKU's van tientallen leveranciers. Welke mogen we na december 2027 nog legaal verkopen — en welke eigen-merklijnen maakten ons stilletjes fabrikant?",
-        "buys": "LINE-CARD REVIEW & EXPOSURE REGISTER",
+        "buys": "ASSORTIMENTSREVIEW & RISICOREGISTER",
         "cta": "Beoordeel mijn assortiment"
       },
       {
         "segment": "operator",
         "title": "Eigenaren/exploitanten",
-        "quote": "Van een groot deel van ons leveranciersportfolio is de CRA-status onbekend — en het bestuur wil door derden gevalideerd bewijs, geen leveranciersbeloftes.",
-        "buys": "SUPPLIER SCAN & PROCUREMENT GATES",
+        "quote": "Van een groot deel van ons leveranciersportfolio is de CRA-status onbekend, onze OT-contracten lopen decennia door — en het bestuur wil door derden gevalideerd bewijs, geen leveranciersbeloftes.",
+        "buys": "LEVERANCIERSSCAN & INKOOPPOORTEN",
         "cta": "Scan mijn leveranciers"
       }
     ]
   },
   "engine": {
-    "eyebrow": "The engine · Phase 1",
-    "title": "Evidence as data, not documents.",
-    "intro": "Your product is modelled once on OXOT's cyber digital twin. Every bill of materials is standardised and machine-readable; every risk decision carries a written rationale; every output ships twice — a human-readable report per stakeholder, and a machine-readable file on a DEXPI-extended schema. That one model feeds Phases 2 and 3 without re-work.",
-    "bomsTitle": "Standardised bills of materials",
+    "eyebrow": "De engine · Fase 1",
+    "title": "Bewijs als data, niet als documenten.",
+    "intro": "Uw product wordt één keer gemodelleerd op de cyber digital twin van OXOT. Elke stuklijst is gestandaardiseerd en machineleesbaar; elke risicobeslissing draagt een schriftelijke onderbouwing; elke output verschijnt tweemaal — een leesbaar rapport per stakeholder en een machineleesbaar bestand op een DEXPI-uitgebreid schema. Dat ene model voedt Fase 2 en 3 zonder dubbel werk.",
+    "bomsTitle": "Gestandaardiseerde stuklijsten",
     "boms": [
-      { "code": "SBOM", "label": "Software components & dependencies, CVE-watched" },
-      { "code": "HBOM", "label": "Hardware: chips, modules, boards, provenance" },
-      { "code": "CBOM", "label": "Cryptography: algorithms, keys, certificates, PQC posture" },
-      { "code": "SaaS-BOM", "label": "Cloud services, APIs and remote data processing in scope" },
-      { "code": "Operations BOM", "label": "Deployment context: services, interfaces, update & support paths" }
+      { "code": "SBOM", "label": "Softwarecomponenten & afhankelijkheden, CVE-bewaakt" },
+      { "code": "HBOM", "label": "Hardware: chips, modules, printplaten, herkomst" },
+      { "code": "CBOM", "label": "Cryptografie: algoritmen, sleutels, certificaten, PQC-gereedheid" },
+      { "code": "SaaS-BOM", "label": "Clouddiensten, API's en gegevensverwerking op afstand binnen scope" },
+      { "code": "Operations BOM", "label": "Uitrolcontext: diensten, interfaces, update- & ondersteuningspaden" }
     ],
-    "bomsNote": "Plus supplier SBOM ingestion — upstream value-stream issues surface in your portfolio view, not in a CB finding.",
-    "riskTitle": "The risk process — IEC 62443, harmonised for OT",
+    "bomsNote": "Plus het inlezen van leveranciers-SBOM's — problemen stroomopwaarts in de waardeketen komen naar boven in uw portfolio-overzicht, niet in een bevinding van de CI.",
+    "riskTitle": "Het risicoproces — IEC 62443, geharmoniseerd voor OT",
     "riskSteps": [
-      { "number": "1", "title": "IRA", "body": "Initial risk assessment." },
-      { "number": "2", "title": "TVA", "body": "Threat & vulnerability assessment." },
-      { "number": "3", "title": "Worst case", "body": "Worst-case consequence analysis." },
-      { "number": "4", "title": "ZCR + SL-T", "body": "Zones & conduits, target security levels." },
-      { "number": "5", "title": "ALARP → SL-C", "body": "Capability levels set by ALARP, with written rationale." },
-      { "number": "6", "title": "SL-A", "body": "Achieved levels verified on the bench (Phase 2)." },
-      { "number": "7", "title": "Portfolio view", "body": "Dependencies, shared platforms, upstream supplier issues." }
+      { "number": "1", "title": "IRA", "body": "Initiële risicobeoordeling." },
+      { "number": "2", "title": "TVA", "body": "Dreigings- en kwetsbaarheidsanalyse." },
+      { "number": "3", "title": "Worst case", "body": "Worstcase-gevolganalyse." },
+      { "number": "4", "title": "ZCR + SL-T", "body": "Zones & conduits, doelbeveiligingsniveaus." },
+      { "number": "5", "title": "ALARP → SL-C", "body": "Capaciteitsniveaus bepaald via ALARP, met schriftelijke onderbouwing." },
+      { "number": "6", "title": "SL-A", "body": "Behaalde niveaus geverifieerd op de bench (Fase 2)." },
+      { "number": "7", "title": "Portfolio-overzicht", "body": "Afhankelijkheden, gedeelde platformen, problemen bij toeleveranciers." }
     ],
-    "riskNote": "One size does not fit all. Security levels are engineered per zone and justified — ALARP closes the gap between target and capability with rationale a Conformity Body accepts, not a checklist.",
-    "outputsTitle": "Every output, twice",
-    "outputsHuman": "Human-readable — one report, cut per audience: business · engineering · compliance · procurement · programme management · deployment · legal · leadership.",
-    "outputsMachine": "Machine-readable — a DEXPI engineering schema, extended by OXOT: classifications, BOMs, risk artifacts, SL rationale — versioned, diffable, consumed directly by Phase 2 and by Conformity Bodies.",
-    "outputsNote": "A document-based programme rots between releases. A model-based one regenerates: change a component, and the SBOM, risk deltas and technical-file sections update as differentials — not a re-engagement."
+    "riskNote": "Eén maat past niet iedereen. Beveiligingsniveaus worden per zone ontworpen en onderbouwd — ALARP dicht het gat tussen doel en capaciteit met een onderbouwing die een Conformiteitsinstantie accepteert, geen afvinklijst.",
+    "outputsTitle": "Elke output, tweemaal",
+    "outputsHuman": "Leesbaar — één rapport, toegesneden per doelgroep: business · engineering · compliance · inkoop · programmamanagement · uitrol · legal · directie.",
+    "outputsMachine": "Machineleesbaar — een DEXPI-engineeringschema, uitgebreid door OXOT: classificaties, BOM's, risico-artefacten, SL-onderbouwing — met versiebeheer, vergelijkbaar, direct bruikbaar voor Fase 2 en voor Conformiteitsinstanties.",
+    "outputsNote": "Een documentgebaseerd programma veroudert tussen releases. Een modelgebaseerd programma regenereert: wijzig een component en de SBOM, risicoverschillen en secties van het technisch dossier werken zich bij als differentiëlen — geen nieuw traject."
   },
   "retainer": {
     "title": "Eén retainer. Drie fasen. Een gereserveerde plek.",
@@ -222,25 +222,25 @@
     "digitalTwin": "Overal versneld door de digital twin van OXOT — uw product één keer gemodelleerd, SBOM's en bewijs geregenereerd over de hele levenscyclus."
   },
   "whyOxot": {
-    "eyebrow": "The model",
-    "title": "Why OXOT wins.",
-    "intro": "Four reasons the same programme costs less, scales further, and holds capacity when the market can't.",
+    "eyebrow": "Het model",
+    "title": "Waarom OXOT wint.",
+    "intro": "Vier redenen waarom hetzelfde programma minder kost, verder schaalt en capaciteit vasthoudt wanneer de markt dat niet kan.",
     "pillars": [
       {
-        "title": "OT-native, not IT-adapted",
-        "body": "IEC 62443 is our home standard — the clearest route to presumption of conformity for OT products. Every artifact serves 62443 and CRA at once."
+        "title": "OT-eigen, niet IT-aangepast",
+        "body": "IEC 62443 is onze thuisnorm — de helderste route naar het vermoeden van conformiteit voor OT-producten. Elk artefact dient 62443 en CRA tegelijk."
       },
       {
-        "title": "Model-based economics",
-        "body": "The digital twin turns compliance from a per-document cost into a per-model asset: releases are differentials, portfolios batch shared evidence, marginal cost falls per product."
+        "title": "Modelgebaseerde economie",
+        "body": "De digital twin verandert compliance van een kostenpost per document in een bezitting per model: releases zijn differentiëlen, portfolio's bundelen gedeeld bewijs, en de marginale kosten dalen per product."
       },
       {
-        "title": "Capacity when it's scarce",
-        "body": "Reserved CB slots and CB-format handovers — the constraint in 2027 is bench time, and retainer clients hold it."
+        "title": "Capaciteit wanneer die schaars is",
+        "body": "Gereserveerde CI-slots en overdrachten in CI-format — het knelpunt in 2027 is benchtijd, en retainer-klanten hebben die vast."
       },
       {
-        "title": "Recurring by design",
-        "body": "CRA obligations run for the product lifecycle — 5-year updates, PSIRT, surveillance. The retainer is the delivery vehicle, from ~€20K, scoped at intake."
+        "title": "Terugkerend van opzet",
+        "body": "CRA-verplichtingen lopen de hele productlevenscyclus door — 5 jaar updates, PSIRT, surveillance. De retainer is het leveringsmodel, vanaf ~€20K, bepaald bij de intake."
       }
     ]
   },
