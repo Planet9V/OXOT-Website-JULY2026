@@ -1,0 +1,197 @@
+{
+  "hero": {
+    "eyebrow": "De OXOT Cyber Digital Twin · consequentiegedreven OT-risico",
+    "title": "Een levend model van uw OT-omgeving —",
+    "titleAccent": "geprioriteerd op basis van data, begrensd door betrouwbaarheidsintervallen.",
+    "subtitle": "De Cyber Digital Twin is een graaf met zeven lagen van alles wat u exploiteert: assets, software, afhankelijkheden, dreigingen en maatregelen, vastgelegd als één samenhangend beeld. Daarbovenop draait een Monte Carlo-voorspellingspijplijn die stresstest hoe een aanvaller zich werkelijk door uw specifieke locatie kan bewegen — zodat u investeert tegen waarschijnlijke paden met hoge consequenties, niet tegen een losstaande CVSS-score.",
+    "badges": [
+      "Graaf met zeven lagen",
+      "DEXPI 2.0 uitgebreid",
+      "Verrijkt met KEV · EPSS · CVSS",
+      "FMECA · RCIL · SCIL",
+      "Monte Carlo, met betrouwbaarheidsintervallen"
+    ],
+    "ctaLabel": "Modelleer mijn omgeving"
+  },
+  "statBand": {
+    "items": [
+      { "value": "7 lagen", "label": "één levende graaf", "sub": "assets · software · afhankelijkheden · dreigingen · maatregelen" },
+      { "value": "5 BOM-typen", "label": "machineleesbaar", "sub": "SBOM · HBOM · CBOM · SaaS-BOM · Ops-BOM" },
+      { "value": "5 niveaus", "label": "inzoomen", "sub": "component → apparaat → productlijn → locatie → organisatie" },
+      { "value": "10.000 runs", "label": "per Monte Carlo-passage", "sub": "verdelingen met 95%-betrouwbaarheidsintervallen" }
+    ]
+  },
+  "livingModel": {
+    "eyebrow": "Het levende model",
+    "title": "Eén gestructureerd beeld van assets, risico's en maatregelen.",
+    "body": "De OXOT Cyber Digital Twin is een levend datamodel van uw OT-omgeving. Het brengt informatie samen uit documentatie, netwerkdiagrammen, asset-inventarissen, configuraties, securitytools en operationele input. In plaats van elke bron afzonderlijk te bekijken, creëert de Cyber Digital Twin één gestructureerd beeld van assets, risico's en maatregelen. Dit helpt industriële organisaties om beveiligingsverbeteringen te prioriteren op basis van werkelijk operationeel risico, niet alleen technische ernst. De Cyber Digital Twin vervangt bestaande OT-securitytools niet — het gebruikt hun output, voegt context toe en helpt de leiding betere beslissingen te nemen.",
+    "points": [
+      "Een graaf met zeven lagen, geen spreadsheet: assets, software, afhankelijkheden, dreigingen en maatregelen als één verbonden model waar een wijziging doorheen propageert.",
+      "Het terrein, niet de kaart: werkelijke firmware, werkelijke patchstatus, werkelijke connectiviteit — het gat tussen de referentiearchitectuur en wat er daadwerkelijk draait wordt als een eersteklas object gemeten.",
+      "Levend, niet momentopname: wijzig een component en de betrokken BOM's, risicoverschillen en dossieronderdelen regenereren als differentialen, niet als een nieuwe opdracht.",
+      "Beslisklaar: elke output verwijst naar de graaf waar hij vandaan komt, zodat de leiding handelt op bewijs in plaats van een volwassenheidsscore."
+    ],
+    "layers": [
+      { "id": "l0", "name": "L0 · Apparatencatalogus", "caption": "De referentie: leveranciersdatasheets, ontworpen firmware en configuratie — de kaart van de wereld die u verkocht is.", "tone": "asset" },
+      { "id": "l1", "name": "L1 · Klantapparatuur", "caption": "Het terrein: werkelijke assets met serienummer, echte firmwareversies en patchstatus, gekoppeld aan locatie en onderlinge afhankelijkheid.", "tone": "asset" },
+      { "id": "l2", "name": "L2 · Software & afhankelijkheden", "caption": "De software bill of materials, getraceerd via transitieve afhankelijkheden en verrijkt met scores voor exploitwaarschijnlijkheid.", "tone": "dependency" },
+      { "id": "l3", "name": "L3 · Dreigingsinformatie", "caption": "Kill-chain-modellering en attributie van live campagnes — de aanvallers die daadwerkelijk actief zijn tegen deze sector en assetklasse.", "tone": "risk" },
+      { "id": "l4", "name": "L4 · Mens & organisatie", "caption": "Gedrag als een dynamisch systeem: besluitvorming onder druk, escalatiepaden en de organisatorische drempels die het eerst breken.", "tone": "risk" },
+      { "id": "l5", "name": "L5 · Informatieomgeving", "caption": "De realtimecontext — geopolitiek, sentiment en de nieuwscyclus die de doelwitkeuze van een aanvaller zonder waarschuwing kan verleggen.", "tone": "dependency" },
+      { "id": "l6", "name": "L6 · Voorspelling & maatregelen", "caption": "Inbraakkans, hersteltijd en rendement op maatregelinvesteringen, uitgedrukt als verdelingen met vermelde betrouwbaarheidsintervallen.", "tone": "control" }
+    ]
+  },
+  "boms": {
+    "eyebrow": "Gestandaardiseerde, machineleesbare bills of materials",
+    "title": "Bewijs als data — op een DEXPI 2.0-engineeringschema.",
+    "intro": "Elk product en elke locatie wordt ontleed in gestandaardiseerde bills of materials die een machine kan lezen, vergelijken en versioneren. OXOT breidt DEXPI 2.0 uit — de gevestigde standaard voor de uitwisseling van engineeringdata — zodat één schema niet alleen het leiding- en instrumentatiemodel draagt, maar de volledige software-, hardware-, cryptografische en operationele stack achter elke asset. Daardoor is bewijs overdraagbaar: rechtstreeks bruikbaar voor Conformiteitsinstanties, voor uw eigen engineeringteams en voor de Monte Carlo-pijplijn.",
+    "standardNote": "DEXPI 2.0 is de standaard voor uitwisseling van engineeringdata die OXOT uitbreidt om machineleesbare BOM's te dragen — geversioneerd, vergelijkbaar en leveranciersneutraal.",
+    "dependencyNote": "Afhankelijkheids- en componentstacks worden via transitieve afhankelijkheden getraceerd, zodat een kwetsbaarheid die vijf niveaus diep in een vergeten library zit zichtbaar wordt in uw portfolio-overzicht — niet in een bevinding van een Conformiteitsinstantie.",
+    "boms": [
+      { "code": "SBOM", "name": "Software-BOM", "desc": "Elke softwarecomponent en zijn transitieve afhankelijkheden, continu bewaakt op CVE's en KEV.", "carries": "packages · versies · licenties · herkomst · exploitwaarschijnlijkheidsscores" },
+      { "code": "HBOM", "name": "Hardware-BOM", "desc": "Chips, modules, printplaten en hun herkomst, tot aan de componentvervangingen die een toeleveringsketen stilletjes doorvoert.", "carries": "chips · modules · printplaten · lotcodes · land van herkomst" },
+      { "code": "CBOM", "name": "Cryptografie-BOM", "desc": "Algoritmen, sleutels en certificaten in gebruik, met post-quantumgereedheid per asset beoordeeld.", "carries": "algoritmen · sleutellengtes · certificaten · PQC-status · vervaldatum" },
+      { "code": "SaaS-BOM", "name": "SaaS-BOM", "desc": "Cloud-diensten, API's en gegevensverwerking op afstand die binnen de productgrens vallen.", "carries": "diensten · endpoints · datastromen · subverwerkers · regio's" },
+      { "code": "Ops-BOM", "name": "Operations-BOM", "desc": "De implementatiecontext: interfaces, diensten en de update- en supportpaden die een aanvaller kan bereiken.", "carries": "interfaces · diensten · updatepaden · toegang op afstand · supportlevensduur" }
+    ]
+  },
+  "drilldown": {
+    "title": "Zoom in van één component tot de hele organisatie.",
+    "intro": "De graaf is op elke hoogte te navigeren. Klap een organisatie open naar haar locaties, een locatie naar haar productlijnen, een lijn naar haar apparatuur, en een apparaat naar de afzonderlijke softwarecomponenten erin. Elke regel is gekruist met KEV (CISA Known Exploited Vulnerabilities), EPSS (Exploit Prediction Scoring System), CVSS en threat modeling — zodat prioritering verder gaat dan een eendimensionale CVE. De onderstaande regels zijn illustratieve voorbeeldgegevens; in een echte opdracht zijn dit uw assets.",
+    "columns": {
+      "component": "Asset / component",
+      "version": "Versie",
+      "level": "Niveau",
+      "kev": "KEV",
+      "epss": "EPSS",
+      "cvss": "CVSS",
+      "consequence": "Consequentie"
+    },
+    "legend": [
+      { "key": "kev", "label": "KEV — op de lijst met Known Exploited Vulnerabilities van CISA (bewezen in het wild)" },
+      { "key": "epss", "label": "EPSS — Exploit Prediction Scoring System, kans op exploitatie binnen 30 dagen" },
+      { "key": "cvss", "label": "CVSS — basisernst, 0–10" },
+      { "key": "priority", "label": "NU / VOLGENDE / NOOIT — consequentie × exploiteerbaarheid, niet losstaande ernst" }
+    ],
+    "rows": [
+      { "id": "org", "parentId": null, "level": "org", "label": "Northwind Energy Group", "kev": true, "epss": 0.42, "cvss": 9.8, "consequence": "Verlies van generatiedispatch over drie locaties", "priority": "now" },
+      { "id": "fac-1", "parentId": "org", "level": "facility", "label": "Batterijopslaglocatie Eemshaven", "kev": true, "epss": 0.51, "cvss": 9.8, "consequence": "Ongecontroleerde afschakeling van 200 MWh BESS", "priority": "now" },
+      { "id": "line-1", "parentId": "fac-1", "level": "productLine", "label": "BESS-besturingslijn — PCS-40-skids", "kev": true, "epss": 0.51, "cvss": 9.8, "consequence": "Verlies van besturing grid-forming omvormer", "priority": "now" },
+      { "id": "eq-1", "parentId": "line-1", "level": "equipment", "label": "Siemens S7-1500 veiligheids-PLC", "version": "FW 2.9.2", "kev": true, "epss": 0.51, "cvss": 9.8, "consequence": "Omzeiling veiligheidsfunctie bij overstroomtrip", "priority": "now" },
+      { "id": "cmp-1", "parentId": "eq-1", "level": "component", "label": "OpenSSL", "version": "3.0.4", "cve": "CVE-2022-3602", "kev": true, "epss": 0.62, "cvss": 9.8, "consequence": "Remote code execution via certificaatparsing op de beheerinterface", "priority": "now" },
+      { "id": "cmp-2", "parentId": "eq-1", "level": "component", "label": "TCP/IP-stack PLC-firmware", "version": "urlib 2.11", "cve": "CVE-2023-2650", "kev": false, "epss": 0.18, "cvss": 7.5, "consequence": "Denial of service op de veiligheidscontroller", "priority": "next" },
+      { "id": "eq-2", "parentId": "line-1", "level": "equipment", "label": "SEL-3530 RTAC-controller", "version": "R148", "kev": false, "epss": 0.09, "cvss": 6.5, "consequence": "Verlies van coördinatie beveiligingsrelais", "priority": "next" },
+      { "id": "cmp-3", "parentId": "eq-2", "level": "component", "label": "libcurl", "version": "7.83.1", "cve": "CVE-2023-38545", "kev": false, "epss": 0.07, "cvss": 5.9, "consequence": "SOCKS5 heap-overflow op uitgaande telemetrie", "priority": "next" },
+      { "id": "line-2", "parentId": "fac-1", "level": "productLine", "label": "SCADA- & historian-lijn", "kev": false, "epss": 0.04, "cvss": 5.3, "consequence": "Data-integriteit van operationele historie", "priority": "never" },
+      { "id": "eq-3", "parentId": "line-2", "level": "equipment", "label": "Historian-gateway (Windows Server 2019)", "version": "OS 1809", "kev": false, "epss": 0.03, "cvss": 4.3, "consequence": "Alleen-lezen data-blootstelling, geen procespad", "priority": "never" },
+      { "id": "cmp-4", "parentId": "eq-3", "level": "component", "label": "log4j-core", "version": "2.17.1", "cve": "—", "kev": false, "epss": 0.02, "cvss": 3.1, "consequence": "Reeds verholpen; behouden voor herkomst", "priority": "never" }
+    ]
+  },
+  "consequence": {
+    "eyebrow": "Consequentiegedreven veiligheid & betrouwbaarheid",
+    "title": "We beginnen bij wat er breekt, niet bij wat het hoogst scoort.",
+    "intro": "Een CVSS-score beschrijft een kwetsbaarheid in het abstracte. Hij kan u niet vertellen of exploitatie ervan een veiligheidssysteem laat afschakelen, de productie stillegt, of niets doet in uw specifieke fabriek. De Cyber Digital Twin bindt elke technische bevinding aan haar operationele consequentie met gevestigde veiligheids- en betrouwbaarheidsengineering — zodat risico wordt gerangschikt naar wat het werkelijk met het proces zou doen.",
+    "note": "Consequentieanalyse is wat een lijst met CVE's omzet in een verdedigbare investeringscase: dezelfde kwetsbaarheid kan een NU zijn op de ene asset en een NOOIT op de andere, puur door wat hij kan bereiken.",
+    "methods": [
+      { "code": "FMECA", "name": "Failure Mode, Effects & Criticality Analysis", "body": "Voor elke component en faalwijze traceren we het effect door het proces en scoren we de kriticiteit — waarmee de faalwijzen naar boven komen waarvan de consequenties domineren, ruim voordat een aanvaller in beeld is." },
+      { "code": "RCIL", "name": "Reliability-Critical Items List", "body": "De assets waarvan het falen de beschikbaarheid en betrouwbaarheid het meest aantast, gerangschikt en onderhouden als een levende lijst — zodat betrouwbaarheidsengineering en securityprioritering één bron van waarheid delen." },
+      { "code": "SCIL", "name": "Safety-Critical Items List", "body": "De assets en functies waarvan compromittering tot een gevaarlijke toestand kan leiden, gekoppeld aan de safety instrumented functions die daartegen beschermen — de top van de consequentiehiërarchie." }
+    ]
+  },
+  "priority": {
+    "eyebrow": "NU / VOLGENDE / NOOIT-prioritering",
+    "title": "Geprioriteerd op consequentie × exploiteerbaarheid — niet losstaande CVSS.",
+    "intro": "Zodra de simulatie heeft gedraaid, belandt elke bevinding in een van drie categorieën. De positie wordt bepaald door twee assen tegelijk: hoe erg de consequentie is als het lukt, en of er een echt, exploiteerbaar pad naartoe bestaat. Een asset met kritieke consequentie zonder bereikbaar pad is geen NU; een asset met bescheiden consequentie op een actief geëxploiteerd pad kan dat wel zijn. Dit is bewust niet hoe een compliance-checklist rangschikt.",
+    "rule": "Categorie = consequentie (uit FMECA / SCIL) × exploiteerbaarheidspad (uit KEV / EPSS / threat modeling).",
+    "buckets": [
+      {
+        "key": "now",
+        "label": "NU",
+        "rule": "Doelwit met hoge consequentie, een exploiteerbaar pad in een groot deel van de simulaties, herstelbaar tegen redelijke kosten.",
+        "items": [
+          { "label": "OpenSSL-RCE op beheerinterface veiligheids-PLC (KEV)", "consequence": "critical", "exploit": "kev" },
+          { "label": "Besturing grid-forming omvormer, blootgesteld pad op afstand", "consequence": "critical", "exploit": "high-epss" },
+          { "label": "Plat netwerk tussen IT-jump host en BESS-zone", "consequence": "high", "exploit": "kev" }
+        ]
+      },
+      {
+        "key": "next",
+        "label": "VOLGENDE",
+        "rule": "Structurele wijziging: segmentatie, herstel van afhankelijkheden met hoge centraliteit, engineeringmaatregelen tussen cyber en proces.",
+        "items": [
+          { "label": "Segmenteer RTAC-beveiligingslijn, verklein besmettingsstraal", "consequence": "high", "exploit": "low-epss" },
+          { "label": "libcurl SOCKS5-overflow op uitgaande telemetrie", "consequence": "med", "exploit": "low-epss" },
+          { "label": "Versterk de escalatiebrug die het eerst breekt onder druk", "consequence": "med", "exploit": "high-epss" }
+        ]
+      },
+      {
+        "key": "never",
+        "label": "NOOIT",
+        "rule": "Scoort goed op een checklist, verplaatst het gesimuleerde risico bijna niet — geen bereikbaar pad of geen betekenisvolle consequentie.",
+        "items": [
+          { "label": "Verholpen log4j op alleen-lezen historian-gateway", "consequence": "low", "exploit": "no-path" },
+          { "label": "Data-integriteitsbevinding zonder procesbereik", "consequence": "low", "exploit": "no-path" },
+          { "label": "Algemene awarenesstraining als maatregel voor dit pad", "consequence": "low", "exploit": "no-path" }
+        ]
+      }
+    ]
+  },
+  "monteCarlo": {
+    "eyebrow": "De Monte Carlo-voorspellingspijplijn",
+    "title": "Duizenden alternatieve geschiedenissen — niet de ene die gebeurde.",
+    "intro": "U kunt uw blootstelling niet begrijpen door te bestuderen wat er is gebeurd. De pijplijn extraheert de huidige toestand van de graaf, genereert MITRE ATT&CK-uitgelijnde aanvalssequenties en draait ze duizenden keren met gerandomiseerde variatie in capaciteit, timing en menselijke respons. Het resultaat is een verdeling van uitkomsten — de kans dat een aanvaller een veiligheidskritisch systeem bereikt — gerapporteerd met een expliciet betrouwbaarheidsinterval in plaats van één getal dat zekerheid voorwendt. Schakel een scenario in om de curve te zien verschuiven.",
+    "runsLabel": "10.000 gesimuleerde campagnes per passage",
+    "bins": [
+      { "x": 0, "p": 0.02 },
+      { "x": 1, "p": 0.05 },
+      { "x": 2, "p": 0.11 },
+      { "x": 3, "p": 0.18 },
+      { "x": 4, "p": 0.22 },
+      { "x": 5, "p": 0.19 },
+      { "x": 6, "p": 0.12 },
+      { "x": 7, "p": 0.06 },
+      { "x": 8, "p": 0.03 },
+      { "x": 9, "p": 0.015 },
+      { "x": 10, "p": 0.005 }
+    ],
+    "ci": {
+      "meanPct": 8.4,
+      "lowerPct": 6.1,
+      "upperPct": 11.2,
+      "label": "P(aanvaller bereikt een veiligheidskritisch systeem), 95%-BI"
+    },
+    "scenarios": [
+      { "id": "base", "label": "Basislijn", "note": "De huidige omgeving, de huidige maatregelen, de actuele dreigingsactiviteit.", "shiftPct": 0 },
+      { "id": "segment", "label": "Voeg segmentatie toe (VOLGENDE)", "note": "Segmenteer de BESS-zone van de IT-jump host — het grootste enkele besmettingspad sluit.", "shiftPct": -3.3 },
+      { "id": "patch", "label": "Patch KEV-items (NU)", "note": "Verhelp de OpenSSL- en firmware-KEV-bevindingen op de veiligheidslijn.", "shiftPct": -4.6 },
+      { "id": "stress", "label": "Organisatie onder druk", "note": "Alertmoeheid en personeelsverloop duwen de menselijke laag voorbij haar coherentiedrempel.", "shiftPct": 5.1 }
+    ]
+  },
+  "methodology": {
+    "eyebrow": "Hoe wij leveren",
+    "title": "Assess → Model → Improve → Sustain.",
+    "intro": "De twin is geen eenmalig rapport. Hij wordt één keer opgezet en daarna levend gehouden gedurende de levenscyclus, zodat elke volgende beslissing put uit hetzelfde model in plaats van uit een nieuwe, dure ontdekkingsoefening.",
+    "steps": [
+      { "number": "01", "title": "Assess", "body": "We lopen de vloer op en nemen de realiteit op: asset-inventarissen, configuraties, netwerkdiagrammen, output van securitytools en operationele input — het terrein, niet alleen de referentiearchitectuur." },
+      { "number": "02", "title": "Model", "body": "We bouwen de graaf met zeven lagen en haar BOM's op het DEXPI-uitgebreide schema, verrijken elke bevinding met KEV / EPSS / CVSS en threat modeling, en draaien de Monte Carlo-pijplijn om het waarschijnlijkheidslandschap te produceren." },
+      { "number": "03", "title": "Improve", "body": "NU / VOLGENDE / NOOIT zet de verdeling om in een gesequenceerde investeringscase, begrensd door betrouwbaarheidsintervallen — zodat hersteluitgaven naar de paden gaan die het getal echt verplaatsen." },
+      { "number": "04", "title": "Sustain", "body": "Het model blijft levend: wijzig een component en de BOM's, risicoverschillen en dossieronderdelen regenereren als differentialen, en voeden CRA-gereedheid, IEC 62443-werk en bestuursrapportage doorlopend." }
+    ]
+  },
+  "outcomes": {
+    "eyebrow": "Wat het ontsluit",
+    "title": "Eén model, vele verdedigbare antwoorden.",
+    "intro": "Doordat de twin assets, risico's en maatregelen als gestructureerde, machineleesbare data vasthoudt, voedt hij de artefacten die een gereguleerde OT-organisatie nodig heeft — zonder een aparte opdracht voor elk daarvan.",
+    "cards": [
+      { "title": "CRA-gereedheid, op portfolioschaal", "body": "Dezelfde BOM's, risicoartefacten en SL-onderbouwing die de twin regenereert, zijn precies wat een technisch dossier onder de Cyber Resilience Act vereist. Modelleer één keer; het bewijs stroomt in het dossier van elk product. Bekijk het CRA-programma.", "href": "/cra" },
+      { "title": "IEC 62443, als tweede natuur", "body": "Zones en conduits, doel- en behaalde beveiligingsniveaus, en ALARP-onderbouwing leven op de graaf — de helderste route naar het vermoeden van conformiteit voor OT-producten." },
+      { "title": "NIS2-risicomanagement", "body": "Een verdedigbaar, consequentiegedreven risicobeeld en het afhankelijkheidsoverzicht van leveranciers dat de bestuurdersaansprakelijkheid en toeleveringsplichten van NIS2 veronderstellen dat u al hebt." },
+      { "title": "Rapportage op bestuursniveau", "body": "Geen volwassenheidsscore — een waarschijnlijkheidslandschap: hier concentreert het risico zich, hier is het betrouwbaarheidsinterval, en hier is wat het getal werkelijk zou verplaatsen." }
+    ]
+  },
+  "finalCta": {
+    "title": "Zie uw eigen waarschijnlijkheidslandschap.",
+    "line": "Maak van uw OT-omgeving een model dat u kunt stresstesten — zodat de weinige paden die een veiligheidskritisch systeem bereiken zichtbaar worden voordat een aanvaller ze vindt.",
+    "ctaLabel": "Modelleer mijn omgeving"
+  }
+}

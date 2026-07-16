@@ -1,0 +1,197 @@
+{
+  "hero": {
+    "eyebrow": "The OXOT Cyber Digital Twin · consequence-driven OT risk",
+    "title": "A living model of your OT estate —",
+    "titleAccent": "prioritized by data, bounded by confidence intervals.",
+    "subtitle": "The Cyber Digital Twin is a seven-layer graph of everything you operate: assets, software, dependencies, threats and controls, held as one structured view. On top of it runs a Monte Carlo prediction pipeline that stress-tests how an adversary could actually move through your specific facility — so you invest against probable, high-consequence paths, not an isolated CVSS score.",
+    "badges": [
+      "Seven-layer graph",
+      "DEXPI 2.0 extended",
+      "KEV · EPSS · CVSS enriched",
+      "FMECA · RCIL · SCIL",
+      "Monte Carlo, with confidence intervals"
+    ],
+    "ctaLabel": "Model my estate"
+  },
+  "statBand": {
+    "items": [
+      { "value": "7 layers", "label": "one living graph", "sub": "assets · software · dependencies · threats · controls" },
+      { "value": "5 BOM types", "label": "machine-readable", "sub": "SBOM · HBOM · CBOM · SaaS-BOM · Ops-BOM" },
+      { "value": "5 levels", "label": "of drill-down", "sub": "component → equipment → line → facility → organization" },
+      { "value": "10,000 runs", "label": "per Monte Carlo pass", "sub": "distributions with 95% confidence intervals" }
+    ]
+  },
+  "livingModel": {
+    "eyebrow": "The living model",
+    "title": "One structured view of assets, risks and controls.",
+    "body": "The OXOT Cyber Digital Twin is a living data model of your OT environment. It brings together information from documentation, network diagrams, asset inventories, configurations, security tools and operational input. Instead of looking at each source separately, the Cyber Digital Twin creates one structured view of assets, risks and controls. This helps industrial organizations prioritize security improvements based on real operational risk, not just technical severity. The Cyber Digital Twin does not replace existing OT security tools — it uses their output, adds context and helps leadership make better decisions.",
+    "points": [
+      "A seven-layer graph, not a spreadsheet: assets, software, dependencies, threats and controls held as one connected model that a change propagates through.",
+      "The territory, not the map: real firmware, real patch state, real connectivity — the gap between the reference architecture and what is actually running is measured as a first-class object.",
+      "Living, not point-in-time: change a component and the affected BOMs, risk deltas and file sections regenerate as differentials, not a re-engagement.",
+      "Decision-grade: every output cites the graph it came from, so leadership acts on evidence rather than a maturity rating."
+    ],
+    "layers": [
+      { "id": "l0", "name": "L0 · Equipment Catalog", "caption": "The reference: vendor datasheets, designed firmware and configuration — the map of the world you were sold.", "tone": "asset" },
+      { "id": "l1", "name": "L1 · Customer Equipment", "caption": "The territory: actual serial-numbered assets, real firmware versions and patch state, mapped to location and interdependency.", "tone": "asset" },
+      { "id": "l2", "name": "L2 · Software & Dependencies", "caption": "The software bill of materials, traced through transitive dependencies and enriched with exploit-probability scoring.", "tone": "dependency" },
+      { "id": "l3", "name": "L3 · Threat Intelligence", "caption": "Kill-chain modeling and live campaign attribution — the adversaries actually active against this sector and asset class.", "tone": "risk" },
+      { "id": "l4", "name": "L4 · Human & Organization", "caption": "Behavior as a dynamical system: decision-making under load, escalation paths, and the organizational thresholds that break first.", "tone": "risk" },
+      { "id": "l5", "name": "L5 · Information Environment", "caption": "The real-time context — geopolitics, sentiment and the news cycle that can redirect an adversary's targeting without warning.", "tone": "dependency" },
+      { "id": "l6", "name": "L6 · Prediction & Controls", "caption": "Breach likelihood, remediation lag and return on control investment, expressed as distributions with stated confidence intervals.", "tone": "control" }
+    ]
+  },
+  "boms": {
+    "eyebrow": "Standardised, machine-readable bills of materials",
+    "title": "Evidence as data — on a DEXPI 2.0 engineering schema.",
+    "intro": "Every product and site is decomposed into standardised bills of materials that a machine can read, diff and version. OXOT extends DEXPI 2.0 — the established standard for exchanging engineering data — so a single schema carries not just the piping-and-instrumentation model but the full software, hardware, cryptographic and operational stack behind every asset. That makes evidence portable: consumed directly by Conformity Bodies, by your own engineering teams, and by the Monte Carlo pipeline.",
+    "standardNote": "DEXPI 2.0 is the engineering-data exchange standard OXOT extends to carry machine-readable BOMs — versioned, diffable, and vendor-neutral.",
+    "dependencyNote": "Dependency and component stacks are traced through transitive dependencies, so a vulnerability sitting five levels deep in a library nobody thinks about surfaces in your portfolio view — not in a Conformity Body finding.",
+    "boms": [
+      { "code": "SBOM", "name": "Software BOM", "desc": "Every software component and its transitive dependencies, continuously CVE- and KEV-watched.", "carries": "packages · versions · licences · provenance · exploit-probability scores" },
+      { "code": "HBOM", "name": "Hardware BOM", "desc": "Chips, modules, boards and their provenance, down to the component substitutions a supply chain quietly makes.", "carries": "chips · modules · boards · lot codes · country of origin" },
+      { "code": "CBOM", "name": "Cryptography BOM", "desc": "Algorithms, keys and certificates in use, with post-quantum readiness assessed per asset.", "carries": "algorithms · key lengths · certificates · PQC posture · expiry" },
+      { "code": "SaaS-BOM", "name": "SaaS BOM", "desc": "Cloud services, APIs and remote data processing that fall inside the product boundary.", "carries": "services · endpoints · data flows · sub-processors · regions" },
+      { "code": "Ops-BOM", "name": "Operations BOM", "desc": "The deployment context: interfaces, services, and the update and support paths an adversary can reach.", "carries": "interfaces · services · update paths · remote access · support lifecycle" }
+    ]
+  },
+  "drilldown": {
+    "title": "Drill down from a single component to the whole organization.",
+    "intro": "The graph is navigable at every altitude. Expand an organization into its facilities, a facility into its product lines, a line into its equipment, and a piece of equipment into the individual software components inside it. Each row is cross-referenced with KEV (CISA Known Exploited Vulnerabilities), EPSS (Exploit Prediction Scoring System), CVSS and threat modeling — so prioritization moves beyond a single-dimension CVE. The rows below are illustrative sample data; on a live engagement they are your assets.",
+    "columns": {
+      "component": "Asset / component",
+      "version": "Version",
+      "level": "Level",
+      "kev": "KEV",
+      "epss": "EPSS",
+      "cvss": "CVSS",
+      "consequence": "Consequence"
+    },
+    "legend": [
+      { "key": "kev", "label": "KEV — on CISA's Known Exploited Vulnerabilities list (proven in-the-wild)" },
+      { "key": "epss", "label": "EPSS — Exploit Prediction Scoring System, probability of exploitation in 30 days" },
+      { "key": "cvss", "label": "CVSS — base severity, 0–10" },
+      { "key": "priority", "label": "NOW / NEXT / NEVER — consequence × exploitability, not isolated severity" }
+    ],
+    "rows": [
+      { "id": "org", "parentId": null, "level": "org", "label": "Northwind Energy Group", "kev": true, "epss": 0.42, "cvss": 9.8, "consequence": "Loss of generation dispatch across three sites", "priority": "now" },
+      { "id": "fac-1", "parentId": "org", "level": "facility", "label": "Eemshaven battery storage site", "kev": true, "epss": 0.51, "cvss": 9.8, "consequence": "Uncontrolled disconnect of 200 MWh BESS", "priority": "now" },
+      { "id": "line-1", "parentId": "fac-1", "level": "productLine", "label": "BESS control line — PCS-40 skids", "kev": true, "epss": 0.51, "cvss": 9.8, "consequence": "Loss of grid-forming inverter control", "priority": "now" },
+      { "id": "eq-1", "parentId": "line-1", "level": "equipment", "label": "Siemens S7-1500 safety PLC", "version": "FW 2.9.2", "kev": true, "epss": 0.51, "cvss": 9.8, "consequence": "Safety-function bypass on overcurrent trip", "priority": "now" },
+      { "id": "cmp-1", "parentId": "eq-1", "level": "component", "label": "OpenSSL", "version": "3.0.4", "cve": "CVE-2022-3602", "kev": true, "epss": 0.62, "cvss": 9.8, "consequence": "Remote code execution via cert parsing on the mgmt interface", "priority": "now" },
+      { "id": "cmp-2", "parentId": "eq-1", "level": "component", "label": "PLC firmware TCP/IP stack", "version": "urlib 2.11", "cve": "CVE-2023-2650", "kev": false, "epss": 0.18, "cvss": 7.5, "consequence": "Denial of service on the safety controller", "priority": "next" },
+      { "id": "eq-2", "parentId": "line-1", "level": "equipment", "label": "SEL-3530 RTAC controller", "version": "R148", "kev": false, "epss": 0.09, "cvss": 6.5, "consequence": "Loss of protection-relay coordination", "priority": "next" },
+      { "id": "cmp-3", "parentId": "eq-2", "level": "component", "label": "libcurl", "version": "7.83.1", "cve": "CVE-2023-38545", "kev": false, "epss": 0.07, "cvss": 5.9, "consequence": "SOCKS5 heap overflow on outbound telemetry", "priority": "next" },
+      { "id": "line-2", "parentId": "fac-1", "level": "productLine", "label": "SCADA & historian line", "kev": false, "epss": 0.04, "cvss": 5.3, "consequence": "Data integrity on operational history", "priority": "never" },
+      { "id": "eq-3", "parentId": "line-2", "level": "equipment", "label": "Historian gateway (Windows Server 2019)", "version": "OS 1809", "kev": false, "epss": 0.03, "cvss": 4.3, "consequence": "Read-only data exposure, no process path", "priority": "never" },
+      { "id": "cmp-4", "parentId": "eq-3", "level": "component", "label": "log4j-core", "version": "2.17.1", "cve": "—", "kev": false, "epss": 0.02, "cvss": 3.1, "consequence": "Already remediated; retained for provenance", "priority": "never" }
+    ]
+  },
+  "consequence": {
+    "eyebrow": "Consequence-driven safety & reliability",
+    "title": "We start from what breaks, not from what scores highest.",
+    "intro": "A CVSS score describes a vulnerability in the abstract. It cannot tell you whether exploiting it trips a safety system, halts production, or does nothing at all in your specific plant. The Cyber Digital Twin binds every technical finding to its operational consequence using established safety and reliability engineering — so risk is ranked by what it would actually do to the process.",
+    "note": "Consequence analysis is what turns a list of CVEs into a defensible investment case: the same vulnerability can be a NOW on one asset and a NEVER on another, purely because of what it can reach.",
+    "methods": [
+      { "code": "FMECA", "name": "Failure Mode, Effects & Criticality Analysis", "body": "For each component and failure mode, we trace the effect through the process and score its criticality — surfacing the failures whose consequences dominate, well before an adversary is in the picture." },
+      { "code": "RCIL", "name": "Reliability-Critical Items List", "body": "The assets whose failure most degrades availability and reliability, ranked and maintained as a living list — so reliability engineering and security prioritization share one source of truth." },
+      { "code": "SCIL", "name": "Safety-Critical Items List", "body": "The assets and functions whose compromise could lead to a hazardous state, mapped to the safety instrumented functions that protect against them — the top of the consequence hierarchy." }
+    ]
+  },
+  "priority": {
+    "eyebrow": "NOW / NEXT / NEVER prioritization",
+    "title": "Prioritized by consequence × exploitability — not isolated CVSS.",
+    "intro": "Once the simulation has run, every finding lands in one of three buckets. Position is set by two axes at once: how bad the consequence is if it succeeds, and whether there is a real, exploitable pathway to it. A critical-consequence asset with no reachable path is not a NOW; a modest-consequence asset on an actively exploited path can be. This is deliberately not how a compliance checklist ranks.",
+    "rule": "Bucket = consequence (from FMECA / SCIL) × exploitability pathway (from KEV / EPSS / threat modeling).",
+    "buckets": [
+      {
+        "key": "now",
+        "label": "NOW",
+        "rule": "High-consequence target, an exploitable path across a high share of simulations, fixable at reasonable cost.",
+        "items": [
+          { "label": "OpenSSL RCE on safety-PLC mgmt interface (KEV)", "consequence": "critical", "exploit": "kev" },
+          { "label": "Grid-forming inverter control, exposed remote path", "consequence": "critical", "exploit": "high-epss" },
+          { "label": "Flat network between IT jump host and BESS zone", "consequence": "high", "exploit": "kev" }
+        ]
+      },
+      {
+        "key": "next",
+        "label": "NEXT",
+        "rule": "Structural change: segmentation, high-centrality dependency remediation, engineering controls between cyber and process.",
+        "items": [
+          { "label": "Segment RTAC protection line, reduce contagion radius", "consequence": "high", "exploit": "low-epss" },
+          { "label": "libcurl SOCKS5 overflow on outbound telemetry", "consequence": "med", "exploit": "low-epss" },
+          { "label": "Strengthen escalation bridge that snaps first under load", "consequence": "med", "exploit": "high-epss" }
+        ]
+      },
+      {
+        "key": "never",
+        "label": "NEVER",
+        "rule": "Scores well on a checklist, moves simulated risk by almost nothing — no reachable path or no meaningful consequence.",
+        "items": [
+          { "label": "Remediated log4j on read-only historian gateway", "consequence": "low", "exploit": "no-path" },
+          { "label": "Data-integrity finding with no process reach", "consequence": "low", "exploit": "no-path" },
+          { "label": "Generic awareness training as a control for this path", "consequence": "low", "exploit": "no-path" }
+        ]
+      }
+    ]
+  },
+  "monteCarlo": {
+    "eyebrow": "The Monte Carlo prediction pipeline",
+    "title": "Thousands of alternative histories — not the single one that happened.",
+    "intro": "You cannot understand your exposure by studying what has happened. The pipeline extracts the current state of the graph, generates MITRE ATT&CK-aligned adversary sequences, and runs them thousands of times with randomized variation in capability, timing and human response. The result is a distribution of outcomes — the probability an adversary reaches a safety-critical system — reported with an explicit confidence interval rather than a single number pretending to be certain. Toggle a scenario to see the curve shift.",
+    "runsLabel": "10,000 simulated campaigns per pass",
+    "bins": [
+      { "x": 0, "p": 0.02 },
+      { "x": 1, "p": 0.05 },
+      { "x": 2, "p": 0.11 },
+      { "x": 3, "p": 0.18 },
+      { "x": 4, "p": 0.22 },
+      { "x": 5, "p": 0.19 },
+      { "x": 6, "p": 0.12 },
+      { "x": 7, "p": 0.06 },
+      { "x": 8, "p": 0.03 },
+      { "x": 9, "p": 0.015 },
+      { "x": 10, "p": 0.005 }
+    ],
+    "ci": {
+      "meanPct": 8.4,
+      "lowerPct": 6.1,
+      "upperPct": 11.2,
+      "label": "P(adversary reaches a safety-critical system), 95% CI"
+    },
+    "scenarios": [
+      { "id": "base", "label": "Baseline", "note": "Today's estate, today's controls, current threat activity.", "shiftPct": 0 },
+      { "id": "segment", "label": "Add segmentation (NEXT)", "note": "Segment the BESS zone from the IT jump host — the largest single contagion path closes.", "shiftPct": -3.3 },
+      { "id": "patch", "label": "Patch KEV items (NOW)", "note": "Remediate the OpenSSL and firmware KEV findings on the safety line.", "shiftPct": -4.6 },
+      { "id": "stress", "label": "Organization under stress", "note": "Alert fatigue and staff turnover push the human layer past its coherence threshold.", "shiftPct": 5.1 }
+    ]
+  },
+  "methodology": {
+    "eyebrow": "How we deliver",
+    "title": "Assess → Model → Improve → Sustain.",
+    "intro": "The twin is not a one-off report. It is stood up once and then kept alive across the lifecycle, so every subsequent decision draws on the same model rather than a fresh, expensive discovery exercise.",
+    "steps": [
+      { "number": "01", "title": "Assess", "body": "We walk the floor and ingest the reality: asset inventories, configurations, network diagrams, security-tool output and operational input — the territory, not just the reference architecture." },
+      { "number": "02", "title": "Model", "body": "We build the seven-layer graph and its BOMs on the DEXPI-extended schema, enrich every finding with KEV / EPSS / CVSS and threat modeling, and run the Monte Carlo pipeline to produce the probability landscape." },
+      { "number": "03", "title": "Improve", "body": "NOW / NEXT / NEVER turns the distribution into a sequenced investment case, bounded by confidence intervals — so remediation spend goes to the paths that actually move the number." },
+      { "number": "04", "title": "Sustain", "body": "The model stays live: change a component and the BOMs, risk deltas and file sections regenerate as differentials, feeding CRA readiness, IEC 62443 work and board reporting on a continuous basis." }
+    ]
+  },
+  "outcomes": {
+    "eyebrow": "What it unlocks",
+    "title": "One model, many defensible answers.",
+    "intro": "Because the twin holds assets, risks and controls as structured, machine-readable data, it feeds the artifacts a regulated OT organization needs — without a separate engagement for each.",
+    "cards": [
+      { "title": "CRA readiness, at portfolio scale", "body": "The same BOMs, risk artifacts and SL rationale the twin regenerates are exactly what a Cyber Resilience Act technical file demands. Model once; the evidence flows into every product's dossier. See the CRA programme.", "href": "/cra" },
+      { "title": "IEC 62443, natively", "body": "Zones and conduits, target and achieved security levels, and ALARP rationale live on the graph — the clearest route to presumption of conformity for OT products." },
+      { "title": "NIS2 risk management", "body": "A defensible, consequence-driven risk picture and the supplier-dependency view that NIS2's management-liability and supply-chain duties assume you already hold." },
+      { "title": "Board-grade reporting", "body": "Not a maturity score — a probability landscape: here is where risk concentrates, here is the confidence interval, and here is what would genuinely move the number." }
+    ]
+  },
+  "finalCta": {
+    "title": "See your own probability landscape.",
+    "line": "Turn your OT estate into a model you can stress-test — so the few paths that reach a safety-critical system show up before an attacker finds them.",
+    "ctaLabel": "Model my estate"
+  }
+}

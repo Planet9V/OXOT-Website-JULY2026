@@ -546,6 +546,12 @@
       "description": "OXOT classificeert uw producten, bouwt verdedigbare technische dossiers op IEC 62443, en houdt gereserveerde beoordelingsslots aan bij onze Conformiteitsinstantie-partners. Plan een gratis intake van 45 minuten."
     }
   },
+  "cdt": {
+    "meta": {
+      "title": "Cyber Digital Twin — een levend, consequentiegedreven model van uw OT-omgeving",
+      "description": "De OXOT Cyber Digital Twin is een graaf met zeven lagen van uw OT-omgeving met een Monte Carlo-voorspellingspijplijn: DEXPI-uitgebreide BOM's, verrijking met KEV/EPSS/CVSS, FMECA/RCIL/SCIL-consequentieanalyse en NU/VOLGENDE/NOOIT-prioritering — begrensd door betrouwbaarheidsintervallen."
+    }
+  },
   "intakeForm": {
     "nameLabel": "Naam",
     "namePlaceholder": "Uw naam",

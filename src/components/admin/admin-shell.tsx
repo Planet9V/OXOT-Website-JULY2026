@@ -1,13 +1,14 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart, Layers, ClipboardList
+  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart, Layers, ClipboardList, Network
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DashboardOverview } from "@/components/admin/dashboard-overview";
 import { CraHomeEditor } from "@/components/admin/cra-home-editor";
+import { CdtEditor } from "@/components/admin/cdt-editor";
 import { ConformityHomeEditor } from "@/components/admin/conformity-home-editor";
 import { HomeContentEditor } from "@/components/admin/home-content-editor";
 import { IntakeLeadsManager } from "@/components/admin/intake-leads-manager";
@@ -22,7 +23,7 @@ import { AnalyticsManager } from "@/components/admin/analytics-manager";
 import { AffiliateSeoManager } from "@/components/admin/affiliate-seo-manager";
 import { CarouselManager } from "@/components/admin/carousel-manager";
 
-type Section = "overview" | "cra-home" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
+type Section = "overview" | "cra-home" | "cdt" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
 // Order is display-only (each item's key→component wiring is unchanged). Grouped for
 // admin UX: Overview → Content authoring → Audience & growth → Configuration, roughly
 // by how often a small content team touches each, with set-and-forget config last.
@@ -31,6 +32,7 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   // Content authoring — flagship pages first, then supporting assets, then site structure
   { key: "cra-home", label: "Home page", icon: Home },
+  { key: "cdt", label: "Cyber Digital Twin", icon: Network },
   { key: "home", label: "Conformity page", icon: Layers },
   { key: "homepage", label: "Approach page", icon: LayoutTemplate },
   { key: "pages", label: "Pages", icon: FileText },
@@ -137,6 +139,7 @@ export function AdminShell({ email }: { email: string }) {
         <main className="mx-auto w-full max-w-6xl flex-1 p-4 lg:p-8">
           {section === "overview" && <DashboardOverview />}
           {section === "cra-home" && <CraHomeEditor />}
+          {section === "cdt" && <CdtEditor />}
           {section === "home" && <ConformityHomeEditor />}
           {section === "homepage" && <HomeContentEditor />}
           {section === "pages" && <PagesManager />}

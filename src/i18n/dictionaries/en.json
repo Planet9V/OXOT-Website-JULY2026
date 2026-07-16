@@ -546,6 +546,12 @@
       "description": "OXOT classifies your products, builds defensible technical files on IEC 62443, and holds reserved assessment slots with our Conformity Body partners. Book a free 45-minute intake."
     }
   },
+  "cdt": {
+    "meta": {
+      "title": "Cyber Digital Twin — a living, consequence-driven model of your OT estate",
+      "description": "The OXOT Cyber Digital Twin is a seven-layer graph of your OT estate with a Monte Carlo prediction pipeline: DEXPI-extended BOMs, KEV/EPSS/CVSS enrichment, FMECA/RCIL/SCIL consequence analysis and NOW/NEXT/NEVER prioritization — bounded by confidence intervals."
+    }
+  },
   "intakeForm": {
     "nameLabel": "Name",
     "namePlaceholder": "Your name",

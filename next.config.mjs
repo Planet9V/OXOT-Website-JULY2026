@@ -24,11 +24,21 @@ const nextConfig = {
   // overview is now folded into /frameworks. Only the bare overview path
   // redirects — the `(en|nl)` group without a trailing wildcard means
   // sub-routes like /en/conformity-platform/matrix do NOT match this rule.
+  //
+  // Approach → Cyber Digital Twin consolidation (see db/migrations/040_*):
+  // the old "Approach" nav pointed at /industrial-operations; that page and
+  // route are untouched, but the top-level nav link is gone, so any inbound
+  // link/bookmark now lands on the new coded CDT page instead.
   async redirects() {
     return [
       {
         source: "/:locale(en|nl)/conformity-platform",
         destination: "/:locale/frameworks",
+        permanent: true
+      },
+      {
+        source: "/:locale(en|nl)/industrial-operations",
+        destination: "/:locale/cyber-digital-twin",
         permanent: true
       }
     ];
