@@ -115,6 +115,8 @@
     "wrongTurnsTitle": "VERKEERDE AFSLAGEN",
     "wrongTurns": "Testen vóór classificeren · een verouderde SBOM · een niet-standaard dossier = bevindingenrondes (elk 4–8 wkn) · de conformiteitsverklaring te vroeg ondertekend · een rebranding of aanpassing die onopgemerkt blijft.",
     "footnote": "Niet zeker welke route? Precies dat beantwoordt de intake van 45 minuten.",
+    "oxotDoesLabel": "OXOT doet · ",
+    "startIntakeLabel": "Start intake",
     "statBar": [
       { "value": "Annex I·I", "label": "13 productbeveiligingseigenschappen" },
       { "value": "Annex I·II", "label": "8 processen voor kwetsbaarhedenbeheer" },
@@ -127,6 +129,7 @@
   "personas": {
     "title": "Eén verordening. Vijf kopers. Dezelfde engine.",
     "intro": "Elke positie in de OT-waardeketen erft een ander CRA-risico — en koopt hetzelfde driefasenprogramma, via een segment-specifieke deur. Kies de uwe; de intake komt daarop voorbereid.",
+    "buysLabel": "KOOPT →",
     "cards": [
       {
         "segment": "manufacturer",
@@ -190,7 +193,9 @@
     ],
     "riskNote": "Eén maat past niet iedereen. Beveiligingsniveaus worden per zone ontworpen en onderbouwd — ALARP dicht het gat tussen doel en capaciteit met een onderbouwing die een Conformiteitsinstantie accepteert, geen afvinklijst.",
     "outputsTitle": "Elke output, tweemaal",
+    "humanLabel": "Leesbaar",
     "outputsHuman": "Leesbaar — één rapport, toegesneden per doelgroep: business · engineering · compliance · inkoop · programmamanagement · uitrol · legal · directie.",
+    "machineLabel": "Machineleesbaar · DEXPI",
     "outputsMachine": "Machineleesbaar — een DEXPI-engineeringschema, uitgebreid door OXOT: classificaties, BOM's, risico-artefacten, SL-onderbouwing — met versiebeheer, vergelijkbaar, direct bruikbaar voor Fase 2 en voor Conformiteitsinstanties.",
     "outputsNote": "Een documentgebaseerd programma veroudert tussen releases. Een modelgebaseerd programma regenereert: wijzig een component en de SBOM, risicoverschillen en secties van het technisch dossier werken zich bij als differentiëlen — geen nieuw traject."
   },

@@ -115,6 +115,8 @@
     "wrongTurnsTitle": "WRONG TURNS",
     "wrongTurns": "Testing before classifying · a stale SBOM · a non-standard dossier = findings loops (4–8 wks each) · the Declaration of Conformity signed too early · a rebrand or modification that goes unnoticed.",
     "footnote": "Not sure which road? That's precisely what the 45-minute intake answers.",
+    "oxotDoesLabel": "OXOT does · ",
+    "startIntakeLabel": "Start intake",
     "statBar": [
       { "value": "Annex I·I", "label": "13 product security properties" },
       { "value": "Annex I·II", "label": "8 vulnerability-handling processes" },
@@ -127,6 +129,7 @@
   "personas": {
     "title": "One regulation. Five buyers. The same engine.",
     "intro": "Every position in the OT value chain inherits a different CRA exposure — and buys the same three-phase programme, entered through a segment-specific door. Pick yours; the intake comes prepared for it.",
+    "buysLabel": "BUYS →",
     "cards": [
       {
         "segment": "manufacturer",
@@ -190,7 +193,9 @@
     ],
     "riskNote": "One size does not fit all. Security levels are engineered per zone and justified — ALARP closes the gap between target and capability with rationale a Conformity Body accepts, not a checklist.",
     "outputsTitle": "Every output, twice",
+    "humanLabel": "Human-readable",
     "outputsHuman": "Human-readable — one report, cut per audience: business · engineering · compliance · procurement · programme management · deployment · legal · leadership.",
+    "machineLabel": "Machine-readable · DEXPI",
     "outputsMachine": "Machine-readable — a DEXPI engineering schema, extended by OXOT: classifications, BOMs, risk artifacts, SL rationale — versioned, diffable, consumed directly by Phase 2 and by Conformity Bodies.",
     "outputsNote": "A document-based programme rots between releases. A model-based one regenerates: change a component, and the SBOM, risk deltas and technical-file sections update as differentials — not a re-engagement."
   },

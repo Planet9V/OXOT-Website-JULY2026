@@ -90,7 +90,9 @@ function RoadSign({
   onLeave,
   onClick,
   index,
-  show
+  show,
+  oxotDoesLabel,
+  startIntakeLabel
 }: {
   road: RoadsSplitRoad;
   active: boolean;
@@ -100,6 +102,8 @@ function RoadSign({
   onClick: () => void;
   index: number;
   show: boolean;
+  oxotDoesLabel: string;
+  startIntakeLabel: string;
 }) {
   const tone = TONE[road.statusTone];
   const StatusIcon = TONE_ICON[road.statusTone];
@@ -133,11 +137,11 @@ function RoadSign({
         <span>{road.status}</span>
       </p>
       <p className="mt-2 text-[11px] leading-snug text-foreground/80">
-        <span className="font-semibold text-primary">OXOT does · </span>
+        <span className="font-semibold text-primary">{oxotDoesLabel}</span>
         {road.oxotDoes}
       </p>
       <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
-        Start intake <ArrowRight className="h-3 w-3" aria-hidden />
+        {startIntakeLabel} <ArrowRight className="h-3 w-3" aria-hidden />
       </span>
     </motion.button>
   );
@@ -279,6 +283,8 @@ export function RoadsSplit({ split }: { split: CraHomeRoadsSplit }) {
                 onEnter={() => setHovered(id)}
                 onLeave={() => setHovered((h) => (h === id ? null : h))}
                 onClick={() => goToIntake(id)}
+                oxotDoesLabel={split.oxotDoesLabel}
+                startIntakeLabel={split.startIntakeLabel}
               />
             );
           })}
@@ -340,7 +346,7 @@ export function RoadsSplit({ split }: { split: CraHomeRoadsSplit }) {
               </p>
               <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{road.body}</p>
               <p className="mt-2 text-xs leading-relaxed text-foreground/80">
-                <span className="font-semibold text-primary">OXOT does · </span>
+                <span className="font-semibold text-primary">{split.oxotDoesLabel}</span>
                 {road.oxotDoes}
               </p>
               <p className="mt-3 flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-2 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">

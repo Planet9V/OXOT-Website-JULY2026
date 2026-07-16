@@ -203,7 +203,7 @@ export function Personas({ personas }: { personas: CraHomePersonas }) {
         <Stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {personas.cards.map((c) => (
             <StaggerItem key={c.segment} className="h-full">
-              <PersonaCard card={c} />
+              <PersonaCard card={c} buysLabel={personas.buysLabel} />
             </StaggerItem>
           ))}
         </Stagger>
@@ -280,11 +280,11 @@ export function Engine({ engine }: { engine: CraHomeEngine }) {
         </Reveal>
         <div className="mt-4 grid gap-6 sm:grid-cols-2">
           <SpotlightCard className="h-full rounded-[calc(var(--radius)+2px)] border border-border bg-card p-6">
-            <p className="text-xs font-bold uppercase tracking-wide text-primary">Human-readable</p>
+            <p className="text-xs font-bold uppercase tracking-wide text-primary">{engine.humanLabel}</p>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{engine.outputsHuman}</p>
           </SpotlightCard>
           <SpotlightCard className="h-full rounded-[calc(var(--radius)+2px)] border border-border bg-card p-6">
-            <p className="text-xs font-bold uppercase tracking-wide text-primary">Machine-readable · DEXPI</p>
+            <p className="text-xs font-bold uppercase tracking-wide text-primary">{engine.machineLabel}</p>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{engine.outputsMachine}</p>
           </SpotlightCard>
         </div>

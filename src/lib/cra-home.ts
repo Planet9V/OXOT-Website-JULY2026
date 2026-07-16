@@ -89,6 +89,10 @@ export interface CraHomeRoadsSplit {
   footnote: string;
   /** 6-item stat bar shown beneath the pathway map. */
   statBar: RoadStatItem[];
+  /** Prefix label before each road's "oxotDoes" line, e.g. "OXOT does · ". */
+  oxotDoesLabel: string;
+  /** Road card CTA label shown on hover/before the arrow icon, e.g. "Start intake". */
+  startIntakeLabel: string;
 }
 
 export interface PersonaCard {
@@ -105,6 +109,8 @@ export interface CraHomePersonas {
   title: string;
   intro: string;
   cards: PersonaCard[];
+  /** Prefix label before each card's "buys" line, e.g. "BUYS →". */
+  buysLabel: string;
 }
 
 export interface RetainerPhase {
@@ -187,7 +193,11 @@ export interface CraHomeEngine {
   riskSteps: EngineRiskStep[];
   riskNote: string;
   outputsTitle: string;
+  /** Label heading the human-readable output card, e.g. "Human-readable". */
+  humanLabel: string;
   outputsHuman: string;
+  /** Label heading the machine-readable output card, e.g. "Machine-readable · DEXPI". */
+  machineLabel: string;
   outputsMachine: string;
   outputsNote: string;
 }
