@@ -1,4 +1,10 @@
 import { pool } from "@/lib/db";
+// SEGMENTS/Segment/isSegment live in a client-safe module so client components
+// can use them without importing this file (which pulls in the pg pool).
+// Imported for local use here and re-exported for existing server-side callers.
+import { SEGMENTS, isSegment, type Segment } from "@/lib/segments";
+export { SEGMENTS, isSegment };
+export type { Segment };
 
 /**
  * Pure, dependency-free validation + insert helpers for the CRA readiness
@@ -6,13 +12,6 @@ import { pool } from "@/lib/db";
  * hashIp + checkRateLimit are reused directly from contact.ts by callers
  * rather than duplicated here.
  */
-
-export const SEGMENTS = ["manufacturer", "oem", "integrator", "reseller", "operator"] as const;
-export type Segment = (typeof SEGMENTS)[number];
-
-export function isSegment(v: unknown): v is Segment {
-  return typeof v === "string" && (SEGMENTS as readonly string[]).includes(v);
-}
 
 export interface IntakeInput {
   name?: unknown;

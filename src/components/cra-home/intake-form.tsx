@@ -3,15 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/i18n/config";
 import { Button } from "@/components/ui/button";
-
-// Kept in sync with src/lib/intake.ts SEGMENTS (Phase A contract). Not imported
-// at runtime from that file so this client bundle never pulls in the `pg` pool
-// intake.ts depends on — a plain literal is the simplest thing that can't break.
-const SEGMENTS = ["manufacturer", "oem", "integrator", "reseller", "operator"] as const;
-type Segment = (typeof SEGMENTS)[number];
-function isSegment(v: string): v is Segment {
-  return (SEGMENTS as readonly string[]).includes(v);
-}
+// Client-safe segments module (no pg import), so this client bundle never pulls
+// in the database pool that src/lib/intake.ts depends on.
+import { SEGMENTS, isSegment, type Segment } from "@/lib/segments";
 
 export interface IntakeFormStrings {
   nameLabel: string;

@@ -1,4 +1,4 @@
-import type { Segment } from "@/lib/intake";
+import type { Segment } from "@/lib/segments";
 
 /**
  * CRA intake funnel email copy (EN transcribed verbatim from

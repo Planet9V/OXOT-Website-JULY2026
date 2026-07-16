@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { SEGMENTS } from "@/lib/intake";
+import { SEGMENTS } from "@/lib/segments";
 import { IntakeSettingsCard } from "@/components/admin/intake-settings-card";
 
 const inp = "rounded-md border border-border bg-background px-3 py-2 text-sm";
