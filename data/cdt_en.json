@@ -39,7 +39,9 @@
       { "id": "l4", "name": "L4 · Human & Organization", "caption": "Behavior as a dynamical system: decision-making under load, escalation paths, and the organizational thresholds that break first.", "tone": "risk" },
       { "id": "l5", "name": "L5 · Information Environment", "caption": "The real-time context — geopolitics, sentiment and the news cycle that can redirect an adversary's targeting without warning.", "tone": "dependency" },
       { "id": "l6", "name": "L6 · Prediction & Controls", "caption": "Breach likelihood, remediation lag and return on control investment, expressed as distributions with stated confidence intervals.", "tone": "control" }
-    ]
+    ],
+    "graphHint": "Hover or focus a layer to read what it holds — assets, dependencies, threats and controls, as one graph.",
+    "graphAriaLabel": "Seven-layer graph of the OT estate"
   },
   "boms": {
     "eyebrow": "Standardised, machine-readable bills of materials",
@@ -85,7 +87,28 @@
       { "id": "line-2", "parentId": "fac-1", "level": "productLine", "label": "SCADA & historian line", "kev": false, "epss": 0.04, "cvss": 5.3, "consequence": "Data integrity on operational history", "priority": "never" },
       { "id": "eq-3", "parentId": "line-2", "level": "equipment", "label": "Historian gateway (Windows Server 2019)", "version": "OS 1809", "kev": false, "epss": 0.03, "cvss": 4.3, "consequence": "Read-only data exposure, no process path", "priority": "never" },
       { "id": "cmp-4", "parentId": "eq-3", "level": "component", "label": "log4j-core", "version": "2.17.1", "cve": "—", "kev": false, "epss": 0.02, "cvss": 3.1, "consequence": "Already remediated; retained for provenance", "priority": "never" }
-    ]
+    ],
+    "levelNames": {
+      "organization": "Organization",
+      "facility": "Facility",
+      "productLine": "Product line",
+      "equipment": "Equipment",
+      "component": "Component"
+    },
+    "deepestLabel": "Deepest level to show",
+    "sortLabel": "Sort:",
+    "sortOptions": {
+      "cvss": "CVSS",
+      "epss": "EPSS"
+    },
+    "priorityHeader": "Priority",
+    "collapseLabel": "Collapse",
+    "expandLabel": "Expand",
+    "priorityLabels": {
+      "now": "NOW",
+      "next": "NEXT",
+      "never": "NEVER"
+    }
   },
   "consequence": {
     "eyebrow": "Consequence-driven safety & reliability",
@@ -134,7 +157,23 @@
           { "label": "Generic awareness training as a control for this path", "consequence": "low", "exploit": "no-path" }
         ]
       }
-    ]
+    ],
+    "axisConsequence": "Consequence →",
+    "axisExploit": "Exploitability pathway →",
+    "consequenceLevels": {
+      "critical": "Critical",
+      "high": "High",
+      "med": "Medium",
+      "low": "Low"
+    },
+    "exploitLevels": {
+      "kev": "KEV",
+      "highEpss": "High EPSS",
+      "lowEpss": "Low EPSS",
+      "noPath": "No path"
+    },
+    "hint": "Hover a cell to see the findings triaged there.",
+    "emptyCellNote": "No findings land in this cell for the sample estate — but any that did would be triaged here."
   },
   "monteCarlo": {
     "eyebrow": "The Monte Carlo prediction pipeline",
@@ -165,7 +204,10 @@
       { "id": "segment", "label": "Add segmentation (NEXT)", "note": "Segment the BESS zone from the IT jump host — the largest single contagion path closes.", "shiftPct": -3.3 },
       { "id": "patch", "label": "Patch KEV items (NOW)", "note": "Remediate the OpenSSL and firmware KEV findings on the safety line.", "shiftPct": -4.6 },
       { "id": "stress", "label": "Organization under stress", "note": "Alert fatigue and staff turnover push the human layer past its coherence threshold.", "shiftPct": 5.1 }
-    ]
+    ],
+    "xAxisLabel": "P(reach a safety-critical system) across simulated campaigns",
+    "meanLabel": "mean",
+    "ciAbbrev": "CI"
   },
   "methodology": {
     "eyebrow": "How we deliver",

@@ -52,6 +52,10 @@ export interface CdtLivingModel {
   points: string[];
   /** Exactly 7 layers, rendered as the interactive seven-layer graph. */
   layers: GraphLayer[];
+  /** Caption shown in the graph's reveal panel before a layer is hovered/focused. */
+  graphHint: string;
+  /** aria-label for the graph's root <svg>. */
+  graphAriaLabel: string;
 }
 
 /* ---------- BOMs (DEXPI-extended bills of materials) ---------- */
@@ -105,12 +109,37 @@ export interface CdtDrilldownLegendItem {
   key: string;
   label: string;
 }
+export interface CdtDrilldownLevelNames {
+  organization: string;
+  facility: string;
+  productLine: string;
+  equipment: string;
+  component: string;
+}
+export interface CdtDrilldownSortOptions {
+  cvss: string;
+  epss: string;
+}
 export interface CdtDrilldown {
   title: string;
   intro: string;
   columns: CdtDrilldownColumns;
   legend: CdtDrilldownLegendItem[];
   rows: BomRow[];
+  /** Level names keyed by BomRowLevel, used for the filter dropdown + row sublabels. */
+  levelNames: CdtDrilldownLevelNames;
+  /** Label for the "deepest level to show" filter (visible text + aria-label). */
+  deepestLabel: string;
+  /** Label preceding the sort buttons, e.g. "Sort:". */
+  sortLabel: string;
+  sortOptions: CdtDrilldownSortOptions;
+  /** Header for the priority column (NOW/NEXT/NEVER). */
+  priorityHeader: string;
+  /** aria-labels for the row expand/collapse toggle. */
+  collapseLabel: string;
+  expandLabel: string;
+  /** Text on the priority pill, keyed by BomPriority. */
+  priorityLabels: Record<BomPriority, string>;
 }
 
 /* ---------- Consequence-driven methods ---------- */
@@ -142,12 +171,34 @@ export interface PriorityBucket {
   rule: string;
   items: PriorityItem[];
 }
+export interface CdtPriorityConsequenceLevels {
+  critical: string;
+  high: string;
+  med: string;
+  low: string;
+}
+export interface CdtPriorityExploitLevels {
+  kev: string;
+  highEpss: string;
+  lowEpss: string;
+  noPath: string;
+}
 export interface CdtPriority {
   eyebrow: string;
   title: string;
   intro: string;
   rule: string;
   buckets: PriorityBucket[];
+  /** Y-axis label, e.g. "Consequence →". */
+  axisConsequence: string;
+  /** X-axis label, e.g. "Exploitability pathway →". */
+  axisExploit: string;
+  consequenceLevels: CdtPriorityConsequenceLevels;
+  exploitLevels: CdtPriorityExploitLevels;
+  /** Idle-state hint under the reveal panel. */
+  hint: string;
+  /** Shown in the reveal panel when a selected cell has no items. */
+  emptyCellNote: string;
 }
 
 /* ---------- Monte Carlo prediction pipeline ---------- */
@@ -175,6 +226,12 @@ export interface CdtMonteCarlo {
   bins: MonteCarloBin[];
   ci: MonteCarloCi;
   scenarios: MonteCarloScenario[];
+  /** X-axis caption under the histogram, e.g. "P(reach a safety-critical system)...". */
+  xAxisLabel: string;
+  /** Label on the dashed mean marker, e.g. "mean". */
+  meanLabel: string;
+  /** Confidence-interval abbreviation next to the mean readout, e.g. "CI" / "BI". */
+  ciAbbrev: string;
 }
 
 /* ---------- Methodology (Assess → Model → Improve → Sustain) ---------- */

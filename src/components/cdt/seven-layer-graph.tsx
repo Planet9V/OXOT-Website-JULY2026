@@ -50,7 +50,7 @@ export function SevenLayerGraph({ model }: { model: CdtLivingModel }) {
         viewBox={`0 0 ${VB_W} ${vbH}`}
         className="w-full"
         role="img"
-        aria-label="Seven-layer graph of the OT estate"
+        aria-label={model.graphAriaLabel}
       >
         <defs>
           <linearGradient id="cdt-edge" x1="0" y1="0" x2="0" y2="1">
@@ -155,7 +155,7 @@ export function SevenLayerGraph({ model }: { model: CdtLivingModel }) {
         aria-live="polite"
       >
         {active === null ? (
-          <span>Hover or focus a layer to read what it holds — assets, dependencies, threats and controls, as one graph.</span>
+          <span>{model.graphHint}</span>
         ) : (
           <span>
             <strong className="text-foreground">{layers[active].name}</strong> — {layers[active].caption}

@@ -13,19 +13,6 @@ import type {
 const CONS: PriorityConsequence[] = ["critical", "high", "med", "low"];
 const EXP: PriorityExploit[] = ["kev", "high-epss", "low-epss", "no-path"];
 
-const CONS_LABEL: Record<PriorityConsequence, string> = {
-  critical: "Critical",
-  high: "High",
-  med: "Medium",
-  low: "Low"
-};
-const EXP_LABEL: Record<PriorityExploit, string> = {
-  kev: "KEV",
-  "high-epss": "High EPSS",
-  "low-epss": "Low EPSS",
-  "no-path": "No path"
-};
-
 const CELL_TONE: Record<BomPriority, string> = {
   now: "bg-destructive/15 hover:bg-destructive/25 border-destructive/30",
   next: "bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/30",
@@ -49,6 +36,22 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduce = useReducedMotion();
+
+  const CONS_LABEL: Record<PriorityConsequence, string> = {
+    critical: priority.consequenceLevels.critical,
+    high: priority.consequenceLevels.high,
+    med: priority.consequenceLevels.med,
+    low: priority.consequenceLevels.low
+  };
+  const EXP_LABEL: Record<PriorityExploit, string> = {
+    kev: priority.exploitLevels.kev,
+    "high-epss": priority.exploitLevels.highEpss,
+    "low-epss": priority.exploitLevels.lowEpss,
+    "no-path": priority.exploitLevels.noPath
+  };
+  const BUCKET_LABEL = Object.fromEntries(
+    priority.buckets.map((b) => [b.key, b.label])
+  ) as Record<BomPriority, string>;
 
   // Index every bucket item into its (consequence, exploit) cell.
   const itemsByCell = React.useMemo(() => {
@@ -76,7 +79,7 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
           {/* Y-axis label */}
           <div className="flex w-6 items-center justify-center">
             <span className="rotate-180 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground [writing-mode:vertical-rl]">
-              Consequence →
+              {priority.axisConsequence}
             </span>
           </div>
           <div className="flex-1">
@@ -105,7 +108,7 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
                       aria-label={`${CONS_LABEL[cons]} consequence, ${EXP_LABEL[exp]}: ${p.toUpperCase()}${items.length ? `, ${items.length} item(s)` : ""}`}
                     >
                       <span className={cn("text-[10px] font-bold uppercase tracking-wide", BUCKET_TONE[p])}>
-                        {p}
+                        {BUCKET_LABEL[p]}
                       </span>
                       {items.length > 0 && (
                         <span className="mt-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground/80 px-1 text-[9px] font-bold text-background">
@@ -126,7 +129,7 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
               ))}
             </div>
             <p className="mt-1 text-center text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              Exploitability pathway →
+              {priority.axisExploit}
             </p>
           </div>
         </div>
@@ -150,10 +153,10 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                {CONS_LABEL[aCons]} consequence · {EXP_LABEL[aExp]}
+                {CONS_LABEL[aCons]} · {EXP_LABEL[aExp]}
               </p>
               <p className={cn("mt-1 text-lg font-bold uppercase tracking-wide", BUCKET_TONE[cellPriority(aCons, aExp)])}>
-                {cellPriority(aCons, aExp)}
+                {BUCKET_LABEL[cellPriority(aCons, aExp)]}
               </p>
               {activeItems.length > 0 ? (
                 <ul className="mt-3 space-y-2">
@@ -165,7 +168,7 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
                 </ul>
               ) : (
                 <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-                  No findings land in this cell for the sample estate — but any that did would be triaged here.
+                  {priority.emptyCellNote}
                 </p>
               )}
             </motion.div>
@@ -185,7 +188,7 @@ export function PriorityMatrix({ priority }: { priority: CdtPriority }) {
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-[11px] text-muted-foreground">Hover a cell to see the findings triaged there.</p>
+              <p className="mt-4 text-[11px] text-muted-foreground">{priority.hint}</p>
             </motion.div>
           )}
         </AnimatePresence>

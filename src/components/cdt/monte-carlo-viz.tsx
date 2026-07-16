@@ -57,7 +57,7 @@ export function MonteCarloViz({ data }: { data: CdtMonteCarlo }) {
           >
             <span className="text-primary">{mean.toFixed(1)}%</span>{" "}
             <span className="font-normal text-muted-foreground">
-              (95% CI {lower.toFixed(1)}–{upper.toFixed(1)}%)
+              (95% {data.ciAbbrev} {lower.toFixed(1)}–{upper.toFixed(1)}%)
             </span>
           </motion.p>
         </div>
@@ -107,7 +107,7 @@ export function MonteCarloViz({ data }: { data: CdtMonteCarlo }) {
           <motion.g initial={false} animate={{ x: xToPx(mean) }} transition={reduce ? { duration: 0 } : spring}>
             <line y1={PAD_T - 4} y2={PAD_T + plotH} stroke="hsl(var(--destructive))" strokeWidth={2} strokeDasharray="4 4" />
             <text y={PAD_T - 8} textAnchor="middle" fontSize={11} fontWeight={700} fill="hsl(var(--destructive))">
-              mean
+              {data.meanLabel}
             </text>
           </motion.g>
 
@@ -118,7 +118,7 @@ export function MonteCarloViz({ data }: { data: CdtMonteCarlo }) {
             </text>
           ))}
           <text x={PAD_L + plotW / 2} y={VB_H - 6} textAnchor="middle" fontSize={10} fill="hsl(var(--muted-foreground))">
-            P(reach a safety-critical system) across simulated campaigns
+            {data.xAxisLabel}
           </text>
         </svg>
       </div>

@@ -6,21 +6,12 @@ import { cn } from "@/lib/utils";
 import type { CdtDrilldown, BomRow, BomRowLevel, BomPriority } from "@/lib/cdt";
 
 const LEVEL_ORDER: BomRowLevel[] = ["org", "facility", "productLine", "equipment", "component"];
-const LEVEL_LABEL: Record<BomRowLevel, string> = {
-  org: "Organization",
-  facility: "Facility",
-  productLine: "Product line",
-  equipment: "Equipment",
-  component: "Component"
-};
 
 const PRIORITY_PILL: Record<BomPriority, string> = {
   now: "bg-destructive/15 text-destructive border-destructive/30",
   next: "bg-amber-500/15 text-amber-600 border-amber-500/30 dark:text-amber-400",
   never: "bg-muted text-muted-foreground border-border"
 };
-const PRIORITY_LABEL: Record<BomPriority, string> = { now: "NOW", next: "NEXT", never: "NEVER" };
-
 /** Cell tint for a 0–10 CVSS score — token-driven, dark+light safe. */
 function cvssClass(v: number): string {
   if (v >= 9) return "bg-destructive/20 text-destructive font-semibold";
@@ -40,6 +31,14 @@ type SortKey = "cvss" | "epss" | null;
 export function BomDrilldownTable({ data }: { data: CdtDrilldown }) {
   const reduce = useReducedMotion();
   const rows = data.rows;
+
+  const levelLabel: Record<BomRowLevel, string> = {
+    org: data.levelNames.organization,
+    facility: data.levelNames.facility,
+    productLine: data.levelNames.productLine,
+    equipment: data.levelNames.equipment,
+    component: data.levelNames.component
+  };
 
   // children index
   const childrenOf = React.useMemo(() => {
@@ -123,24 +122,24 @@ export function BomDrilldownTable({ data }: { data: CdtDrilldown }) {
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-border px-4 py-3">
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-muted-foreground">{data.columns.level}:</span>
+          <span className="text-muted-foreground">{data.deepestLabel}:</span>
           <select
             value={maxLevel}
             onChange={(e) => setMaxLevel(e.target.value as BomRowLevel)}
             className="rounded border border-border bg-background px-2 py-1 text-xs text-foreground"
-            aria-label="Deepest level to show"
+            aria-label={data.deepestLabel}
           >
             {LEVEL_ORDER.map((l) => (
               <option key={l} value={l}>
-                {LEVEL_LABEL[l]}
+                {levelLabel[l]}
               </option>
             ))}
           </select>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="text-[11px] text-muted-foreground">Sort:</span>
-          <SortBtn k="cvss" label="CVSS" />
-          <SortBtn k="epss" label="EPSS" />
+          <span className="text-[11px] text-muted-foreground">{data.sortLabel}</span>
+          <SortBtn k="cvss" label={data.sortOptions.cvss} />
+          <SortBtn k="epss" label={data.sortOptions.epss} />
         </div>
       </div>
 
@@ -151,7 +150,7 @@ export function BomDrilldownTable({ data }: { data: CdtDrilldown }) {
         <span className="text-center">{data.columns.kev}</span>
         <span className="text-center">{data.columns.epss}</span>
         <span className="text-center">{data.columns.cvss}</span>
-        <span className="text-center">Priority</span>
+        <span className="text-center">{data.priorityHeader}</span>
       </div>
 
       {/* Rows */}
@@ -181,7 +180,7 @@ export function BomDrilldownTable({ data }: { data: CdtDrilldown }) {
                         onClick={() => toggle(r.id)}
                         className="shrink-0 rounded p-0.5 text-muted-foreground hover:bg-muted hover:text-foreground"
                         aria-expanded={isOpen}
-                        aria-label={isOpen ? "Collapse" : "Expand"}
+                        aria-label={isOpen ? data.collapseLabel : data.expandLabel}
                       >
                         <ChevronRight
                           className={cn("h-3.5 w-3.5 transition-transform", isOpen && "rotate-90")}
@@ -194,7 +193,7 @@ export function BomDrilldownTable({ data }: { data: CdtDrilldown }) {
                     <span className="min-w-0">
                       <span className="block truncate font-medium text-foreground">{r.label}</span>
                       <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
-                        {LEVEL_LABEL[r.level]}
+                        {levelLabel[r.level]}
                         {r.cve && r.cve !== "—" ? ` · ${r.cve}` : ""}
                       </span>
                     </span>
@@ -223,7 +222,7 @@ export function BomDrilldownTable({ data }: { data: CdtDrilldown }) {
 
                   <span className="text-center">
                     <span className={cn("inline-block rounded-full border px-1.5 py-0.5 text-[9px] font-bold tracking-wide", PRIORITY_PILL[r.priority])}>
-                      {PRIORITY_LABEL[r.priority]}
+                      {data.priorityLabels[r.priority]}
                     </span>
                   </span>
                 </div>

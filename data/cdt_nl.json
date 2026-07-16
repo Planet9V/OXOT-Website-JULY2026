@@ -39,7 +39,9 @@
       { "id": "l4", "name": "L4 · Mens & organisatie", "caption": "Gedrag als een dynamisch systeem: besluitvorming onder druk, escalatiepaden en de organisatorische drempels die het eerst breken.", "tone": "risk" },
       { "id": "l5", "name": "L5 · Informatieomgeving", "caption": "De realtimecontext — geopolitiek, sentiment en de nieuwscyclus die de doelwitkeuze van een aanvaller zonder waarschuwing kan verleggen.", "tone": "dependency" },
       { "id": "l6", "name": "L6 · Voorspelling & maatregelen", "caption": "Inbraakkans, hersteltijd en rendement op maatregelinvesteringen, uitgedrukt als verdelingen met vermelde betrouwbaarheidsintervallen.", "tone": "control" }
-    ]
+    ],
+    "graphHint": "Beweeg over een laag of geef er focus aan om te lezen wat hij bevat — assets, afhankelijkheden, dreigingen en maatregelen, als één graaf.",
+    "graphAriaLabel": "Graaf met zeven lagen van de OT-omgeving"
   },
   "boms": {
     "eyebrow": "Gestandaardiseerde, machineleesbare bills of materials",
@@ -85,7 +87,28 @@
       { "id": "line-2", "parentId": "fac-1", "level": "productLine", "label": "SCADA- & historian-lijn", "kev": false, "epss": 0.04, "cvss": 5.3, "consequence": "Data-integriteit van operationele historie", "priority": "never" },
       { "id": "eq-3", "parentId": "line-2", "level": "equipment", "label": "Historian-gateway (Windows Server 2019)", "version": "OS 1809", "kev": false, "epss": 0.03, "cvss": 4.3, "consequence": "Alleen-lezen data-blootstelling, geen procespad", "priority": "never" },
       { "id": "cmp-4", "parentId": "eq-3", "level": "component", "label": "log4j-core", "version": "2.17.1", "cve": "—", "kev": false, "epss": 0.02, "cvss": 3.1, "consequence": "Reeds verholpen; behouden voor herkomst", "priority": "never" }
-    ]
+    ],
+    "levelNames": {
+      "organization": "Organisatie",
+      "facility": "Locatie",
+      "productLine": "Productlijn",
+      "equipment": "Apparaat",
+      "component": "Component"
+    },
+    "deepestLabel": "Diepste niveau om te tonen",
+    "sortLabel": "Sorteren:",
+    "sortOptions": {
+      "cvss": "CVSS",
+      "epss": "EPSS"
+    },
+    "priorityHeader": "Prioriteit",
+    "collapseLabel": "Inklappen",
+    "expandLabel": "Uitklappen",
+    "priorityLabels": {
+      "now": "NU",
+      "next": "VOLGENDE",
+      "never": "NOOIT"
+    }
   },
   "consequence": {
     "eyebrow": "Consequentiegedreven veiligheid & betrouwbaarheid",
@@ -134,7 +157,23 @@
           { "label": "Algemene awarenesstraining als maatregel voor dit pad", "consequence": "low", "exploit": "no-path" }
         ]
       }
-    ]
+    ],
+    "axisConsequence": "Consequentie →",
+    "axisExploit": "Exploiteerbaarheidspad →",
+    "consequenceLevels": {
+      "critical": "Kritiek",
+      "high": "Hoog",
+      "med": "Middel",
+      "low": "Laag"
+    },
+    "exploitLevels": {
+      "kev": "KEV",
+      "highEpss": "Hoge EPSS",
+      "lowEpss": "Lage EPSS",
+      "noPath": "Geen pad"
+    },
+    "hint": "Beweeg over een cel om de daar getrieerde bevindingen te zien.",
+    "emptyCellNote": "Er landen geen bevindingen in deze cel voor de voorbeeldomgeving — maar eventuele bevindingen zouden hier worden getrieerd."
   },
   "monteCarlo": {
     "eyebrow": "De Monte Carlo-voorspellingspijplijn",
@@ -165,7 +204,10 @@
       { "id": "segment", "label": "Voeg segmentatie toe (VOLGENDE)", "note": "Segmenteer de BESS-zone van de IT-jump host — het grootste enkele besmettingspad sluit.", "shiftPct": -3.3 },
       { "id": "patch", "label": "Patch KEV-items (NU)", "note": "Verhelp de OpenSSL- en firmware-KEV-bevindingen op de veiligheidslijn.", "shiftPct": -4.6 },
       { "id": "stress", "label": "Organisatie onder druk", "note": "Alertmoeheid en personeelsverloop duwen de menselijke laag voorbij haar coherentiedrempel.", "shiftPct": 5.1 }
-    ]
+    ],
+    "xAxisLabel": "P(bereikt een veiligheidskritisch systeem) over gesimuleerde campagnes",
+    "meanLabel": "gemiddelde",
+    "ciAbbrev": "BI"
   },
   "methodology": {
     "eyebrow": "Hoe wij leveren",
