@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-sql.mjs && next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -16,7 +16,8 @@
     "seed:site": "node scripts/seed-site-blocks.mjs",
     "seed:admin": "node scripts/seed-admin.mjs",
     "ingest": "node scripts/ingest.mjs",
-    "claude:bootstrap": "bash scripts/bootstrap-claude.sh"
+    "claude:bootstrap": "bash scripts/bootstrap-claude.sh",
+    "check:sql": "node scripts/check-sql.mjs"
   },
   "dependencies": {
     "next": "^15.3.0",

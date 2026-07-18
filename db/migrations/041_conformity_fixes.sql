@@ -266,7 +266,11 @@ COMMIT;
 -- D) Restore nav reachability: re-add "Overview" and "Regulations" under the
 --    Frameworks parent (both locales), orphaned by migration 038.
 -- ============================================================================
-DO $$
+-- NOTE: this block is tagged $mig041$, NOT the bare $$, because the Dutch
+-- description below is itself dollar-quoted (it contains an apostrophe in
+-- "thema's"). A bare $$ DO body would be terminated early by that inner $$,
+-- which is exactly what failed the 2026-07-18 pre-deploy migrate step.
+DO $mig041$
 DECLARE
   m_id BIGINT;
   fw_en BIGINT;
@@ -307,4 +311,4 @@ BEGIN
        WHERE x.menu_id = m_id AND x.locale = 'nl' AND x.href = v.href AND x.parent_id = fw_nl
     );
   END IF;
-END $$;
+END $mig041$;
