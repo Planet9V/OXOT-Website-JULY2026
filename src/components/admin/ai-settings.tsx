@@ -116,20 +116,59 @@ export function AiSettings() {
     setStatus({ kind: "ok", msg: "OpenRouter key cleared (using .env fallback if present)." });
   }
 
+  // Poll GET /api/admin/content/reindex every ~5s while a background rebuild
+  // is running, so the admin sees passage/page counts climb without refreshing.
+  const pollRebuildStatus = React.useCallback(() => {
+    const timer = setInterval(async () => {
+      try {
+        const res = await fetch("/api/admin/content/reindex");
+        if (!res.ok) return;
+        const d = (await res.json()) as {
+          running?: boolean; pagesDone?: number; chunks?: number; error?: string | null;
+        };
+        if (d.running) {
+          setStatus({ kind: "ok", msg: `Rebuilding… ${d.pagesDone ?? 0} page(s), ${d.chunks ?? 0} passage(s) so far.` });
+          return;
+        }
+        clearInterval(timer);
+        setBusy(null);
+        await loadStats();
+        if (d.error) {
+          setStatus({ kind: "err", msg: `Rebuild failed: ${d.error}` });
+        } else {
+          setStatus({ kind: "ok", msg: `Knowledge rebuilt: ${d.chunks ?? 0} passage(s) from ${d.pagesDone ?? 0} page(s).` });
+        }
+      } catch {
+        // transient network hiccup while polling — try again on the next tick
+      }
+    }, 5000);
+  }, [loadStats]);
+
   async function reindex() {
     setBusy("reindex"); setStatus({ kind: "idle", msg: "" });
     try {
       const res = await fetch("/api/admin/content/reindex", { method: "POST" });
-      const d = (await res.json().catch(() => ({}))) as { ok?: boolean; pages?: number; chunks?: number; error?: string };
+      const d = (await res.json().catch(() => ({}))) as { ok?: boolean; started?: boolean; alreadyRunning?: boolean; error?: string };
       if (!res.ok || !d.ok) {
-        setStatus({ kind: "err", msg: `Rebuild failed: ${d.error ?? "Ollama unreachable or server error"}` });
+        setStatus({ kind: "err", msg: `Rebuild failed: ${d.error ?? "server error"}` });
+        setBusy(null);
         return;
       }
-      await loadStats();
-      setStatus({ kind: "ok", msg: `Knowledge rebuilt: ${d.chunks ?? 0} passage(s) from ${d.pages ?? 0} page(s).` });
+      if (d.alreadyRunning) {
+        setStatus({ kind: "ok", msg: "A rebuild is already running." });
+        pollRebuildStatus();
+        return;
+      }
+      if (d.started) {
+        setStatus({ kind: "ok", msg: "Rebuild started — this runs in the background. Refresh in a few minutes to see the passage count climb." });
+        pollRebuildStatus();
+        return;
+      }
+      setBusy(null);
     } catch (e) {
       setStatus({ kind: "err", msg: `Rebuild failed: ${e instanceof Error ? e.message : "network error"}` });
-    } finally { setBusy(null); }
+      setBusy(null);
+    }
   }
 
   const ollamaConfigured = !!form.ollamaHost.trim();
