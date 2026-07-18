@@ -62,7 +62,10 @@ export default async function ConformityHomePage({
   try {
     summary = await getSummary();
   } catch {
-    summary = { regulationCount: 5, requirementCount: 78, themeCount: 15, mappingCount: 61 };
+    // mappingCount fallback: count of non-empty theme×regulation matrix cells (47),
+    // matching the "Mapped combinations" KPI label — see conformity.kpi.mappings in
+    // both dictionaries and docs/CONFORMITY-APP.md §10.1 for the definitions considered.
+    summary = { regulationCount: 5, requirementCount: 78, themeCount: 15, mappingCount: 47 };
   }
 
   return (

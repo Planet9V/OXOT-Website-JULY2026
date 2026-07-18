@@ -42,7 +42,7 @@ export default async function SourcesPage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale).conformity;
-  const sources = await getSources();
+  const sources = await getSources(locale);
 
   const groups = new Map<KindSlug, SourceDoc[]>();
   for (const s of sources) {

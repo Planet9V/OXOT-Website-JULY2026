@@ -23,6 +23,9 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+# FUSE editor swap artifacts (appear on FUSE-backed mounts; unlink can be blocked
+# there, so ignore rather than delete).
+.fuse_hidden*
 
 # Docker / data
 pgdata/

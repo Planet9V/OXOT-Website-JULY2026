@@ -124,7 +124,7 @@ export async function getRequirements(locale: Locale): Promise<Requirement[]> {
   const { rows } = await pool.query(
     `SELECT r.id,
             r.regulation_key AS "regulationKey",
-            reg.short_name   AS "regulationShortName",
+            COALESCE(${nl ? "NULLIF(reg.short_name_nl,'')," : ""} reg.short_name) AS "regulationShortName",
             r.theme_key      AS "themeKey",
             COALESCE(${nl ? "NULLIF(t.name_nl,'')," : ""} t.name) AS "themeName",
             r.ref_code       AS "refCode",
@@ -174,9 +174,12 @@ export async function getTimeline(locale: Locale): Promise<TimelineEvent[]> {
   return rows;
 }
 
-export async function getSources(): Promise<SourceDoc[]> {
+export async function getSources(locale: Locale): Promise<SourceDoc[]> {
+  const nl = isNl(locale);
   const { rows } = await pool.query(
-    `SELECT title, filename, url, kind, description,
+    `SELECT COALESCE(${nl ? "NULLIF(title_nl,'')," : ""} title)             AS "title",
+            filename, url, kind,
+            COALESCE(${nl ? "NULLIF(description_nl,'')," : ""} description) AS "description",
             regulation_key AS "regulationKey",
             sort_order     AS "sortOrder"
        FROM conformity_sources

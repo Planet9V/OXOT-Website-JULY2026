@@ -6,17 +6,25 @@ import { SITE_URL } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 // Static routes that exist for every locale (not CMS-driven).
+// NOTE: `/industrial-operations` is deliberately omitted — it 308-redirects to
+// `/cyber-digital-twin` (see next.config.mjs). `/conformity-platform` stays listed:
+// its top-level nav entry was removed, but the route itself still serves 200 (the
+// redirect that used to send it to /frameworks was removed — see next.config.mjs).
+// Transactional newsletter landing pages (/newsletter/confirmed|unsubscribed|invalid)
+// are excluded on purpose: they're only ever reached via an emailed link, not
+// something search engines should index or visitors should land on cold.
 const STATIC_PATHS = [
   "",
   "/blog",
   "/contact",
+  "/conformity",
   "/conformity-platform",
-  "/industrial-operations",
   "/conformity-platform/regulations",
   "/conformity-platform/requirements",
   "/conformity-platform/themes",
   "/conformity-platform/sources",
-  "/conformity-platform/matrix"
+  "/conformity-platform/matrix",
+  "/cyber-digital-twin"
 ];
 
 function languageAlternates(path: string): Record<string, string> {
