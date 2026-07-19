@@ -37,6 +37,10 @@ ollama/
 # Next.js generated
 next-env.d.ts
 
+# TypeScript incremental build cache (regenerated on every compile — must never
+# be committed; it churns on every build and was tracked by mistake).
+*.tsbuildinfo
+
 # Internal source material (never commit to public repo)
 content-source/
 
