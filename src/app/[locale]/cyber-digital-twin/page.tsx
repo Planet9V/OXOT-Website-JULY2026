@@ -5,6 +5,8 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { getCdt } from "@/lib/cdt";
 import { alternates } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { blocksRoutingEnabled } from "@/lib/blocks/flag";
+import { BlockRenderer } from "@/components/blocks/block-renderer";
 import {
   Hero,
   StatBand,
@@ -41,14 +43,20 @@ export async function generateMetadata({
 }
 
 export default async function CyberDigitalTwinPage({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
-  const cdt = await getCdt(locale);
+
+  // Phase 2: render from page_blocks when the flag opts in (?blocks=1 or the
+  // BLOCKS_ROUTING env). Default = the coded sections below (byte-identical).
+  const useBlocks = blocksRoutingEnabled("cyber-digital-twin", await searchParams);
+  const cdt = useBlocks ? null : await getCdt(locale);
 
   return (
     <main className="bg-background text-foreground">
@@ -56,23 +64,29 @@ export default async function CyberDigitalTwinPage({
         <ThemeToggle label={t.theme.toggle} />
       </div>
 
-      <Hero
-        hero={cdt.hero}
-        model={cdt.livingModel}
-        locale={locale}
-        assistLabel={t.agent.assistCtaLabel}
-        seedTemplate={t.agent.seedTemplate}
-      />
-      <StatBand band={cdt.statBand} />
-      <LivingModel model={cdt.livingModel} />
-      <Boms boms={cdt.boms} />
-      <Drilldown drilldown={cdt.drilldown} />
-      <Consequence consequence={cdt.consequence} />
-      <Priority priority={cdt.priority} />
-      <MonteCarlo monteCarlo={cdt.monteCarlo} />
-      <Methodology methodology={cdt.methodology} />
-      <Outcomes outcomes={cdt.outcomes} locale={locale} />
-      <FinalCta cta={cdt.finalCta} locale={locale} />
+      {useBlocks ? (
+        <BlockRenderer slug="cyber-digital-twin" locale={locale} />
+      ) : (
+        <>
+          <Hero
+            hero={cdt!.hero}
+            model={cdt!.livingModel}
+            locale={locale}
+            assistLabel={t.agent.assistCtaLabel}
+            seedTemplate={t.agent.seedTemplate}
+          />
+          <StatBand band={cdt!.statBand} />
+          <LivingModel model={cdt!.livingModel} />
+          <Boms boms={cdt!.boms} />
+          <Drilldown drilldown={cdt!.drilldown} />
+          <Consequence consequence={cdt!.consequence} />
+          <Priority priority={cdt!.priority} />
+          <MonteCarlo monteCarlo={cdt!.monteCarlo} />
+          <Methodology methodology={cdt!.methodology} />
+          <Outcomes outcomes={cdt!.outcomes} locale={locale} />
+          <FinalCta cta={cdt!.finalCta} locale={locale} />
+        </>
+      )}
     </main>
   );
 }

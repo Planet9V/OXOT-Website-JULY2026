@@ -6,6 +6,8 @@ import { getSummary, type ConformitySummary } from "@/lib/conformity";
 import { getConformityHome } from "@/lib/conformity-home";
 import { alternates } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { blocksRoutingEnabled } from "@/lib/blocks/flag";
+import { BlockRenderer } from "@/components/blocks/block-renderer";
 import { Reveal } from "@/components/motion/fx";
 import { ConsultingCarousel } from "@/components/conformity-home/consulting-carousel";
 import { Faq } from "@/components/conformity-home/faq";
@@ -44,18 +46,26 @@ export async function generateMetadata({
 }
 
 export default async function ConformityHomePage({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
   const c = t.conformityHome;
 
+  // Phase 2: render from page_blocks when the flag opts in (?blocks=1 or the
+  // BLOCKS_ROUTING env). Default = the coded sections below (byte-identical).
+  // The KPI shell (getSummary data-* attrs) is preserved either way.
+  const useBlocks = blocksRoutingEnabled("conformity", await searchParams);
+
   // Admin-editable home content (DB-backed, JSON defaults). The lib wraps its DB
-  // read in try/catch, so this page never 500s if the DB is down.
-  const home = await getConformityHome(locale);
+  // read in try/catch, so this page never 500s if the DB is down. Only the coded
+  // path needs it — the block path reads page_blocks.
+  const home = useBlocks ? null : await getConformityHome(locale);
 
   // Resilient data fetch: must never 500 if the DB is down.
   let summary: ConformitySummary;
@@ -80,49 +90,55 @@ export default async function ConformityHomePage({
         <ThemeToggle label={t.theme.toggle} />
       </div>
 
-      <Hero hero={home.hero} locale={locale} />
+      {useBlocks ? (
+        <BlockRenderer slug="conformity" locale={locale} />
+      ) : (
+        <>
+          <Hero hero={home!.hero} locale={locale} />
 
-      {/* 2 — Consultancy carousel (dictionary-driven, unchanged) */}
-      <section className="border-b border-border py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <Reveal>
-            <ConsultingCarousel slides={c.carousel.slides} locale={locale} labels={c.carousel.labels} />
-          </Reveal>
-        </div>
-      </section>
-
-      <RegulationBand logoWall={home.logoWall} />
-      <Stats stats={home.stats} />
-      <Platform featureGrid={home.featureGrid} />
-      <Problem problem={home.problem} />
-      <Shift shift={home.shift} locale={locale} />
-      <Comparison comparison={home.comparison} />
-      <HowItWorks steps={home.steps} />
-      <Testimonial quote={home.quote} />
-
-      {/* 11 — FAQ */}
-      <section className="border-b border-border py-20">
-        <div className="mx-auto max-w-4xl px-4">
-          <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              {home.faq.eyebrow}
-            </p>
-            <h2
-              className="mt-3 text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {home.faq.title}
-            </h2>
-          </Reveal>
-          <Reveal>
-            <div className="mt-8">
-              <Faq items={home.faq.items} />
+          {/* 2 — Consultancy carousel (dictionary-driven, unchanged) */}
+          <section className="border-b border-border py-16">
+            <div className="mx-auto max-w-6xl px-4">
+              <Reveal>
+                <ConsultingCarousel slides={c.carousel.slides} locale={locale} labels={c.carousel.labels} />
+              </Reveal>
             </div>
-          </Reveal>
-        </div>
-      </section>
+          </section>
 
-      <FinalCta cta={home.cta} locale={locale} />
+          <RegulationBand logoWall={home!.logoWall} />
+          <Stats stats={home!.stats} />
+          <Platform featureGrid={home!.featureGrid} />
+          <Problem problem={home!.problem} />
+          <Shift shift={home!.shift} locale={locale} />
+          <Comparison comparison={home!.comparison} />
+          <HowItWorks steps={home!.steps} />
+          <Testimonial quote={home!.quote} />
+
+          {/* 11 — FAQ */}
+          <section className="border-b border-border py-20">
+            <div className="mx-auto max-w-4xl px-4">
+              <Reveal>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  {home!.faq.eyebrow}
+                </p>
+                <h2
+                  className="mt-3 text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {home!.faq.title}
+                </h2>
+              </Reveal>
+              <Reveal>
+                <div className="mt-8">
+                  <Faq items={home!.faq.items} />
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          <FinalCta cta={home!.cta} locale={locale} />
+        </>
+      )}
     </main>
   );
 }
