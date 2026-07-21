@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DashboardOverview } from "@/components/admin/dashboard-overview";
-import { CraHomeEditor } from "@/components/admin/cra-home-editor";
-import { CdtEditor } from "@/components/admin/cdt-editor";
-import { ConformityHomeEditor } from "@/components/admin/conformity-home-editor";
-import { HomeContentEditor } from "@/components/admin/home-content-editor";
+// Legacy per-page editors (CraHomeEditor / CdtEditor / ConformityHomeEditor /
+// HomeContentEditor) were retired from the nav at the Gate-4 cutover — Home, CDT
+// and Conformity are now edited in the visual Page Builder (page_blocks). The
+// component + API files remain on disk as a one-release rollback escape hatch.
 import { IntakeLeadsManager } from "@/components/admin/intake-leads-manager";
 import { PagesManager } from "@/components/admin/pages-manager";
 import { PageBuilder } from "@/components/admin/page-builder";
@@ -24,7 +24,7 @@ import { AnalyticsManager } from "@/components/admin/analytics-manager";
 import { AffiliateSeoManager } from "@/components/admin/affiliate-seo-manager";
 import { CarouselManager } from "@/components/admin/carousel-manager";
 
-type Section = "overview" | "cra-home" | "cdt" | "home" | "homepage" | "page-builder" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
+type Section = "overview" | "page-builder" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
 // Order is display-only (each item's key→component wiring is unchanged). Grouped for
 // admin UX: Overview → Content authoring → Audience & growth → Configuration, roughly
 // by how often a small content team touches each, with set-and-forget config last.
@@ -32,10 +32,6 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   // Overview
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   // Content authoring — flagship pages first, then supporting assets, then site structure
-  { key: "cra-home", label: "Home page", icon: Home },
-  { key: "cdt", label: "Cyber Digital Twin", icon: Network },
-  { key: "home", label: "Conformity page", icon: Layers },
-  { key: "homepage", label: "Approach page", icon: LayoutTemplate },
   { key: "page-builder", label: "Page Builder", icon: Blocks },
   { key: "pages", label: "Pages", icon: FileText },
   { key: "media", label: "Media", icon: Images },
@@ -140,10 +136,6 @@ export function AdminShell({ email }: { email: string }) {
 
         <main className="mx-auto w-full max-w-6xl flex-1 p-4 lg:p-8">
           {section === "overview" && <DashboardOverview />}
-          {section === "cra-home" && <CraHomeEditor />}
-          {section === "cdt" && <CdtEditor />}
-          {section === "home" && <ConformityHomeEditor />}
-          {section === "homepage" && <HomeContentEditor />}
           {section === "page-builder" && <PageBuilder />}
           {section === "pages" && <PagesManager />}
           {section === "menus" && <MenuManager />}
