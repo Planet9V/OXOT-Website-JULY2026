@@ -3,10 +3,21 @@ import { pool } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 import { ingestPage, extractProse } from "@/lib/ingest";
 import { isLocale, locales, type Locale } from "@/i18n/config";
-import { getCraHome, CRA_HOME_KEY } from "@/lib/cra-home";
-import { getCdt, CDT_HOME_KEY } from "@/lib/cdt";
-import { getConformityHome, CONFORMITY_HOME_KEY } from "@/lib/conformity-home";
+import { CRA_HOME_KEY } from "@/lib/cra-home";
+import { CDT_HOME_KEY } from "@/lib/cdt";
+import { CONFORMITY_HOME_KEY } from "@/lib/conformity-home";
 import { getHomeContent, HOME_KEY } from "@/lib/site-content";
+import { getPageBlocks } from "@/lib/blocks/page-blocks";
+
+// After the Gate-4 cutover, Home/CDT/Conformity render from page_blocks (the
+// Page Builder), so the grounding corpus for these three pages must come from
+// page_blocks too — else the AI would drift on the first Page-Builder edit. This
+// reads a block page's ordered configs; extractProse walks them to the same prose
+// leaves as the reconstructed page object (config IS the section sub-object).
+async function blockPageProse(pageSlug: string, locale: Locale): Promise<unknown> {
+  const blocks = await getPageBlocks(pageSlug, locale);
+  return blocks.map((b) => b.config);
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -39,9 +50,12 @@ const SITE_BLOCK_SOURCES: Array<{
   slug: string;
   get: (locale: Locale) => Promise<unknown>;
 }> = [
-  { key: CRA_HOME_KEY, slug: "site-blocks-cra-home", get: getCraHome },
-  { key: CDT_HOME_KEY, slug: "site-blocks-cdt-home", get: getCdt },
-  { key: CONFORMITY_HOME_KEY, slug: "site-blocks-conformity-home", get: getConformityHome },
+  // Post-cutover: these three read page_blocks (the live source), keeping the
+  // same pseudo page_id so content_chunks are updated in place (no orphans/dupes).
+  { key: CRA_HOME_KEY, slug: "site-blocks-cra-home", get: (l) => blockPageProse("home", l) },
+  { key: CDT_HOME_KEY, slug: "site-blocks-cdt-home", get: (l) => blockPageProse("cyber-digital-twin", l) },
+  { key: CONFORMITY_HOME_KEY, slug: "site-blocks-conformity-home", get: (l) => blockPageProse("conformity", l) },
+  // The Approach orphan (HOME_KEY) still reads site_blocks — out of the cutover scope.
   { key: HOME_KEY, slug: "site-blocks-home", get: getHomeContent }
 ];
 
