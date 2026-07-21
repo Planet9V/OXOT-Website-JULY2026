@@ -51,21 +51,26 @@ export async function setPageBlocks(
   slug: string,
   locale: string,
   blocks: BlockInput[],
-  note = "Block edit"
+  note = "Block edit",
+  snapshot = true
 ): Promise<number> {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
     // Snapshot the pre-change state (pages row + current blocks) for history.
-    const { rows: pub } = await client.query(
-      `SELECT published FROM pages WHERE slug=$1 AND locale=$2 LIMIT 1`,
-      [slug, locale]
-    );
-    await snapshotCurrent(
-      slug, locale,
-      pub[0]?.published ? "published" : "draft",
-      note, client
-    );
+    // Skipped for live-preview writes (snapshot=false) to avoid version spam;
+    // an explicit Save records a version.
+    if (snapshot) {
+      const { rows: pub } = await client.query(
+        `SELECT published FROM pages WHERE slug=$1 AND locale=$2 LIMIT 1`,
+        [slug, locale]
+      );
+      await snapshotCurrent(
+        slug, locale,
+        pub[0]?.published ? "published" : "draft",
+        note, client
+      );
+    }
 
     await client.query(`DELETE FROM page_blocks WHERE slug=$1 AND locale=$2`, [slug, locale]);
     for (let i = 0; i < blocks.length; i++) {

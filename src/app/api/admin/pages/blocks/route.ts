@@ -29,6 +29,7 @@ export async function PUT(req: NextRequest) {
     locale?: string;
     blocks?: BlockInput[];
     note?: string;
+    preview?: boolean;
   };
   const { slug, locale } = body;
   if (!slug || !locale || !isLocale(locale) || !Array.isArray(body.blocks)) {
@@ -38,6 +39,12 @@ export async function PUT(req: NextRequest) {
   if (unknown) {
     return NextResponse.json({ error: `unknown block type: ${String(unknown.type)}` }, { status: 400 });
   }
-  const count = await setPageBlocks(slug, locale, body.blocks, body.note ?? "Block edit (admin)");
+  // preview writes skip the version snapshot (they just refresh the ?blocks=1
+  // render); an explicit save records a snapshot.
+  const count = await setPageBlocks(
+    slug, locale, body.blocks,
+    body.note ?? "Block edit (admin)",
+    !body.preview
+  );
   return NextResponse.json({ ok: true, count });
 }
