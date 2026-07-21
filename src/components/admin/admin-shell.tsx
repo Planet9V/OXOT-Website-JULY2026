@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart, Layers, ClipboardList, Network
+  LayoutDashboard, Home, LayoutTemplate, FileText, Menu as MenuIcon, Inbox, LogOut, ShieldCheck, ExternalLink, Images, GalleryHorizontal, Bot, Plug, Send, BarChart3, LineChart, Layers, ClipboardList, Network, Blocks
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import { ConformityHomeEditor } from "@/components/admin/conformity-home-editor"
 import { HomeContentEditor } from "@/components/admin/home-content-editor";
 import { IntakeLeadsManager } from "@/components/admin/intake-leads-manager";
 import { PagesManager } from "@/components/admin/pages-manager";
+import { PageBuilder } from "@/components/admin/page-builder";
 import { MenuManager } from "@/components/admin/menu-manager";
 import { InquiriesManager } from "@/components/admin/inquiries-manager";
 import { MediaManager } from "@/components/admin/media-manager";
@@ -23,7 +24,7 @@ import { AnalyticsManager } from "@/components/admin/analytics-manager";
 import { AffiliateSeoManager } from "@/components/admin/affiliate-seo-manager";
 import { CarouselManager } from "@/components/admin/carousel-manager";
 
-type Section = "overview" | "cra-home" | "cdt" | "home" | "homepage" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
+type Section = "overview" | "cra-home" | "cdt" | "home" | "homepage" | "page-builder" | "pages" | "menus" | "media" | "carousel" | "enquiries" | "leads" | "ai" | "integrations" | "newsletter" | "analytics" | "affiliate-seo";
 // Order is display-only (each item's key→component wiring is unchanged). Grouped for
 // admin UX: Overview → Content authoring → Audience & growth → Configuration, roughly
 // by how often a small content team touches each, with set-and-forget config last.
@@ -35,6 +36,7 @@ const NAV: { key: Section; label: string; icon: React.ElementType }[] = [
   { key: "cdt", label: "Cyber Digital Twin", icon: Network },
   { key: "home", label: "Conformity page", icon: Layers },
   { key: "homepage", label: "Approach page", icon: LayoutTemplate },
+  { key: "page-builder", label: "Page Builder", icon: Blocks },
   { key: "pages", label: "Pages", icon: FileText },
   { key: "media", label: "Media", icon: Images },
   { key: "carousel", label: "Carousel", icon: GalleryHorizontal },
@@ -142,6 +144,7 @@ export function AdminShell({ email }: { email: string }) {
           {section === "cdt" && <CdtEditor />}
           {section === "home" && <ConformityHomeEditor />}
           {section === "homepage" && <HomeContentEditor />}
+          {section === "page-builder" && <PageBuilder />}
           {section === "pages" && <PagesManager />}
           {section === "menus" && <MenuManager />}
           {section === "media" && <MediaManager />}

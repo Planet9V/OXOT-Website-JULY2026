@@ -72,6 +72,23 @@ import type {
 
 // --- Generic prose block ---
 import { MarkdownContent } from "@/components/markdown";
+// --- Generic effect-rich blocks (for new dynamic pages) ---
+import {
+  GenericHero,
+  GenericStats,
+  GenericFeatureGrid,
+  GenericCta,
+  GenericMedia,
+  GenericDivider
+} from "@/components/blocks/generic-sections";
+import type {
+  GenericHeroConfig,
+  GenericStatsConfig,
+  GenericFeatureGridConfig,
+  GenericCtaConfig,
+  GenericMediaConfig,
+  GenericDividerConfig
+} from "@/components/blocks/generic-sections";
 
 type Dict = ReturnType<typeof getDictionary>;
 
@@ -284,7 +301,7 @@ export const BLOCK_REGISTRY: Record<BlockType, BlockDef> = {
     )
   },
 
-  // ---------------- Generic ----------------
+  // ---------------- Generic, effect-rich (new dynamic pages) ----------------
   prose: {
     type: "prose",
     label: "Prose (Markdown)",
@@ -295,5 +312,35 @@ export const BLOCK_REGISTRY: Record<BlockType, BlockDef> = {
         locale={ctx.locale}
       />
     )
+  },
+  "block.hero": {
+    type: "block.hero",
+    label: "Hero",
+    Render: (config, ctx) => <GenericHero config={config as GenericHeroConfig} locale={ctx.locale} />
+  },
+  "block.stats": {
+    type: "block.stats",
+    label: "Stat counters",
+    Render: (config) => <GenericStats config={config as GenericStatsConfig} />
+  },
+  "block.featureGrid": {
+    type: "block.featureGrid",
+    label: "Feature grid",
+    Render: (config) => <GenericFeatureGrid config={config as GenericFeatureGridConfig} />
+  },
+  "block.cta": {
+    type: "block.cta",
+    label: "CTA banner",
+    Render: (config, ctx) => <GenericCta config={config as GenericCtaConfig} locale={ctx.locale} />
+  },
+  "block.media": {
+    type: "block.media",
+    label: "Image / media",
+    Render: (config) => <GenericMedia config={config as GenericMediaConfig} />
+  },
+  "block.divider": {
+    type: "block.divider",
+    label: "Divider / spacer",
+    Render: (config) => <GenericDivider config={config as GenericDividerConfig} />
   }
 };

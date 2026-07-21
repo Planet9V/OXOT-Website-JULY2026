@@ -6,6 +6,7 @@ import { MarkdownContent, extractToc } from "@/components/markdown";
 import { ArticleShell } from "@/components/article/article-shell";
 import { FrameworkPlatformLink } from "@/components/conformity/framework-platform-link";
 import { alternates, articleJsonLd, jsonLdScript, ogImageUrl, SITE_URL } from "@/lib/seo";
+import { BlockRenderer } from "@/components/blocks/block-renderer";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +85,18 @@ export default async function CmsPage({
   if (!isLocale(locale)) notFound();
   const page = await getPublishedPage(slug, locale);
   if (!page) notFound();
+
+  // Block pages (content_type='blocks') are composed from page_blocks, not the
+  // markdown body. Render full-bleed sections via the generic BlockRenderer
+  // rather than the article shell.
+  if (page.contentType === "blocks") {
+    return (
+      <main className="bg-background text-foreground">
+        <BlockRenderer slug={slug} locale={locale} />
+      </main>
+    );
+  }
+
   const jsonLd =
     page.contentType === "article"
       ? articleJsonLd({

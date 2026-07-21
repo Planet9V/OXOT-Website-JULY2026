@@ -45,20 +45,29 @@ export async function snapshotCurrent(
   const page = rows[0];
   if (!page) return; // nothing to snapshot yet
 
+  // Also capture the ordered block set (block pages) so the zero-loss history
+  // covers block content too. NULL for markdown pages that have no blocks.
+  const { rows: blockRows } = await client.query(
+    `SELECT position, type, config FROM page_blocks
+      WHERE slug=$1 AND locale=$2 ORDER BY position`,
+    [slug, locale]
+  );
+  const blocksJson = blockRows.length ? JSON.stringify(blockRows) : null;
+
   await client.query(
     `INSERT INTO page_versions
        (slug, locale, version_number, state, title, body,
-        meta_title, meta_description, excerpt, og_image, content_type, note)
+        meta_title, meta_description, excerpt, og_image, content_type, note, blocks)
      VALUES (
        $1, $2,
        COALESCE((SELECT MAX(version_number) FROM page_versions WHERE slug=$1 AND locale=$2), 0) + 1,
-       $3, $4, $5, $6, $7, $8, $9, $10, $11
+       $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
      )`,
     [
       slug, locale, state,
       page.title, page.body,
       page.meta_title, page.meta_description, page.excerpt, page.og_image, page.content_type,
-      note,
+      note, blocksJson,
     ]
   );
 }

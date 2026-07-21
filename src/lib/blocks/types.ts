@@ -31,8 +31,14 @@ export type BlockType =
   | "conformity.testimonial"
   | "conformity.faq"
   | "conformity.finalCta"
-  // Generic — available to any page.
-  | "prose";
+  // Generic, effect-rich blocks — for building any new dynamic page.
+  | "prose"
+  | "block.hero"
+  | "block.stats"
+  | "block.featureGrid"
+  | "block.cta"
+  | "block.media"
+  | "block.divider";
 
 /** A single stored block: ordered, typed, per-locale config. Mirrors page_blocks. */
 export interface PageBlock {
