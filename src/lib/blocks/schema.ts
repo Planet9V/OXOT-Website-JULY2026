@@ -15,7 +15,7 @@ export type Field =
 export interface BlockSchema {
   type: BlockType;
   label: string;
-  category: "generic" | "cdt" | "conformity";
+  category: "generic" | "cdt" | "conformity" | "cra";
   /** Show in the "add block" palette for arbitrary/new pages. */
   palette: boolean;
   /** One-line description for the palette. */
@@ -123,6 +123,18 @@ export const BLOCK_SCHEMAS: Record<BlockType, BlockSchema> = {
     ]
   },
 
+  // ---------------- Home / CRA-readiness (visual via ObjectFields) ----------------
+  "cra.hero": craBlock("cra.hero", "Home — Hero"),
+  "cra.statBand": craBlock("cra.statBand", "Home — Stat band"),
+  "cra.departureBoard": craBlock("cra.departureBoard", "Home — Departure board"),
+  "cra.roadsSplit": craBlock("cra.roadsSplit", "Home — Roads / map"),
+  "cra.personas": craBlock("cra.personas", "Home — Personas"),
+  "cra.engine": craBlock("cra.engine", "Home — Engine"),
+  "cra.retainer": craBlock("cra.retainer", "Home — Retainer"),
+  "cra.whyOxot": craBlock("cra.whyOxot", "Home — Why OXOT"),
+  "cra.intake": craBlock("cra.intake", "Home — Intake form"),
+  "cra.finalCta": craBlock("cra.finalCta", "Home — Final CTA"),
+
   // ---------------- Flagship CDT (JSON power-editor) ----------------
   "cdt.hero": jsonBlock("cdt.hero", "CDT — Hero", "cdt"),
   "cdt.statBand": jsonBlock("cdt.statBand", "CDT — Stat band", "cdt"),
@@ -153,6 +165,13 @@ export const BLOCK_SCHEMAS: Record<BlockType, BlockSchema> = {
 
 function jsonBlock(type: BlockType, label: string, category: "cdt" | "conformity"): BlockSchema {
   return { type, label, category, palette: false, defaultConfig: () => ({}), fields: [] };
+}
+
+// Home/CRA blocks: edited visually via ObjectFields (fields: [] => the generic
+// recursive form). Empty defaultConfig for a fresh add; editing the live Home
+// loads full configs from page_blocks.
+function craBlock(type: BlockType, label: string): BlockSchema {
+  return { type, label, category: "cra", palette: false, defaultConfig: () => ({}), fields: [] };
 }
 
 /** Block types offered in the "add block" palette for arbitrary/new pages. */

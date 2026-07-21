@@ -21,12 +21,13 @@ type WBlock = { type: BlockType; config: Record<string, unknown> };
 type Status = { kind: "idle" | "ok" | "err" | "busy"; msg: string };
 
 const KNOWN_PAGES = [
+  { slug: "home", label: "Home page" },
   { slug: "cyber-digital-twin", label: "Cyber Digital Twin" },
   { slug: "conformity", label: "Conformity page" }
 ];
 
-const CATEGORY_LABEL: Record<string, string> = { generic: "Building blocks", cdt: "Cyber Digital Twin", conformity: "Conformity" };
-const CATEGORY_ORDER = ["generic", "cdt", "conformity"];
+const CATEGORY_LABEL: Record<string, string> = { generic: "Building blocks", cra: "Home / CRA", cdt: "Cyber Digital Twin", conformity: "Conformity" };
+const CATEGORY_ORDER = ["generic", "cra", "cdt", "conformity"];
 
 export function PageBuilder() {
   const [slug, setSlug] = useState("cyber-digital-twin");
@@ -114,7 +115,9 @@ export function PageBuilder() {
     return g;
   }, []);
 
-  const previewSrc = `/${locale}/${slug}?blocks=1&pv=${previewKey}`;
+  // Home lives at the locale root (/{locale}); every other page at /{locale}/{slug}.
+  const pagePath = slug === "home" ? `/${locale}` : `/${locale}/${slug}`;
+  const previewSrc = `${pagePath}?blocks=1&pv=${previewKey}`;
 
   return (
     <div className="space-y-4">
@@ -134,7 +137,7 @@ export function PageBuilder() {
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Button size="sm" variant="outline" onClick={newPage}><FilePlus2 className="h-4 w-4" /> New page</Button>
-            <Button size="sm" variant="outline" onClick={() => window.open(`/${locale}/${slug}?blocks=1`, "_blank")}><ExternalLink className="h-4 w-4" /> Open</Button>
+            <Button size="sm" variant="outline" onClick={() => window.open(`${pagePath}?blocks=1`, "_blank")}><ExternalLink className="h-4 w-4" /> Open</Button>
             <Button size="sm" onClick={save} disabled={status.kind === "busy" || !dirty}>
               {status.kind === "busy" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Save
             </Button>
@@ -215,7 +218,7 @@ export function PageBuilder() {
             <h2 className="text-sm font-semibold text-foreground">Live preview</h2>
             <div className="flex items-center gap-2">
               <Button size="sm" variant="ghost" onClick={() => setPreviewKey((k) => k + 1)}><RefreshCw className="h-3.5 w-3.5" /> Refresh</Button>
-              <a className="inline-flex items-center gap-1 text-xs text-primary hover:underline" href={`/${locale}/${slug}?blocks=1`} target="_blank" rel="noreferrer">Open page <ExternalLink className="h-3 w-3" /></a>
+              <a className="inline-flex items-center gap-1 text-xs text-primary hover:underline" href={`${pagePath}?blocks=1`} target="_blank" rel="noreferrer">Open page <ExternalLink className="h-3 w-3" /></a>
             </div>
           </div>
           <div className="overflow-hidden rounded-xl border border-border bg-card">

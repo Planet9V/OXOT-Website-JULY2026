@@ -5,6 +5,8 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { getCraHome } from "@/lib/cra-home";
 import { alternates } from "@/lib/seo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { blocksRoutingEnabled } from "@/lib/blocks/flag";
+import { BlockRenderer } from "@/components/blocks/block-renderer";
 import {
   Hero,
   StatBand,
@@ -39,13 +41,30 @@ export async function generateMetadata({
 }
 
 export default async function Home({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
+
+  // Block path when the flag opts in (?blocks=1 or BLOCKS_ROUTING). Default =
+  // the coded sections below (byte-identical). The Home page is block-editable
+  // in the CMS Page Builder under the slug 'home'.
+  const useBlocks = blocksRoutingEnabled("home", await searchParams);
+  if (useBlocks) {
+    return (
+      <main className="bg-background text-foreground">
+        <div className="mx-auto flex max-w-6xl justify-end px-4 pt-4">
+          <ThemeToggle label={t.theme.toggle} />
+        </div>
+        <BlockRenderer slug="home" locale={locale} />
+      </main>
+    );
+  }
 
   // Admin-editable CRA home content (DB-backed, JSON defaults). getCraHome
   // wraps its DB read in try/catch, so the front door never 500s if the DB

@@ -70,6 +70,33 @@ import type {
   ConformityHomeCta
 } from "@/lib/conformity-home";
 
+// --- Home / CRA-readiness sections + config types ---
+import {
+  Hero as CraHeroSection,
+  StatBand as CraStatBandSection,
+  DepartureBoard as CraDepartureBoardSection,
+  RoadsSplit as CraRoadsSplitSection,
+  Personas as CraPersonasSection,
+  Engine as CraEngineSection,
+  Retainer as CraRetainerSection,
+  WhyOxot as CraWhyOxotSection,
+  IntakeSection as CraIntakeSection,
+  FinalCta as CraFinalCtaSection
+} from "@/components/cra-home/sections";
+import type {
+  CraHomeHero,
+  CraHomeStatBand,
+  CraHomeDepartureBoard,
+  CraHomeRoadsSplit,
+  CraHomePersonas,
+  CraHomeEngine,
+  CraHomeRetainer,
+  CraHomeWhyOxot,
+  CraHomeIntake,
+  CraHomeProcess,
+  CraHomeFinalCta
+} from "@/lib/cra-home";
+
 // --- Generic prose block ---
 import { MarkdownContent } from "@/components/markdown";
 // --- Generic effect-rich blocks (for new dynamic pages) ---
@@ -299,6 +326,61 @@ export const BLOCK_REGISTRY: Record<BlockType, BlockDef> = {
     Render: (config, ctx) => (
       <ConformityFinalCtaSection cta={config as ConformityHomeCta} locale={ctx.locale} />
     )
+  },
+
+  // ---------------- Home / CRA-readiness ----------------
+  "cra.hero": {
+    type: "cra.hero", label: "Home — Hero",
+    Render: (config, ctx) => (
+      <CraHeroSection hero={config as CraHomeHero} locale={ctx.locale}
+        assistLabel={ctx.dict.agent.assistCtaLabel} seedTemplate={ctx.dict.agent.seedTemplate} />
+    )
+  },
+  "cra.statBand": {
+    type: "cra.statBand", label: "Home — Stat band",
+    Render: (config) => <CraStatBandSection band={config as CraHomeStatBand} />
+  },
+  "cra.departureBoard": {
+    type: "cra.departureBoard", label: "Home — Departure board",
+    Render: (config) => <CraDepartureBoardSection board={config as CraHomeDepartureBoard} />
+  },
+  "cra.roadsSplit": {
+    type: "cra.roadsSplit", label: "Home — Roads / map",
+    Render: (config, ctx) => (
+      <CraRoadsSplitSection split={config as CraHomeRoadsSplit}
+        assistLabel={ctx.dict.agent.assistCtaLabel} seedTemplate={ctx.dict.agent.seedTemplate} />
+    )
+  },
+  "cra.personas": {
+    type: "cra.personas", label: "Home — Personas",
+    Render: (config) => <CraPersonasSection personas={config as CraHomePersonas} />
+  },
+  "cra.engine": {
+    type: "cra.engine", label: "Home — Engine",
+    Render: (config) => <CraEngineSection engine={config as CraHomeEngine} />
+  },
+  "cra.retainer": {
+    type: "cra.retainer", label: "Home — Retainer",
+    Render: (config) => <CraRetainerSection retainer={config as CraHomeRetainer} />
+  },
+  "cra.whyOxot": {
+    type: "cra.whyOxot", label: "Home — Why OXOT",
+    Render: (config) => <CraWhyOxotSection why={config as CraHomeWhyOxot} />
+  },
+  "cra.intake": {
+    type: "cra.intake", label: "Home — Intake form",
+    // Composite: config carries both the intake and process sub-objects.
+    Render: (config, ctx) => {
+      const c = config as { intake: CraHomeIntake; process: CraHomeProcess };
+      return (
+        <CraIntakeSection intake={c.intake} process={c.process} locale={ctx.locale}
+          strings={{ form: ctx.dict.intakeForm, success: ctx.dict.intakeSuccess }} />
+      );
+    }
+  },
+  "cra.finalCta": {
+    type: "cra.finalCta", label: "Home — Final CTA",
+    Render: (config) => <CraFinalCtaSection cta={config as CraHomeFinalCta} />
   },
 
   // ---------------- Generic, effect-rich (new dynamic pages) ----------------

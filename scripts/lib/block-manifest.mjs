@@ -49,6 +49,23 @@ export const PAGE_MANIFEST = {
       ["conformity.faq", "faq"],
       ["conformity.finalCta", "cta"]
     ]
+  },
+  home: {
+    defaultJson: { en: "data/cra_home_en.json", nl: "data/cra_home_nl.json" },
+    siteBlockKey: "cra_home",
+    blocks: [
+      ["cra.hero", "hero"],
+      ["cra.statBand", "statBand"],
+      ["cra.departureBoard", "departureBoard"],
+      ["cra.roadsSplit", "roadsSplit"],
+      ["cra.personas", "personas"],
+      ["cra.engine", "engine"],
+      ["cra.retainer", "retainer"],
+      ["cra.whyOxot", "whyOxot"],
+      // Composite: this block carries BOTH the intake and process sub-objects.
+      ["cra.intake", ["intake", "process"]],
+      ["cra.finalCta", "finalCta"]
+    ]
   }
 };
 
@@ -56,9 +73,11 @@ export const PAGE_MANIFEST = {
 {
   const cdt = PAGE_MANIFEST["cyber-digital-twin"].blocks.length;
   const conf = PAGE_MANIFEST.conformity.blocks.length;
+  const home = PAGE_MANIFEST.home.blocks.length;
   const confFieldless = PAGE_MANIFEST.conformity.blocks.filter(([, f]) => f === null).length;
   if (cdt !== 11) throw new Error(`manifest drift: CDT expected 11 blocks, got ${cdt}`);
   if (conf !== 12) throw new Error(`manifest drift: Conformity expected 12 blocks, got ${conf}`);
+  if (home !== 10) throw new Error(`manifest drift: Home expected 10 blocks, got ${home}`);
   if (confFieldless !== 1) throw new Error(`manifest drift: expected 1 field-less block, got ${confFieldless}`);
 }
 
@@ -79,23 +98,29 @@ export async function loadSource(slug, locale, db = null) {
   return { source: "json-default", data: JSON.parse(readFileSync(file, "utf8")) };
 }
 
-/** Decompose a page's source object into ordered block rows (in-memory). */
+/** Decompose a page's source object into ordered block rows (in-memory).
+ *  field: string => config = obj[field]; array => config = { f: obj[f], … }
+ *  (composite block, e.g. Home intake carries intake+process); null => {}. */
 export function decompose(slug, obj) {
-  return PAGE_MANIFEST[slug].blocks.map(([type, field], position) => ({
-    position,
-    type,
-    config: field === null ? {} : obj[field]
-  }));
+  return PAGE_MANIFEST[slug].blocks.map(([type, field], position) => {
+    let config;
+    if (field === null) config = {};
+    else if (Array.isArray(field)) config = Object.fromEntries(field.map((f) => [f, obj[f]]));
+    else config = obj[field];
+    return { position, type, config };
+  });
 }
 
 /** Reconstruct the page's source object from its block rows (skips field-less
- *  blocks, whose content is not part of the object). */
+ *  blocks; composite/array blocks assign each of their fields back). */
 export function reconstruct(slug, blocks) {
   const fieldByType = new Map(PAGE_MANIFEST[slug].blocks);
   const obj = {};
   for (const b of blocks) {
     const field = fieldByType.get(b.type);
-    if (field != null) obj[field] = b.config;
+    if (field == null) continue;
+    if (Array.isArray(field)) for (const f of field) obj[f] = b.config?.[f];
+    else obj[field] = b.config;
   }
   return obj;
 }

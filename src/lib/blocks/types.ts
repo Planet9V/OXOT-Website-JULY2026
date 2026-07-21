@@ -31,6 +31,17 @@ export type BlockType =
   | "conformity.testimonial"
   | "conformity.faq"
   | "conformity.finalCta"
+  // Home / CRA-readiness landing (src/components/cra-home/sections.tsx) — 10 sections.
+  | "cra.hero"
+  | "cra.statBand"
+  | "cra.departureBoard"
+  | "cra.roadsSplit"
+  | "cra.personas"
+  | "cra.engine"
+  | "cra.retainer"
+  | "cra.whyOxot"
+  | "cra.intake"
+  | "cra.finalCta"
   // Generic, effect-rich blocks — for building any new dynamic page.
   | "prose"
   | "block.hero"
@@ -93,9 +104,28 @@ export const CONFORMITY_BLOCK_ORDER: BlockType[] = [
  * Maps a page slug to its canonical ordered block manifest. Used by the backfill
  * (which sub-object goes to which block, in what order) and by parity checks.
  */
+/**
+ * Ordered composition of the Home (CRA-readiness) page — EXACTLY the render order
+ * in src/app/[locale]/page.tsx. `cra.intake` carries BOTH the intake and process
+ * sub-objects (the IntakeSection component renders them together).
+ */
+export const CRA_BLOCK_ORDER: BlockType[] = [
+  "cra.hero",
+  "cra.statBand",
+  "cra.departureBoard",
+  "cra.roadsSplit",
+  "cra.personas",
+  "cra.engine",
+  "cra.retainer",
+  "cra.whyOxot",
+  "cra.intake",
+  "cra.finalCta"
+];
+
 export const PAGE_BLOCK_MANIFEST: Record<string, BlockType[]> = {
   "cyber-digital-twin": CDT_BLOCK_ORDER,
-  conformity: CONFORMITY_BLOCK_ORDER
+  conformity: CONFORMITY_BLOCK_ORDER,
+  home: CRA_BLOCK_ORDER
 };
 
 /**
