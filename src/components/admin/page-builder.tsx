@@ -8,7 +8,7 @@
 // live-preview writes skip the snapshot).
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  Plus, Trash2, Copy, ChevronUp, ChevronDown, Save, ExternalLink, FilePlus2, Braces, RefreshCw, Loader2
+  Plus, Trash2, Copy, ChevronUp, ChevronDown, Save, ExternalLink, FilePlus2, Braces, RefreshCw, Loader2, Sparkles, Wand2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -40,6 +40,10 @@ export function PageBuilder() {
   const [adding, setAdding] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
   const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // AI assist state
+  const [aiOpen, setAiOpen] = useState<number | null>(null);
+  const [aiText, setAiText] = useState("");
+  const [aiBusy, setAiBusy] = useState<number | "page" | null>(null);
 
   const load = useCallback(async (s: string, l: string) => {
     setStatus({ kind: "busy", msg: "Loading…" });
@@ -92,6 +96,44 @@ export function PageBuilder() {
   const remove = (i: number) => { const n = blocks.filter((_, k) => k !== i); mutate(n, n.length ? Math.max(0, i - 1) : null); };
   const setConfig = (i: number, config: Record<string, unknown>) => mutate(blocks.map((b, k) => (k === i ? { ...b, config } : b)), open);
 
+  // AI: rewrite one block's copy on-brand (keeps the same JSON shape).
+  const aiImprove = async (i: number) => {
+    setAiBusy(i);
+    try {
+      const res = await fetch("/api/admin/pages/blocks/assist", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ mode: "block-copy", blockType: blocks[i].type, config: blocks[i].config, instruction: aiText, locale })
+      });
+      const d = await res.json();
+      if (!res.ok) { setStatus({ kind: "err", msg: d.error ?? "AI failed." }); return; }
+      setConfig(i, d.config as Record<string, unknown>);
+      setStatus({ kind: "ok", msg: "AI updated this block's copy — review, then Save." });
+      setAiOpen(null); setAiText("");
+    } catch { setStatus({ kind: "err", msg: "AI request failed." }); }
+    finally { setAiBusy(null); }
+  };
+
+  // AI: draft a whole page of blocks from a brief (appends to the current page).
+  const aiDraftPage = async () => {
+    const brief = window.prompt("Describe the page you want (topic, audience, sections):")?.trim();
+    if (!brief) return;
+    setAiBusy("page"); setStatus({ kind: "busy", msg: "AI is drafting the page…" });
+    try {
+      const res = await fetch("/api/admin/pages/blocks/assist", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ mode: "page-draft", instruction: brief, locale })
+      });
+      const d = await res.json();
+      if (!res.ok) { setStatus({ kind: "err", msg: d.error ?? "AI failed." }); return; }
+      const drafted = (d.blocks ?? []) as WBlock[];
+      if (drafted.length === 0) { setStatus({ kind: "err", msg: "AI returned no blocks." }); return; }
+      const next = [...blocks, ...drafted.map((b) => ({ type: b.type, config: (b.config ?? {}) as Record<string, unknown> }))];
+      mutate(next, blocks.length);
+      setStatus({ kind: "ok", msg: `AI added ${drafted.length} block(s) — review, then Save.` });
+    } catch { setStatus({ kind: "err", msg: "AI request failed." }); }
+    finally { setAiBusy(null); }
+  };
+
   const save = async () => {
     setStatus({ kind: "busy", msg: "Saving…" });
     try { const c = await persist(blocks, false); setDirty(false); setStatus({ kind: "ok", msg: `Saved ${c} block(s) — a version snapshot was recorded.` }); setPreviewKey((k) => k + 1); }
@@ -136,6 +178,9 @@ export function PageBuilder() {
             ))}
           </div>
           <div className="ml-auto flex items-center gap-2">
+            <Button size="sm" variant="outline" onClick={aiDraftPage} disabled={aiBusy === "page"}>
+              {aiBusy === "page" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />} AI draft
+            </Button>
             <Button size="sm" variant="outline" onClick={newPage}><FilePlus2 className="h-4 w-4" /> New page</Button>
             <Button size="sm" variant="outline" onClick={() => window.open(`${pagePath}?blocks=1`, "_blank")}><ExternalLink className="h-4 w-4" /> Open</Button>
             <Button size="sm" onClick={save} disabled={status.kind === "busy" || !dirty}>
@@ -198,10 +243,31 @@ export function PageBuilder() {
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => move(i, 1)} disabled={i === blocks.length - 1} title="Move down"><ChevronDown className="h-3.5 w-3.5" /></Button>
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => duplicate(i)} title="Duplicate"><Copy className="h-3.5 w-3.5" /></Button>
                       <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => remove(i)} title="Delete"><Trash2 className="h-3.5 w-3.5" /></Button>
+                      <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs text-primary" onClick={() => { setAiOpen(aiOpen === i ? null : i); setAiText(""); }}>
+                        <Sparkles className="h-3.5 w-3.5" /> AI
+                      </Button>
                       <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs" onClick={() => setAdvanced((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}>
                         <Braces className="h-3.5 w-3.5" /> {isAdv ? "Form" : "JSON"}
                       </Button>
                     </div>
+                    {aiOpen === i ? (
+                      <div className="mb-3 rounded-md border border-primary/40 bg-primary/5 p-3">
+                        <p className="mb-2 text-xs font-medium text-primary">AI — improve this section's copy (on-brand, same layout)</p>
+                        <div className="flex gap-2">
+                          <input
+                            className="h-9 flex-1 rounded-md border border-border bg-background px-3 text-sm"
+                            placeholder="e.g. make it punchier · add urgency about the CRA deadline · shorten"
+                            value={aiText}
+                            onChange={(e) => setAiText(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === "Enter" && aiBusy !== i) aiImprove(i); }}
+                          />
+                          <Button size="sm" onClick={() => aiImprove(i)} disabled={aiBusy === i}>
+                            {aiBusy === i ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />} Improve
+                          </Button>
+                        </div>
+                        <p className="mt-1.5 text-[11px] text-muted-foreground">Leave blank to just tighten and align to the styleguide. Review the result, then Save.</p>
+                      </div>
+                    ) : null}
                     {isAdv
                       ? <JsonEditor value={b.config} onChange={(cfg) => setConfig(i, cfg)} />
                       : <ObjectFields value={b.config} onChange={(cfg) => setConfig(i, cfg)} />}
