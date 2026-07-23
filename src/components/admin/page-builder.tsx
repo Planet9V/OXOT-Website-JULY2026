@@ -29,6 +29,12 @@ const KNOWN_PAGES = [
 const CATEGORY_LABEL: Record<string, string> = { generic: "Building blocks", cra: "Home / CRA", cdt: "Cyber Digital Twin", conformity: "Conformity" };
 const CATEGORY_ORDER = ["generic", "cra", "cdt", "conformity"];
 
+// Turn a slug into a readable label for pages the flagship list doesn't name.
+function labelForSlug(slug: string): string {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+type PageOption = { slug: string; label: string; contentType?: string };
+
 export function PageBuilder() {
   const [slug, setSlug] = useState("cyber-digital-twin");
   const [locale, setLocale] = useState<"en" | "nl">("en");
@@ -44,6 +50,27 @@ export function PageBuilder() {
   const [aiOpen, setAiOpen] = useState<number | null>(null);
   const [aiText, setAiText] = useState("");
   const [aiBusy, setAiBusy] = useState<number | "page" | null>(null);
+  // All selectable pages: the flagship three, merged with every page in the DB
+  // (deduped by slug) so migrated + newly-created block pages are editable here.
+  const [pages, setPages] = useState<PageOption[]>(KNOWN_PAGES);
+
+  const loadPages = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/pages");
+      const d = await res.json();
+      const rows: { slug: string; contentType?: string }[] = d.pages ?? [];
+      const bySlug = new Map<string, PageOption>();
+      for (const p of KNOWN_PAGES) bySlug.set(p.slug, { ...p });
+      for (const r of rows) {
+        if (!bySlug.has(r.slug)) bySlug.set(r.slug, { slug: r.slug, label: labelForSlug(r.slug), contentType: r.contentType });
+        else bySlug.get(r.slug)!.contentType = r.contentType;
+      }
+      setPages([...bySlug.values()].sort((a, b) =>
+        (KNOWN_PAGES.some((k) => k.slug === b.slug) ? 1 : 0) - (KNOWN_PAGES.some((k) => k.slug === a.slug) ? 1 : 0)
+        || a.label.localeCompare(b.label)));
+    } catch { /* keep flagship defaults */ }
+  }, []);
+  useEffect(() => { void loadPages(); }, [loadPages]);
 
   const load = useCallback(async (s: string, l: string) => {
     setStatus({ kind: "busy", msg: "Loading…" });
@@ -146,7 +173,7 @@ export function PageBuilder() {
     setStatus({ kind: "busy", msg: "Creating page…" });
     const res = await fetch("/api/admin/pages", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ slug: s, locale, title, body: "", published: false, contentType: "blocks" }) });
     if (!res.ok) { const d = await res.json().catch(() => ({})); setStatus({ kind: "err", msg: d.error ?? "Create failed." }); return; }
-    setSlug(s); setBlocks([]); setOpen(null); setDirty(false);
+    setSlug(s); setBlocks([]); setOpen(null); setDirty(false); void loadPages();
     setStatus({ kind: "ok", msg: `Page '${s}' created (${locale}). Add blocks, then Save. Publish it in Pages to go live.` });
   };
 
@@ -168,8 +195,12 @@ export function PageBuilder() {
         <CardContent className="flex flex-wrap items-center gap-3 py-3">
           <select className="h-9 rounded-md border border-border bg-background px-2 text-sm" value={slug}
             onChange={(e) => { if (dirty && !confirm("Discard unsaved changes?")) return; setSlug(e.target.value); }}>
-            {KNOWN_PAGES.map((p) => <option key={p.slug} value={p.slug}>{p.label}</option>)}
-            {!KNOWN_PAGES.some((p) => p.slug === slug) ? <option value={slug}>{slug}</option> : null}
+            {pages.map((p) => (
+              <option key={p.slug} value={p.slug}>
+                {p.label}{p.contentType && p.contentType !== "blocks" && !KNOWN_PAGES.some((k) => k.slug === p.slug) ? "  (markdown)" : ""}
+              </option>
+            ))}
+            {!pages.some((p) => p.slug === slug) ? <option value={slug}>{slug}</option> : null}
           </select>
           <div className="inline-flex overflow-hidden rounded-md border border-border">
             {(["en", "nl"] as const).map((l) => (
