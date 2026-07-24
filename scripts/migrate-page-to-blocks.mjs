@@ -18,8 +18,11 @@ import pg from "pg";
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
+const ALL = args.includes("--all");
 const slugs = args.filter((a) => !a.startsWith("--"));
-const SLUGS = slugs.length ? slugs : ["privacy", "services"];
+// --all resolves to every not-yet-migrated page at runtime (after connect);
+// otherwise use the explicit slugs, defaulting to the two pilots.
+let SLUGS = slugs.length ? slugs : ["privacy", "services"];
 
 const base = process.env.DATABASE_URL;
 if (!base) { console.error("no DATABASE_URL — run via `railway run`"); process.exit(2); }
@@ -39,6 +42,13 @@ async function connect() {
 const c = await connect();
 const results = [];
 try {
+  if (ALL) {
+    const { rows } = await c.query(
+      `SELECT DISTINCT slug FROM pages WHERE content_type IS DISTINCT FROM 'blocks' ORDER BY slug`
+    );
+    SLUGS = rows.map((r) => r.slug);
+    console.log(`--all: ${SLUGS.length} not-yet-migrated page slug(s) found`);
+  }
   for (const slug of SLUGS) {
     const { rows: locs } = await c.query(
       `SELECT slug, locale, title, body, published, content_type
